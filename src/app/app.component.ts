@@ -1,10 +1,18 @@
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
+import { Beam } from '@bitrise/beam';
 
 @Component({
   selector: 'app-root',
-  template: '<h1>Frontend of the {{ title }}</h1>',
+  templateUrl: './app.component.html',
   styles: []
 })
-export class AppComponent {
+export class AppComponent implements OnInit {
   title = 'Test add-on';
+
+  ngOnInit() {
+    Beam.init({
+      app_slug: 'd08709ae5c5f6171',
+      app_name: 'Fast building app'
+    });
+  }
 }

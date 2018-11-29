@@ -215,6 +215,11 @@
   dependencies:
     tslib "^1.9.0"
 
+"@bitrise/beam@^0.1.6":
+  version "0.1.6"
+  resolved "https://registry.yarnpkg.com/@bitrise/beam/-/beam-0.1.6.tgz#4cbd827ba056ac0058a91603b5bff47ae04e892f"
+  integrity sha512-/Z8WxJ/Q3OBiGUoMDi5AJrVrEX0yn/xgJ1S2CmrqMEFMmsYpftceDHuWKJHe1YIifYfXVtHVh73dTHZWDO2YSg==
+
 "@ngtools/webpack@6.0.8":
   version "6.0.8"
   resolved "https://registry.yarnpkg.com/@ngtools/webpack/-/webpack-6.0.8.tgz#a05bce526aee9da62bb230a95fba83fee99d0bca"
@@ -4770,6 +4775,11 @@ neo-async@^2.5.0:
   resolved "https://registry.yarnpkg.com/neo-async/-/neo-async-2.6.0.tgz#b9d15e4d71c6762908654b5183ed38b753340835"
   integrity sha512-MFh0d/Wa7vkKO3Y3LlacqAEeHK0mckVqzDieUKTT+KGxi+zIpeVsFxymkIiRpbpDziHc290Xr9A1O4Om7otoRA==
 
+ng-inline-svg@^8.2.1:
+  version "8.2.1"
+  resolved "https://registry.yarnpkg.com/ng-inline-svg/-/ng-inline-svg-8.2.1.tgz#29c833d17a22d4664f9369d82dd541f429db67be"
+  integrity sha512-yMHP4VH1v7gTqVjndbr6MRix2mZncoSznWpSaPftc9ZIKafegTnGy6UzTc4Zn2FPVsqr6iCJ7MkfC3cDnIxoNw==
+
 nice-try@^1.0.4:
   version "1.0.5"
   resolved "https://registry.yarnpkg.com/nice-try/-/nice-try-1.0.5.tgz#a3378a7696ce7d223e88fc9b764bd7ef1089e366"
@@ -4920,6 +4930,11 @@ normalize-range@^0.1.2:
   version "0.1.2"
   resolved "https://registry.yarnpkg.com/normalize-range/-/normalize-range-0.1.2.tgz#2d10c06bdfd312ea9777695a4d28439456b75942"
   integrity sha1-LRDAa9/TEuqXd2laTShDlFa3WUI=
+
+normalize.css@^8.0.1:
+  version "8.0.1"
+  resolved "https://registry.yarnpkg.com/normalize.css/-/normalize.css-8.0.1.tgz#9b98a208738b9cc2634caacbc42d131c97487bf3"
+  integrity sha512-qizSNPO93t1YUuUhP22btGOo3chcvDFqFaj2TRybP0DMxkHOCTYwp3n34fel4a31ORXy4m1Xq0Gyqpb5m33qIg==
 
 npm-bundled@^1.0.1:
   version "1.0.5"
