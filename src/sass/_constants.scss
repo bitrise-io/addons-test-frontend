@@ -1,0 +1,47 @@
+// Screen sizes
+
+$screen-small-width: 600px;
+$screen-medium-width: 960px;
+$screen-large-width: 1280px;
+$screen-xlarge-width: 1920px;
+
+// Sizes
+
+$beam-height: 47px;
+$content-maxwidth: 1528px;
+
+// Colors
+
+$white: #ffffff !default;
+$aqua: #0dd3c5 !default;
+$water-blue-two: #0d83cd !default;
+
+// UI elements
+
+@mixin default-font {
+  font-family: TTNorms;
+  line-height: 1.5;
+  letter-spacing: normal;
+  font-weight: 500;
+  font-style: normal;
+  font-stretch: normal;
+}
+
+@mixin ui-element-header-3 {
+  @include default-font;
+  font-size: 34px;
+  letter-spacing: 0.2px;
+  font-weight: 700;
+}
+
+@mixin ui-element-body {
+  @include default-font;
+  font-size: 16px;
+}
+
+@mixin ui-element-tag {
+  @include default-font;
+  font-size: 10px;
+  letter-spacing: 0.8px;
+  text-transform: uppercase;
+}
