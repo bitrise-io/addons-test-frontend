@@ -7,6 +7,27 @@
   padding: 43px 77px;
   background-image: linear-gradient(to left, $aqua, $water-blue-two);
 
+  .icon {
+
+    ::ng-deep .stop-start {
+      stop-color: #135EA7;
+      stop-opacity: 0.855;
+    }
+
+    ::ng-deep .stop-end {
+      stop-color: #1E568F;
+    }
+
+    ::ng-deep .frame-wrapper {
+      fill: url(#app_header-icon-stop);
+      fill-rule: evenodd;
+    }
+
+    ::ng-deep .frame {
+      mix-blend-mode: multiply;
+    }
+  }
+
   .text {
     margin-left: 23px;
     color: $white;
