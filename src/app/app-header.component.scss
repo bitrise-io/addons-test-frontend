@@ -3,7 +3,7 @@
 
 .app-header {
   margin-top: $beam-height;
-  padding: 42px 76px;
+  padding: 42px 24px;
   background-image: linear-gradient(to left, $aqua, $water-blue-two);
 
   .app-header-content {
@@ -82,7 +82,7 @@
   }
 
   @include width-max($screen-small-width) {
-    padding: 24px 24px;
+    @include padding-y(24px);
 
     .app-header-content .text {
       margin-left: 18px;
