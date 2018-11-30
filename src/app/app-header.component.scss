@@ -2,82 +2,86 @@
 @import "../sass/mixins";
 
 .app-header {
-  display: flex;
   margin-top: $beam-height;
-  padding: 43px 77px;
+  padding: 42px 76px;
   background-image: linear-gradient(to left, $aqua, $water-blue-two);
 
-  .icon {
+  .app-header-content {
+    display: flex;
+    width: 100%;
+    max-width: $content-maxwidth;
+    @include margin-x(auto);
 
-    ::ng-deep .stop-start {
-      stop-color: #135EA7;
-      stop-opacity: 0.855;
-    }
-
-    ::ng-deep .stop-end {
-      stop-color: #1E568F;
-    }
-
-    ::ng-deep .frame-wrapper {
-      fill: url(#app_header-icon-stop);
-      fill-rule: evenodd;
-    }
-
-    ::ng-deep .frame {
-      mix-blend-mode: multiply;
-    }
-  }
-
-  .text {
-    margin-left: 23px;
-    color: $white;
-
-    .title-with-tag {
-      display: flex;
-      align-items: center;
-
-      .title {
-        @include ui-element-header-3;
-        @include margin-y(0);
-        color: inherit;
+    .icon {
+      ::ng-deep .stop-start {
+        stop-color: #135EA7;
+        stop-opacity: 0.855;
       }
 
-      .tag {
-        @include ui-element-tag;
-        @include margin-y(0);
-        margin-left: 22px;
-        color: inherit;
+      ::ng-deep .stop-end {
+        stop-color: #1E568F;
+      }
+
+      ::ng-deep .frame-wrapper {
+        fill: url(#app_header-icon-stop);
+        fill-rule: evenodd;
+      }
+
+      ::ng-deep .frame {
+        mix-blend-mode: multiply;
       }
     }
 
-    .description {
-      @include ui-element-body;
-      margin-top: 3px;
-      margin-bottom: 0;
-      color: inherit;
-    }
-  }
-
-  @include width-max(650px) {
     .text {
-      margin-left: 16px;
+      margin-left: 24px;
+      color: $white;
 
       .title-with-tag {
-        display: block;
+        display: flex;
+        align-items: center;
+
+        .title {
+          @include ui-element-header-3;
+          @include margin-y(0);
+          color: inherit;
+        }
 
         .tag {
-          margin-left: 0;
-          margin-top: 11px;
+          @include ui-element-tag;
+          @include margin-y(0);
+          margin-left: 24px;
+          color: inherit;
         }
       }
 
       .description {
-        margin-top: 6px;
+        @include ui-element-body;
+        @include margin-y(0);
+        color: inherit;
+      }
+    }
+
+    @include width-max(650px) {
+      .text {
+        margin-left: 18px;
+
+        .title-with-tag {
+          display: block;
+
+          .tag {
+            margin-left: 0;
+            margin-top: 12px;
+          }
+        }
+
+        .description {
+          margin-top: 6px;
+        }
       }
     }
   }
 
   @include width-max($screen-small-width) {
-    padding: 20px 21px;
+    padding: 24px 24px;
   }
 }
