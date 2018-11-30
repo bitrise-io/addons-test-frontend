@@ -60,28 +60,32 @@
         color: inherit;
       }
     }
+  }
 
-    @include width-max(650px) {
-      .text {
-        margin-left: 18px;
+  $wrap-title-tag-maxwidth: 650px;
 
-        .title-with-tag {
-          display: block;
+  @include width-max($wrap-title-tag-maxwidth) {
+    .app-header-content .text {
+      .title-with-tag {
+        display: block;
 
-          .tag {
-            margin-left: 0;
-            margin-top: 12px;
-          }
+        .tag {
+          margin-left: 0;
+          margin-top: 12px;
         }
+      }
 
-        .description {
-          margin-top: 6px;
-        }
+      .description {
+        margin-top: 6px;
       }
     }
   }
 
   @include width-max($screen-small-width) {
     padding: 24px 24px;
+
+    .app-header-content .text {
+      margin-left: 18px;
+    }
   }
 }
