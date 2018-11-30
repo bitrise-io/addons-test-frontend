@@ -1,0 +1,54 @@
+@mixin font-face($font-family, $font-file-url-without-extension, $font-weight) {
+  @font-face {
+    font-family: $font-family;
+    src: url($font-file-url-without-extension + ".eot");
+    src: url($font-file-url-without-extension + ".eot?#iefix") format("embedded-opentype"),
+      url($font-file-url-without-extension + ".woff2") format("woff2"),
+      url($font-file-url-without-extension + ".woff") format("woff"),
+      url($font-file-url-without-extension + ".ttf") format("truetype"),
+      url($font-file-url-without-extension + ".svg#wf") format("svg");
+    font-weight: $font-weight;
+  }
+}
+
+@mixin width-min($value) {
+  @media (min-width: $value) {
+    @content;
+  }
+}
+
+@mixin width-max($value) {
+  @media (max-width: $value) {
+    @content;
+  }
+}
+
+@mixin margin-x($value) {
+  margin-left: $value;
+  margin-right: $value;
+}
+
+@mixin margin-y($value) {
+  margin-top: $value;
+  margin-bottom: $value;
+}
+
+@mixin border-x($value) {
+  border-left: $value;
+  border-right: $value;
+}
+
+@mixin border-y($value) {
+  border-top: $value;
+  border-bottom: $value;
+}
+
+@mixin padding-x($value) {
+  padding-left: $value;
+  padding-right: $value;
+}
+
+@mixin padding-y($value) {
+  padding-top: $value;
+  padding-bottom: $value;
+}
