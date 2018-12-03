@@ -1,12 +1,12 @@
-@import "../sass/constants";
-@import "../sass/mixins";
+@import '../sass/constants';
+@import '../sass/mixins';
 
 .app-header {
   margin-top: $beam-height;
   padding: 42px 24px;
   background-image: linear-gradient(to left, $aqua, $water-blue-two);
 
-  .app-header-content {
+  .opening {
     display: flex;
     width: 100%;
     max-width: $content-maxwidth;
@@ -14,12 +14,12 @@
 
     .icon {
       ::ng-deep .stop-start {
-        stop-color: #135EA7;
+        stop-color: #135ea7;
         stop-opacity: 0.855;
       }
 
       ::ng-deep .stop-end {
-        stop-color: #1E568F;
+        stop-color: #1e568f;
       }
 
       ::ng-deep .frame-wrapper {
@@ -62,10 +62,31 @@
     }
   }
 
+  .menu {
+    display: flex;
+    margin-top: 48px;
+
+    .menu-item {
+      @include ui-element-tab;
+      border-color: $white;
+      color: $white;
+      text-decoration: none;
+
+      &:hover, &:focus, &.active {
+        color: $dark-blue-grey;
+        background-color: $white;
+      }
+
+      &:not(:first-child) {
+        margin-left: 18px;
+      }
+    }
+  }
+
   $wrap-title-tag-maxwidth: 650px;
 
   @include width-max($wrap-title-tag-maxwidth) {
-    .app-header-content .text {
+    .opening .text {
       .title-with-tag {
         display: block;
 
@@ -84,7 +105,7 @@
   @include width-max($screen-small-width) {
     @include padding-y(24px);
 
-    .app-header-content .text {
+    .opening .text {
       margin-left: 18px;
     }
   }

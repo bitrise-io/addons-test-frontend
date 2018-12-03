@@ -10,11 +10,16 @@ $screen-xlarge-width: 1920px;
 $beam-height: 47px;
 $content-maxwidth: 1476px;
 
+// Times
+
+$default-hovertime: 0.2s;
+
 // Colors
 
 $white: #ffffff !default;
 $aqua: #0dd3c5 !default;
 $water-blue-two: #0d83cd !default;
+$dark-blue-grey: #351d48 !default;
 
 // UI elements
 
@@ -39,9 +44,23 @@ $water-blue-two: #0d83cd !default;
   font-size: 16px;
 }
 
+@mixin ui-element-body-highlight {
+  @include ui-element-body;
+  font-weight: 700;
+}
+
 @mixin ui-element-tag {
   @include default-font;
   font-size: 10px;
   letter-spacing: 0.8px;
   text-transform: uppercase;
+}
+
+@mixin ui-element-tab {
+  @include ui-element-body-highlight;
+  border-width: 2px;
+  border-style: solid;
+  border-radius: 6px;
+  padding: 24px 72px;
+  transition: border-color $default-hovertime, color $default-hovertime, background-color $default-hovertime;
 }

@@ -25,3 +25,9 @@ Run `ng e2e` to execute the end-to-end tests via [Protractor](http://www.protrac
 ## Further help
 
 To get more help on the Angular CLI use `ng help` or go check out the [Angular CLI README](https://github.com/angular/angular-cli/blob/master/README.md).
+
+# Used terms
+
+- 'Test suite' refers to 'UI Test A', 'Unit Test Y', etc.
+- 'Test context' (sometimes 'device') refers to a selectable on the Test summary dashboard, e. g. 'iPhone 7 portrait', 'iPhone 8 portrait', etc.
+- 'Test case' refers to the children of a test context, e. g. 'testExample'

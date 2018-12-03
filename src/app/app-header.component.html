@@ -1,5 +1,5 @@
 <section class="app-header">
-  <div class="app-header-content">
+  <div class="opening">
     <div class="icon" [inlineSVG]="'/assets/images/app_header/icon.svg'"></div>
     <div class="text">
       <div class="title-with-tag">
@@ -9,4 +9,8 @@
       <p class="description">All your favourite tests at one place</p>
     </div>
   </div>
+  <nav class="menu">
+    <a class="menu-item" [routerLink]="['/summary']" routerLinkActive="active">Test Summary</a>
+    <a class="menu-item" *ngFor="let testSuite of testSuites" [routerLink]="['/testsuite/' + testSuite.id]" routerLinkActive="active">{{ testSuite.name }}</a>
+  </nav>
 </section>
