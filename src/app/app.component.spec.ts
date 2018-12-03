@@ -2,25 +2,23 @@ import { TestBed, async } from '@angular/core/testing';
 import { By } from '@angular/platform-browser';
 import { Component } from '@angular/core';
 import { AppComponent } from './app.component';
-import { AppHeaderComponent } from './app-header.component';
-import { AppFooterComponent } from './app-footer/app-footer.component';
-import { HttpClientModule } from '@angular/common/http';
-import { InlineSVGModule } from 'ng-inline-svg';
 
 @Component({
-  selector: 'app-root',
+  selector: 'app-header',
   template: ''
 })
-class MockAppComponent {}
+class MockAppHeaderComponent {}
+
+@Component({
+  selector: 'app-footer',
+  template: ''
+})
+class MockAppFooterComponent {}
 
 describe('AppComponent', () => {
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      imports: [
-        HttpClientModule,
-        InlineSVGModule.forRoot(),
-      ],
-      declarations: [AppComponent, AppHeaderComponent, AppFooterComponent]
+      declarations: [AppComponent, MockAppHeaderComponent, MockAppFooterComponent]
     }).compileComponents();
   }));
 
