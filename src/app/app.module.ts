@@ -5,9 +5,10 @@ import { InlineSVGModule } from 'ng-inline-svg';
 
 import { AppComponent } from './app.component';
 import { AppHeaderComponent } from './app-header.component';
+import { AppFooterComponent } from './app-footer/app-footer.component';
 
 @NgModule({
-  declarations: [AppComponent, AppHeaderComponent],
+  declarations: [AppComponent, AppHeaderComponent, AppFooterComponent],
   imports: [BrowserModule, HttpClientModule, InlineSVGModule.forRoot()],
   providers: [],
   bootstrap: [AppComponent]

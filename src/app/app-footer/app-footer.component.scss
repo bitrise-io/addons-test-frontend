@@ -1,0 +1,39 @@
+@import "../../sass/constants";
+@import "../../sass/mixins";
+
+.app-footer {
+  width: 100%;
+
+  .logo-with-text {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    padding-top: 90px;
+    padding-bottom: 160px;
+
+    .logo {
+      margin-bottom: 8px;
+
+      svg {
+        width: 24px;
+        height: 24px;
+        fill: $dark-blue-grey;
+
+        path {
+          fill: $dark-blue-grey;
+        }
+      }
+    }
+
+    .text {
+      @include default-font;
+      @include ui-element-tag;
+      height: 36px;
+      width: 176px;
+      line-height: 1.8;
+      text-align: center;
+      color: $dark-blue-grey;
+    }
+  }
+}

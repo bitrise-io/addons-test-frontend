@@ -4,7 +4,7 @@ import { Component } from '@angular/core';
 import { AppComponent } from './app.component';
 
 @Component({
-  selector: 'app-header',
+  selector: 'app-header, app-footer',
   template: ''
 })
 export class MockAppHeaderComponent {}
@@ -27,5 +27,12 @@ describe('AppComponent', () => {
     fixture.detectChanges();
     const appHeader = fixture.debugElement.query(By.css('app-header'));
     expect(appHeader).not.toBeNull();
+  }));
+
+  it('renders app footer', async(() => {
+    const fixture = TestBed.createComponent(AppComponent);
+    fixture.detectChanges();
+    const appFooter = fixture.debugElement.query(By.css('app-footer'));
+    expect(appFooter).not.toBeNull();
   }));
 });
