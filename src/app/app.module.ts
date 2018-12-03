@@ -7,12 +7,13 @@ import { InlineSVGModule } from 'ng-inline-svg';
 import { AppComponent } from './app.component';
 import { AppHeaderComponent } from './app-header.component';
 import { appRoutes } from './routes';
+import { MaximizePipe } from './maximize.pipe';
 import { TestSummaryComponent } from './test-summary.component';
 import { TestSuiteComponent } from './test-suite.component';
 import { TestSuiteService } from './test-suite.service';
 
 @NgModule({
-  declarations: [AppComponent, AppHeaderComponent, TestSummaryComponent, TestSuiteComponent],
+  declarations: [AppComponent, AppHeaderComponent, MaximizePipe, TestSummaryComponent, TestSuiteComponent],
   imports: [BrowserModule, RouterModule.forRoot(appRoutes), HttpClientModule, InlineSVGModule.forRoot()],
   providers: [TestSuiteService],
   bootstrap: [AppComponent]

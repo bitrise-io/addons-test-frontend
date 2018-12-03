@@ -9,6 +9,7 @@ $screen-xlarge-width: 1920px;
 
 $beam-height: 47px;
 $content-maxwidth: 1476px;
+$ui-element-notification-bubble-size: 24px;
 
 // Times
 
@@ -20,6 +21,7 @@ $white: #ffffff !default;
 $aqua: #0dd3c5 !default;
 $water-blue-two: #0d83cd !default;
 $dark-blue-grey: #351d48 !default;
+$vivid-pink: #ff2158 !default;
 
 // UI elements
 
@@ -58,9 +60,28 @@ $dark-blue-grey: #351d48 !default;
 
 @mixin ui-element-tab {
   @include ui-element-body-highlight;
-  border-width: 2px;
+  border-width: 2px 2px 0;
   border-style: solid;
-  border-radius: 6px;
-  padding: 24px 72px;
+  @include border-top-radius(6px);
+  padding: 18px;
+  text-align: center;
+  text-decoration: none;
   transition: border-color $default-hovertime, color $default-hovertime, background-color $default-hovertime;
+}
+
+@mixin ui-element-notification-bubble {
+  @include default-font;
+  @include size($ui-element-notification-bubble-size);
+  line-height: $ui-element-notification-bubble-size;
+  border-radius: $ui-element-notification-bubble-size / 2;
+  text-align: center;
+  font-size: 13px;
+  font-weight: 800;
+  letter-spacing: 0.6px;
+}
+
+@mixin ui-element-notification-bubble-error {
+  @include ui-element-notification-bubble;
+  color: white;
+  background-color: $vivid-pink;
 }

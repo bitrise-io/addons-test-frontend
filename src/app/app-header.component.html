@@ -1,16 +1,21 @@
 <section class="app-header">
-  <div class="opening">
-    <div class="icon" [inlineSVG]="'/assets/images/app_header/icon.svg'"></div>
-    <div class="text">
-      <div class="title-with-tag">
-        <h1 class="title">Test Reports</h1>
-        <p class="tag">add-on provided by Bitrise</p>
+  <div class="app-header-content">
+    <div class="opening">
+      <div class="icon" [inlineSVG]="'/assets/images/app_header/icon.svg'"></div>
+      <div class="text">
+        <div class="title-with-tag">
+          <h1 class="title">Test Reports</h1>
+          <p class="tag">add-on provided by Bitrise</p>
+        </div>
+        <p class="description">All your favourite tests at one place</p>
       </div>
-      <p class="description">All your favourite tests at one place</p>
     </div>
+    <nav class="menu">
+      <a class="menu-item" [routerLink]="['/summary']" routerLinkActive="active">Test Summary</a>
+      <a class="menu-item" *ngFor="let testSuite of testSuites" [routerLink]="['/testsuite/' + testSuite.id]" routerLinkActive="active">
+        <span class="text">{{ testSuite.name }}</span>
+        <span class="failed-test-case-count" *ngIf="testSuite.failedTestCaseCount > 0">{{ testSuite.failedTestCaseCount | maximizeTo:9 }}</span>
+      </a>
+    </nav>
   </div>
-  <nav class="menu">
-    <a class="menu-item" [routerLink]="['/summary']" routerLinkActive="active">Test Summary</a>
-    <a class="menu-item" *ngFor="let testSuite of testSuites" [routerLink]="['/testsuite/' + testSuite.id]" routerLinkActive="active">{{ testSuite.name }}</a>
-  </nav>
 </section>

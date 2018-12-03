@@ -3,82 +3,110 @@
 
 .app-header {
   margin-top: $beam-height;
-  padding: 42px 24px;
+  padding-top: 48px;
+  @include padding-x(24px);
   background-image: linear-gradient(to left, $aqua, $water-blue-two);
 
-  .opening {
-    display: flex;
+  .app-header-content {
     width: 100%;
     max-width: $content-maxwidth;
     @include margin-x(auto);
 
-    .icon {
-      ::ng-deep .stop-start {
-        stop-color: #135ea7;
-        stop-opacity: 0.855;
+    .opening {
+      display: flex;
+      align-items: center;
+
+      .icon {
+        ::ng-deep .stop-start {
+          stop-color: #135ea7;
+          stop-opacity: 0.855;
+        }
+
+        ::ng-deep .stop-end {
+          stop-color: #1e568f;
+        }
+
+        ::ng-deep .frame-wrapper {
+          fill: url(#app_header-icon-stop);
+          fill-rule: evenodd;
+        }
+
+        ::ng-deep .frame {
+          mix-blend-mode: multiply;
+        }
       }
 
-      ::ng-deep .stop-end {
-        stop-color: #1e568f;
-      }
+      .text {
+        margin-left: 24px;
+        color: $white;
 
-      ::ng-deep .frame-wrapper {
-        fill: url(#app_header-icon-stop);
-        fill-rule: evenodd;
-      }
+        .title-with-tag {
+          display: flex;
+          align-items: center;
 
-      ::ng-deep .frame {
-        mix-blend-mode: multiply;
+          .title {
+            @include ui-element-header-3;
+            @include margin-y(0);
+            color: inherit;
+          }
+
+          .tag {
+            @include ui-element-tag;
+            @include margin-y(0);
+            margin-left: 24px;
+            color: inherit;
+          }
+        }
+
+        .description {
+          @include ui-element-body;
+          @include margin-y(0);
+          color: inherit;
+        }
       }
     }
 
-    .text {
-      margin-left: 24px;
-      color: $white;
+    .menu {
+      display: flex;
+      margin-top: 48px;
 
-      .title-with-tag {
+      .menu-item {
+        @include ui-element-tab;
+        flex-grow: 1;
         display: flex;
+        justify-content: center;
         align-items: center;
+        max-width: 240px;
+        min-width: 0;
+        border-color: $white;
+        color: $white;
 
-        .title {
-          @include ui-element-header-3;
-          @include margin-y(0);
-          color: inherit;
+        &:hover, &:focus, &.active {
+          color: $dark-blue-grey;
+          background-color: $white;
         }
 
-        .tag {
-          @include ui-element-tag;
-          @include margin-y(0);
-          margin-left: 24px;
-          color: inherit;
+        &:not(:first-child) {
+          margin-left: 18px;
         }
-      }
 
-      .description {
-        @include ui-element-body;
-        @include margin-y(0);
-        color: inherit;
-      }
-    }
-  }
+        $notification-bubble-spacing: 18px;
 
-  .menu {
-    display: flex;
-    margin-top: 48px;
+        .text {
+          @include ellipsis-oneliner;
 
-    .menu-item {
-      @include ui-element-tab;
-      border-color: $white;
-      color: $white;
-      text-decoration: none;
+          &:not(:last-child) {
+            margin-left: auto;
+            padding-left: $ui-element-notification-bubble-size + $notification-bubble-spacing;
+            padding-right: $notification-bubble-spacing;
+          }
+        }
 
-      &:hover, &:focus, &.active {
-        color: $dark-blue-grey;
-        background-color: $white;
-      }
-
-      &:not(:first-child) {
-        margin-left: 18px;
+        .failed-test-case-count {
+          @include ui-element-notification-bubble-error;
+          flex-shrink: 0;
+          margin-left: auto;
+        }
       }
     }
   }
@@ -86,7 +114,7 @@
   $wrap-title-tag-maxwidth: 650px;
 
   @include width-max($wrap-title-tag-maxwidth) {
-    .opening .text {
+    .app-header-content .opening .text {
       .title-with-tag {
         display: block;
 
@@ -103,9 +131,9 @@
   }
 
   @include width-max($screen-small-width) {
-    @include padding-y(24px);
+    padding-top: 24px;
 
-    .opening .text {
+    .app-header-content .opening .text {
       margin-left: 18px;
     }
   }

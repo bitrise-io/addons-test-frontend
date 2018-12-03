@@ -23,6 +23,11 @@
   }
 }
 
+@mixin size($width, $height: $width) {
+  width: $width;
+  height: $height;
+}
+
 @mixin margin-x($value) {
   margin-left: $value;
   margin-right: $value;
@@ -51,4 +56,20 @@
 @mixin padding-y($value) {
   padding-top: $value;
   padding-bottom: $value;
+}
+
+@mixin border-top-radius($value) {
+  border-top-left-radius: $value;
+  border-top-right-radius: $value;
+}
+
+@mixin border-bottom-radius($value) {
+  border-bottom-left-radius: $value;
+  border-bottom-right-radius: $value;
+}
+
+@mixin ellipsis-oneliner {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
 }
