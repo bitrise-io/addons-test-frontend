@@ -24,7 +24,7 @@ describe('AppFooterComponent', () => {
     fixture.detectChanges();
   });
 
-  it('should create the component', () => {
+  it('creates the component', () => {
     expect(component).toBeTruthy();
   });
 });
