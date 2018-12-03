@@ -66,11 +66,11 @@
       }
     }
 
-    .menu {
+    .tabmenu {
       display: flex;
       margin-top: 48px;
 
-      .menu-item {
+      .tabmenu-item {
         @include ui-element-tab;
         flex-grow: 1;
         display: flex;
@@ -92,14 +92,10 @@
 
         $notification-bubble-spacing: 18px;
 
-        .text {
-          @include ellipsis-oneliner;
-
-          &:not(:last-child) {
-            margin-left: auto;
-            padding-left: $ui-element-notification-bubble-size + $notification-bubble-spacing;
-            padding-right: $notification-bubble-spacing;
-          }
+        .text:not(:last-child) {
+          margin-left: auto;
+          padding-left: $ui-element-notification-bubble-size + $notification-bubble-spacing;
+          padding-right: $notification-bubble-spacing;
         }
 
         .failed-test-case-count {
@@ -131,10 +127,17 @@
   }
 
   @include width-max($screen-small-width) {
-    padding-top: 24px;
+    padding: 18px;
 
-    .app-header-content .opening .text {
-      margin-left: 18px;
+    .app-header-content {
+
+      .opening .text {
+        margin-left: 18px;
+      }
+
+      .tabmenu {
+        display: none;
+      }
     }
   }
 }
