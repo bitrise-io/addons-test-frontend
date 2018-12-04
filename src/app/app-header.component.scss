@@ -81,7 +81,9 @@
         border-color: $white;
         color: $white;
 
-        &:hover, &:focus, &.active {
+        &:hover,
+        &:focus,
+        &.active {
           color: $dark-blue-grey;
           background-color: $white;
         }
@@ -90,18 +92,28 @@
           margin-left: 18px;
         }
 
-        $notification-bubble-spacing: 18px;
-
-        .text:not(:last-child) {
-          margin-left: auto;
-          padding-left: $ui-element-notification-bubble-size + $notification-bubble-spacing;
-          padding-right: $notification-bubble-spacing;
+        &:not(.with-bubble) .failed-test-case-count {
+          display: none;
         }
 
-        .failed-test-case-count {
-          @include ui-element-notification-bubble-error;
-          flex-shrink: 0;
-          margin-left: auto;
+        &.with-bubble {
+          justify-content: space-between;
+
+          &:before {
+            content: '';
+            width: $ui-element-notification-bubble-size;
+            margin-right: auto;
+          }
+
+          .text {
+            @include padding-x(18px);
+          }
+
+          .failed-test-case-count {
+            @include ui-element-notification-bubble-error;
+            flex-shrink: 0;
+            margin-left: auto;
+          }
         }
       }
     }
@@ -130,7 +142,6 @@
     padding: 18px;
 
     .app-header-content {
-
       .opening .text {
         margin-left: 18px;
       }

@@ -16,14 +16,13 @@
       >
       <a
         class="tabmenu-item"
+        [class.with-bubble]="testSuite.failedTestCaseCount > 0"
         *ngFor="let testSuite of testSuites"
         [routerLink]="['/testsuite/' + testSuite.id]"
         routerLinkActive="active"
       >
         <span class="text">{{ testSuite.name }}</span>
-        <span class="failed-test-case-count" *ngIf="testSuite.failedTestCaseCount > 0">{{
-          testSuite.failedTestCaseCount | maximizeTo: 9
-        }}</span>
+        <span class="failed-test-case-count">{{ testSuite.failedTestCaseCount | maximizeTo: 9 }}</span>
       </a>
     </nav>
   </div>
