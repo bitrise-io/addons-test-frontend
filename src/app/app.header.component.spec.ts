@@ -7,10 +7,8 @@ import { InlineSVGModule } from 'ng-inline-svg';
 import { AppHeaderComponent } from './app-header.component';
 import { TestSuiteService } from './test-suite.service';
 
-@Pipe({
-  name: 'maximizeTo'
-})
-class MockMaximizeToPipe implements PipeTransform {
+@Pipe({ name: 'maximizeTo' })
+class MockMaximizePipe implements PipeTransform {
   transform(value: number, maximumValue: number, maximumReachedPostfixCharacter: string): string {
     return '9+';
   }
@@ -30,7 +28,7 @@ describe('AppHeaderComponent', () => {
   beforeEach(async(() => {
     TestBed.configureTestingModule({
       imports: [RouterTestingModule, HttpClientTestingModule, FormsModule, InlineSVGModule.forRoot()],
-      declarations: [MockMaximizeToPipe, AppHeaderComponent],
+      declarations: [MockMaximizePipe, AppHeaderComponent],
       providers: [{ provide: TestSuiteService, useClass: MockTestSuiteService }]
     }).compileComponents();
   }));
