@@ -3,7 +3,7 @@
 
 .app-header {
   margin-top: $beam-height;
-  padding-top: 48px;
+  padding-top: 40px;
   @include padding-x(24px);
   background-image: linear-gradient(to left, $aqua, $water-blue-two);
 
@@ -73,47 +73,18 @@
       .tabmenu-item {
         @include ui-element-tab;
         flex-grow: 1;
-        display: flex;
-        justify-content: center;
-        align-items: center;
         max-width: 240px;
-        min-width: 0;
         border-color: $white;
         color: $white;
 
         &:hover,
-        &:focus,
         &.active {
           color: $dark-blue-grey;
           background-color: $white;
         }
 
         &:not(:first-child) {
-          margin-left: 18px;
-        }
-
-        &:not(.with-bubble) .failed-test-case-count {
-          display: none;
-        }
-
-        &.with-bubble {
-          justify-content: space-between;
-
-          &:before {
-            content: '';
-            width: $ui-element-notification-bubble-size;
-            margin-right: auto;
-          }
-
-          .text {
-            @include padding-x(18px);
-          }
-
-          .failed-test-case-count {
-            @include ui-element-notification-bubble-error;
-            flex-shrink: 0;
-            margin-left: auto;
-          }
+          margin-left: 16px;
         }
       }
     }
@@ -122,33 +93,76 @@
   $wrap-title-tag-maxwidth: 650px;
 
   @include width-max($wrap-title-tag-maxwidth) {
-    .app-header-content .opening .text {
-      .title-with-tag {
-        display: block;
+    .app-header-content .opening {
+      align-items: flex-start;
 
-        .tag {
-          margin-left: 0;
-          margin-top: 12px;
+      .text {
+        .title-with-tag {
+          display: block;
+
+          .tag {
+            margin-left: 0;
+          }
         }
-      }
 
-      .description {
-        margin-top: 6px;
+        .description {
+          margin-top: 8px;
+        }
       }
     }
   }
+}
 
-  @include width-max($screen-small-width) {
+@include width-above-screen-small {
+  .tabmenu-screen-small {
+    display: none;
+  }
+}
+
+@include width-max-screen-small {
+  .app-header {
     padding: 18px;
 
     .app-header-content {
       .opening .text {
-        margin-left: 18px;
+        margin-left: 16px;
       }
 
       .tabmenu {
         display: none;
       }
+    }
+  }
+
+  .tabmenu-screen-small {
+    width: 100%;
+    max-width: $content-maxwidth;
+    box-sizing: border-box;
+    @include margin-x(auto);
+    padding: 8px 18px;
+
+    .summed-failed-test-case-count {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      margin-bottom: 8px;
+
+      .icon ::ng-deep svg {
+        fill: $vivid-pink;
+      }
+
+      .text {
+        @include ui-element-subtitle;
+        margin-left: 8px;
+        color: $vivid-pink;
+      }
+    }
+
+    .tabmenu-select {
+      @include ui-element-select;
+      @include ui-modifier-shadow;
+      display: block;
+      width: 100%;
     }
   }
 }

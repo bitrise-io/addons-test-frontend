@@ -11,7 +11,7 @@
   }
 }
 
-@mixin width-min($value) {
+@mixin width-above($value) {
   @media (min-width: $value) {
     @content;
   }
@@ -19,6 +19,18 @@
 
 @mixin width-max($value) {
   @media (max-width: $value) {
+    @content;
+  }
+}
+
+@mixin width-above-screen-small {
+  @include width-above($screen-small-width) {
+    @content;
+  }
+}
+
+@mixin width-max-screen-small {
+  @include width-max($screen-small-width) {
     @content;
   }
 }
@@ -66,4 +78,10 @@
 @mixin border-bottom-radius($value) {
   border-bottom-left-radius: $value;
   border-bottom-right-radius: $value;
+}
+
+@mixin ellipsis-oneliner {
+  overflow: hidden;
+  white-space: nowrap;
+  text-overflow: ellipsis;
 }

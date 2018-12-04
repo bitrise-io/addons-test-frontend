@@ -11,19 +11,26 @@
       </div>
     </div>
     <nav class="tabmenu">
-      <a class="tabmenu-item" [routerLink]="['/summary']" routerLinkActive="active"
-        ><span class="text">Test Summary</span></a
-      >
       <a
         class="tabmenu-item"
-        [class.with-bubble]="testSuite.failedTestCaseCount > 0"
-        *ngFor="let testSuite of testSuites"
-        [routerLink]="['/testsuite/' + testSuite.id]"
+        *ngFor="let tabmenuItem of tabmenuItems"
+        [routerLink]="tabmenuItem.routerLink"
         routerLinkActive="active"
       >
-        <span class="text">{{ testSuite.name }}</span>
-        <span class="failed-test-case-count">{{ testSuite.failedTestCaseCount | maximizeTo: 9 }}</span>
+        <span class="text">{{ tabmenuItem.name }}</span>
+        <span class="notification-bubble error failed-test-case-count" *ngIf="tabmenuItem.failedTestCaseCount > 0">{{
+          tabmenuItem.failedTestCaseCount | maximizeTo: 9
+        }}</span>
       </a>
     </nav>
   </div>
+</section>
+<section class="tabmenu-screen-small">
+  <div class="summed-failed-test-case-count">
+    <div class="icon" [inlineSVG]="'/assets/images/sign-cross.svg'"></div>
+    <span class="text">{{ summedFailedTestCaseCount }} failed tests</span>
+  </div>
+  <select class="tabmenu-select" [(ngModel)]="selectedSmallTabmenuItem" (change)="selectedSmallTabmenuItemChanged()">
+    <option *ngFor="let tabmenuItem of tabmenuItems" [ngValue]="tabmenuItem">{{ tabmenuItem.name }}</option>
+  </select>
 </section>
