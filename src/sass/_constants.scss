@@ -66,6 +66,7 @@ $vivid-pink: #ff2158 !default;
   padding: 18px;
   text-align: center;
   text-decoration: none;
+  background-color: rgba($white, 0.2);
   transition: border-color $default-hovertime, color $default-hovertime, background-color $default-hovertime;
 }
 
