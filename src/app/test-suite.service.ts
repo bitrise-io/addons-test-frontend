@@ -8,7 +8,7 @@ export class TestSuiteService {
     { id: 3, name: 'Unit Test Y', failedTestCaseCount: 1 }
   ];
 
-  getTestSuites() {
+  getTestSuites(): any[] {
     return this.TEST_SUITES;
   }
 }

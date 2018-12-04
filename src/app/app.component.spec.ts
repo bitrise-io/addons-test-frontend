@@ -1,18 +1,29 @@
 import { TestBed, async } from '@angular/core/testing';
+import { RouterTestingModule } from '@angular/router/testing';
 import { By } from '@angular/platform-browser';
 import { Component } from '@angular/core';
+import { InlineSVGModule } from 'ng-inline-svg';
 import { AppComponent } from './app.component';
 
 @Component({
   selector: 'app-header',
   template: ''
 })
-export class MockAppHeaderComponent {}
+class MockAppHeaderComponent {}
+
+@Component({
+  template: ''
+})
+class MockedRouterOutletComponent {}
 
 describe('AppComponent', () => {
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [AppComponent, MockAppHeaderComponent]
+      imports: [
+        InlineSVGModule.forRoot(),
+        RouterTestingModule.withRoutes([{ path: 'mocked-route', component: MockedRouterOutletComponent }])
+      ],
+      declarations: [AppComponent, MockAppHeaderComponent, MockedRouterOutletComponent]
     }).compileComponents();
   }));
 
