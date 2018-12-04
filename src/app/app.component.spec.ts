@@ -63,14 +63,14 @@ describe('AppComponent', () => {
 
     tick();
 
-    const mockedRouterOutletComponentA = fixture.debugElement.query(By.css('mocked-router-outlet-component-a'));
-    expect(mockedRouterOutletComponentA).not.toBeNull();
+    expect(fixture.debugElement.query(By.css('mocked-router-outlet-component-a'))).not.toBeNull();
+    expect(fixture.debugElement.query(By.css('mocked-router-outlet-component-b'))).toBeNull();
 
     router.navigate(['mocked-route-b']);
 
     tick();
 
-    const mockedRouterOutletComponentB = fixture.debugElement.query(By.css('mocked-router-outlet-component-b'));
-    expect(mockedRouterOutletComponentB).not.toBeNull();
+    expect(fixture.debugElement.query(By.css('mocked-router-outlet-component-a'))).toBeNull();
+    expect(fixture.debugElement.query(By.css('mocked-router-outlet-component-b'))).not.toBeNull();
   }));
 });
