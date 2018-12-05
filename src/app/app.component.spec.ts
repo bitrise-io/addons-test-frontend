@@ -1,4 +1,4 @@
-import { TestBed, async, tick, fakeAsync } from '@angular/core/testing';
+import { TestBed, async, tick, fakeAsync, ComponentFixture } from '@angular/core/testing';
 import { RouterTestingModule } from '@angular/router/testing';
 import { By } from '@angular/platform-browser';
 import { Router } from '@angular/router';
@@ -26,6 +26,8 @@ class MockedRouterOutletComponentB {}
 
 describe('AppComponent', () => {
   let router: Router;
+  let fixture: ComponentFixture<AppComponent>;
+  let app: AppComponent;
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
@@ -42,23 +44,21 @@ describe('AppComponent', () => {
     router = TestBed.get(Router);
   }));
 
-  it('creates the app', async(() => {
-    const fixture = TestBed.createComponent(AppComponent);
-    const app = fixture.debugElement.componentInstance;
-    expect(app).not.toBeNull();
-  }));
+  beforeEach(() => {
+    fixture = TestBed.createComponent(AppComponent);
+    app = fixture.debugElement.componentInstance;
+  });
 
-  it('renders app header', async(() => {
-    const fixture = TestBed.createComponent(AppComponent);
-    fixture.detectChanges();
+  it('creates the app', () => {
+    expect(app).not.toBeNull();
+  });
+
+  it('renders app header', () => {
     const appHeader = fixture.debugElement.query(By.css('app-header'));
     expect(appHeader).not.toBeNull();
-  }));
+  });
 
   it('renders component matching the current route', fakeAsync(() => {
-    const fixture = TestBed.createComponent(AppComponent);
-    fixture.detectChanges();
-
     router.navigate(['mocked-route-a']);
 
     tick();

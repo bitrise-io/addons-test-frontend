@@ -1,10 +1,10 @@
-import { MaximizePipe } from "./maximize.pipe";
+import { MaximizePipe } from './maximize.pipe';
 
 describe('Maximize', () => {
   let maximizePipe: MaximizePipe;
 
   beforeEach(() => {
-    maximizePipe = new MaximizePipe;
+    maximizePipe = new MaximizePipe();
   });
 
   describe('when providing non-number value', () => {
@@ -39,6 +39,6 @@ describe('Maximize', () => {
       it('returns the maximum value postfixed with the specified postfix string, in a string', () => {
         expect(maximizePipe.transform(6, 5, ' or more')).toBe('5 or more');
       });
-    })
+    });
   });
 });
