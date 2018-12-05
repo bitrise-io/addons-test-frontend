@@ -13,6 +13,12 @@ import { AppComponent } from './app.component';
 class MockAppHeaderComponent {}
 
 @Component({
+  selector: 'app-footer',
+  template: ''
+})
+class MockAppFooterComponent {}
+
+@Component({
   selector: 'mocked-router-outlet-component-a',
   template: ''
 })
@@ -57,6 +63,11 @@ describe('AppComponent', () => {
     const appHeader = fixture.debugElement.query(By.css('app-header'));
     expect(appHeader).not.toBeNull();
   });
+
+  it('renders app footer', async(() => {
+    const appFooter = fixture.debugElement.query(By.css('app-footer'));
+    expect(appFooter).not.toBeNull();
+  }));
 
   it('renders component matching the current route', fakeAsync(() => {
     router.navigate(['mocked-route-a']);
