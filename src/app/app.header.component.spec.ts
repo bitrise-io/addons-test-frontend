@@ -1,4 +1,5 @@
-import { TestBed, async, ComponentFixture } from '@angular/core/testing';
+import { TestBed, async, ComponentFixture, fakeAsync, tick } from '@angular/core/testing';
+import { Location } from '@angular/common';
 import { RouterTestingModule } from '@angular/router/testing';
 import { HttpClientTestingModule } from '@angular/common/http/testing';
 import { By } from '@angular/platform-browser';
@@ -6,6 +7,8 @@ import { Pipe, PipeTransform, DebugElement } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { InlineSVGModule } from 'ng-inline-svg';
 import { AppHeaderComponent } from './app-header.component';
+import { TestSummaryComponent } from './test-summary.component';
+import { TestSuiteComponent } from './test-suite.component';
 import { TestSuiteService } from './test-suite.service';
 
 @Pipe({ name: 'maximizeTo' })
@@ -24,6 +27,7 @@ class MockTestSuiteService {
 }
 
 describe('AppHeaderComponent', () => {
+  let location: Location;
   let service: MockTestSuiteService;
   let fixture: ComponentFixture<AppHeaderComponent>;
   let appHeaderElement: AppHeaderComponent;
@@ -33,8 +37,18 @@ describe('AppHeaderComponent', () => {
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      imports: [RouterTestingModule, HttpClientTestingModule, FormsModule, InlineSVGModule.forRoot()],
-      declarations: [MockMaximizePipe, AppHeaderComponent],
+      imports: [
+        RouterTestingModule.withRoutes([
+          { path: 'summary', component: TestSummaryComponent },
+          { path: 'testsuite/1', component: TestSuiteComponent },
+          { path: 'testsuite/2', component: TestSuiteComponent },
+          { path: 'testsuite/3', component: TestSuiteComponent }
+        ]),
+        HttpClientTestingModule,
+        FormsModule,
+        InlineSVGModule.forRoot()
+      ],
+      declarations: [MockMaximizePipe, AppHeaderComponent, TestSummaryComponent, TestSuiteComponent],
       providers: [{ provide: TestSuiteService, useClass: MockTestSuiteService }]
     }).compileComponents();
 
@@ -42,6 +56,7 @@ describe('AppHeaderComponent', () => {
   }));
 
   beforeEach(() => {
+    location = TestBed.get(Location);
     fixture = TestBed.createComponent(AppHeaderComponent);
     appHeaderElement = fixture.debugElement.componentInstance;
   });
@@ -96,6 +111,49 @@ describe('AppHeaderComponent', () => {
       expect(dropdownItemElements[1].nativeElement.textContent).toBe('Unit Test A');
       expect(dropdownItemElements[2].nativeElement.textContent).toBe('Unit Test X');
       expect(dropdownItemElements[3].nativeElement.textContent).toBe('Unit Test Y');
+    });
+
+    describe('and a test suite tab is selected', () => {
+      let selectedTabElement: DebugElement;
+
+      beforeEach(fakeAsync(() => {
+        selectedTabElement = fixture.debugElement.queryAll(By.css('.tabmenu-item'))[2];
+        selectedTabElement.nativeElement.click();
+      }));
+
+      it('directs to corresponding route', fakeAsync(() => {
+        tick();
+
+        expect(location.path()).toBe('/testsuite/2');
+      }));
+    });
+
+    describe('and a dropdown item is selected', () => {
+      let dropdownElement: DebugElement;
+
+      beforeEach(() => {
+        dropdownElement = fixture.debugElement.query(By.css('.tabmenu-select'));
+        dropdownElement.nativeElement.value = dropdownElement.nativeElement.options[0].value;
+        dropdownElement.nativeElement.dispatchEvent(new Event('change'));
+      });
+
+      it('calls selectedSmallTabmenuItemChanged', () => {
+        spyOn(appHeaderElement, 'selectedSmallTabmenuItemChanged');
+
+        dropdownElement.nativeElement.value = dropdownElement.nativeElement.options[1].value;
+        dropdownElement.nativeElement.dispatchEvent(new Event('change'));
+
+        expect(appHeaderElement.selectedSmallTabmenuItemChanged).toHaveBeenCalled();
+      });
+
+      it('directs to corresponding route', fakeAsync(() => {
+        dropdownElement.nativeElement.value = dropdownElement.nativeElement.options[1].value;
+        dropdownElement.nativeElement.dispatchEvent(new Event('change'));
+
+        tick();
+
+        expect(location.path()).toBe('/testsuite/1');
+      }));
     });
   });
 
