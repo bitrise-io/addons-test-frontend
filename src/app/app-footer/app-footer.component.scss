@@ -1,0 +1,22 @@
+@import "../../sass/constants";
+@import "../../sass/mixins";
+
+.app-footer {
+  padding-top: 60px;
+  padding-bottom: 160px;
+  text-align: center;
+
+  .logo {
+    margin-bottom: 8px;
+
+    svg {
+      @include size(24px);
+      fill: $dark-blue-grey;
+    }
+  }
+
+  .text {
+    @include ui-element-tag;
+    color: $dark-blue-grey;
+  }
+}

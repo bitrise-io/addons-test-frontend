@@ -7,12 +7,18 @@ import { AppComponent } from './app.component';
   selector: 'app-header',
   template: ''
 })
-export class MockAppHeaderComponent {}
+class MockAppHeaderComponent {}
+
+@Component({
+  selector: 'app-footer',
+  template: ''
+})
+class MockAppFooterComponent {}
 
 describe('AppComponent', () => {
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [AppComponent, MockAppHeaderComponent]
+      declarations: [AppComponent, MockAppHeaderComponent, MockAppFooterComponent]
     }).compileComponents();
   }));
 
@@ -27,5 +33,12 @@ describe('AppComponent', () => {
     fixture.detectChanges();
     const appHeader = fixture.debugElement.query(By.css('app-header'));
     expect(appHeader).not.toBeNull();
+  }));
+
+  it('renders app footer', async(() => {
+    const fixture = TestBed.createComponent(AppComponent);
+    fixture.detectChanges();
+    const appFooter = fixture.debugElement.query(By.css('app-footer'));
+    expect(appFooter).not.toBeNull();
   }));
 });

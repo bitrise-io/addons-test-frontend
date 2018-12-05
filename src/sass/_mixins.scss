@@ -23,6 +23,11 @@
   }
 }
 
+@mixin size($width, $height: $width) {
+	width: $width;
+	height: $height;
+}
+
 @mixin margin-x($value) {
   margin-left: $value;
   margin-right: $value;
