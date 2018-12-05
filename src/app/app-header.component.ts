@@ -9,14 +9,13 @@ import { filter } from 'rxjs/operators';
   styleUrls: ['./app-header.component.scss']
 })
 export class AppHeaderComponent implements OnInit {
-  testSuites: any[];
   tabmenuItems: any[];
   selectedSmallTabmenuItem: any;
   summedFailedTestCaseCount: number;
 
   constructor(private router: Router, private testSuiteService: TestSuiteService) {
     this.router.events.pipe(filter(event => event instanceof NavigationEnd)).subscribe(event => {
-      this.selectedSmallTabmenuItem = this.tabmenuItems.find(tabmenuItem => tabmenuItem.routerLink[0] == event['url']);
+      this.selectedSmallTabmenuItem = this.tabmenuItems.find(tabmenuItem => tabmenuItem.routerLink[0] === event['url']);
     });
   }
 

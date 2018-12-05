@@ -44,7 +44,13 @@ describe('AppComponent', () => {
           { path: 'mocked-route-b', component: MockedRouterOutletComponentB }
         ])
       ],
-      declarations: [AppComponent, MockAppHeaderComponent, MockedRouterOutletComponentA, MockedRouterOutletComponentB]
+      declarations: [
+        AppComponent,
+        MockAppHeaderComponent,
+        MockAppFooterComponent,
+        MockedRouterOutletComponentA,
+        MockedRouterOutletComponentB
+      ]
     }).compileComponents();
 
     router = TestBed.get(Router);
