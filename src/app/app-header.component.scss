@@ -74,14 +74,6 @@
         @include ui-element-tab;
         flex-grow: 1;
         max-width: 240px;
-        border-color: $white;
-        color: $white;
-
-        &:hover,
-        &.active {
-          color: $dark-blue-grey;
-          background-color: $white;
-        }
 
         &:not(:first-child) {
           margin-left: 16px;
