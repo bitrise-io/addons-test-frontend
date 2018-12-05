@@ -4,7 +4,7 @@ import { Router, NavigationEnd } from '@angular/router';
 import { filter } from 'rxjs/operators';
 
 @Component({
-  selector: 'app-header',
+  selector: 'bitrise-app-header',
   templateUrl: './app-header.component.html',
   styleUrls: ['./app-header.component.scss']
 })
@@ -20,7 +20,7 @@ export class AppHeaderComponent implements OnInit {
   }
 
   ngOnInit() {
-    let testSuites = this.testSuiteService.getTestSuites();
+    const testSuites = this.testSuiteService.getTestSuites();
 
     this.tabmenuItems = [
       {

@@ -1,7 +1,7 @@
 import { Component } from '@angular/core';
 
 @Component({
-  selector: 'test-summary',
+  selector: 'bitrise-test-summary',
   template: ''
 })
 export class TestSummaryComponent {}

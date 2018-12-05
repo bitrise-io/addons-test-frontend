@@ -7,28 +7,28 @@ import { InlineSVGModule } from 'ng-inline-svg';
 import { AppComponent } from './app.component';
 
 @Component({
-  selector: 'app-header',
+  selector: 'bitrise-app-header',
   template: ''
 })
 class MockAppHeaderComponent {}
 
 @Component({
-  selector: 'app-footer',
+  selector: 'bitrise-app-footer',
   template: ''
 })
 class MockAppFooterComponent {}
 
 @Component({
-  selector: 'mocked-router-outlet-component-a',
+  selector: 'bitrise-mock-router-outlet-a-component',
   template: ''
 })
-class MockedRouterOutletComponentA {}
+class MockRouterOutletAComponent {}
 
 @Component({
-  selector: 'mocked-router-outlet-component-b',
+  selector: 'bitrise-mock-router-outlet-b-component',
   template: ''
 })
-class MockedRouterOutletComponentB {}
+class MockRouterOutletBComponent {}
 
 describe('AppComponent', () => {
   let router: Router;
@@ -40,16 +40,16 @@ describe('AppComponent', () => {
       imports: [
         InlineSVGModule.forRoot(),
         RouterTestingModule.withRoutes([
-          { path: 'mocked-route-a', component: MockedRouterOutletComponentA },
-          { path: 'mocked-route-b', component: MockedRouterOutletComponentB }
+          { path: 'mocked-route-a', component: MockRouterOutletAComponent },
+          { path: 'mocked-route-b', component: MockRouterOutletBComponent }
         ])
       ],
       declarations: [
         AppComponent,
         MockAppHeaderComponent,
         MockAppFooterComponent,
-        MockedRouterOutletComponentA,
-        MockedRouterOutletComponentB
+        MockRouterOutletAComponent,
+        MockRouterOutletBComponent
       ]
     }).compileComponents();
 
@@ -66,12 +66,12 @@ describe('AppComponent', () => {
   });
 
   it('renders app header', () => {
-    const appHeader = fixture.debugElement.query(By.css('app-header'));
+    const appHeader = fixture.debugElement.query(By.css('bitrise-app-header'));
     expect(appHeader).not.toBeNull();
   });
 
   it('renders app footer', async(() => {
-    const appFooter = fixture.debugElement.query(By.css('app-footer'));
+    const appFooter = fixture.debugElement.query(By.css('bitrise-app-footer'));
     expect(appFooter).not.toBeNull();
   }));
 
@@ -80,14 +80,14 @@ describe('AppComponent', () => {
 
     tick();
 
-    expect(fixture.debugElement.query(By.css('mocked-router-outlet-component-a'))).not.toBeNull();
-    expect(fixture.debugElement.query(By.css('mocked-router-outlet-component-b'))).toBeNull();
+    expect(fixture.debugElement.query(By.css('bitrise-mock-router-outlet-a-component'))).not.toBeNull();
+    expect(fixture.debugElement.query(By.css('bitrise-mock-router-outlet-b-component'))).toBeNull();
 
     router.navigate(['mocked-route-b']);
 
     tick();
 
-    expect(fixture.debugElement.query(By.css('mocked-router-outlet-component-a'))).toBeNull();
-    expect(fixture.debugElement.query(By.css('mocked-router-outlet-component-b'))).not.toBeNull();
+    expect(fixture.debugElement.query(By.css('bitrise-mock-router-outlet-a-component'))).toBeNull();
+    expect(fixture.debugElement.query(By.css('bitrise-mock-router-outlet-b-component'))).not.toBeNull();
   }));
 });
