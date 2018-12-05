@@ -4,27 +4,23 @@ import { HttpClientModule } from '@angular/common/http';
 import { InlineSVGModule } from 'ng-inline-svg';
 
 describe('AppFooterComponent', () => {
-  let component: AppFooterComponent;
+  let appFooter: AppFooterComponent;
   let fixture: ComponentFixture<AppFooterComponent>;
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      imports: [
-        HttpClientModule,
-        InlineSVGModule.forRoot(),
-      ],
-      declarations: [ AppFooterComponent ]
-    })
-    .compileComponents();
+      imports: [HttpClientModule, InlineSVGModule.forRoot()],
+      declarations: [AppFooterComponent]
+    }).compileComponents();
   }));
 
   beforeEach(() => {
     fixture = TestBed.createComponent(AppFooterComponent);
-    component = fixture.componentInstance;
+    appFooter = fixture.componentInstance;
     fixture.detectChanges();
   });
 
-  it('creates the component', () => {
-    expect(component).toBeTruthy();
+  it('creates the footer', () => {
+    expect(appFooter).toBeTruthy();
   });
 });
