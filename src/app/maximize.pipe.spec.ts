@@ -29,14 +29,14 @@ describe('Maximize', () => {
   });
 
   describe('when providing a bigger value than the maximum', () => {
-    describe('and no postfix string is provided', () => {
-      it('returns the maximum value postfixed, in a string', () => {
+    describe('and no suffix string is provided', () => {
+      it('returns the maximum value suffixed, in a string', () => {
         expect(maximizePipe.transform(6, 5)).toBe('5+');
       });
     });
 
-    describe('and a postfix string is provided', () => {
-      it('returns the maximum value postfixed with the specified postfix string, in a string', () => {
+    describe('and a suffix string is provided', () => {
+      it('returns the maximum value suffixed with the specified suffix string, in a string', () => {
         expect(maximizePipe.transform(6, 5, ' or more')).toBe('5 or more');
       });
     });
