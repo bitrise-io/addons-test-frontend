@@ -18,6 +18,7 @@ describe('Maximize', () => {
     it('returns the original value, in a string', () => {
       expect(maximizePipe.transform(3, 5)).toBe('3');
       expect(maximizePipe.transform(-3, 5)).toBe('-3');
+      expect(maximizePipe.transform(0, 5)).toBe('0');
       expect(maximizePipe.transform(1000, 5000)).toBe('1000');
     });
   });
