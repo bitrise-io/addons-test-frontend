@@ -1,4 +1,5 @@
 import { Injectable } from '@angular/core';
+import { TestSuite } from './test-suite.model';
 
 @Injectable()
 export class TestSuiteService {
@@ -9,6 +10,8 @@ export class TestSuiteService {
   ];
 
   getTestSuites(): any[] {
-    return this.TEST_SUITES;
+    return this.TEST_SUITES.map((testSuiteData: any) => {
+      new TestSuite().deserialize(testSuiteData);
+    });
   }
 }
