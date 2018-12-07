@@ -28,13 +28,11 @@ export class AppHeaderComponent implements OnInit {
         routerLink: ['/summary']
       }
     ].concat(
-      testSuites.map(testSuite => {
-        return {
-          name: testSuite.name,
-          routerLink: ['/testsuite/' + testSuite.id],
-          failedTestCaseCount: testSuite.failedTestCaseCount
-        };
-      })
+      testSuites.map(testSuite => ({
+        name: testSuite.name,
+        routerLink: ['/testsuite/' + testSuite.id],
+        failedTestCaseCount: testSuite.failedTestCaseCount
+      }))
     );
 
     this.summedFailedTestCaseCount = 0;
