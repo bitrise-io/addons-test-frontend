@@ -35,10 +35,9 @@ export class AppHeaderComponent implements OnInit {
       }))
     );
 
-    this.summedFailedTestCaseCount = 0;
-    testSuites.forEach(testSuite => {
-      this.summedFailedTestCaseCount += testSuite.failedTestCaseCount;
-    });
+    this.summedFailedTestCaseCount = testSuites.reduce((summedFailedTestCaseCount, testSuite:any) => {
+      return summedFailedTestCaseCount + testSuite.failedTestCaseCount;
+    }, 0);
   }
 
   selectedSmallTabmenuItemChanged() {
