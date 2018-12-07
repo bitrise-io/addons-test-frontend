@@ -9,13 +9,20 @@ $screen-xlarge-width: 1920px;
 
 $beam-height: 47px;
 $content-maxwidth: 1476px;
+$ui-element-notification-bubble-size: 24px;
+
+// Times
+
+$default-hovertime: 0.2s;
 
 // Colors
 
 $white: #ffffff !default;
+$white-darken: #dddddd !default;
 $aqua: #0dd3c5 !default;
 $water-blue-two: #0d83cd !default;
 $dark-blue-grey: #351d48 !default;
+$vivid-pink: #ff2158 !default;
 
 // UI elements
 
@@ -40,9 +47,108 @@ $dark-blue-grey: #351d48 !default;
   font-size: 16px;
 }
 
+@mixin ui-element-body-highlight {
+  @include ui-element-body;
+  font-weight: 700;
+}
+
+@mixin ui-element-subtitle {
+  @include default-font;
+  font-size: 13px;
+  font-weight: 700;
+  letter-spacing: 0.6px;
+  text-transform: uppercase;
+}
+
 @mixin ui-element-tag {
   @include default-font;
   font-size: 10px;
   letter-spacing: 0.8px;
   text-transform: uppercase;
+}
+
+@mixin ui-element-select {
+  @include ui-element-body;
+  appearance: none;
+  border: 1px solid $white-darken;
+  border-radius: 4px;
+  padding: 10px 36px 10px 16px;
+  color: $dark-blue-grey;
+  background-image: url('../assets/images/select-arrows.svg'), linear-gradient(to top, #f8f8f8, $white);
+  background-repeat: no-repeat;
+  background-position: right 8px center, center;
+}
+
+@mixin ui-element-notification-bubble {
+  @include default-font;
+  @include size($ui-element-notification-bubble-size);
+  line-height: $ui-element-notification-bubble-size;
+  border-radius: $ui-element-notification-bubble-size / 2;
+  text-align: center;
+  font-size: 13px;
+  font-weight: 800;
+  letter-spacing: 0.6px;
+
+  &.error {
+    color: white;
+    background-color: $vivid-pink;
+  }
+}
+
+@mixin ui-element-tab {
+  @include ui-element-body-highlight;
+  position: relative;
+  display: flex;
+  align-items: center;
+  min-width: 0;
+  height: 48px;
+  box-sizing: border-box;
+  justify-content: center;
+  border-width: 2px 2px 0;
+  border-style: solid;
+  border-color: $white;
+  @include border-top-radius(4px);
+  @include padding-x(16px);
+  text-align: center;
+  text-decoration: none;
+  color: $white;
+  background-color: rgba($white, 0.2);
+  transition: border-color $default-hovertime, color $default-hovertime, background-color $default-hovertime;
+
+  &:before {
+    content: '';
+    position: absolute;
+    top: -2px;
+    @include size(100%, 0);
+    @include border-top-radius(inherit);
+    @include border-x(2px solid $aqua);
+    background-color: $aqua;
+    transition: height $default-hovertime;
+  }
+
+  .text {
+    @include ellipsis-oneliner;
+  }
+
+  .notification-bubble {
+    @include ui-element-notification-bubble;
+    flex-shrink: 0;
+    margin-left: 8px;
+  }
+
+  &:hover,
+  &.active {
+    color: $dark-blue-grey;
+    background-color: $white;
+  }
+
+  &.active:before {
+    height: 4px;
+  }
+}
+
+// UI modifiers
+
+@mixin ui-modifier-shadow {
+  box-shadow: 0 2px 4px 0 rgba(0, 0, 0, 0.08);
 }

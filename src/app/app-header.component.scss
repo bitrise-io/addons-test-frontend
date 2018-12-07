@@ -1,63 +1,83 @@
-@import "../sass/constants";
-@import "../sass/mixins";
+@import '../sass/constants';
+@import '../sass/mixins';
 
 .app-header {
   margin-top: $beam-height;
-  padding: 42px 24px;
+  padding-top: 40px;
+  @include padding-x(24px);
   background-image: linear-gradient(to left, $aqua, $water-blue-two);
 
   .app-header-content {
-    display: flex;
     width: 100%;
     max-width: $content-maxwidth;
     @include margin-x(auto);
 
-    .icon {
-      ::ng-deep .stop-start {
-        stop-color: #135EA7;
-        stop-opacity: 0.855;
+    .opening {
+      display: flex;
+      align-items: center;
+
+      .icon {
+        ::ng-deep .stop-start {
+          stop-color: #135ea7;
+          stop-opacity: 0.855;
+        }
+
+        ::ng-deep .stop-end {
+          stop-color: #1e568f;
+        }
+
+        ::ng-deep .frame-wrapper {
+          fill: url(#app_header-icon-stop);
+          fill-rule: evenodd;
+        }
+
+        ::ng-deep .frame {
+          mix-blend-mode: multiply;
+        }
       }
 
-      ::ng-deep .stop-end {
-        stop-color: #1E568F;
-      }
+      .text {
+        margin-left: 24px;
+        color: $white;
 
-      ::ng-deep .frame-wrapper {
-        fill: url(#app_header-icon-stop);
-        fill-rule: evenodd;
-      }
+        .title-with-tag {
+          display: flex;
+          align-items: center;
 
-      ::ng-deep .frame {
-        mix-blend-mode: multiply;
+          .title {
+            @include ui-element-header-3;
+            @include margin-y(0);
+            color: inherit;
+          }
+
+          .tag {
+            @include ui-element-tag;
+            @include margin-y(0);
+            margin-left: 24px;
+            color: inherit;
+          }
+        }
+
+        .description {
+          @include ui-element-body;
+          @include margin-y(0);
+          color: inherit;
+        }
       }
     }
 
-    .text {
-      margin-left: 24px;
-      color: $white;
+    .tabmenu {
+      display: flex;
+      margin-top: 48px;
 
-      .title-with-tag {
-        display: flex;
-        align-items: center;
+      .tabmenu-item {
+        @include ui-element-tab;
+        flex-grow: 1;
+        max-width: 240px;
 
-        .title {
-          @include ui-element-header-3;
-          @include margin-y(0);
-          color: inherit;
+        &:not(:first-child) {
+          margin-left: 16px;
         }
-
-        .tag {
-          @include ui-element-tag;
-          @include margin-y(0);
-          margin-left: 24px;
-          color: inherit;
-        }
-      }
-
-      .description {
-        @include ui-element-body;
-        @include margin-y(0);
-        color: inherit;
       }
     }
   }
@@ -65,27 +85,76 @@
   $wrap-title-tag-maxwidth: 650px;
 
   @include width-max($wrap-title-tag-maxwidth) {
-    .app-header-content .text {
-      .title-with-tag {
-        display: block;
+    .app-header-content .opening {
+      align-items: flex-start;
 
-        .tag {
-          margin-left: 0;
-          margin-top: 12px;
+      .text {
+        .title-with-tag {
+          display: block;
+
+          .tag {
+            margin-left: 0;
+          }
+        }
+
+        .description {
+          margin-top: 8px;
         }
       }
+    }
+  }
+}
 
-      .description {
-        margin-top: 6px;
+@include width-above-screen-small {
+  .tabmenu-screen-small {
+    display: none;
+  }
+}
+
+@include width-max-screen-small {
+  .app-header {
+    padding: 18px;
+
+    .app-header-content {
+      .opening .text {
+        margin-left: 16px;
+      }
+
+      .tabmenu {
+        display: none;
       }
     }
   }
 
-  @include width-max($screen-small-width) {
-    @include padding-y(24px);
+  .tabmenu-screen-small {
+    width: 100%;
+    max-width: $content-maxwidth;
+    box-sizing: border-box;
+    @include margin-x(auto);
+    padding: 8px 18px;
 
-    .app-header-content .text {
-      margin-left: 18px;
+    .summed-failed-test-case-count {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      margin-bottom: 8px;
+
+      .icon ::ng-deep svg {
+        fill: $vivid-pink;
+      }
+
+      .text {
+        @include ui-element-subtitle;
+        margin-left: 8px;
+        color: $vivid-pink;
+      }
+    }
+
+    .tabmenu-select {
+      @include ui-element-select;
+      @include ui-modifier-shadow;
+      display: block;
+      width: 100%;
     }
   }
 }

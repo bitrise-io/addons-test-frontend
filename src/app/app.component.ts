@@ -2,10 +2,11 @@ import { Component, OnInit } from '@angular/core';
 import { Beam } from '@bitrise/beam';
 
 @Component({
-  selector: 'app-root',
+  selector: 'bitrise-app-root',
   template: `
-    <app-header></app-header>
-    <app-footer></app-footer>
+    <bitrise-app-header></bitrise-app-header>
+    <router-outlet></router-outlet>
+    <bitrise-app-footer></bitrise-app-footer>
   `,
   styles: []
 })
