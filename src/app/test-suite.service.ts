@@ -10,8 +10,6 @@ export class TestSuiteService {
   ];
 
   getTestSuites(): any[] {
-    return this.TEST_SUITES.map((testSuiteData: any) => {
-      new TestSuite().deserialize(testSuiteData);
-    });
+    return this.TEST_SUITES.map((testSuiteData: any) => new TestSuite().deserialize(testSuiteData));
   }
 }

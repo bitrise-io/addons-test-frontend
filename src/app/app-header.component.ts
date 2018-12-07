@@ -14,8 +14,8 @@ export class AppHeaderComponent implements OnInit {
   summedFailedTestCaseCount: number;
 
   constructor(private router: Router, private testSuiteService: TestSuiteService) {
-    this.router.events.pipe(filter(event => event instanceof NavigationEnd)).subscribe((event:NavigationEnd) => {
-      this.selectedSmallTabmenuItem = this.tabmenuItems.find(({routerLink: [url]}) => url === event.url);
+    this.router.events.pipe(filter(event => event instanceof NavigationEnd)).subscribe((event: NavigationEnd) => {
+      this.selectedSmallTabmenuItem = this.tabmenuItems.find(({ routerLink: [url] }) => url === event.url);
     });
   }
 
@@ -35,9 +35,10 @@ export class AppHeaderComponent implements OnInit {
       }))
     );
 
-    this.summedFailedTestCaseCount = testSuites.reduce((summedFailedTestCaseCount, testSuite:any) => {
-      return summedFailedTestCaseCount + testSuite.failedTestCaseCount;
-    }, 0);
+    this.summedFailedTestCaseCount = testSuites.reduce(
+      (summedFailedTestCaseCount, testSuite: any) => summedFailedTestCaseCount + testSuite.failedTestCaseCount,
+      0
+    );
   }
 
   selectedSmallTabmenuItemChanged() {
