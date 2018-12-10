@@ -13,6 +13,7 @@ import { MaximizePipe } from './maximize.pipe';
 import { TestSummaryComponent } from './test-summary.component';
 import { TestReportComponent } from './test-report.component';
 import { TestReportService } from './test-report.service';
+import { TestSummaryHeaderComponent } from './test-summary-header.component';
 
 @NgModule({
   declarations: [
@@ -21,6 +22,7 @@ import { TestReportService } from './test-report.service';
     AppFooterComponent,
     MaximizePipe,
     TestSummaryComponent,
+    TestSummaryHeaderComponent,
     TestReportComponent
   ],
   imports: [BrowserModule, RouterModule.forRoot(appRoutes), HttpClientModule, FormsModule, InlineSVGModule.forRoot()],
