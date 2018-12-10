@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { TestSuiteService } from './test-suite.service';
+import { TestReportService } from './test-report.service';
 import { Router, NavigationEnd } from '@angular/router';
 import { filter } from 'rxjs/operators';
 
@@ -13,14 +13,14 @@ export class AppHeaderComponent implements OnInit {
   selectedSmallTabmenuItem: any;
   summedFailedTestCaseCount: number;
 
-  constructor(private router: Router, private testSuiteService: TestSuiteService) {
+  constructor(private router: Router, private testReportService: TestReportService) {
     this.router.events.pipe(filter(event => event instanceof NavigationEnd)).subscribe((event: NavigationEnd) => {
       this.selectedSmallTabmenuItem = this.tabmenuItems.find(({ routerLink: [url] }) => url === event.url);
     });
   }
 
   ngOnInit() {
-    const testSuites = this.testSuiteService.getTestSuites();
+    const testReports = this.testReportService.getTestReports();
 
     this.tabmenuItems = [
       {
@@ -28,15 +28,15 @@ export class AppHeaderComponent implements OnInit {
         routerLink: ['/summary']
       }
     ].concat(
-      testSuites.map(testSuite => ({
-        name: testSuite.name,
-        routerLink: ['/testsuite/' + testSuite.id],
-        failedTestCaseCount: testSuite.failedTestCaseCount
+      testReports.map(testReport => ({
+        name: testReport.name,
+        routerLink: ['/testreport/' + testReport.id],
+        failedTestCaseCount: testReport.failedTestCaseCount
       }))
     );
 
-    this.summedFailedTestCaseCount = testSuites.reduce(
-      (summedFailedTestCaseCount, testSuite: any) => summedFailedTestCaseCount + testSuite.failedTestCaseCount,
+    this.summedFailedTestCaseCount = testReports.reduce(
+      (summedFailedTestCaseCount, testReport: any) => summedFailedTestCaseCount + testReport.failedTestCaseCount,
       0
     );
   }

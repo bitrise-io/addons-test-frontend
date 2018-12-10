@@ -11,8 +11,8 @@ import { AppFooterComponent } from './app-footer/app-footer.component';
 import { appRoutes } from './routes';
 import { MaximizePipe } from './maximize.pipe';
 import { TestSummaryComponent } from './test-summary.component';
-import { TestSuiteComponent } from './test-suite.component';
-import { TestSuiteService } from './test-suite.service';
+import { TestReportComponent } from './test-report.component';
+import { TestReportService } from './test-report.service';
 
 @NgModule({
   declarations: [
@@ -21,10 +21,10 @@ import { TestSuiteService } from './test-suite.service';
     AppFooterComponent,
     MaximizePipe,
     TestSummaryComponent,
-    TestSuiteComponent
+    TestReportComponent
   ],
   imports: [BrowserModule, RouterModule.forRoot(appRoutes), HttpClientModule, FormsModule, InlineSVGModule.forRoot()],
-  providers: [TestSuiteService],
+  providers: [TestReportService],
   bootstrap: [AppComponent]
 })
 export class AppModule {}
