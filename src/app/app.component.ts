@@ -3,11 +3,7 @@ import { Beam } from '@bitrise/beam';
 
 @Component({
   selector: 'bitrise-app-root',
-  template: `
-    <bitrise-app-header></bitrise-app-header>
-    <router-outlet></router-outlet>
-    <bitrise-app-footer></bitrise-app-footer>
-  `,
+  templateUrl: './app.component.html',
   styles: []
 })
 export class AppComponent implements OnInit {

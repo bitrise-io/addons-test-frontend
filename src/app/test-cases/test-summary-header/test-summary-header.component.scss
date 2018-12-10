@@ -1,0 +1,115 @@
+@import "../../../sass/constants";
+@import "../../../sass/mixins";
+
+:host() {
+  width: 100%;
+}
+
+.test-summary-header {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+
+  .test-case-counters-by-types {
+    display: flex;
+
+    .total-counter, .failed-counter, .passed-counter, .skipped-counter, .inconclusive-counter {
+      display: flex;
+      flex-direction: row;
+      justify-content: center;
+      flex-grow: 1;
+      flex-shrink: 0;
+
+      ::ng-deep .icon svg {
+        @include size(40px);
+      }
+
+      .counter-and-title {
+        display: flex;
+        flex-direction: column;
+        margin-left: 8px;
+
+        .counter {
+          font-size: 25px;
+          font-weight: bold;
+          font-style: normal;
+          font-stretch: normal;
+          line-height: 1.28;
+          letter-spacing: 0.1px;
+          color: $dark-blue-grey;
+          margin: 5px 0 0;
+        }
+
+        .title {
+          font-size: 13px;
+          font-weight: bold;
+          font-style: normal;
+          font-stretch: normal;
+          line-height: 1.38;
+          letter-spacing: 0.6px;
+          margin: 0;
+          text-transform: uppercase;
+        }
+      }
+    }
+
+    .total-counter {
+
+      ::ng-deep .icon svg {
+        fill: $dark-blue-grey;
+      }
+
+      .counter-and-title .title {
+        color: $dark-blue-grey;
+      }
+    }
+
+    .failed-counter {
+
+      ::ng-deep .icon svg {
+        fill: $vivid-pink;
+      }
+
+      .counter-and-title .title {
+        color: $vivid-pink;
+      }
+    }
+
+    .passed-counter {
+
+      ::ng-deep .icon svg {
+        fill: $green-teal;
+      }
+
+      .counter-and-title .title {
+        color: $green-teal;
+      }
+    }
+
+    .skipped-counter {
+
+      ::ng-deep .icon svg {
+        fill: $warm-grey;
+      }
+
+      .counter-and-title .title {
+        color: $warm-grey;
+      }
+    }
+
+    .inconclusive-counter {
+
+      ::ng-deep .icon svg {
+        fill: $ocean-blue;
+      }
+
+      .counter-and-title .title {
+        color: $ocean-blue;
+      }
+    }
+  }
+
+  .percentage-diagram {
+
+  }
+}

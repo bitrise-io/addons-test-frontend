@@ -1,0 +1,13 @@
+@import "../../../sass/constants";
+@import "../../../sass/mixins";
+
+.test-summary {
+  padding: 42px 24px;
+
+  .test-summary-content {
+    display: flex;
+    width: 100%;
+    max-width: $content-maxwidth;
+    @include margin-x(auto);
+  }
+}

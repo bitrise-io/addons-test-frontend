@@ -7,9 +7,9 @@ import { Pipe, PipeTransform, DebugElement } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { InlineSVGModule } from 'ng-inline-svg';
 import { AppHeaderComponent } from './app-header.component';
-import { TestSummaryComponent } from './test-summary.component';
-import { TestSuiteComponent } from './test-suite.component';
-import { TestSuiteService } from './test-suite.service';
+import { TestSummaryComponent } from '../test-cases/test-summary/test-summary.component';
+import { TestSuiteComponent } from '../test-cases/test-suite/test-suite.component';
+import { TestSuiteService } from '../test-cases/test-suite/test-suite.service';
 
 @Pipe({ name: 'maximizeTo' })
 class MockMaximizePipe implements PipeTransform {

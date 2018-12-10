@@ -23,6 +23,9 @@ $aqua: #0dd3c5 !default;
 $water-blue-two: #0d83cd !default;
 $dark-blue-grey: #351d48 !default;
 $vivid-pink: #ff2158 !default;
+$green-teal: #0fc389 !default;
+$warm-grey: #777777 !default;
+$ocean-blue: #054ab0 !default;
 
 // UI elements
 
@@ -74,9 +77,9 @@ $vivid-pink: #ff2158 !default;
   border-radius: 4px;
   padding: 10px 36px 10px 16px;
   color: $dark-blue-grey;
-  background-image: url('../assets/images/select-arrows.svg'), linear-gradient(to top, #f8f8f8, $white);
   background-repeat: no-repeat;
   background-position: right 8px center, center;
+  background-image: url('/assets/images/select-arrows.svg'), linear-gradient(to top, #f8f8f8, $white);
 }
 
 @mixin ui-element-notification-bubble {

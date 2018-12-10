@@ -1,5 +1,6 @@
 import { Injectable } from '@angular/core';
-import { Deserializable } from './deserializable.model';
+import { Deserializable } from 'src/app/deserializable.model';
+
 
 @Injectable()
 export class TestSuite implements Deserializable {
