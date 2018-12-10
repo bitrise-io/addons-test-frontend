@@ -10,6 +10,7 @@ import { AppHeaderComponent } from './app-header.component';
 import { TestSummaryComponent } from '../test-cases/test-summary/test-summary.component';
 import { TestSuiteComponent } from '../test-cases/test-suite/test-suite.component';
 import { TestSuiteService } from '../test-cases/test-suite/test-suite.service';
+import { TestSummaryHeaderComponent } from '../test-cases/test-summary-header/test-summary-header.component';
 
 @Pipe({ name: 'maximizeTo' })
 class MockMaximizePipe implements PipeTransform {
@@ -48,7 +49,7 @@ describe('AppHeaderComponent', () => {
         FormsModule,
         InlineSVGModule.forRoot()
       ],
-      declarations: [MockMaximizePipe, AppHeaderComponent, TestSummaryComponent, TestSuiteComponent],
+      declarations: [MockMaximizePipe, AppHeaderComponent, TestSummaryComponent, TestSummaryHeaderComponent, TestSuiteComponent],
       providers: [{ provide: TestSuiteService, useClass: MockTestSuiteService }]
     }).compileComponents();
 
