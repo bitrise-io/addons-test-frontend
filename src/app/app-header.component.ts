@@ -11,7 +11,7 @@ import { filter } from 'rxjs/operators';
 export class AppHeaderComponent implements OnInit {
   tabmenuItems: any[];
   selectedSmallTabmenuItem: any;
-  summedFailedTestCaseCount: number;
+  summedFailedTestSuiteCount: number;
 
   constructor(private router: Router, private testReportService: TestReportService) {
     this.router.events.pipe(filter(event => event instanceof NavigationEnd)).subscribe((event: NavigationEnd) => {
@@ -31,12 +31,12 @@ export class AppHeaderComponent implements OnInit {
       testReports.map(testReport => ({
         name: testReport.name,
         routerLink: ['/testreport/' + testReport.id],
-        failedTestCaseCount: testReport.failedTestCaseCount
+        failedTestSuiteCount: testReport.failedTestSuiteCount
       }))
     );
 
-    this.summedFailedTestCaseCount = testReports.reduce(
-      (summedFailedTestCaseCount, testReport: any) => summedFailedTestCaseCount + testReport.failedTestCaseCount,
+    this.summedFailedTestSuiteCount = testReports.reduce(
+      (summedFailedTestSuiteCount, testReport: any) => summedFailedTestSuiteCount + testReport.failedTestSuiteCount,
       0
     );
   }

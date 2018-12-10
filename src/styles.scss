@@ -1,3 +1,4 @@
+@import './sass/constants';
 @import "./sass/mixins";
 
 @include font-face("TTNorms", "/assets/fonts/ttnorms/35C30F_7_0", 100);
@@ -9,4 +10,10 @@
 
 body {
   margin: 0;
+}
+
+.centered-max-width {
+  width: 100%;
+  max-width: $centered-maxwidth;
+  @include margin-x(auto);
 }

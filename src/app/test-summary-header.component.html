@@ -1,23 +1,41 @@
-<section class="test-summary-header">
-  <div class="count-indicator total">
-    <div class="icon" [inlineSVG]="'/assets/images/hashtag.svg'"></div>
-    <div class="count-wrapper">
-      <div class="count">{{ totalTestSuitesCount }}</div>
-      <div class="name">total</div>
+<section class="test-summary-header centered-max-width">
+  <div class="test-suite-counts">
+    <div class="count-indicator total">
+      <div class="icon" [inlineSVG]="'/assets/images/hashtag.svg'"></div>
+      <div class="count-wrapper">
+        <div class="count">{{ totalTestSuitesCount }}</div>
+        <div class="name">total</div>
+      </div>
     </div>
-  </div>
-  <div
-    class="count-indicator"
-    *ngFor="let testSuiteCountByStatus of testSuiteCountsByStatuses"
-    [ngClass]="testSuiteCountByStatus.cssClass"
-  >
-	<div class="icon" *ngIf="testSuiteCountByStatus.status === testSuiteStatus.failed" [inlineSVG]="'/assets/images/sign-cross.svg'"></div>
-	<div class="icon" *ngIf="testSuiteCountByStatus.status === testSuiteStatus.passed" [inlineSVG]="'/assets/images/sign-check.svg'"></div>
-	<div class="icon" *ngIf="testSuiteCountByStatus.status === testSuiteStatus.skipped" [inlineSVG]="'/assets/images/sign-arrowheads.svg'"></div>
-	<div class="icon" *ngIf="testSuiteCountByStatus.status === testSuiteStatus.inconclusive" [inlineSVG]="'/assets/images/sign-questionmark.svg'"></div>
-    <div class="count-wrapper">
-      <div class="count">{{ testSuiteCountByStatus.testSuiteCount }}</div>
-      <div class="name">{{ testSuiteCountByStatus.name }}</div>
+    <div
+      class="count-indicator"
+      *ngFor="let testSuiteCountByStatus of testSuiteCountsByStatuses"
+      [ngClass]="testSuiteCountByStatus.cssClass"
+    >
+      <div
+        class="icon"
+        *ngIf="testSuiteCountByStatus.status === testSuiteStatus.failed"
+        [inlineSVG]="'/assets/images/sign-cross.svg'"
+      ></div>
+      <div
+        class="icon"
+        *ngIf="testSuiteCountByStatus.status === testSuiteStatus.passed"
+        [inlineSVG]="'/assets/images/sign-check.svg'"
+      ></div>
+      <div
+        class="icon"
+        *ngIf="testSuiteCountByStatus.status === testSuiteStatus.skipped"
+        [inlineSVG]="'/assets/images/sign-arrowheads.svg'"
+      ></div>
+      <div
+        class="icon"
+        *ngIf="testSuiteCountByStatus.status === testSuiteStatus.inconclusive"
+        [inlineSVG]="'/assets/images/sign-questionmark.svg'"
+      ></div>
+      <div class="count-wrapper">
+        <div class="count">{{ testSuiteCountByStatus.testSuiteCount }}</div>
+        <div class="name">{{ testSuiteCountByStatus.name }}</div>
+      </div>
     </div>
   </div>
 </section>

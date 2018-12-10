@@ -1,0 +1,101 @@
+@import '../sass/constants';
+@import '../sass/mixins';
+
+.test-summary-header {
+  box-sizing: border-box;
+  @include padding-x($main-content-padding-x);
+  padding-top: 56px;
+
+  .test-suite-counts {
+    display: flex;
+    justify-content: space-between;
+    @include padding-x(40px);
+
+    .count-indicator {
+      display: flex;
+      align-items: flex-start;
+
+      .icon {
+        flex-shrink: 0;
+
+        ::ng-deep svg {
+          @include size(40px);
+          fill: $dark-blue-grey;
+        }
+      }
+
+      .count-wrapper {
+        margin-left: 8px;
+        color: $dark-blue-grey;
+
+        .count {
+          @include default-font;
+          font-size: 25px;
+          font-weight: 700;
+        }
+
+        .name {
+          @include ui-element-subtitle;
+        }
+      }
+
+      @mixin count-indicator-with-color($color) {
+        .icon ::ng-deep svg {
+          fill: $color;
+        }
+
+        .name {
+          color: $color;
+        }
+      }
+
+      &.failed {
+        @include count-indicator-with-color($vivid-pink);
+      }
+
+      &.passed {
+        @include count-indicator-with-color($green-teal);
+      }
+
+      &.skipped {
+        @include count-indicator-with-color($warm-grey);
+      }
+
+      &.inconclusive {
+        @include count-indicator-with-color($ocean-blue);
+      }
+    }
+  }
+
+  @include width-max(800px) {
+    .test-suite-counts {
+      flex-wrap: wrap;
+
+      .count-indicator {
+        margin-top: 16px;
+
+        &.total {
+          width: 100%;
+        }
+
+        &:not(.total) {
+          width: 50%;
+        }
+      }
+    }
+  }
+
+  @include width-max-screen-small {
+    @include padding-x($main-content-padding-x-smallscreen);
+  }
+
+  @include width-max(420px) {
+    .test-suite-counts {
+      display: block;
+
+      .count-indicator.total, .count-indicator:not(.total) {
+        width: auto;
+      }
+    }
+  }
+}

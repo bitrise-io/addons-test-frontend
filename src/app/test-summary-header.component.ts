@@ -5,7 +5,8 @@ import { TestReportService } from './test-report.service';
 
 @Component({
   selector: 'bitrise-test-summary-header',
-  templateUrl: './test-summary-header.component.html'
+  templateUrl: './test-summary-header.component.html',
+  styleUrls: ['./test-summary-header.component.scss']
 })
 export class TestSummaryHeaderComponent implements OnInit {
   public testSuiteStatus = TestSuiteStatus;
