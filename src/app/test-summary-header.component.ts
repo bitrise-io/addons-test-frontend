@@ -8,6 +8,7 @@ import { TestReportService } from './test-report.service';
   templateUrl: './test-summary-header.component.html'
 })
 export class TestSummaryHeaderComponent implements OnInit {
+  public testSuiteStatus = TestSuiteStatus;
   testReports: TestReport[];
   testSuiteCountsByStatuses: {
     status: number;
