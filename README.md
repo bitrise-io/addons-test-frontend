@@ -28,6 +28,6 @@ To get more help on the Angular CLI use `ng help` or go check out the [Angular C
 
 # Used terms
 
-- 'Test suite' refers to 'UI Test A', 'Unit Test Y', etc.
-- 'Test context' (sometimes 'device') refers to a selectable on the Test summary dashboard, e. g. 'iPhone 7 portrait', 'iPhone 8 portrait', etc.
-- 'Test case' refers to the children of a test context, e. g. 'testExample'
+- 'Test report' refers to 'UI Test A', 'Unit Test Y', etc.
+- 'Test suite' (sometimes 'device') refers to a selectable on the Test summary dashboard, e. g. 'iPhone 7 portrait', 'iPhone 8 portrait', etc.
+- 'Test case' refers to the children of a test suite, e. g. 'testExample'

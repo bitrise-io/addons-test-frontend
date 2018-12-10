@@ -1,7 +1,7 @@
 import { Component } from '@angular/core';
 
 @Component({
-  selector: 'bitrise-test-suite',
+  selector: 'bitrise-test-report',
   template: ''
 })
-export class TestSuiteComponent {}
+export class TestReportComponent {}

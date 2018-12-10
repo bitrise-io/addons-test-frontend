@@ -8,8 +8,8 @@ import { FormsModule } from '@angular/forms';
 import { InlineSVGModule } from 'ng-inline-svg';
 import { AppHeaderComponent } from './app-header.component';
 import { TestSummaryComponent } from './test-summary.component';
-import { TestSuiteComponent } from './test-suite.component';
-import { TestSuiteService } from './test-suite.service';
+import { TestReportComponent } from './test-report.component';
+import { TestReportService } from './test-report.service';
 
 @Pipe({ name: 'maximizeTo' })
 class MockMaximizePipe implements PipeTransform {
@@ -18,17 +18,17 @@ class MockMaximizePipe implements PipeTransform {
   }
 }
 
-class MockTestSuiteService {
-  testSuites: any[];
+class MockTestReportService {
+  testReports: any[];
 
-  public getTestSuites(): any[] {
-    return this.testSuites;
+  public getTestReports(): any[] {
+    return this.testReports;
   }
 }
 
 describe('AppHeaderComponent', () => {
   let location: Location;
-  let service: MockTestSuiteService;
+  let service: MockTestReportService;
   let fixture: ComponentFixture<AppHeaderComponent>;
   let appHeaderElement: AppHeaderComponent;
   let tabElements: DebugElement[];
@@ -40,19 +40,19 @@ describe('AppHeaderComponent', () => {
       imports: [
         RouterTestingModule.withRoutes([
           { path: 'summary', component: TestSummaryComponent },
-          { path: 'testsuite/1', component: TestSuiteComponent },
-          { path: 'testsuite/2', component: TestSuiteComponent },
-          { path: 'testsuite/3', component: TestSuiteComponent }
+          { path: 'testreport/1', component: TestReportComponent },
+          { path: 'testreport/2', component: TestReportComponent },
+          { path: 'testreport/3', component: TestReportComponent }
         ]),
         HttpClientTestingModule,
         FormsModule,
         InlineSVGModule.forRoot()
       ],
-      declarations: [MockMaximizePipe, AppHeaderComponent, TestSummaryComponent, TestSuiteComponent],
-      providers: [{ provide: TestSuiteService, useClass: MockTestSuiteService }]
+      declarations: [MockMaximizePipe, AppHeaderComponent, TestSummaryComponent, TestReportComponent],
+      providers: [{ provide: TestReportService, useClass: MockTestReportService }]
     }).compileComponents();
 
-    service = TestBed.get(TestSuiteService);
+    service = TestBed.get(TestReportService);
   }));
 
   beforeEach(() => {
@@ -65,9 +65,9 @@ describe('AppHeaderComponent', () => {
     expect(appHeaderElement).not.toBeNull();
   });
 
-  describe('when there are some test suites', () => {
+  describe('when there are some test reports', () => {
     beforeEach(() => {
-      service.testSuites = [
+      service.testReports = [
         { id: 1, name: 'Unit Test A', failedTestCaseCount: 2 },
         { id: 2, name: 'Unit Test X', failedTestCaseCount: 0 },
         { id: 3, name: 'Unit Test Y', failedTestCaseCount: 1 }
@@ -80,22 +80,22 @@ describe('AppHeaderComponent', () => {
       dropdownItemElements = fixture.debugElement.queryAll(By.css('.tabmenu-select option'));
     });
 
-    it('loads as many tabs as there are test suites, plus one for the summary', () => {
+    it('loads as many tabs as there are test reports, plus one for the summary', () => {
       expect(tabElements.length).toBe(4);
     });
 
-    it('shows the name of the test suites in the tabs', () => {
+    it('shows the name of the test reports in the tabs', () => {
       expect(tabElements[1].query(By.css('.text')).nativeElement.textContent).toBe('Unit Test A');
       expect(tabElements[2].query(By.css('.text')).nativeElement.textContent).toBe('Unit Test X');
       expect(tabElements[3].query(By.css('.text')).nativeElement.textContent).toBe('Unit Test Y');
     });
 
-    it('shows bubble for test suites with failed test cases', () => {
+    it('shows bubble for test reports with failed test cases', () => {
       expect(tabElements[1].query(By.css('.notification-bubble'))).not.toBeNull();
       expect(tabElements[3].query(By.css('.notification-bubble'))).not.toBeNull();
     });
 
-    it('does not show bubble for test suites without failed test cases', () => {
+    it('does not show bubble for test reports without failed test cases', () => {
       expect(tabElements[2].query(By.css('.notification-bubble'))).toBeNull();
     });
 
@@ -103,17 +103,17 @@ describe('AppHeaderComponent', () => {
       expect(summedTestCaseCountElement.query(By.css('.text')).nativeElement.textContent).toBe('3 failed tests');
     });
 
-    it('loads as many items for the mobile-only dropdown as there are test suites, plus one for the summary', () => {
+    it('loads as many items for the mobile-only dropdown as there are test reports, plus one for the summary', () => {
       expect(dropdownItemElements.length).toBe(4);
     });
 
-    it('shows the name of the test suites in the dropdown items', () => {
+    it('shows the name of the test reports in the dropdown items', () => {
       expect(dropdownItemElements[1].nativeElement.textContent).toBe('Unit Test A');
       expect(dropdownItemElements[2].nativeElement.textContent).toBe('Unit Test X');
       expect(dropdownItemElements[3].nativeElement.textContent).toBe('Unit Test Y');
     });
 
-    describe('and a test suite tab is selected', () => {
+    describe('and a test report tab is selected', () => {
       let selectedTabElement: DebugElement;
 
       beforeEach(fakeAsync(() => {
@@ -124,7 +124,7 @@ describe('AppHeaderComponent', () => {
       it('directs to corresponding route', fakeAsync(() => {
         tick();
 
-        expect(location.path()).toBe('/testsuite/2');
+        expect(location.path()).toBe('/testreport/2');
       }));
     });
 
@@ -152,14 +152,14 @@ describe('AppHeaderComponent', () => {
 
         tick();
 
-        expect(location.path()).toBe('/testsuite/1');
+        expect(location.path()).toBe('/testreport/1');
       }));
     });
   });
 
-  describe('when there are no test suites', () => {
+  describe('when there are no test reports', () => {
     beforeEach(() => {
-      service.testSuites = [];
+      service.testReports = [];
 
       fixture.detectChanges();
 
