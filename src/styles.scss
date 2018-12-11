@@ -17,3 +17,7 @@ body {
   max-width: $centered-maxwidth;
   @include margin-x(auto);
 }
+
+[hidden] {
+  display: none !important;
+}
