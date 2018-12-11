@@ -42,10 +42,9 @@
     <div
       class="rate-indicator"
       *ngFor="let testSuitesByStatus of testSuitesByStatuses"
+      [hidden]="testSuitesByStatus.count == 0"
       [ngClass]="testSuitesByStatus.cssClass"
       [style.width]="(100 * testSuitesByStatus.count) / totalTestSuitesCount + '%'"
-    >
-      {{ testSuitesByStatus.count }} {{ testSuitesByStatus.statusName }}
-    </div>
+    >{{ testSuitesByStatus.count }} {{ testSuitesByStatus.statusName }}</div>
   </div>
 </section>
