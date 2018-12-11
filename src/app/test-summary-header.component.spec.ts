@@ -126,13 +126,19 @@ describe('TestSummaryHeaderComponent', () => {
     });
 
     it('hides the rate partition for that status in the rate indicator', () => {
-      expect(fixture.debugElement.query(By.css('.test-suite-rates .rate-indicator.skipped[hidden]'))).not.toBeNull();
+      expect(
+        fixture.debugElement
+          .query(By.css('.test-suite-rates .rate-indicator.skipped'))
+          .nativeElement.attributes.getNamedItem('hidden').value
+      ).toBe('');
     });
 
     it('does not hide the rate partition for other statuses in the rate indicator', () => {
       ['failed', 'passed', 'inconclusive'].forEach(statusCssClass => {
         expect(
-          fixture.debugElement.query(By.css('.test-suite-rates .rate-indicator.' + statusCssClass + '[hidden]'))
+          fixture.debugElement
+            .query(By.css('.test-suite-rates .rate-indicator.' + statusCssClass))
+            .nativeElement.attributes.getNamedItem('hidden')
         ).toBeNull();
       });
     });
@@ -140,9 +146,9 @@ describe('TestSummaryHeaderComponent', () => {
     it('does not hide the counter of any statuses', () => {
       ['failed', 'passed', 'skipped', 'inconclusive'].forEach(statusCssClass => {
         expect(
-          fixture.debugElement.query(
-            By.css('.test-suite-counts .count-indicator.' + statusCssClass + ' .count[hidden]')
-          )
+          fixture.debugElement
+            .query(By.css('.test-suite-counts .count-indicator.' + statusCssClass + ' .count'))
+            .nativeElement.attributes.getNamedItem('hidden')
         ).toBeNull();
       });
     });
