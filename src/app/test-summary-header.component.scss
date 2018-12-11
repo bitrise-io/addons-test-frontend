@@ -19,12 +19,13 @@
         flex-shrink: 0;
 
         ::ng-deep svg {
-          @include size(40px);
+          @include size(48px);
           fill: $dark-blue-grey;
         }
       }
 
       .count-wrapper {
+        margin-top: 8px;
         margin-left: 8px;
         color: $dark-blue-grey;
 
@@ -67,12 +68,46 @@
     }
   }
 
+  .test-suite-rates {
+    display: flex;
+    margin-top: 32px;
+
+    .rate-indicator {
+      height: 20px;
+      padding-right: 8px;
+      overflow: hidden;
+      border-bottom: 6px solid;
+      @include ui-element-subtitle;
+
+      @mixin rate-indicator-with-color($color) {
+        border-bottom-color: $color;
+        color: $color;
+      }
+
+      &.failed {
+        @include rate-indicator-with-color($vivid-pink);
+      }
+
+      &.passed {
+        @include rate-indicator-with-color($green-teal);
+      }
+
+      &.skipped {
+        @include rate-indicator-with-color($warm-grey);
+      }
+
+      &.inconclusive {
+        @include rate-indicator-with-color($ocean-blue);
+      }
+    }
+  }
+
   @include width-max(800px) {
     .test-suite-counts {
       flex-wrap: wrap;
 
       .count-indicator {
-        margin-top: 16px;
+        margin-bottom: 16px;
 
         &.total {
           width: 100%;
@@ -93,7 +128,8 @@
     .test-suite-counts {
       display: block;
 
-      .count-indicator.total, .count-indicator:not(.total) {
+      .count-indicator.total,
+      .count-indicator:not(.total) {
         width: auto;
       }
     }

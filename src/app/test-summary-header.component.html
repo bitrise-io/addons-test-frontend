@@ -9,33 +9,38 @@
     </div>
     <div
       class="count-indicator"
-      *ngFor="let testSuiteCountByStatus of testSuiteCountsByStatuses"
-      [ngClass]="testSuiteCountByStatus.cssClass"
+      *ngFor="let testSuitesByStatus of testSuitesByStatuses"
+      [ngClass]="testSuitesByStatus.cssClass"
     >
       <div
         class="icon"
-        *ngIf="testSuiteCountByStatus.status === testSuiteStatus.failed"
+        *ngIf="testSuitesByStatus.status === testSuiteStatus.failed"
         [inlineSVG]="'/assets/images/sign-cross.svg'"
       ></div>
       <div
         class="icon"
-        *ngIf="testSuiteCountByStatus.status === testSuiteStatus.passed"
+        *ngIf="testSuitesByStatus.status === testSuiteStatus.passed"
         [inlineSVG]="'/assets/images/sign-check.svg'"
       ></div>
       <div
         class="icon"
-        *ngIf="testSuiteCountByStatus.status === testSuiteStatus.skipped"
+        *ngIf="testSuitesByStatus.status === testSuiteStatus.skipped"
         [inlineSVG]="'/assets/images/sign-arrowheads.svg'"
       ></div>
       <div
         class="icon"
-        *ngIf="testSuiteCountByStatus.status === testSuiteStatus.inconclusive"
+        *ngIf="testSuitesByStatus.status === testSuiteStatus.inconclusive"
         [inlineSVG]="'/assets/images/sign-questionmark.svg'"
       ></div>
       <div class="count-wrapper">
-        <div class="count">{{ testSuiteCountByStatus.testSuiteCount }}</div>
-        <div class="name">{{ testSuiteCountByStatus.name }}</div>
+        <div class="count">{{ testSuitesByStatus.count }}</div>
+        <div class="name">{{ testSuitesByStatus.statusName }}</div>
       </div>
+    </div>
+  </div>
+  <div class="test-suite-rates">
+    <div class="rate-indicator" *ngFor="let testSuitesByStatus of testSuitesByStatuses" [ngClass]="testSuitesByStatus.cssClass" [style.width]="(100 * testSuitesByStatus.count / totalTestSuitesCount) + '%'">
+      {{ testSuitesByStatus.count }} {{ testSuitesByStatus.statusName }}
     </div>
   </div>
 </section>

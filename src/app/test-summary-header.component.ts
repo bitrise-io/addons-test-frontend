@@ -11,35 +11,35 @@ import { TestReportService } from './test-report.service';
 export class TestSummaryHeaderComponent implements OnInit {
   public testSuiteStatus = TestSuiteStatus;
   testReports: TestReport[];
-  testSuiteCountsByStatuses: {
+  testSuitesByStatuses: {
     status: number;
-    name: string;
+    statusName: string;
     cssClass: string;
-    testSuiteCount: number;
+    count: number;
   }[] = [
     {
       status: TestSuiteStatus.failed,
-      name: 'failed',
+      statusName: 'failed',
       cssClass: 'failed',
-      testSuiteCount: undefined
+      count: undefined
     },
     {
       status: TestSuiteStatus.passed,
-      name: 'passed',
+      statusName: 'passed',
       cssClass: 'passed',
-      testSuiteCount: undefined
+      count: undefined
     },
     {
       status: TestSuiteStatus.skipped,
-      name: 'skipped',
+      statusName: 'skipped',
       cssClass: 'skipped',
-      testSuiteCount: undefined
+      count: undefined
     },
     {
       status: TestSuiteStatus.inconclusive,
-      name: 'inconclusive',
+      statusName: 'inconclusive',
       cssClass: 'inconclusive',
-      testSuiteCount: undefined
+      count: undefined
     }
   ];
   totalTestSuitesCount: number;
@@ -49,24 +49,24 @@ export class TestSummaryHeaderComponent implements OnInit {
   ngOnInit() {
     const testReports = this.testReportService.getTestReports();
 
-    this.testSuiteCountsByStatuses.forEach(testSuiteCountByStatus => {
-      testSuiteCountByStatus.testSuiteCount = 0;
+    this.testSuitesByStatuses.forEach(testSuitesByStatus => {
+      testSuitesByStatus.count = 0;
     });
     this.totalTestSuitesCount = 0;
 
     testReports.forEach(testReport => {
-      this.testSuiteCountsByStatuses.find(
-        testSuiteCountByStatus => testSuiteCountByStatus.status === TestSuiteStatus.failed
-      ).testSuiteCount += testReport.failedTestSuiteCount;
-      this.testSuiteCountsByStatuses.find(
-        testSuiteCountByStatus => testSuiteCountByStatus.status === TestSuiteStatus.passed
-      ).testSuiteCount += testReport.passedTestSuiteCount;
-      this.testSuiteCountsByStatuses.find(
-        testSuiteCountByStatus => testSuiteCountByStatus.status === TestSuiteStatus.skipped
-      ).testSuiteCount += testReport.skippedTestSuiteCount;
-      this.testSuiteCountsByStatuses.find(
-        testSuiteCountByStatus => testSuiteCountByStatus.status === TestSuiteStatus.inconclusive
-      ).testSuiteCount += testReport.inconclusiveTestSuiteCount;
+      this.testSuitesByStatuses.find(
+        testSuitesByStatus => testSuitesByStatus.status === TestSuiteStatus.failed
+      ).count += testReport.failedTestSuiteCount;
+      this.testSuitesByStatuses.find(
+        testSuitesByStatus => testSuitesByStatus.status === TestSuiteStatus.passed
+      ).count += testReport.passedTestSuiteCount;
+      this.testSuitesByStatuses.find(
+        testSuitesByStatus => testSuitesByStatus.status === TestSuiteStatus.skipped
+      ).count += testReport.skippedTestSuiteCount;
+      this.testSuitesByStatuses.find(
+        testSuitesByStatus => testSuitesByStatus.status === TestSuiteStatus.inconclusive
+      ).count += testReport.inconclusiveTestSuiteCount;
 
       this.totalTestSuitesCount += testReport.failedTestSuiteCount;
       this.totalTestSuitesCount += testReport.passedTestSuiteCount;
