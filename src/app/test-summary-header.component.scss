@@ -73,10 +73,11 @@
     margin-top: 32px;
 
     .rate-indicator {
-      height: 20px;
+      height: 24px;
+      box-sizing: border-box;
+      border-bottom: 6px solid;
       padding-right: 8px;
       overflow: hidden;
-      border-bottom: 6px solid;
       @include ui-element-subtitle;
 
       @mixin rate-indicator-with-color($color) {
