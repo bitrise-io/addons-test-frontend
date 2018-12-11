@@ -81,9 +81,9 @@ describe('TestSummaryHeaderComponent', () => {
       ['skipped', 'skipped', '4'],
       ['inconclusive', 'inconclusive', '15']
     ].forEach(specConfig => {
-      let statusName = specConfig[0];
-      let statusCssClass = specConfig[1];
-      let count = specConfig[2];
+      const statusName = specConfig[0];
+      const statusCssClass = specConfig[1];
+      const count = specConfig[2];
 
       it('shows the number of ' + statusName + ' test suites in the ' + statusName + ' counter', () => {
         expect(
