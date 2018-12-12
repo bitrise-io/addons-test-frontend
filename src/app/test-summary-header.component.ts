@@ -2,6 +2,12 @@ import { Component, OnInit } from '@angular/core';
 import { TestSuiteStatus } from './test-suite-status';
 import { TestReportService } from './test-report.service';
 
+interface TestSuiteStatusInformation {
+  statusName: string;
+  cssClass: string;
+  count: number;
+}
+
 @Component({
   selector: 'bitrise-test-summary-header',
   templateUrl: './test-summary-header.component.html',
@@ -16,11 +22,7 @@ export class TestSummaryHeaderComponent implements OnInit {
     TestSuiteStatus.inconclusive
   ];
   testSuitesByStatuses: {
-    [status: string]: {
-      statusName: string;
-      cssClass: string;
-      count: number;
-    };
+    [status: string]: TestSuiteStatusInformation;
   } = {
     [TestSuiteStatus.inconclusive]: {
       statusName: 'inconclusive',
