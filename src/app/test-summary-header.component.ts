@@ -10,7 +10,6 @@ import { TestReportService } from './test-report.service';
 })
 export class TestSummaryHeaderComponent implements OnInit {
   public testSuiteStatusEnum = TestSuiteStatus;
-  testReports: TestReport[];
   orderedTestSuiteStatuses = [
     TestSuiteStatus.failed,
     TestSuiteStatus.passed,

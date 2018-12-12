@@ -30,7 +30,7 @@ export class TestReportService {
     }
   ];
 
-  getTestReports(): any[] {
+  getTestReports(): TestReport[] {
     return this.TEST_REPORTS.map((testReportData: any) => new TestReport().deserialize(testReportData));
   }
 }
