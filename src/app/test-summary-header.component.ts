@@ -9,39 +9,42 @@ import { TestReportService } from './test-report.service';
   styleUrls: ['./test-summary-header.component.scss']
 })
 export class TestSummaryHeaderComponent implements OnInit {
-  public testSuiteStatus = TestSuiteStatus;
+  public testSuiteStatusEnum = TestSuiteStatus;
   testReports: TestReport[];
+  orderedTestSuiteStatuses = [
+    TestSuiteStatus.failed,
+    TestSuiteStatus.passed,
+    TestSuiteStatus.skipped,
+    TestSuiteStatus.inconclusive
+  ];
   testSuitesByStatuses: {
-    status: number;
-    statusName: string;
-    cssClass: string;
-    count: number;
-  }[] = [
-    {
-      status: TestSuiteStatus.failed,
-      statusName: 'failed',
-      cssClass: 'failed',
+    [status: string]: {
+      statusName: string;
+      cssClass: string;
+      count: number;
+    };
+  } = {
+    [TestSuiteStatus.inconclusive]: {
+      statusName: 'inconclusive',
+      cssClass: 'inconclusive',
       count: undefined
     },
-    {
-      status: TestSuiteStatus.passed,
+    [TestSuiteStatus.passed]: {
       statusName: 'passed',
       cssClass: 'passed',
       count: undefined
     },
-    {
-      status: TestSuiteStatus.skipped,
+    [TestSuiteStatus.failed]: {
+      statusName: 'failed',
+      cssClass: 'failed',
+      count: undefined
+    },
+    [TestSuiteStatus.skipped]: {
       statusName: 'skipped',
       cssClass: 'skipped',
       count: undefined
-    },
-    {
-      status: TestSuiteStatus.inconclusive,
-      statusName: 'inconclusive',
-      cssClass: 'inconclusive',
-      count: undefined
     }
-  ];
+  };
   totalTestSuitesCount: number;
 
   constructor(private testReportService: TestReportService) {}
@@ -49,29 +52,25 @@ export class TestSummaryHeaderComponent implements OnInit {
   ngOnInit() {
     const testReports = this.testReportService.getTestReports();
 
-    this.testSuitesByStatuses.forEach(testSuitesByStatus => {
-      testSuitesByStatus.count = 0;
-    });
-    this.totalTestSuitesCount = 0;
+    const testSuiteCountsByStatuses: {
+      [status: string]: number;
+    } = testReports.reduce(
+      (summedTestSuiteCountsByStatuses, testReport) => ({
+        [TestSuiteStatus.inconclusive]:
+          (summedTestSuiteCountsByStatuses[TestSuiteStatus.inconclusive] || 0) + testReport.inconclusiveTestSuiteCount,
+        [TestSuiteStatus.passed]:
+          (summedTestSuiteCountsByStatuses[TestSuiteStatus.passed] || 0) + testReport.passedTestSuiteCount,
+        [TestSuiteStatus.failed]:
+          (summedTestSuiteCountsByStatuses[TestSuiteStatus.failed] || 0) + testReport.failedTestSuiteCount,
+        [TestSuiteStatus.skipped]:
+          (summedTestSuiteCountsByStatuses[TestSuiteStatus.skipped] || 0) + testReport.skippedTestSuiteCount
+      }),
+      {}
+    );
 
-    testReports.forEach(testReport => {
-      this.testSuitesByStatuses.find(
-        testSuitesByStatus => testSuitesByStatus.status === TestSuiteStatus.failed
-      ).count += testReport.failedTestSuiteCount;
-      this.testSuitesByStatuses.find(
-        testSuitesByStatus => testSuitesByStatus.status === TestSuiteStatus.passed
-      ).count += testReport.passedTestSuiteCount;
-      this.testSuitesByStatuses.find(
-        testSuitesByStatus => testSuitesByStatus.status === TestSuiteStatus.skipped
-      ).count += testReport.skippedTestSuiteCount;
-      this.testSuitesByStatuses.find(
-        testSuitesByStatus => testSuitesByStatus.status === TestSuiteStatus.inconclusive
-      ).count += testReport.inconclusiveTestSuiteCount;
-
-      this.totalTestSuitesCount += testReport.failedTestSuiteCount;
-      this.totalTestSuitesCount += testReport.passedTestSuiteCount;
-      this.totalTestSuitesCount += testReport.skippedTestSuiteCount;
-      this.totalTestSuitesCount += testReport.inconclusiveTestSuiteCount;
+    Object.entries(testSuiteCountsByStatuses).forEach(([status, testSuiteCountWithStatus]) => {
+      this.testSuitesByStatuses[status].count = testSuiteCountWithStatus;
+      this.totalTestSuitesCount = (this.totalTestSuitesCount || 0) + testSuiteCountWithStatus;
     });
   }
 }

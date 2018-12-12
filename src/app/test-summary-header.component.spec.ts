@@ -85,18 +85,18 @@ describe('TestSummaryHeaderComponent', () => {
       const statusCssClass = specConfig[1];
       const count = specConfig[2];
 
-      it('shows the number of ' + statusName + ' test suites in the ' + statusName + ' counter', () => {
+      it(`shows the number of ${statusName} test suites in the ${statusName} counter`, () => {
         expect(
-          fixture.debugElement.query(By.css('.test-suite-counts .count-indicator.' + statusCssClass + ' .count'))
+          fixture.debugElement.query(By.css(`.test-suite-counts .count-indicator.${statusCssClass} .count`))
             .nativeElement.textContent
         ).toBe(count);
       });
 
-      it('shows a rate partition for ' + statusName + ' test suites in the rate indicator', () => {
+      it(`shows a rate partition for ${statusName} test suites in the rate indicator`, () => {
         expect(
-          fixture.debugElement.query(By.css('.test-suite-rates .rate-indicator.' + statusCssClass)).nativeElement
+          fixture.debugElement.query(By.css(`.test-suite-rates .rate-indicator.${statusCssClass}`)).nativeElement
             .textContent
-        ).toBe(count + ' ' + statusName);
+        ).toBe(`${count} ${statusName}`);
       });
     });
   });
@@ -137,7 +137,7 @@ describe('TestSummaryHeaderComponent', () => {
       ['failed', 'passed', 'inconclusive'].forEach(statusCssClass => {
         expect(
           fixture.debugElement
-            .query(By.css('.test-suite-rates .rate-indicator.' + statusCssClass))
+            .query(By.css(`.test-suite-rates .rate-indicator.${statusCssClass}`))
             .nativeElement.attributes.getNamedItem('hidden')
         ).toBeNull();
       });
@@ -147,7 +147,7 @@ describe('TestSummaryHeaderComponent', () => {
       ['failed', 'passed', 'skipped', 'inconclusive'].forEach(statusCssClass => {
         expect(
           fixture.debugElement
-            .query(By.css('.test-suite-counts .count-indicator.' + statusCssClass + ' .count'))
+            .query(By.css(`.test-suite-counts .count-indicator.${statusCssClass} .count`))
             .nativeElement.attributes.getNamedItem('hidden')
         ).toBeNull();
       });
