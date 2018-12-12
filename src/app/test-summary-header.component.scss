@@ -1,0 +1,138 @@
+@import '../sass/constants';
+@import '../sass/mixins';
+
+.test-summary-header {
+  box-sizing: border-box;
+  @include padding-x($main-content-padding-x);
+  padding-top: 56px;
+
+  .test-suite-counts {
+    display: flex;
+    justify-content: space-between;
+    @include padding-x(40px);
+
+    .count-indicator {
+      display: flex;
+      align-items: flex-start;
+
+      .icon {
+        flex-shrink: 0;
+
+        ::ng-deep svg {
+          @include size(48px);
+          fill: $dark-blue-grey;
+        }
+      }
+
+      .count-wrapper {
+        margin-top: 8px;
+        margin-left: 8px;
+        color: $dark-blue-grey;
+
+        .count {
+          @include default-font;
+          font-size: 25px;
+          font-weight: 700;
+        }
+
+        .name {
+          @include ui-element-subtitle;
+        }
+      }
+
+      @mixin count-indicator-with-color($color) {
+        .icon ::ng-deep svg {
+          fill: $color;
+        }
+
+        .name {
+          color: $color;
+        }
+      }
+
+      &.failed {
+        @include count-indicator-with-color($vivid-pink);
+      }
+
+      &.passed {
+        @include count-indicator-with-color($green-teal);
+      }
+
+      &.skipped {
+        @include count-indicator-with-color($warm-grey);
+      }
+
+      &.inconclusive {
+        @include count-indicator-with-color($ocean-blue);
+      }
+    }
+  }
+
+  .test-suite-rates {
+    display: flex;
+    margin-top: 32px;
+
+    .rate-indicator {
+      height: 24px;
+      box-sizing: border-box;
+      border-bottom: 6px solid;
+      padding-right: 8px;
+      overflow: hidden;
+      @include ui-element-subtitle;
+
+      @mixin rate-indicator-with-color($color) {
+        border-bottom-color: $color;
+        color: $color;
+      }
+
+      &.failed {
+        @include rate-indicator-with-color($vivid-pink);
+      }
+
+      &.passed {
+        @include rate-indicator-with-color($green-teal);
+      }
+
+      &.skipped {
+        @include rate-indicator-with-color($warm-grey);
+      }
+
+      &.inconclusive {
+        @include rate-indicator-with-color($ocean-blue);
+      }
+    }
+  }
+
+  @include width-max(800px) {
+    .test-suite-counts {
+      flex-wrap: wrap;
+
+      .count-indicator {
+        margin-bottom: 16px;
+
+        &.total {
+          width: 100%;
+        }
+
+        &:not(.total) {
+          width: 50%;
+        }
+      }
+    }
+  }
+
+  @include width-max-screen-small {
+    @include padding-x($main-content-padding-x-smallscreen);
+  }
+
+  @include width-max(420px) {
+    .test-suite-counts {
+      display: block;
+
+      .count-indicator.total,
+      .count-indicator:not(.total) {
+        width: auto;
+      }
+    }
+  }
+}

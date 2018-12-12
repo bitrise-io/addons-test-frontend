@@ -8,7 +8,10 @@ $screen-xlarge-width: 1920px;
 // Sizes
 
 $beam-height: 47px;
-$content-maxwidth: 1476px;
+$centered-maxwidth: 1476px;
+$main-content-padding-x: 24px;
+$main-content-padding-x-smallscreen: 18px;
+$section-spacing-y: 32px;
 $ui-element-notification-bubble-size: 24px;
 
 // Times
@@ -19,8 +22,11 @@ $default-hovertime: 0.2s;
 
 $white: #ffffff !default;
 $white-darken: #dddddd !default;
+$warm-grey: #777777 !default;
 $aqua: #0dd3c5 !default;
+$green-teal: #0fc389 !default;
 $water-blue-two: #0d83cd !default;
+$ocean-blue: #054ab0 !default;
 $dark-blue-grey: #351d48 !default;
 $vivid-pink: #ff2158 !default;
 

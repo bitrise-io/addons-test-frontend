@@ -3,13 +3,23 @@ import { Location } from '@angular/common';
 import { RouterTestingModule } from '@angular/router/testing';
 import { HttpClientTestingModule } from '@angular/common/http/testing';
 import { By } from '@angular/platform-browser';
-import { Pipe, PipeTransform, DebugElement } from '@angular/core';
+import { Pipe, PipeTransform, DebugElement, Component } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { InlineSVGModule } from 'ng-inline-svg';
 import { AppHeaderComponent } from './app-header.component';
-import { TestSummaryComponent } from './test-summary.component';
-import { TestReportComponent } from './test-report.component';
 import { TestReportService } from './test-report.service';
+
+@Component({
+  selector: 'bitrise-test-summary',
+  template: ''
+})
+class MockTestSummaryComponent {}
+
+@Component({
+  selector: 'bitrise-test-report',
+  template: ''
+})
+class MockTestReportComponent {}
 
 @Pipe({ name: 'maximizeTo' })
 class MockMaximizePipe implements PipeTransform {
@@ -32,23 +42,23 @@ describe('AppHeaderComponent', () => {
   let fixture: ComponentFixture<AppHeaderComponent>;
   let appHeaderElement: AppHeaderComponent;
   let tabElements: DebugElement[];
-  let summedTestCaseCountElement: DebugElement;
+  let summedTestSuiteCountElement: DebugElement;
   let dropdownItemElements: DebugElement[];
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
       imports: [
         RouterTestingModule.withRoutes([
-          { path: 'summary', component: TestSummaryComponent },
-          { path: 'testreport/1', component: TestReportComponent },
-          { path: 'testreport/2', component: TestReportComponent },
-          { path: 'testreport/3', component: TestReportComponent }
+          { path: 'summary', component: MockTestSummaryComponent },
+          { path: 'testreport/1', component: MockTestReportComponent },
+          { path: 'testreport/2', component: MockTestReportComponent },
+          { path: 'testreport/3', component: MockTestReportComponent }
         ]),
         HttpClientTestingModule,
         FormsModule,
         InlineSVGModule.forRoot()
       ],
-      declarations: [MockMaximizePipe, AppHeaderComponent, TestSummaryComponent, TestReportComponent],
+      declarations: [MockMaximizePipe, AppHeaderComponent, MockTestSummaryComponent, MockTestReportComponent],
       providers: [{ provide: TestReportService, useClass: MockTestReportService }]
     }).compileComponents();
 
@@ -68,15 +78,15 @@ describe('AppHeaderComponent', () => {
   describe('when there are some test reports', () => {
     beforeEach(() => {
       service.testReports = [
-        { id: 1, name: 'Unit Test A', failedTestCaseCount: 2 },
-        { id: 2, name: 'Unit Test X', failedTestCaseCount: 0 },
-        { id: 3, name: 'Unit Test Y', failedTestCaseCount: 1 }
+        { id: 1, name: 'Unit Test A', failedTestSuiteCount: 2 },
+        { id: 2, name: 'Unit Test X', failedTestSuiteCount: 0 },
+        { id: 3, name: 'Unit Test Y', failedTestSuiteCount: 1 }
       ];
 
       fixture.detectChanges();
 
       tabElements = fixture.debugElement.queryAll(By.css('a.tabmenu-item'));
-      summedTestCaseCountElement = fixture.debugElement.query(By.css('.summed-failed-test-case-count'));
+      summedTestSuiteCountElement = fixture.debugElement.query(By.css('.summed-failed-test-suite-count'));
       dropdownItemElements = fixture.debugElement.queryAll(By.css('.tabmenu-select option'));
     });
 
@@ -90,17 +100,17 @@ describe('AppHeaderComponent', () => {
       expect(tabElements[3].query(By.css('.text')).nativeElement.textContent).toBe('Unit Test Y');
     });
 
-    it('shows bubble for test reports with failed test cases', () => {
+    it('shows bubble for test reports with failed test suites', () => {
       expect(tabElements[1].query(By.css('.notification-bubble'))).not.toBeNull();
       expect(tabElements[3].query(By.css('.notification-bubble'))).not.toBeNull();
     });
 
-    it('does not show bubble for test reports without failed test cases', () => {
+    it('does not show bubble for test reports without failed test suites', () => {
       expect(tabElements[2].query(By.css('.notification-bubble'))).toBeNull();
     });
 
-    it('shows the sum of failed test cases in the mobile-only section', () => {
-      expect(summedTestCaseCountElement.query(By.css('.text')).nativeElement.textContent).toBe('3 failed tests');
+    it('shows the sum of failed test suites in the mobile-only section', () => {
+      expect(summedTestSuiteCountElement.query(By.css('.text')).nativeElement.textContent).toBe('3 failed tests');
     });
 
     it('loads as many items for the mobile-only dropdown as there are test reports, plus one for the summary', () => {
@@ -164,7 +174,7 @@ describe('AppHeaderComponent', () => {
       fixture.detectChanges();
 
       tabElements = fixture.debugElement.queryAll(By.css('a.tabmenu-item'));
-      summedTestCaseCountElement = fixture.debugElement.query(By.css('.summed-failed-test-case-count'));
+      summedTestSuiteCountElement = fixture.debugElement.query(By.css('.summed-failed-test-suite-count'));
       dropdownItemElements = fixture.debugElement.queryAll(By.css('.tabmenu-select option'));
     });
 
@@ -172,8 +182,8 @@ describe('AppHeaderComponent', () => {
       expect(tabElements.length).toBe(1);
     });
 
-    it('shows 0 failed test cases in the mobile-only section', () => {
-      expect(summedTestCaseCountElement.query(By.css('.text')).nativeElement.textContent).toBe('0 failed tests');
+    it('shows 0 failed test suites in the mobile-only section', () => {
+      expect(summedTestSuiteCountElement.query(By.css('.text')).nativeElement.textContent).toBe('0 failed tests');
     });
 
     it('loads only one dropdown item for the summary', () => {
