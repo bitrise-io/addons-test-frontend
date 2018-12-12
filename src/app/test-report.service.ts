@@ -7,26 +7,34 @@ export class TestReportService {
     {
       id: 1,
       name: 'Unit Test A',
-      inconclusiveTestSuiteCount: 5,
-      passedTestSuiteCount: 3,
-      failedTestSuiteCount: 2,
-      skippedTestSuiteCount: 0
+      testSuites: [
+        { status: 1 },
+        { status: 1 },
+        { status: 2 },
+        { status: 0 },
+        { status: 3 },
+        { status: 1 },
+        { status: 2 }
+      ]
     },
     {
       id: 2,
       name: 'Unit Test X',
-      inconclusiveTestSuiteCount: 3,
-      passedTestSuiteCount: 2,
-      failedTestSuiteCount: 0,
-      skippedTestSuiteCount: 1
+      testSuites: [
+        { status: 3 },
+        { status: 1 },
+        { status: 2 }
+      ]
     },
     {
       id: 3,
       name: 'Unit Test Y',
-      inconclusiveTestSuiteCount: 7,
-      passedTestSuiteCount: 4,
-      failedTestSuiteCount: 1,
-      skippedTestSuiteCount: 3
+      testSuites: [
+        { status: 1 },
+        { status: 1 },
+        { status: 2 },
+        { status: 0 }
+      ]
     }
   ];
 

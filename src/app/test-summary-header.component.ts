@@ -57,13 +57,17 @@ export class TestSummaryHeaderComponent implements OnInit {
     } = testReports.reduce(
       (summedTestSuiteCountsByStatuses, testReport) => ({
         [TestSuiteStatus.inconclusive]:
-          (summedTestSuiteCountsByStatuses[TestSuiteStatus.inconclusive] || 0) + testReport.inconclusiveTestSuiteCount,
+          (summedTestSuiteCountsByStatuses[TestSuiteStatus.inconclusive] || 0) +
+          testReport.testSuites.filter(testSuite => testSuite.status === TestSuiteStatus.inconclusive).length,
         [TestSuiteStatus.passed]:
-          (summedTestSuiteCountsByStatuses[TestSuiteStatus.passed] || 0) + testReport.passedTestSuiteCount,
+          (summedTestSuiteCountsByStatuses[TestSuiteStatus.passed] || 0) +
+          testReport.testSuites.filter(testSuite => testSuite.status === TestSuiteStatus.passed).length,
         [TestSuiteStatus.failed]:
-          (summedTestSuiteCountsByStatuses[TestSuiteStatus.failed] || 0) + testReport.failedTestSuiteCount,
+          (summedTestSuiteCountsByStatuses[TestSuiteStatus.failed] || 0) +
+          testReport.testSuites.filter(testSuite => testSuite.status === TestSuiteStatus.failed).length,
         [TestSuiteStatus.skipped]:
-          (summedTestSuiteCountsByStatuses[TestSuiteStatus.skipped] || 0) + testReport.skippedTestSuiteCount
+          (summedTestSuiteCountsByStatuses[TestSuiteStatus.skipped] || 0) +
+          testReport.testSuites.filter(testSuite => testSuite.status === TestSuiteStatus.skipped).length
       }),
       {}
     );

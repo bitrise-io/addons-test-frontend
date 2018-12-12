@@ -1,22 +1,17 @@
 import { Injectable } from '@angular/core';
 import { Deserializable } from './deserializable.model';
+import { TestSuite } from './test-suite.model';
 
 @Injectable()
 export class TestReport implements Deserializable {
   id: number;
   name: string;
-  inconclusiveTestSuiteCount: number;
-  passedTestSuiteCount: number;
-  failedTestSuiteCount: number;
-  skippedTestSuiteCount: number;
+  testSuites: TestSuite[];
 
   deserialize(testReportData: any) {
     this.id = testReportData.id;
     this.name = testReportData.name;
-    this.inconclusiveTestSuiteCount = testReportData.inconclusiveTestSuiteCount;
-    this.passedTestSuiteCount = testReportData.passedTestSuiteCount;
-    this.failedTestSuiteCount = testReportData.failedTestSuiteCount;
-    this.skippedTestSuiteCount = testReportData.skippedTestSuiteCount;
+    this.testSuites = testReportData.testSuites.map((testSuiteData) => new TestSuite().deserialize(testSuiteData));
 
     return this;
   }

@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { TestReportService } from './test-report.service';
 import { Router, NavigationEnd } from '@angular/router';
 import { filter } from 'rxjs/operators';
+import { TestSuiteStatus } from './test-suite-status';
 
 @Component({
   selector: 'bitrise-app-header',
@@ -31,7 +32,7 @@ export class AppHeaderComponent implements OnInit {
       testReports.map(testReport => ({
         name: testReport.name,
         routerLink: ['/testreport/' + testReport.id],
-        failedTestSuiteCount: testReport.failedTestSuiteCount
+        failedTestSuiteCount: testReport.testSuites.filter((testSuite) => testSuite.status === TestSuiteStatus.failed).length
       }))
     );
 
