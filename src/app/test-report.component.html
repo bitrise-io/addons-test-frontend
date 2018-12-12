@@ -7,4 +7,5 @@
     <div class="label orientation">orientation</div>
     <div class="label locale">locale</div>
   </div>
+  <bitrise-test-suite *ngFor="let testSuite of testReport.testSuites" [testSuite]="testSuite"></bitrise-test-suite>
 </section>
