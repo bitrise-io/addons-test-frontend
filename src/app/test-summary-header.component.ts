@@ -1,6 +1,5 @@
 import { Component, OnInit } from '@angular/core';
 import { TestSuiteStatus } from './test-suite-status';
-import { TestReport } from './test-report.model';
 import { TestReportService } from './test-report.service';
 
 @Component({
