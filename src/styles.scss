@@ -18,6 +18,14 @@ body {
   @include margin-x(auto);
 }
 
+.main-content-padding-x {
+  @include padding-x($main-content-padding-x);
+
+  @include width-max-screen-small {
+    @include padding-x($main-content-padding-x-smallscreen);
+  }
+}
+
 [hidden] {
   display: none !important;
 }
