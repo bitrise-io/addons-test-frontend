@@ -1,0 +1,28 @@
+@import '../sass/constants';
+@import '../sass/mixins';
+
+.test-report {
+  margin-top: 32px;
+
+  .name {
+    @include ui-element-header-5;
+    margin-bottom: 24px;
+    @include padding-y(20px);
+    border-bottom: 2px solid $white-three;
+    line-height: 24px;
+    font-weight: 700;
+    color: $dark-blue-grey;
+  }
+
+  .labels {
+    display: flex;
+
+    .label {
+      @include ui-element-subtitle;
+      flex-grow: 1;
+      line-height: 16px;
+      @include padding-y(8px);
+      color: $brownish-grey;
+    }
+  }
+}
