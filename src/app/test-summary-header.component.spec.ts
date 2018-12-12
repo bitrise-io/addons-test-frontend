@@ -4,6 +4,8 @@ import { By } from '@angular/platform-browser';
 import { InlineSVGModule } from 'ng-inline-svg';
 import { TestSummaryHeaderComponent } from './test-summary-header.component';
 import { TestReportService } from './test-report.service';
+import { TestReport } from './test-report.model';
+import { TestSuite } from './test-suite.model';
 
 class MockTestReportService {
   testReports: any[];
@@ -64,7 +66,30 @@ describe('TestSummaryHeaderComponent', () => {
           failedTestSuiteCount: 1,
           skippedTestSuiteCount: 3
         }
-      ];
+      ].map(specConfig => {
+        let testReport = new TestReport();
+        testReport.id = specConfig.id;
+        testReport.name = specConfig.name;
+        testReport.testSuites = [
+          specConfig.inconclusiveTestSuiteCount,
+          specConfig.passedTestSuiteCount,
+          specConfig.failedTestSuiteCount,
+          specConfig.skippedTestSuiteCount
+        ].reduce(
+          (testSuites, testSuiteCount, index) =>
+            testSuites.concat(
+              [...Array(testSuiteCount)].fill(null).map(() => {
+                let testSuite = new TestSuite();
+                testSuite.status = index;
+
+                return testSuite;
+              })
+            ),
+          []
+        );
+
+        return testReport;
+      });
 
       fixture.detectChanges();
     });
@@ -120,7 +145,30 @@ describe('TestSummaryHeaderComponent', () => {
           failedTestSuiteCount: 0,
           skippedTestSuiteCount: 0
         }
-      ];
+      ].map(specConfig => {
+        let testReport = new TestReport();
+        testReport.id = specConfig.id;
+        testReport.name = specConfig.name;
+        testReport.testSuites = [
+          specConfig.inconclusiveTestSuiteCount,
+          specConfig.passedTestSuiteCount,
+          specConfig.failedTestSuiteCount,
+          specConfig.skippedTestSuiteCount
+        ].reduce(
+          (testSuites, testSuiteCount, index) =>
+            testSuites.concat(
+              [...Array(testSuiteCount)].fill(null).map(() => {
+                let testSuite = new TestSuite();
+                testSuite.status = index;
+
+                return testSuite;
+              })
+            ),
+          []
+        );
+
+        return testReport;
+      });
 
       fixture.detectChanges();
     });

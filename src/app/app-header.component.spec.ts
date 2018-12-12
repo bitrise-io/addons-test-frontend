@@ -8,6 +8,8 @@ import { FormsModule } from '@angular/forms';
 import { InlineSVGModule } from 'ng-inline-svg';
 import { AppHeaderComponent } from './app-header.component';
 import { TestReportService } from './test-report.service';
+import { TestReport } from './test-report.model';
+import { TestSuite } from './test-suite.model';
 
 @Component({
   selector: 'bitrise-test-summary',
@@ -29,9 +31,9 @@ class MockMaximizePipe implements PipeTransform {
 }
 
 class MockTestReportService {
-  testReports: any[];
+  testReports: TestReport[];
 
-  public getTestReports(): any[] {
+  public getTestReports(): TestReport[] {
     return this.testReports;
   }
 }
@@ -81,7 +83,19 @@ describe('AppHeaderComponent', () => {
         { id: 1, name: 'Unit Test A', failedTestSuiteCount: 2 },
         { id: 2, name: 'Unit Test X', failedTestSuiteCount: 0 },
         { id: 3, name: 'Unit Test Y', failedTestSuiteCount: 1 }
-      ];
+      ].map(specConfig => {
+        let testReport = new TestReport();
+        testReport.id = specConfig.id;
+        testReport.name = specConfig.name;
+        testReport.testSuites = [...Array(specConfig.failedTestSuiteCount)].fill(null).map(() => {
+          let testSuite = new TestSuite();
+          testSuite.status = 2;
+
+          return testSuite;
+        });
+
+        return testReport;
+      });
 
       fixture.detectChanges();
 
