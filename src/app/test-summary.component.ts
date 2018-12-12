@@ -2,8 +2,7 @@ import { Component } from '@angular/core';
 
 @Component({
   selector: 'bitrise-test-summary',
-  template: `
-    <bitrise-test-summary-header></bitrise-test-summary-header>
-  `
+  templateUrl: './test-summary.component.html',
+  styleUrls: ['./test-summary.component.scss']
 })
 export class TestSummaryComponent {}

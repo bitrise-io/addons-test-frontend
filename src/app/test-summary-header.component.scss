@@ -2,9 +2,7 @@
 @import '../sass/mixins';
 
 .test-summary-header {
-  box-sizing: border-box;
-  @include padding-x($main-content-padding-x);
-  padding-top: 56px;
+  margin-top: 56px;
 
   .test-suite-counts {
     display: flex;
@@ -119,10 +117,6 @@
         }
       }
     }
-  }
-
-  @include width-max-screen-small {
-    @include padding-x($main-content-padding-x-smallscreen);
   }
 
   @include width-max(420px) {
