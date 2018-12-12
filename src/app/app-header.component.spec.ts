@@ -84,11 +84,11 @@ describe('AppHeaderComponent', () => {
         { id: 2, name: 'Unit Test X', failedTestSuiteCount: 0 },
         { id: 3, name: 'Unit Test Y', failedTestSuiteCount: 1 }
       ].map(specConfig => {
-        let testReport = new TestReport();
+        const testReport = new TestReport();
         testReport.id = specConfig.id;
         testReport.name = specConfig.name;
         testReport.testSuites = [...Array(specConfig.failedTestSuiteCount)].fill(null).map(() => {
-          let testSuite = new TestSuite();
+          const testSuite = new TestSuite();
           testSuite.status = 2;
 
           return testSuite;

@@ -67,7 +67,7 @@ describe('TestSummaryHeaderComponent', () => {
           skippedTestSuiteCount: 3
         }
       ].map(specConfig => {
-        let testReport = new TestReport();
+        const testReport = new TestReport();
         testReport.id = specConfig.id;
         testReport.name = specConfig.name;
         testReport.testSuites = [
@@ -79,7 +79,7 @@ describe('TestSummaryHeaderComponent', () => {
           (testSuites, testSuiteCount, index) =>
             testSuites.concat(
               [...Array(testSuiteCount)].fill(null).map(() => {
-                let testSuite = new TestSuite();
+                const testSuite = new TestSuite();
                 testSuite.status = index;
 
                 return testSuite;
@@ -146,7 +146,7 @@ describe('TestSummaryHeaderComponent', () => {
           skippedTestSuiteCount: 0
         }
       ].map(specConfig => {
-        let testReport = new TestReport();
+        const testReport = new TestReport();
         testReport.id = specConfig.id;
         testReport.name = specConfig.name;
         testReport.testSuites = [
@@ -158,7 +158,7 @@ describe('TestSummaryHeaderComponent', () => {
           (testSuites, testSuiteCount, index) =>
             testSuites.concat(
               [...Array(testSuiteCount)].fill(null).map(() => {
-                let testSuite = new TestSuite();
+                const testSuite = new TestSuite();
                 testSuite.status = index;
 
                 return testSuite;
