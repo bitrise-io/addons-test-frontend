@@ -1,5 +1,5 @@
 import { Pipe, PipeTransform } from '@angular/core';
-import { TestSuiteStatus } from './test-suite-status';
+import { TestSuiteStatus } from './test-suite.model';
 
 @Pipe({ name: 'cssClassFromTestSuiteStatus' })
 export class CssClassFromTestSuiteStatusPipe implements PipeTransform {

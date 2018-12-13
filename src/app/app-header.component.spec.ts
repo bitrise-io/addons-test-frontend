@@ -87,7 +87,7 @@ describe('AppHeaderComponent', () => {
         const testReport = new TestReport();
         testReport.id = specConfig.id;
         testReport.name = specConfig.name;
-        testReport.testSuites = [...Array(specConfig.failedTestSuiteCount)].fill(null).map(() => {
+        testReport.testSuites = Array(specConfig.failedTestSuiteCount).fill(null).map(() => {
           const testSuite = new TestSuite();
           testSuite.status = 2;
 

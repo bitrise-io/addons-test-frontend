@@ -1,8 +1,7 @@
 import { Component, OnInit } from '@angular/core';
-import { TestSuiteStatus } from './test-suite-status';
 import { TestReportService } from './test-report.service';
 import { TestReport } from './test-report.model';
-import { TestSuite } from './test-suite.model';
+import { TestSuite, TestSuiteStatus } from './test-suite.model';
 
 interface TestSuiteStatusInformation {
   statusName: string;
@@ -57,8 +56,7 @@ export class TestSummaryHeaderComponent implements OnInit {
     this.orderedTestSuiteStatuses.forEach((status: number) => {
       this.testSuitesByStatuses[status].count = testReports.reduce(
         (testSuiteCountWithStatus: number, testReport: TestReport) =>
-          testSuiteCountWithStatus +
-          testReport.testSuites.filter((testSuite: TestSuite) => testSuite.status === status).length,
+          testSuiteCountWithStatus + testReport.testSuitesWithStatus(status).length,
         0
       );
 

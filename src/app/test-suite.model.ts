@@ -1,7 +1,17 @@
 import { Injectable } from '@angular/core';
 import { Deserializable } from './deserializable.model';
-import { TestSuiteStatus } from './test-suite-status';
 import { TestSuiteOrientation } from './test-suite-orientation';
+
+export enum TestSuiteStatus {
+  inconclusive = 0,
+  passed = 1,
+  failed = 2,
+  skipped = 3
+}
+
+export type TestSuiteResponse = {
+  status: TestSuiteStatus;
+};
 
 @Injectable()
 export class TestSuite implements Deserializable {

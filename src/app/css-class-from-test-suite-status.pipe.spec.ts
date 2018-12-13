@@ -1,5 +1,5 @@
 import { CssClassFromTestSuiteStatusPipe } from './css-class-from-test-suite-status.pipe';
-import { TestSuiteStatus } from './test-suite-status';
+import { TestSuiteStatus } from './test-suite.model';
 
 describe('CssClassFromTestSuiteStatusPipe', () => {
   let cssClassFromTestSuiteStatusPipe: CssClassFromTestSuiteStatusPipe;
