@@ -3,7 +3,7 @@ import { TestReportService } from './test-report.service';
 import { Router, NavigationEnd } from '@angular/router';
 import { filter } from 'rxjs/operators';
 import { TestReport } from './test-report.model';
-import { TestSuite, TestSuiteStatus } from './test-suite.model';
+import { TestSuiteStatus } from './test-suite.model';
 
 @Component({
   selector: 'bitrise-app-header',
@@ -24,8 +24,7 @@ export class AppHeaderComponent implements OnInit {
   ngOnInit() {
     const testReports = this.testReportService.getTestReports();
     const failedTestSuiteCountsOfTestReports = testReports.map(
-      testReport =>
-        testReport.testSuites.filter((testSuite: TestSuite) => testSuite.status === TestSuiteStatus.failed).length
+      testReport => testReport.testSuitesWithStatus(TestSuiteStatus.failed).length
     );
 
     this.tabmenuItems = [

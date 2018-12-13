@@ -56,8 +56,7 @@ export class TestSummaryHeaderComponent implements OnInit {
     this.orderedTestSuiteStatuses.forEach((status: number) => {
       this.testSuitesByStatuses[status].count = testReports.reduce(
         (testSuiteCountWithStatus: number, testReport: TestReport) =>
-          testSuiteCountWithStatus +
-          testReport.testSuites.filter((testSuite: TestSuite) => testSuite.status === status).length,
+          testSuiteCountWithStatus + testReport.testSuitesWithStatus(status).length,
         0
       );
 
