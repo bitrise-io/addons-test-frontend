@@ -20,7 +20,7 @@ describe('TestSummaryHeaderComponent', () => {
   let fixture: ComponentFixture<TestSummaryHeaderComponent>;
   let testSummaryHeader: TestSummaryHeaderComponent;
 
-  let testReportsFromSpecConfig = (specConfig: any) => {
+  const testReportsFromSpecConfig = (specConfig: any) => {
     const testReport = new TestReport();
     testReport.id = specConfig.id;
     testReport.name = specConfig.name;

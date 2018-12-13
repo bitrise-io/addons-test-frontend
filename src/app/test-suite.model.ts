@@ -9,8 +9,8 @@ export enum TestSuiteStatus {
 }
 
 export type TestSuiteResponse = {
-  status: TestSuiteStatus
-}
+  status: TestSuiteStatus;
+};
 
 @Injectable()
 export class TestSuite implements Deserializable {
