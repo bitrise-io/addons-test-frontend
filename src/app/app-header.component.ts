@@ -2,9 +2,8 @@ import { Component, OnInit } from '@angular/core';
 import { TestReportService } from './test-report.service';
 import { Router, NavigationEnd } from '@angular/router';
 import { filter } from 'rxjs/operators';
-import { TestSuiteStatus } from './test-suite-status';
 import { TestReport } from './test-report.model';
-import { TestSuite } from './test-suite.model';
+import { TestSuite, TestSuiteStatus } from './test-suite.model';
 
 @Component({
   selector: 'bitrise-app-header',

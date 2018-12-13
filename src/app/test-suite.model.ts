@@ -1,13 +1,23 @@
 import { Injectable } from '@angular/core';
 import { Deserializable } from './deserializable.model';
-import { TestSuiteStatus } from './test-suite-status';
+
+export enum TestSuiteStatus {
+  inconclusive = 0,
+  passed = 1,
+  failed = 2,
+  skipped = 3
+}
+
+export interface TestSuiteResponse {
+  status: TestSuiteStatus
+}
 
 @Injectable()
 export class TestSuite implements Deserializable {
   status: TestSuiteStatus;
 
-  deserialize(testSuiteData: any) {
-    this.status = testSuiteData.status;
+  deserialize(testSuiteResponse: TestSuiteResponse) {
+    this.status = testSuiteResponse.status;
 
     return this;
   }

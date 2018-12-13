@@ -1,8 +1,7 @@
 import { Component, OnInit } from '@angular/core';
-import { TestSuiteStatus } from './test-suite-status';
 import { TestReportService } from './test-report.service';
 import { TestReport } from './test-report.model';
-import { TestSuite } from './test-suite.model';
+import { TestSuite, TestSuiteStatus } from './test-suite.model';
 
 interface TestSuiteStatusInformation {
   statusName: string;
