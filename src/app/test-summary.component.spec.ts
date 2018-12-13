@@ -59,7 +59,7 @@ describe('TestSummaryComponent', () => {
 
   describe('when there are some test reports', () => {
     beforeEach(() => {
-      service.testReports = [...Array(3)].fill(null).map(() => new TestReport());
+      service.testReports = Array(3).fill(null).map(() => new TestReport());
 
       fixture.detectChanges();
     });

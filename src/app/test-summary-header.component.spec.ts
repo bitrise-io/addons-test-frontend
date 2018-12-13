@@ -78,7 +78,7 @@ describe('TestSummaryHeaderComponent', () => {
         ].reduce(
           (testSuites, testSuiteCount, index) =>
             testSuites.concat(
-              [...Array(testSuiteCount)].fill(null).map(() => {
+              Array(testSuiteCount).fill(null).map(() => {
                 const testSuite = new TestSuite();
                 testSuite.status = index;
 
@@ -157,7 +157,7 @@ describe('TestSummaryHeaderComponent', () => {
         ].reduce(
           (testSuites, testSuiteCount, index) =>
             testSuites.concat(
-              [...Array(testSuiteCount)].fill(null).map(() => {
+              Array(testSuiteCount).fill(null).map(() => {
                 const testSuite = new TestSuite();
                 testSuite.status = index;
 
