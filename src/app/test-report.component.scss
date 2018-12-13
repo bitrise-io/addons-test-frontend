@@ -17,6 +17,11 @@
   .labels {
     display: flex;
 
+    &:before {
+      content: "";
+      width: $test-suite-info-part-icon-x;
+    }
+
     .label {
       @include ui-element-subtitle;
       flex-grow: 1;
@@ -26,7 +31,6 @@
 
       &.devices {
         width: $test-suite-info-part-device-x;
-        margin-left: $test-suite-info-part-icon-x;
       }
 
       &.duration {
@@ -46,6 +50,12 @@
         width: $test-suite-info-part-locale-x;
         text-align: center;
       }
+    }
+
+    &:after {
+      content: "";
+      width: $test-suite-info-part-test-case-button-x;
+      margin-right: 16px;
     }
   }
 

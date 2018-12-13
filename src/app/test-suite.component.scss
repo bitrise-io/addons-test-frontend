@@ -1,0 +1,114 @@
+@import '../sass/constants';
+@import '../sass/mixins';
+
+:host:not(:last-child) .test-suite {
+  margin-bottom: 16px;
+}
+
+.test-suite {
+  $border-width: 1px;
+  $colored-border-left-width: 8px;
+  $status-icon-size: 24px;
+
+  display: flex;
+  align-items: center;
+  height: 64px;
+  border: $border-width solid $white-three;
+  border-radius: 8px;
+  overflow: hidden;
+  @include ui-modifier-container-shadow;
+
+  &:before {
+    content: '';
+    width: $colored-border-left-width;
+    height: 100%;
+  }
+
+  .status-icon {
+    @include size($status-icon-size);
+    @include margin-x(16px);
+  }
+
+  @mixin test-suite-with-color($color) {
+    &:before {
+      background-color: $color;
+    }
+
+    .status-icon ::ng-deep svg {
+      fill: $color;
+    }
+  }
+
+  .detail {
+    flex-grow: 1;
+  }
+
+  .detail.device {
+    width: $test-suite-info-part-device-x;
+    color: $dark-blue-grey;
+
+    .name {
+      @include ui-element-body;
+    }
+
+    .operating-system {
+      @include ui-element-description;
+    }
+  }
+
+  .detail.duration {
+    @include ui-element-body;
+    width: $test-suite-info-part-duration-x;
+    color: $dark-blue-grey;
+  }
+
+  .detail.test-results {
+    flex-grow: 1;
+    width: $test-suite-info-part-results-x;
+  }
+
+  .detail.orientation {
+    width: $test-suite-info-part-orientation-x;
+  }
+
+  .detail.locale {
+    @include ui-element-body;
+    width: $test-suite-info-part-locale-x;
+    color: $dark-blue-grey;
+  }
+
+  .test-cases-button {
+    @include ui-element-button-secondary;
+    display: flex;
+    width: $test-suite-info-part-test-case-button-x;
+    margin-right: 16px;
+
+    &:hover {
+      @include ui-element-button-secondary-hover;
+    }
+
+    .arrow {
+      margin-left: 8px;
+
+      ::ng-deep svg {
+        display: block;
+      }
+    }
+  }
+
+  &.failed {
+    @include test-suite-with-color($vivid-pink);
+  }
+
+  &.passed {
+    @include test-suite-with-color($green-teal);
+  }
+
+  &.skipped {
+    @include test-suite-with-color($warm-grey);
+  }
+
+  &.inconclusive {
+    @include test-suite-with-color($ocean-blue);
+  }
+}

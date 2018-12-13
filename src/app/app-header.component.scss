@@ -145,7 +145,7 @@
 
     .tabmenu-select {
       @include ui-element-select;
-      @include ui-modifier-shadow;
+      @include ui-modifier-button-shadow;
       display: block;
       width: 100%;
     }
