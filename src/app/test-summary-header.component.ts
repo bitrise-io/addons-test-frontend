@@ -1,6 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { TestSuiteStatus } from './test-suite-status';
 import { TestReportService } from './test-report.service';
+import { TestReport } from './test-report.model';
+import { TestSuite } from './test-suite.model';
 
 interface TestSuiteStatusInformation {
   statusName: string;
@@ -52,29 +54,15 @@ export class TestSummaryHeaderComponent implements OnInit {
   ngOnInit() {
     const testReports = this.testReportService.getTestReports();
 
-    const testSuiteCountsByStatuses: {
-      [status: string]: number;
-    } = testReports.reduce(
-      (summedTestSuiteCountsByStatuses, testReport) => ({
-        [TestSuiteStatus.inconclusive]:
-          (summedTestSuiteCountsByStatuses[TestSuiteStatus.inconclusive] || 0) +
-          testReport.testSuites.filter(testSuite => testSuite.status === TestSuiteStatus.inconclusive).length,
-        [TestSuiteStatus.passed]:
-          (summedTestSuiteCountsByStatuses[TestSuiteStatus.passed] || 0) +
-          testReport.testSuites.filter(testSuite => testSuite.status === TestSuiteStatus.passed).length,
-        [TestSuiteStatus.failed]:
-          (summedTestSuiteCountsByStatuses[TestSuiteStatus.failed] || 0) +
-          testReport.testSuites.filter(testSuite => testSuite.status === TestSuiteStatus.failed).length,
-        [TestSuiteStatus.skipped]:
-          (summedTestSuiteCountsByStatuses[TestSuiteStatus.skipped] || 0) +
-          testReport.testSuites.filter(testSuite => testSuite.status === TestSuiteStatus.skipped).length
-      }),
-      {}
-    );
+    this.orderedTestSuiteStatuses.forEach((status: number) => {
+      this.testSuitesByStatuses[status].count = testReports.reduce(
+        (testSuiteCountWithStatus: number, testReport: TestReport) =>
+          testSuiteCountWithStatus +
+          testReport.testSuites.filter((testSuite: TestSuite) => testSuite.status === status).length,
+        0
+      );
 
-    Object.entries(testSuiteCountsByStatuses).forEach(([status, testSuiteCountWithStatus]) => {
-      this.testSuitesByStatuses[status].count = testSuiteCountWithStatus;
-      this.totalTestSuitesCount = (this.totalTestSuitesCount || 0) + testSuiteCountWithStatus;
+      this.totalTestSuitesCount = (this.totalTestSuitesCount || 0) + this.testSuitesByStatuses[status].count;
     });
   }
 }
