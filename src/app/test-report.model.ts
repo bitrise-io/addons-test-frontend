@@ -2,7 +2,7 @@ import { Injectable } from '@angular/core';
 import { Deserializable } from './deserializable.model';
 import { TestSuite, TestSuiteResponse } from './test-suite.model';
 
-export interface TestReportResponse {
+export type TestReportResponse = {
   id: number;
   name: string;
   testSuites: TestSuiteResponse[]

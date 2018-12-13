@@ -8,7 +8,7 @@ export enum TestSuiteStatus {
   skipped = 3
 }
 
-export interface TestSuiteResponse {
+export type TestSuiteResponse = {
   status: TestSuiteStatus
 }
 
