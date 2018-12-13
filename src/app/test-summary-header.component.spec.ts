@@ -20,6 +20,33 @@ describe('TestSummaryHeaderComponent', () => {
   let fixture: ComponentFixture<TestSummaryHeaderComponent>;
   let testSummaryHeader: TestSummaryHeaderComponent;
 
+  let testReportsFromSpecConfig = (specConfig: any) => {
+    const testReport = new TestReport();
+    testReport.id = specConfig.id;
+    testReport.name = specConfig.name;
+    testReport.testSuites = [
+      specConfig.inconclusiveTestSuiteCount,
+      specConfig.passedTestSuiteCount,
+      specConfig.failedTestSuiteCount,
+      specConfig.skippedTestSuiteCount
+    ].reduce(
+      (testSuites, testSuiteCount, index) =>
+        testSuites.concat(
+          Array(testSuiteCount)
+            .fill(null)
+            .map(() => {
+              const testSuite = new TestSuite();
+              testSuite.status = index;
+
+              return testSuite;
+            })
+        ),
+      []
+    );
+
+    return testReport;
+  };
+
   beforeEach(async(() => {
     TestBed.configureTestingModule({
       imports: [HttpClientTestingModule, InlineSVGModule.forRoot()],
@@ -66,30 +93,7 @@ describe('TestSummaryHeaderComponent', () => {
           failedTestSuiteCount: 1,
           skippedTestSuiteCount: 3
         }
-      ].map(specConfig => {
-        const testReport = new TestReport();
-        testReport.id = specConfig.id;
-        testReport.name = specConfig.name;
-        testReport.testSuites = [
-          specConfig.inconclusiveTestSuiteCount,
-          specConfig.passedTestSuiteCount,
-          specConfig.failedTestSuiteCount,
-          specConfig.skippedTestSuiteCount
-        ].reduce(
-          (testSuites, testSuiteCount, index) =>
-            testSuites.concat(
-              Array(testSuiteCount).fill(null).map(() => {
-                const testSuite = new TestSuite();
-                testSuite.status = index;
-
-                return testSuite;
-              })
-            ),
-          []
-        );
-
-        return testReport;
-      });
+      ].map(testReportsFromSpecConfig);
 
       fixture.detectChanges();
     });
@@ -145,30 +149,7 @@ describe('TestSummaryHeaderComponent', () => {
           failedTestSuiteCount: 0,
           skippedTestSuiteCount: 0
         }
-      ].map(specConfig => {
-        const testReport = new TestReport();
-        testReport.id = specConfig.id;
-        testReport.name = specConfig.name;
-        testReport.testSuites = [
-          specConfig.inconclusiveTestSuiteCount,
-          specConfig.passedTestSuiteCount,
-          specConfig.failedTestSuiteCount,
-          specConfig.skippedTestSuiteCount
-        ].reduce(
-          (testSuites, testSuiteCount, index) =>
-            testSuites.concat(
-              Array(testSuiteCount).fill(null).map(() => {
-                const testSuite = new TestSuite();
-                testSuite.status = index;
-
-                return testSuite;
-              })
-            ),
-          []
-        );
-
-        return testReport;
-      });
+      ].map(testReportsFromSpecConfig);
 
       fixture.detectChanges();
     });
