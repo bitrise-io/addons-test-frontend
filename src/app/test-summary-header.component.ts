@@ -13,8 +13,8 @@ interface TestSuiteStatusInformation {
   styleUrls: ['./test-summary-header.component.scss']
 })
 export class TestSummaryHeaderComponent implements OnInit {
-  public testSuiteClass = TestSuite;
-  public testSuiteStatusEnum = TestSuiteStatus;
+  TestSuite = TestSuite;
+  TestSuiteStatus = TestSuiteStatus;
   orderedTestSuiteStatuses = [
     TestSuiteStatus.failed,
     TestSuiteStatus.passed,

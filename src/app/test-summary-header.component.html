@@ -10,31 +10,31 @@
     <div
       class="count-indicator"
       *ngFor="let testSuiteStatus of orderedTestSuiteStatuses"
-      [ngClass]="testSuiteClass.statusCssClass(testSuiteStatus)"
+      [ngClass]="TestSuite.statusCssClass(testSuiteStatus)"
     >
       <div
         class="icon"
-        *ngIf="testSuiteStatus === testSuiteStatusEnum.failed"
+        *ngIf="testSuiteStatus === TestSuiteStatus.failed"
         [inlineSVG]="'/assets/images/sign-cross.svg'"
       ></div>
       <div
         class="icon"
-        *ngIf="testSuiteStatus === testSuiteStatusEnum.passed"
+        *ngIf="testSuiteStatus === TestSuiteStatus.passed"
         [inlineSVG]="'/assets/images/sign-check.svg'"
       ></div>
       <div
         class="icon"
-        *ngIf="testSuiteStatus === testSuiteStatusEnum.skipped"
+        *ngIf="testSuiteStatus === TestSuiteStatus.skipped"
         [inlineSVG]="'/assets/images/sign-arrowheads.svg'"
       ></div>
       <div
         class="icon"
-        *ngIf="testSuiteStatus === testSuiteStatusEnum.inconclusive"
+        *ngIf="testSuiteStatus === TestSuiteStatus.inconclusive"
         [inlineSVG]="'/assets/images/sign-questionmark.svg'"
       ></div>
       <div class="count-wrapper">
         <div class="count">{{ testSuiteCountsByStatuses[testSuiteStatus] }}</div>
-        <div class="name">{{ testSuiteClass.statusName(testSuiteStatus) }}</div>
+        <div class="name">{{ TestSuite.statusName(testSuiteStatus) }}</div>
       </div>
     </div>
   </div>
@@ -43,8 +43,8 @@
       class="rate-indicator"
       *ngFor="let testSuiteStatus of orderedTestSuiteStatuses"
       [hidden]="testSuiteCountsByStatuses[testSuiteStatus] == 0"
-      [ngClass]="testSuiteClass.statusCssClass(testSuiteStatus)"
+      [ngClass]="TestSuite.statusCssClass(testSuiteStatus)"
       [style.width]="(100 * testSuiteCountsByStatuses[testSuiteStatus]) / totalTestSuitesCount + '%'"
-    >{{ testSuiteCountsByStatuses[testSuiteStatus] }} {{ testSuiteClass.statusName(testSuiteStatus) }}</div>
+    >{{ testSuiteCountsByStatuses[testSuiteStatus] }} {{ TestSuite.statusName(testSuiteStatus) }}</div>
   </div>
 </section>
