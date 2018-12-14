@@ -1,0 +1,11 @@
+<section class="test-report">
+  <div class="name">{{ testReport.name }}</div>
+  <div class="labels">
+    <div class="label devices">devices</div>
+    <div class="label duration">duration</div>
+    <div class="label test-results">test results</div>
+    <div class="label orientation">orientation</div>
+    <div class="label locale">locale</div>
+  </div>
+  <bitrise-test-suite *ngFor="let testSuite of testReport.testSuites" [testSuite]="testSuite"></bitrise-test-suite>
+</section>

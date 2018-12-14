@@ -1,5 +1,6 @@
 import { Injectable } from '@angular/core';
-import { TestReport } from './test-report.model';
+import { TestReport, TestReportResponse } from './test-report.model';
+import { TestSuiteStatus } from './test-suite.model';
 
 @Injectable()
 export class TestReportService {
@@ -7,30 +8,38 @@ export class TestReportService {
     {
       id: 1,
       name: 'Unit Test A',
-      inconclusiveTestSuiteCount: 5,
-      passedTestSuiteCount: 3,
-      failedTestSuiteCount: 2,
-      skippedTestSuiteCount: 0
+      testSuites: [
+        { status: TestSuiteStatus.passed },
+        { status: TestSuiteStatus.passed },
+        { status: TestSuiteStatus.failed },
+        { status: TestSuiteStatus.inconclusive },
+        { status: TestSuiteStatus.skipped },
+        { status: TestSuiteStatus.passed },
+        { status: TestSuiteStatus.failed }
+      ]
     },
     {
       id: 2,
       name: 'Unit Test X',
-      inconclusiveTestSuiteCount: 3,
-      passedTestSuiteCount: 2,
-      failedTestSuiteCount: 0,
-      skippedTestSuiteCount: 1
+      testSuites: [
+        { status: TestSuiteStatus.skipped },
+        { status: TestSuiteStatus.passed },
+        { status: TestSuiteStatus.failed }
+      ]
     },
     {
       id: 3,
       name: 'Unit Test Y',
-      inconclusiveTestSuiteCount: 7,
-      passedTestSuiteCount: 4,
-      failedTestSuiteCount: 1,
-      skippedTestSuiteCount: 3
+      testSuites: [
+        { status: TestSuiteStatus.passed },
+        { status: TestSuiteStatus.passed },
+        { status: TestSuiteStatus.failed },
+        { status: TestSuiteStatus.inconclusive }
+      ]
     }
   ];
 
   getTestReports(): TestReport[] {
-    return this.TEST_REPORTS.map((testReportData: any) => new TestReport().deserialize(testReportData));
+    return this.TEST_REPORTS.map((testReportResponse: TestReportResponse) => new TestReport().deserialize(testReportResponse));
   }
 }

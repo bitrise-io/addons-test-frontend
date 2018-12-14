@@ -1,7 +1,11 @@
-import { Component } from '@angular/core';
+import { Component, Input } from '@angular/core';
+import { TestReport } from './test-report.model';
 
 @Component({
   selector: 'bitrise-test-report',
-  template: ''
+  templateUrl: './test-report.component.html',
+  styleUrls: ['./test-report.component.scss']
 })
-export class TestReportComponent {}
+export class TestReportComponent {
+  @Input() testReport: TestReport;
+}

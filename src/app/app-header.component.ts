@@ -2,6 +2,8 @@ import { Component, OnInit } from '@angular/core';
 import { TestReportService } from './test-report.service';
 import { Router, NavigationEnd } from '@angular/router';
 import { filter } from 'rxjs/operators';
+import { TestReport } from './test-report.model';
+import { TestSuiteStatus } from './test-suite.model';
 
 @Component({
   selector: 'bitrise-app-header',
@@ -21,6 +23,9 @@ export class AppHeaderComponent implements OnInit {
 
   ngOnInit() {
     const testReports = this.testReportService.getTestReports();
+    const failedTestSuiteCountsOfTestReports = testReports.map(
+      testReport => testReport.testSuitesWithStatus(TestSuiteStatus.failed).length
+    );
 
     this.tabmenuItems = [
       {
@@ -28,15 +33,16 @@ export class AppHeaderComponent implements OnInit {
         routerLink: ['/summary']
       }
     ].concat(
-      testReports.map(testReport => ({
+      testReports.map((testReport: TestReport, index: number) => ({
         name: testReport.name,
         routerLink: ['/testreport/' + testReport.id],
-        failedTestSuiteCount: testReport.failedTestSuiteCount
+        failedTestSuiteCount: failedTestSuiteCountsOfTestReports[index]
       }))
     );
 
-    this.summedFailedTestSuiteCount = testReports.reduce(
-      (summedFailedTestSuiteCount, testReport: any) => summedFailedTestSuiteCount + testReport.failedTestSuiteCount,
+    this.summedFailedTestSuiteCount = failedTestSuiteCountsOfTestReports.reduce(
+      (summedFailedTestSuiteCount: number, failedTestSuiteCountOfTestReport: number) =>
+        summedFailedTestSuiteCount + failedTestSuiteCountOfTestReport,
       0
     );
   }

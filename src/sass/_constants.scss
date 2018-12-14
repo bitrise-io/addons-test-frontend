@@ -13,6 +13,12 @@ $main-content-padding-x: 24px;
 $main-content-padding-x-smallscreen: 16px;
 $section-spacing-y: 32px;
 $ui-element-notification-bubble-size: 24px;
+$test-suite-info-part-icon-x: 64px;
+$test-suite-info-part-device-x: 20%;
+$test-suite-info-part-duration-x: 80px;
+$test-suite-info-part-results-x: 30%;
+$test-suite-info-part-orientation-x: 106px;
+$test-suite-info-part-locale-x: 64px;
 
 // Times
 
@@ -21,8 +27,10 @@ $default-hovertime: 0.2s;
 // Colors
 
 $white: #ffffff !default;
+$white-three: #ececec !default;
 $white-darken: #dddddd !default;
 $warm-grey: #777777 !default;
+$brownish-grey: #616161 !default;
 $aqua: #0dd3c5 !default;
 $green-teal: #0fc389 !default;
 $water-blue-two: #0d83cd !default;
@@ -46,6 +54,12 @@ $vivid-pink: #ff2158 !default;
   font-size: 34px;
   letter-spacing: 0.2px;
   font-weight: 700;
+}
+
+@mixin ui-element-header-5 {
+  @include default-font;
+  font-size: 19px;
+  font-weight: 500;
 }
 
 @mixin ui-element-body {
