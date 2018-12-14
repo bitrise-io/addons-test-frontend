@@ -8,7 +8,31 @@
     <div class="operating-system">{{ testSuite.deviceOperatingSystem }}</div>
   </div>
   <div class="detail duration">{{ testSuite.durationInMilliseconds | textFromDurationInMilliseconds }}</div>
-  <div class="detail test-results"></div>
+  <div class="detail test-results">
+    <div
+      *ngIf="testSuite.status == TestSuiteStatus.inconclusive || testSuite.status == TestSuiteStatus.skipped"
+      class="test-result-bar"
+    ></div>
+    <div
+      *ngIf="testSuite.status == TestSuiteStatus.passed || testSuite.status == TestSuiteStatus.failed"
+      class="test-result-bar"
+    >
+      <div
+        class="test-case-bar passed"
+        *ngIf="passedTestCaseCount > 0"
+        [style.width]="(100 * passedTestCaseCount) / testSuite.testCases.length + '%'"
+      >
+        {{ passedTestCaseCount }}
+      </div>
+      <div
+        class="test-case-bar failed"
+        *ngIf="failedTestCaseCount > 0"
+        [style.width]="(100 * failedTestCaseCount) / testSuite.testCases.length + '%'"
+      >
+        {{ failedTestCaseCount }}
+      </div>
+    </div>
+  </div>
   <div class="detail orientation">{{ testSuite.orientation }}</div>
   <div class="detail locale">{{ testSuite.locale }}</div>
   <a class="test-cases-button">

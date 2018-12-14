@@ -54,6 +54,7 @@
 
     &:after {
       content: "";
+      flex-shrink: 0;
       width: $test-suite-info-part-test-case-button-x;
       margin-right: 16px;
     }

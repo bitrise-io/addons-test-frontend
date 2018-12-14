@@ -1,6 +1,7 @@
 import { Injectable } from '@angular/core';
 import { Deserializable } from './deserializable.model';
 import { TestSuiteOrientation } from './test-suite-orientation';
+import { TestCase, TestCaseResponse } from './test-case.model';
 
 export enum TestSuiteStatus {
   inconclusive = 0,
@@ -21,8 +22,9 @@ export class TestSuite implements Deserializable {
   durationInMilliseconds: number;
   orientation: TestSuiteOrientation;
   locale: string;
+  testCases: TestCase[];
 
-  public static statusName(status: TestSuiteStatus):string {
+  public static statusName(status: TestSuiteStatus): string {
     switch (status) {
       case TestSuiteStatus.inconclusive:
         return 'inconclusive';
@@ -35,7 +37,7 @@ export class TestSuite implements Deserializable {
     }
   }
 
-  public static statusCssClass(status: TestSuiteStatus):string {
+  public static statusCssClass(status: TestSuiteStatus): string {
     switch (status) {
       case TestSuiteStatus.inconclusive:
         return 'inconclusive';
@@ -56,13 +58,16 @@ export class TestSuite implements Deserializable {
     return TestSuite.statusCssClass(this.status);
   }
 
-  deserialize(testSuiteData: any) {
-    this.status = testSuiteData.status;
-    this.deviceName = testSuiteData.deviceName;
-    this.deviceOperatingSystem = testSuiteData.deviceOperatingSystem;
-    this.durationInMilliseconds = testSuiteData.durationInMilliseconds;
-    this.orientation = testSuiteData.orientation;
-    this.locale = testSuiteData.locale;
+  deserialize(testSuiteResponse: any) {
+    this.status = testSuiteResponse.status;
+    this.deviceName = testSuiteResponse.deviceName;
+    this.deviceOperatingSystem = testSuiteResponse.deviceOperatingSystem;
+    this.durationInMilliseconds = testSuiteResponse.durationInMilliseconds;
+    this.orientation = testSuiteResponse.orientation;
+    this.locale = testSuiteResponse.locale;
+    this.testCases = testSuiteResponse.testCases ? testSuiteResponse.testCases.map((testCaseResponse: TestCaseResponse) =>
+      new TestCase().deserialize(testCaseResponse)
+    ) : [];
 
     return this;
   }

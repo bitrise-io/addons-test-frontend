@@ -86,6 +86,52 @@
   .detail.test-results {
     flex-grow: 1;
     width: $test-suite-info-part-results-x;
+
+    .test-result-bar {
+      display: flex;
+      @include size(100%, 8px);
+
+      :first-child,
+      &:before {
+        @include border-left-radius(4px);
+      }
+
+      :last-child,
+      &:before {
+        @include border-right-radius(4px);
+      }
+
+      .test-case-bar {
+        @include ui-element-subtitle;
+        box-sizing: border-box;
+        padding-top: 8px;
+        @include padding-x(4px);
+
+        &.passed {
+          background-color: $green-teal;
+          color: $green-teal;
+        }
+
+        &.failed {
+          background-color: $vivid-pink;
+          color: $vivid-pink;
+        }
+      }
+    }
+  }
+
+  &.inconclusive .detail.test-results .test-result-bar:before,
+  &.skipped .detail.test-results .test-result-bar:before {
+    content: '';
+    width: 100%;
+  }
+
+  &.inconclusive .detail.test-results .test-result-bar:before {
+    background-color: $ocean-blue;
+  }
+
+  &.skipped .detail.test-results .test-result-bar:before {
+    background-color: $warm-grey;
   }
 
   .detail.orientation {
@@ -100,6 +146,7 @@
 
   .test-cases-button {
     @include ui-element-button-secondary;
+    flex-shrink: 0;
     display: flex;
     width: $test-suite-info-part-test-case-button-x;
     margin-right: 16px;
