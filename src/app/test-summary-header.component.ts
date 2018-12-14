@@ -3,10 +3,6 @@ import { TestReportService } from './test-report.service';
 import { TestReport } from './test-report.model';
 import { TestSuite, TestSuiteStatus } from './test-suite.model';
 
-interface TestSuiteStatusInformation {
-  count: number;
-}
-
 @Component({
   selector: 'bitrise-test-summary-header',
   templateUrl: './test-summary-header.component.html',
