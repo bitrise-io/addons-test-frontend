@@ -9,7 +9,7 @@
   position: relative;
   margin-top: 32px;
 
-  .detail-wrapper .label {
+  .detail-wrapper:before {
     @include ui-element-subtitle;
     position: absolute;
     bottom: 100%;
@@ -19,8 +19,8 @@
   }
 }
 
-:host:not(:first-of-type) .test-suite .detail-wrapper .label {
-  display: none;
+:host:not(:first-of-type) .test-suite .detail-wrapper:before {
+  content: normal;
 }
 
 .test-suite {
@@ -91,6 +91,10 @@
     width: 20%;
     min-width: 128px;
 
+    &:before {
+      content: "device";
+    }
+
     .detail {
       padding-right: 4px;
       color: $dark-blue-grey;
@@ -110,6 +114,10 @@
   .detail-wrapper.duration {
     min-width: 88px;
 
+    &:before {
+      content: "duration";
+    }
+
     .detail {
       @include ui-element-body;
       @include padding-x(4px);
@@ -122,6 +130,10 @@
     flex-shrink: 5;
     width: 30%;
     min-width: 120px;
+
+    &:before {
+      content: "test results";
+    }
 
     .detail .test-result-bar {
       display: flex;
@@ -175,6 +187,10 @@
     min-width: 100px;
     text-align: center;
 
+    &:before {
+      content: "orientation";
+    }
+
     .detail {
       &.landscape ::ng-deep svg {
         transform: rotate(-90deg);
@@ -191,6 +207,10 @@
     width: 96px;
     min-width: 0;
     text-align: center;
+
+    &:before {
+      content: "locale";
+    }
 
     .detail {
       @include ui-element-body;
@@ -229,7 +249,7 @@
 }
 
 @include width-max(800px) {
-  :host .test-suite .detail-wrapper .label {
-    display: none;
+  :host .test-suite .detail-wrapper:before {
+    content: normal;
   }
 }
