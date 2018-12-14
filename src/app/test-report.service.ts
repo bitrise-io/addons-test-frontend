@@ -51,8 +51,8 @@ export class TestReportService {
         },
         {
           status: TestSuiteStatus.inconclusive,
-          deviceName: 'iPad Mini 2017',
-          deviceOperatingSystem: 'iOS 11.2',
+          deviceName: 'Nexus7 clone, DVD 16:9 aspect ratio',
+          deviceOperatingSystem: 'Android Oreo',
           durationInMilliseconds: 3700000,
           orientation: 'landscape',
           locale: 'Japanese'
@@ -110,7 +110,7 @@ export class TestReportService {
             { status: TestCaseStatus.passed }
           ],
           orientation: 'portrait',
-          locale: 'English'
+          locale: 'Traditional chinese'
         },
         {
           status: TestSuiteStatus.failed,
@@ -149,8 +149,8 @@ export class TestReportService {
         },
         {
           status: TestSuiteStatus.passed,
-          deviceName: 'iPad Mini 2017',
-          deviceOperatingSystem: 'iOS 11.2',
+          deviceName: 'Galaxy S4 mini',
+          deviceOperatingSystem: 'Android Ice Cream Sandwich',
           durationInMilliseconds: 1000,
           testCases: [
             { status: TestCaseStatus.passed },

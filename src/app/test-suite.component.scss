@@ -1,8 +1,26 @@
 @import '../sass/constants';
 @import '../sass/mixins';
 
-:host:not(:last-child) .test-suite {
+:host:not(:last-of-type) .test-suite {
   margin-bottom: 16px;
+}
+
+:host:first-of-type .test-suite {
+  position: relative;
+  margin-top: 32px;
+
+  .detail-wrapper .label {
+    @include ui-element-subtitle;
+    position: absolute;
+    bottom: 100%;
+    line-height: 32px;
+    white-space: nowrap;
+    color: $brownish-grey;
+  }
+}
+
+:host:not(:first-of-type) .test-suite .detail-wrapper .label {
+  display: none;
 }
 
 .test-suite {
@@ -15,13 +33,13 @@
   height: 64px;
   border: $border-width solid $white-three;
   border-radius: 8px;
-  overflow: hidden;
   @include ui-modifier-container-shadow;
 
   &:before {
     content: '';
-    width: $colored-border-left-width;
+    border-left: $colored-border-left-width solid;
     height: 100%;
+    @include border-left-radius(8px);
   }
 
   .status-icon {
@@ -47,7 +65,7 @@
       }
 
       &:before {
-        background-color: $color;
+        border-left-color: $color;
       }
 
       .status-icon:not(.#{ $status-class }) {
@@ -60,34 +78,52 @@
     }
   }
 
-  .detail {
+  .detail-wrapper {
     flex-grow: 1;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    position: relative;
+    height: 100%;
   }
 
-  .detail.device {
-    width: $test-suite-info-part-device-x;
-    color: $dark-blue-grey;
+  .detail-wrapper.device {
+    width: 20%;
+    min-width: 128px;
 
-    .name {
+    .detail {
+      padding-right: 4px;
+      color: $dark-blue-grey;
+
+      .name {
+        @include ui-element-body;
+        @include ellipsis-oneliner;
+      }
+
+      .operating-system {
+        @include ui-element-description;
+        @include ellipsis-oneliner;
+      }
+    }
+  }
+
+  .detail-wrapper.duration {
+    min-width: 88px;
+
+    .detail {
       @include ui-element-body;
-    }
-
-    .operating-system {
-      @include ui-element-description;
+      @include padding-x(4px);
+      color: $dark-blue-grey;
     }
   }
 
-  .detail.duration {
-    @include ui-element-body;
-    width: $test-suite-info-part-duration-x;
-    color: $dark-blue-grey;
-  }
-
-  .detail.test-results {
+  .detail-wrapper.test-results {
     flex-grow: 1;
-    width: $test-suite-info-part-results-x;
+    flex-shrink: 5;
+    width: 30%;
+    min-width: 120px;
 
-    .test-result-bar {
+    .detail .test-result-bar {
       display: flex;
       @include size(100%, 8px);
 
@@ -120,45 +156,55 @@
     }
   }
 
-  &.inconclusive .detail.test-results .test-result-bar:before,
-  &.skipped .detail.test-results .test-result-bar:before {
+  &.inconclusive .detail-wrapper.test-results .detail .test-result-bar:before,
+  &.skipped .detail-wrapper.test-results .detail .test-result-bar:before {
     content: '';
     width: 100%;
   }
 
-  &.inconclusive .detail.test-results .test-result-bar:before {
+  &.inconclusive .detail-wrapper.test-results .detail .test-result-bar:before {
     background-color: $ocean-blue;
   }
 
-  &.skipped .detail.test-results .test-result-bar:before {
+  &.skipped .detail-wrapper.test-results .detail .test-result-bar:before {
     background-color: $warm-grey;
   }
 
-  .detail.orientation {
-    width: $test-suite-info-part-orientation-x;
+  .detail-wrapper.orientation {
+    align-items: center;
+    min-width: 100px;
     text-align: center;
 
-    &.landscape ::ng-deep svg {
-      transform: rotate(-90deg);
-    }
+    .detail {
+      &.landscape ::ng-deep svg {
+        transform: rotate(-90deg);
+      }
 
-    ::ng-deep svg {
-      fill: $dark-blue-grey;
+      ::ng-deep svg {
+        fill: $dark-blue-grey;
+      }
     }
   }
 
-  .detail.locale {
-    @include ui-element-body;
-    width: $test-suite-info-part-locale-x;
+  .detail-wrapper.locale {
+    align-items: center;
+    min-width: 96px;
     text-align: center;
-    color: $dark-blue-grey;
+
+    .detail {
+      @include ui-element-body;
+      max-width: 100%;
+      @include padding-x(4px);
+      @include ellipsis-oneliner;
+      color: $dark-blue-grey;
+    }
   }
 
   .test-cases-button {
     @include ui-element-button-secondary;
     flex-shrink: 0;
     display: flex;
-    width: $test-suite-info-part-test-case-button-x;
+    width: 120px;
     margin-right: 16px;
 
     &:hover {
@@ -178,4 +224,10 @@
   @include test-suite-with-status-class(passed);
   @include test-suite-with-status-class(skipped);
   @include test-suite-with-status-class(inconclusive);
+}
+
+@include width-max(800px) {
+  :host .test-suite .detail-wrapper .label {
+    display: none;
+  }
 }
