@@ -10,7 +10,7 @@
     <div
       class="count-indicator"
       *ngFor="let testSuiteStatus of orderedTestSuiteStatuses"
-      [ngClass]="testSuitesByStatuses[testSuiteStatus].cssClass"
+      [ngClass]="testSuiteClass.statusCssClass(testSuiteStatus)"
     >
       <div
         class="icon"
@@ -33,8 +33,8 @@
         [inlineSVG]="'/assets/images/sign-questionmark.svg'"
       ></div>
       <div class="count-wrapper">
-        <div class="count">{{ testSuitesByStatuses[testSuiteStatus].count }}</div>
-        <div class="name">{{ testSuitesByStatuses[testSuiteStatus].statusName }}</div>
+        <div class="count">{{ testSuiteCountsByStatuses[testSuiteStatus] }}</div>
+        <div class="name">{{ testSuiteClass.statusName(testSuiteStatus) }}</div>
       </div>
     </div>
   </div>
@@ -42,9 +42,9 @@
     <div
       class="rate-indicator"
       *ngFor="let testSuiteStatus of orderedTestSuiteStatuses"
-      [hidden]="testSuitesByStatuses[testSuiteStatus].count == 0"
-      [ngClass]="testSuitesByStatuses[testSuiteStatus].cssClass"
-      [style.width]="(100 * testSuitesByStatuses[testSuiteStatus].count) / totalTestSuitesCount + '%'"
-    >{{ testSuitesByStatuses[testSuiteStatus].count }} {{ testSuitesByStatuses[testSuiteStatus].statusName }}</div>
+      [hidden]="testSuiteCountsByStatuses[testSuiteStatus] == 0"
+      [ngClass]="testSuiteClass.statusCssClass(testSuiteStatus)"
+      [style.width]="(100 * testSuiteCountsByStatuses[testSuiteStatus]) / totalTestSuitesCount + '%'"
+    >{{ testSuiteCountsByStatuses[testSuiteStatus] }} {{ testSuiteClass.statusName(testSuiteStatus) }}</div>
   </div>
 </section>

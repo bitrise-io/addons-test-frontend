@@ -22,6 +22,40 @@ export class TestSuite implements Deserializable {
   orientation: TestSuiteOrientation;
   locale: string;
 
+  public static statusName(status: TestSuiteStatus):string {
+    switch (status) {
+      case TestSuiteStatus.inconclusive:
+        return 'inconclusive';
+      case TestSuiteStatus.passed:
+        return 'passed';
+      case TestSuiteStatus.failed:
+        return 'failed';
+      case TestSuiteStatus.skipped:
+        return 'skipped';
+    }
+  }
+
+  public static statusCssClass(status: TestSuiteStatus):string {
+    switch (status) {
+      case TestSuiteStatus.inconclusive:
+        return 'inconclusive';
+      case TestSuiteStatus.passed:
+        return 'passed';
+      case TestSuiteStatus.failed:
+        return 'failed';
+      case TestSuiteStatus.skipped:
+        return 'skipped';
+    }
+  }
+
+  get statusName() {
+    return TestSuite.statusName(this.status);
+  }
+
+  get statusCssClass() {
+    return TestSuite.statusCssClass(this.status);
+  }
+
   deserialize(testSuiteData: any) {
     this.status = testSuiteData.status;
     this.deviceName = testSuiteData.deviceName;

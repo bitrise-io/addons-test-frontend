@@ -1,6 +1,5 @@
 import { Component, Input } from '@angular/core';
-import { TestSuite } from './test-suite.model';
-import { TestSuiteStatus } from './test-suite-status';
+import { TestSuite, TestSuiteStatus } from './test-suite.model';
 
 @Component({
   selector: 'bitrise-test-suite',

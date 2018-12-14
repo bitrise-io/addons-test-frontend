@@ -29,13 +29,34 @@
     @include margin-x(16px);
   }
 
-  @mixin test-suite-with-color($color) {
-    &:before {
-      background-color: $color;
-    }
+  @mixin test-suite-with-status-class($status-class) {
+    $color: '';
 
-    .status-icon ::ng-deep svg {
-      fill: $color;
+    &.#{ $status-class } {
+      @if ($status-class == 'inconclusive') {
+        $color: $ocean-blue;
+      }
+      @if ($status-class == 'passed') {
+        $color: $green-teal;
+      }
+      @if ($status-class == 'failed') {
+        $color: $vivid-pink;
+      }
+      @if ($status-class == 'skipped') {
+        $color: $warm-grey;
+      }
+
+      &:before {
+        background-color: $color;
+      }
+
+      .status-icon:not(.#{ $status-class }) {
+        display: none;
+      }
+
+      .status-icon ::ng-deep svg {
+        fill: $color;
+      }
     }
   }
 
@@ -96,19 +117,8 @@
     }
   }
 
-  &.failed {
-    @include test-suite-with-color($vivid-pink);
-  }
-
-  &.passed {
-    @include test-suite-with-color($green-teal);
-  }
-
-  &.skipped {
-    @include test-suite-with-color($warm-grey);
-  }
-
-  &.inconclusive {
-    @include test-suite-with-color($ocean-blue);
-  }
+  @include test-suite-with-status-class(failed);
+  @include test-suite-with-status-class(passed);
+  @include test-suite-with-status-class(skipped);
+  @include test-suite-with-status-class(inconclusive);
 }

@@ -1,24 +1,8 @@
-<div class="test-suite" [ngClass]="testSuite.status | cssClassFromTestSuiteStatus">
-  <div
-    class="status-icon"
-    *ngIf="testSuite.status === testSuiteStatusEnum.failed"
-    [inlineSVG]="'/assets/images/sign-cross.svg'"
-  ></div>
-  <div
-    class="status-icon"
-    *ngIf="testSuite.status === testSuiteStatusEnum.passed"
-    [inlineSVG]="'/assets/images/sign-check.svg'"
-  ></div>
-  <div
-    class="status-icon"
-    *ngIf="testSuite.status === testSuiteStatusEnum.skipped"
-    [inlineSVG]="'/assets/images/sign-arrowheads.svg'"
-  ></div>
-  <div
-    class="status-icon"
-    *ngIf="testSuite.status === testSuiteStatusEnum.inconclusive"
-    [inlineSVG]="'/assets/images/sign-questionmark.svg'"
-  ></div>
+<div class="test-suite" [ngClass]="testSuite.statusCssClass">
+  <div class="status-icon failed" inlineSVG="/assets/images/sign-cross.svg"></div>
+  <div class="status-icon passed" inlineSVG="/assets/images/sign-check.svg"></div>
+  <div class="status-icon skipped" inlineSVG="/assets/images/sign-arrowheads.svg"></div>
+  <div class="status-icon inconclusive" inlineSVG="/assets/images/sign-questionmark.svg"></div>
   <div class="detail device">
     <div class="name">{{ testSuite.deviceName }}</div>
     <div class="operating-system">{{ testSuite.deviceOperatingSystem }}</div>
@@ -28,7 +12,6 @@
   <div class="detail orientation">{{ testSuite.orientation }}</div>
   <div class="detail locale">{{ testSuite.locale }}</div>
   <a class="test-cases-button">
-    <span>Test Cases</span>
-    <span class="arrow" [inlineSVG]="'/assets/images/arrow-dashed-tail-right.svg'"></span>
+    <span>Test Cases</span> <span class="arrow" inlineSVG="/assets/images/arrow-dashed-tail-right.svg"></span>
   </a>
 </div>
