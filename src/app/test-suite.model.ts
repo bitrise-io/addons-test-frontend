@@ -1,6 +1,5 @@
 import { Injectable } from '@angular/core';
 import { Deserializable } from './deserializable.model';
-import { TestSuiteOrientation } from './test-suite-orientation';
 import { TestCase, TestCaseResponse } from './test-case.model';
 
 export enum TestSuiteStatus {
@@ -8,6 +7,11 @@ export enum TestSuiteStatus {
   passed = 1,
   failed = 2,
   skipped = 3
+}
+
+export enum TestSuiteOrientation {
+  portrait = 'portrait',
+  landscape = 'landscape'
 }
 
 export type TestSuiteResponse = {
@@ -50,6 +54,15 @@ export class TestSuite implements Deserializable {
     }
   }
 
+  public static orientationCssClass(orientation: TestSuiteOrientation): string {
+    switch (orientation) {
+      case TestSuiteOrientation.portrait:
+        return 'portrait';
+      case TestSuiteOrientation.landscape:
+        return 'landscape';
+    }
+  }
+
   get statusName() {
     return TestSuite.statusName(this.status);
   }
@@ -58,16 +71,22 @@ export class TestSuite implements Deserializable {
     return TestSuite.statusCssClass(this.status);
   }
 
+  get orientationCssClass() {
+    return TestSuite.orientationCssClass(this.orientation);
+  }
+
   deserialize(testSuiteResponse: any) {
     this.status = testSuiteResponse.status;
     this.deviceName = testSuiteResponse.deviceName;
     this.deviceOperatingSystem = testSuiteResponse.deviceOperatingSystem;
     this.durationInMilliseconds = testSuiteResponse.durationInMilliseconds;
+    this.testCases = testSuiteResponse.testCases
+      ? testSuiteResponse.testCases.map((testCaseResponse: TestCaseResponse) =>
+          new TestCase().deserialize(testCaseResponse)
+        )
+      : [];
     this.orientation = testSuiteResponse.orientation;
     this.locale = testSuiteResponse.locale;
-    this.testCases = testSuiteResponse.testCases ? testSuiteResponse.testCases.map((testCaseResponse: TestCaseResponse) =>
-      new TestCase().deserialize(testCaseResponse)
-    ) : [];
 
     return this;
   }

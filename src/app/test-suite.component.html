@@ -33,7 +33,7 @@
       </div>
     </div>
   </div>
-  <div class="detail orientation">{{ testSuite.orientation }}</div>
+  <div class="detail orientation" [ngClass]="testSuite.orientationCssClass" inlineSVG="/assets/images/mobile.svg"></div>
   <div class="detail locale">{{ testSuite.locale }}</div>
   <a class="test-cases-button">
     <span>Test Cases</span> <span class="arrow" inlineSVG="/assets/images/arrow-dashed-tail-right.svg"></span>

@@ -136,11 +136,21 @@
 
   .detail.orientation {
     width: $test-suite-info-part-orientation-x;
+    text-align: center;
+
+    &.landscape ::ng-deep svg {
+      transform: rotate(-90deg);
+    }
+
+    ::ng-deep svg {
+      fill: $dark-blue-grey;
+    }
   }
 
   .detail.locale {
     @include ui-element-body;
     width: $test-suite-info-part-locale-x;
+    text-align: center;
     color: $dark-blue-grey;
   }
 

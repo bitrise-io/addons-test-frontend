@@ -19,7 +19,9 @@ export class TestReportService {
             { status: TestCaseStatus.passed },
             { status: TestCaseStatus.passed },
             { status: TestCaseStatus.passed }
-          ]
+          ],
+          orientation: 'portrait',
+          locale: 'English'
         },
         {
           status: TestSuiteStatus.passed,
@@ -30,7 +32,9 @@ export class TestReportService {
             { status: TestCaseStatus.passed },
             { status: TestCaseStatus.passed },
             { status: TestCaseStatus.passed }
-          ]
+          ],
+          orientation: 'portrait',
+          locale: 'English'
         },
         {
           status: TestSuiteStatus.failed,
@@ -41,19 +45,25 @@ export class TestReportService {
             { status: TestCaseStatus.passed },
             { status: TestCaseStatus.passed },
             { status: TestCaseStatus.failed }
-          ]
+          ],
+          orientation: 'portrait',
+          locale: 'Japanese'
         },
         {
           status: TestSuiteStatus.inconclusive,
           deviceName: 'iPad Mini 2017',
           deviceOperatingSystem: 'iOS 11.2',
-          durationInMilliseconds: 3700000
+          durationInMilliseconds: 3700000,
+          orientation: 'landscape',
+          locale: 'Japanese'
         },
         {
           status: TestSuiteStatus.skipped,
           deviceName: 'iPhone 7',
           deviceOperatingSystem: 'iOS 11.2',
-          durationInMilliseconds: 7200000
+          durationInMilliseconds: 7200000,
+          orientation: 'landscape',
+          locale: 'Japanese'
         },
         {
           status: TestSuiteStatus.passed,
@@ -64,17 +74,18 @@ export class TestReportService {
             { status: TestCaseStatus.passed },
             { status: TestCaseStatus.passed },
             { status: TestCaseStatus.passed }
-          ]
+          ],
+          orientation: 'portrait',
+          locale: 'Japanese'
         },
         {
           status: TestSuiteStatus.failed,
           deviceName: 'iPhone 8',
           deviceOperatingSystem: 'iOS 11.2',
           durationInMilliseconds: 32000,
-          testCases: [
-            { status: TestCaseStatus.passed },
-            { status: TestCaseStatus.failed }
-          ]
+          testCases: [{ status: TestCaseStatus.passed }, { status: TestCaseStatus.failed }],
+          orientation: 'portrait',
+          locale: 'English'
         }
       ]
     },
@@ -97,7 +108,9 @@ export class TestReportService {
             { status: TestCaseStatus.passed },
             { status: TestCaseStatus.passed },
             { status: TestCaseStatus.passed }
-          ]
+          ],
+          orientation: 'portrait',
+          locale: 'English'
         },
         {
           status: TestSuiteStatus.failed,
@@ -107,11 +120,13 @@ export class TestReportService {
           testCases: [
             { status: TestCaseStatus.passed },
             { status: TestCaseStatus.passed },
-            { status: TestCaseStatus.passed }
+            { status: TestCaseStatus.passed },
             { status: TestCaseStatus.passed },
             { status: TestCaseStatus.failed },
             { status: TestCaseStatus.failed }
-          ]
+          ],
+          orientation: 'portrait',
+          locale: 'English'
         }
       ]
     },
@@ -128,7 +143,9 @@ export class TestReportService {
             { status: TestCaseStatus.passed },
             { status: TestCaseStatus.passed },
             { status: TestCaseStatus.passed }
-          ]
+          ],
+          orientation: 'portrait',
+          locale: 'English'
         },
         {
           status: TestSuiteStatus.passed,
@@ -139,7 +156,9 @@ export class TestReportService {
             { status: TestCaseStatus.passed },
             { status: TestCaseStatus.passed },
             { status: TestCaseStatus.passed }
-          ]
+          ],
+          orientation: 'portrait',
+          locale: 'Japanese'
         },
         {
           status: TestSuiteStatus.failed,
@@ -149,17 +168,21 @@ export class TestReportService {
           testCases: [
             { status: TestCaseStatus.passed },
             { status: TestCaseStatus.failed },
-            { status: TestCaseStatus.failed }
+            { status: TestCaseStatus.failed },
             { status: TestCaseStatus.passed },
             { status: TestCaseStatus.failed },
             { status: TestCaseStatus.failed }
-          ]
+          ],
+          orientation: 'portrait',
+          locale: 'English'
         },
         {
           status: TestSuiteStatus.inconclusive,
           deviceName: 'iPhone 7',
           deviceOperatingSystem: 'iOS 11.2',
-          durationInMilliseconds: 20000
+          durationInMilliseconds: 20000,
+          orientation: 'landscape',
+          locale: 'English'
         }
       ]
     }
