@@ -97,7 +97,14 @@ export class TestReportService {
           status: TestSuiteStatus.skipped,
           deviceName: 'iPhone 8',
           deviceOperatingSystem: 'iOS 11.2',
-          durationInMilliseconds: 20
+          durationInMilliseconds: 20,
+          testCases: [
+            { status: TestCaseStatus.passed },
+            { status: TestCaseStatus.passed },
+            { status: TestCaseStatus.passed }
+          ],
+          orientation: 'portrait',
+          locale: 'Traditional chinese'
         },
         {
           status: TestSuiteStatus.passed,

@@ -9,7 +9,7 @@
   position: relative;
   margin-top: 32px;
 
-  .detail-wrapper:before {
+  .test-suite-inner .detail-wrapper:before {
     @include ui-element-subtitle;
     position: absolute;
     bottom: 100%;
@@ -19,7 +19,7 @@
   }
 }
 
-:host:not(:first-of-type) .test-suite .detail-wrapper:before {
+:host:not(:first-of-type) .test-suite .test-suite-inner .detail-wrapper:before {
   content: normal;
 }
 
@@ -28,75 +28,54 @@
   $colored-border-left-width: 8px;
   $status-icon-size: 24px;
 
-  display: flex;
-  align-items: center;
-  height: 64px;
   border: $border-width solid $white-three;
   border-radius: 8px;
   @include ui-modifier-container-shadow;
 
-  &:before {
-    content: '';
+  .test-suite-inner {
+    height: 100%;
     border-left: $colored-border-left-width solid;
-    height: 100%;
     @include border-left-radius(8px);
-  }
 
-  .status-icon {
-    @include size($status-icon-size);
-    @include margin-x(16px);
-  }
+    .detail-wrapper.status-device .detail .status-icon {
+      @include size($status-icon-size);
+    }
 
-  @mixin test-suite-with-status-class($status-class) {
-    $color: '';
+    @mixin test-suite-with-status-class($status-class) {
+      $color: '';
 
-    &.#{ $status-class } {
-      @if ($status-class == 'inconclusive') {
-        $color: $ocean-blue;
-      }
-      @if ($status-class == 'passed') {
-        $color: $green-teal;
-      }
-      @if ($status-class == 'failed') {
-        $color: $vivid-pink;
-      }
-      @if ($status-class == 'skipped') {
-        $color: $warm-grey;
-      }
+      &.#{ $status-class } {
+        @if ($status-class == 'inconclusive') {
+          $color: $ocean-blue;
+        }
+        @if ($status-class == 'passed') {
+          $color: $green-teal;
+        }
+        @if ($status-class == 'failed') {
+          $color: $vivid-pink;
+        }
+        @if ($status-class == 'skipped') {
+          $color: $warm-grey;
+        }
 
-      &:before {
         border-left-color: $color;
-      }
 
-      .status-icon:not(.#{ $status-class }) {
-        display: none;
-      }
+        .detail-wrapper.status-device .detail .status-icon:not(.#{ $status-class }) {
+          display: none;
+        }
 
-      .status-icon ::ng-deep svg {
-        fill: $color;
+        .detail-wrapper.status-device .detail .status-icon ::ng-deep svg {
+          fill: $color;
+        }
       }
     }
-  }
 
-  .detail-wrapper {
-    flex-grow: 1;
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    position: relative;
-    height: 100%;
-  }
+    @include test-suite-with-status-class(failed);
+    @include test-suite-with-status-class(passed);
+    @include test-suite-with-status-class(skipped);
+    @include test-suite-with-status-class(inconclusive);
 
-  .detail-wrapper.device {
-    width: 20%;
-    min-width: 128px;
-
-    &:before {
-      content: "device";
-    }
-
-    .detail {
-      padding-right: 4px;
+    .detail-wrapper.status-device .detail .device {
       color: $dark-blue-grey;
 
       .name {
@@ -109,33 +88,13 @@
         @include ellipsis-oneliner;
       }
     }
-  }
 
-  .detail-wrapper.duration {
-    min-width: 88px;
-
-    &:before {
-      content: "duration";
-    }
-
-    .detail {
+    .detail-wrapper.duration .detail {
       @include ui-element-body;
-      @include padding-x(4px);
       color: $dark-blue-grey;
     }
-  }
 
-  .detail-wrapper.test-results {
-    flex-grow: 1;
-    flex-shrink: 5;
-    width: 30%;
-    min-width: 120px;
-
-    &:before {
-      content: "test results";
-    }
-
-    .detail .test-result-bar {
+    .detail-wrapper.test-results .detail .test-result-bar {
       display: flex;
       @include size(100%, 8px);
 
@@ -166,32 +125,22 @@
         }
       }
     }
-  }
 
-  &.inconclusive .detail-wrapper.test-results .detail .test-result-bar:before,
-  &.skipped .detail-wrapper.test-results .detail .test-result-bar:before {
-    content: '';
-    width: 100%;
-  }
-
-  &.inconclusive .detail-wrapper.test-results .detail .test-result-bar:before {
-    background-color: $ocean-blue;
-  }
-
-  &.skipped .detail-wrapper.test-results .detail .test-result-bar:before {
-    background-color: $warm-grey;
-  }
-
-  .detail-wrapper.orientation {
-    align-items: center;
-    min-width: 100px;
-    text-align: center;
-
-    &:before {
-      content: "orientation";
+    &.inconclusive .detail-wrapper.test-results .detail .test-result-bar:before,
+    &.skipped .detail-wrapper.test-results .detail .test-result-bar:before {
+      content: '';
+      width: 100%;
     }
 
-    .detail {
+    &.inconclusive .detail-wrapper.test-results .detail .test-result-bar:before {
+      background-color: $ocean-blue;
+    }
+
+    &.skipped .detail-wrapper.test-results .detail .test-result-bar:before {
+      background-color: $warm-grey;
+    }
+
+    .detail-wrapper.orientation .detail {
       &.landscape ::ng-deep svg {
         transform: rotate(-90deg);
       }
@@ -200,56 +149,180 @@
         fill: $dark-blue-grey;
       }
     }
-  }
 
-  .detail-wrapper.locale {
-    align-items: center;
-    width: 96px;
-    min-width: 0;
-    text-align: center;
-
-    &:before {
-      content: "locale";
-    }
-
-    .detail {
+    .detail-wrapper.locale .detail {
       @include ui-element-body;
-      max-width: 100%;
-      box-sizing: border-box;
-      @include padding-x(4px);
-      @include ellipsis-oneliner;
       color: $dark-blue-grey;
     }
-  }
 
-  .test-cases-button {
-    @include ui-element-button-secondary;
-    flex-shrink: 0;
-    display: flex;
-    width: 120px;
-    margin-right: 16px;
+    .test-cases-button {
+      @include ui-element-button-secondary;
+      display: flex;
 
-    &:hover {
-      @include ui-element-button-secondary-hover;
-    }
+      &:hover {
+        @include ui-element-button-secondary-hover;
+      }
 
-    .arrow {
-      margin-left: 8px;
+      .arrow {
+        margin-left: 8px;
 
-      ::ng-deep svg {
-        display: block;
+        ::ng-deep svg {
+          display: block;
+        }
       }
     }
   }
+}
 
-  @include test-suite-with-status-class(failed);
-  @include test-suite-with-status-class(passed);
-  @include test-suite-with-status-class(skipped);
-  @include test-suite-with-status-class(inconclusive);
+@include width-above(800px) {
+  .test-suite {
+    height: 64px;
+
+    .test-suite-inner {
+      display: flex;
+      align-items: center;
+
+      .detail-wrapper {
+        flex-grow: 1;
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        position: relative;
+        height: 100%;
+      }
+
+      .detail-wrapper.status-device {
+        width: 20%;
+        min-width: 128px;
+        padding-right: 4px;
+
+        .detail {
+          display: flex;
+          align-items: center;
+
+          .status-icon {
+            @include margin-x(16px);
+          }
+
+          .device {
+            overflow: hidden;
+          }
+        }
+      }
+
+      .detail-wrapper.duration {
+        min-width: 88px;
+
+        &:before {
+          content: 'duration';
+        }
+
+        .detail {
+          @include padding-x(4px);
+        }
+      }
+
+      .detail-wrapper.test-results {
+        flex-grow: 1;
+        flex-shrink: 5;
+        width: 30%;
+        min-width: 120px;
+
+        &:before {
+          content: 'test results';
+        }
+      }
+
+      .detail-wrapper.orientation {
+        align-items: center;
+        min-width: 100px;
+        text-align: center;
+
+        &:before {
+          content: 'orientation';
+        }
+      }
+
+      .detail-wrapper.locale {
+        align-items: center;
+        width: 96px;
+        min-width: 0;
+        text-align: center;
+
+        &:before {
+          content: 'locale';
+        }
+
+        .detail {
+          max-width: 100%;
+          box-sizing: border-box;
+          @include padding-x(4px);
+          @include ellipsis-oneliner;
+        }
+      }
+
+      .test-cases-button {
+        flex-shrink: 0;
+        width: 120px;
+        margin-right: 16px;
+      }
+    }
+  }
 }
 
 @include width-max(800px) {
-  :host .test-suite .detail-wrapper:before {
+  :host .test-suite .test-suite-inner .detail-wrapper:before {
     content: normal;
+  }
+
+  .test-suite {
+    .test-suite-inner {
+      display: flex;
+      align-items: center;
+      flex-wrap: wrap;
+      padding: 16px;
+
+      .detail-wrapper.status-device {
+        width: 100%;
+
+        .detail {
+          display: flex;
+          align-items: center;
+
+          .device {
+            margin-left: 16px;
+            overflow: hidden;
+          }
+        }
+      }
+
+      .detail-wrapper.test-results {
+        order: 1;
+        width: 100%;
+        margin-top: 16px;
+        margin-bottom: 32px;
+      }
+
+      .detail-wrapper.duration {
+        order: 2;
+        @include margin-y(8px);
+      }
+
+      .detail-wrapper.orientation {
+        order: 3;
+        margin: 8px 16px;
+      }
+
+      .detail-wrapper.locale {
+        order: 4;
+        @include margin-y(8px);
+      }
+
+      .test-cases-button {
+        order: 5;
+        width: 100%;
+        margin-top: 8px;
+      }
+    }
   }
 }
