@@ -188,12 +188,14 @@
 
   .detail-wrapper.locale {
     align-items: center;
-    min-width: 96px;
+    width: 96px;
+    min-width: 0;
     text-align: center;
 
     .detail {
       @include ui-element-body;
       max-width: 100%;
+      box-sizing: border-box;
       @include padding-x(4px);
       @include ellipsis-oneliner;
       color: $dark-blue-grey;
