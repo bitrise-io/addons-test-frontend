@@ -77,7 +77,7 @@ Integer posuere erat a ante venenatis dapibus posuere velit aliquet. Donec id el
           locale: 'Japanese'
         }
       ]
-    }
+    },
     {
       id: 3,
       name: 'UI Test B',
