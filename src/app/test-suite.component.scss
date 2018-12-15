@@ -196,6 +196,11 @@
         min-width: 128px;
         padding-right: 4px;
 
+        &:before {
+          content: 'devices';
+          margin-left: 56px;
+        }
+
         .detail {
           display: flex;
           align-items: center;
