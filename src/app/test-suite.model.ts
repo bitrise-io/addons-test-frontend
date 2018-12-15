@@ -16,6 +16,12 @@ export enum TestSuiteOrientation {
 
 export type TestSuiteResponse = {
   status: TestSuiteStatus;
+  deviceName: string;
+  deviceOperatingSystem: string;
+  durationInMilliseconds: number;
+  orientation: TestSuiteOrientation;
+  locale: string;
+  testCases: TestCaseResponse[];
 };
 
 @Injectable()
@@ -29,38 +35,34 @@ export class TestSuite implements Deserializable {
   testCases: TestCase[];
 
   public static statusName(status: TestSuiteStatus): string {
-    switch (status) {
-      case TestSuiteStatus.inconclusive:
-        return 'inconclusive';
-      case TestSuiteStatus.passed:
-        return 'passed';
-      case TestSuiteStatus.failed:
-        return 'failed';
-      case TestSuiteStatus.skipped:
-        return 'skipped';
-    }
+    const statusNames = {
+      [TestSuiteStatus.inconclusive]: 'inconclusive',
+      [TestSuiteStatus.passed]: 'passed',
+      [TestSuiteStatus.failed]: 'failed',
+      [TestSuiteStatus.skipped]: 'skipped'
+    };
+
+    return statusNames[status];
   }
 
   public static statusCssClass(status: TestSuiteStatus): string {
-    switch (status) {
-      case TestSuiteStatus.inconclusive:
-        return 'inconclusive';
-      case TestSuiteStatus.passed:
-        return 'passed';
-      case TestSuiteStatus.failed:
-        return 'failed';
-      case TestSuiteStatus.skipped:
-        return 'skipped';
-    }
+    const statusCssClasses = {
+      [TestSuiteStatus.inconclusive]: 'inconclusive',
+      [TestSuiteStatus.passed]: 'passed',
+      [TestSuiteStatus.failed]: 'failed',
+      [TestSuiteStatus.skipped]: 'skipped'
+    };
+
+    return statusCssClasses[status];
   }
 
   public static orientationCssClass(orientation: TestSuiteOrientation): string {
-    switch (orientation) {
-      case TestSuiteOrientation.portrait:
-        return 'portrait';
-      case TestSuiteOrientation.landscape:
-        return 'landscape';
-    }
+    const orientationCssClasses = {
+      [TestSuiteOrientation.portrait]: 'portrait',
+      [TestSuiteOrientation.landscape]: 'landscape'
+    };
+
+    return orientationCssClasses[orientation];
   }
 
   get statusName() {
@@ -75,7 +77,7 @@ export class TestSuite implements Deserializable {
     return TestSuite.orientationCssClass(this.orientation);
   }
 
-  deserialize(testSuiteResponse: any) {
+  deserialize(testSuiteResponse: TestSuiteResponse) {
     this.status = testSuiteResponse.status;
     this.deviceName = testSuiteResponse.deviceName;
     this.deviceOperatingSystem = testSuiteResponse.deviceOperatingSystem;
