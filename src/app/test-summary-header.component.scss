@@ -4,7 +4,7 @@
 .test-summary-header {
   margin-top: 56px;
 
-  .test-suite-counts {
+  .test-counts {
     display: flex;
     justify-content: space-between;
     @include padding-x(40px);
@@ -66,7 +66,7 @@
     }
   }
 
-  .test-suite-rates {
+  .test-rates {
     display: flex;
     margin-top: 32px;
 
@@ -102,7 +102,7 @@
   }
 
   @include width-max(800px) {
-    .test-suite-counts {
+    .test-counts {
       flex-wrap: wrap;
 
       .count-indicator {
@@ -120,7 +120,7 @@
   }
 
   @include width-max(420px) {
-    .test-suite-counts {
+    .test-counts {
       display: block;
 
       .count-indicator.total,

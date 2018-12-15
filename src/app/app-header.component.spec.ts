@@ -44,7 +44,7 @@ describe('AppHeaderComponent', () => {
   let fixture: ComponentFixture<AppHeaderComponent>;
   let appHeaderElement: AppHeaderComponent;
   let tabElements: DebugElement[];
-  let summedTestSuiteCountElement: DebugElement;
+  let summedFailedTestCountElement: DebugElement;
   let dropdownItemElements: DebugElement[];
 
   beforeEach(async(() => {
@@ -80,19 +80,21 @@ describe('AppHeaderComponent', () => {
   describe('when there are some test reports', () => {
     beforeEach(() => {
       service.testReports = [
-        { id: 1, name: 'Unit Test A', failedTestSuiteCount: 2 },
-        { id: 2, name: 'Unit Test X', failedTestSuiteCount: 0 },
-        { id: 3, name: 'Unit Test Y', failedTestSuiteCount: 1 }
+        { id: 1, name: 'Unit Test A', failedTestCount: 2 },
+        { id: 2, name: 'Unit Test X', failedTestCount: 0 },
+        { id: 3, name: 'Unit Test Y', failedTestCount: 1 }
       ].map(specConfig => {
         const testReport = new TestReport();
         testReport.id = specConfig.id;
         testReport.name = specConfig.name;
-        testReport.testSuites = Array(specConfig.failedTestSuiteCount).fill(null).map(() => {
-          const testSuite = new TestSuite();
-          testSuite.status = 2;
+        testReport.testSuites = Array(specConfig.failedTestCount)
+          .fill(null)
+          .map(() => {
+            const testSuite = new TestSuite();
+            testSuite.status = 2;
 
-          return testSuite;
-        });
+            return testSuite;
+          });
 
         return testReport;
       });
@@ -100,7 +102,7 @@ describe('AppHeaderComponent', () => {
       fixture.detectChanges();
 
       tabElements = fixture.debugElement.queryAll(By.css('a.tabmenu-item'));
-      summedTestSuiteCountElement = fixture.debugElement.query(By.css('.summed-failed-test-suite-count'));
+      summedFailedTestCountElement = fixture.debugElement.query(By.css('.summed-failed-test-count'));
       dropdownItemElements = fixture.debugElement.queryAll(By.css('.tabmenu-select option'));
     });
 
@@ -114,17 +116,17 @@ describe('AppHeaderComponent', () => {
       expect(tabElements[3].query(By.css('.text')).nativeElement.textContent).toBe('Unit Test Y');
     });
 
-    it('shows bubble for test reports with failed test suites', () => {
+    it('shows bubble for test reports with failed tests', () => {
       expect(tabElements[1].query(By.css('.notification-bubble'))).not.toBeNull();
       expect(tabElements[3].query(By.css('.notification-bubble'))).not.toBeNull();
     });
 
-    it('does not show bubble for test reports without failed test suites', () => {
+    it('does not show bubble for test reports without failed tests', () => {
       expect(tabElements[2].query(By.css('.notification-bubble'))).toBeNull();
     });
 
-    it('shows the sum of failed test suites in the mobile-only section', () => {
-      expect(summedTestSuiteCountElement.query(By.css('.text')).nativeElement.textContent).toBe('3 failed tests');
+    it('shows the sum of failed tests in the mobile-only section', () => {
+      expect(summedFailedTestCountElement.query(By.css('.text')).nativeElement.textContent).toBe('3 failed tests');
     });
 
     it('loads as many items for the mobile-only dropdown as there are test reports, plus one for the summary', () => {
@@ -188,7 +190,7 @@ describe('AppHeaderComponent', () => {
       fixture.detectChanges();
 
       tabElements = fixture.debugElement.queryAll(By.css('a.tabmenu-item'));
-      summedTestSuiteCountElement = fixture.debugElement.query(By.css('.summed-failed-test-suite-count'));
+      summedFailedTestCountElement = fixture.debugElement.query(By.css('.summed-failed-test-count'));
       dropdownItemElements = fixture.debugElement.queryAll(By.css('.tabmenu-select option'));
     });
 
@@ -196,8 +198,8 @@ describe('AppHeaderComponent', () => {
       expect(tabElements.length).toBe(1);
     });
 
-    it('shows 0 failed test suites in the mobile-only section', () => {
-      expect(summedTestSuiteCountElement.query(By.css('.text')).nativeElement.textContent).toBe('0 failed tests');
+    it('shows 0 failed tests in the mobile-only section', () => {
+      expect(summedFailedTestCountElement.query(By.css('.text')).nativeElement.textContent).toBe('0 failed tests');
     });
 
     it('loads only one dropdown item for the summary', () => {

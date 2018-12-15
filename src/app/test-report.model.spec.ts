@@ -8,7 +8,7 @@ describe('TestReport', () => {
     testReport = new TestReport();
   });
 
-  describe('testSuitesWithStatus', () => {
+  describe('testsWithStatus', () => {
     describe('when test report has some test suites', () => {
       beforeEach(() => {
         testReport.testSuites = Array(6)
@@ -25,12 +25,12 @@ describe('TestReport', () => {
             });
 
             it('returns only those test suites', () => {
-              expect(testReport.testSuitesWithStatus(status)).toContain(testReport.testSuites[0]);
-              expect(testReport.testSuitesWithStatus(status)).toContain(testReport.testSuites[1]);
-              expect(testReport.testSuitesWithStatus(status)).not.toContain(testReport.testSuites[2]);
-              expect(testReport.testSuitesWithStatus(status)).not.toContain(testReport.testSuites[3]);
-              expect(testReport.testSuitesWithStatus(status)).not.toContain(testReport.testSuites[4]);
-              expect(testReport.testSuitesWithStatus(status)).not.toContain(testReport.testSuites[5]);
+              expect(testReport.testsWithStatus(status)).toContain(testReport.testSuites[0]);
+              expect(testReport.testsWithStatus(status)).toContain(testReport.testSuites[1]);
+              expect(testReport.testsWithStatus(status)).not.toContain(testReport.testSuites[2]);
+              expect(testReport.testsWithStatus(status)).not.toContain(testReport.testSuites[3]);
+              expect(testReport.testsWithStatus(status)).not.toContain(testReport.testSuites[4]);
+              expect(testReport.testsWithStatus(status)).not.toContain(testReport.testSuites[5]);
             });
           });
         }

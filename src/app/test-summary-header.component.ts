@@ -17,10 +17,10 @@ export class TestSummaryHeaderComponent implements OnInit {
     TestSuiteStatus.skipped,
     TestSuiteStatus.inconclusive
   ];
-  testSuiteCountsByStatuses: {
+  testCountsByStatuses: {
     [status: number]: number;
   };
-  totalTestSuitesCount: number;
+  totalTestCount: number;
 
   constructor(private testReportService: TestReportService) {}
 
@@ -28,15 +28,15 @@ export class TestSummaryHeaderComponent implements OnInit {
     const testReports = this.testReportService.getTestReports();
 
     this.orderedTestSuiteStatuses.forEach((status: TestSuiteStatus) => {
-      this.testSuiteCountsByStatuses = Object.assign(this.testSuiteCountsByStatuses || {}, {
+      this.testCountsByStatuses = Object.assign(this.testCountsByStatuses || {}, {
         [status]: testReports.reduce(
           (testSuiteCountWithStatus: number, testReport: TestReport) =>
-            (testSuiteCountWithStatus += testReport.testSuitesWithStatus(status).length),
+            (testSuiteCountWithStatus += testReport.testsWithStatus(status).length),
           0
         )
       });
 
-      this.totalTestSuitesCount = (this.totalTestSuitesCount || 0) + this.testSuiteCountsByStatuses[status];
+      this.totalTestCount = (this.totalTestCount || 0) + this.testCountsByStatuses[status];
     });
   }
 }

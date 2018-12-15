@@ -8,7 +8,7 @@ export class TestReportService {
   private TEST_REPORTS = [
     {
       id: 1,
-      name: 'Unit Test A',
+      name: 'UI Test A',
       testSuites: [
         {
           status: TestSuiteStatus.passed,
@@ -91,7 +91,7 @@ export class TestReportService {
     },
     {
       id: 2,
-      name: 'Unit Test X',
+      name: 'UI Test B',
       testSuites: [
         {
           status: TestSuiteStatus.skipped,
@@ -139,7 +139,7 @@ export class TestReportService {
     },
     {
       id: 3,
-      name: 'Unit Test Y',
+      name: 'UI Test C',
       testSuites: [
         {
           status: TestSuiteStatus.passed,
@@ -192,6 +192,11 @@ export class TestReportService {
           locale: 'English'
         }
       ]
+    },
+    {
+      id: 4,
+      name: 'Unit Test C',
+      testCases: []
     }
   ];
 

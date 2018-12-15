@@ -100,7 +100,7 @@ describe('TestSummaryHeaderComponent', () => {
 
     it('shows the total number of test suites in the total counter', () => {
       expect(
-        fixture.debugElement.query(By.css('.test-suite-counts .count-indicator.total .count')).nativeElement.textContent
+        fixture.debugElement.query(By.css('.test-counts .count-indicator.total .count')).nativeElement.textContent
       ).toBe('31');
     });
 
@@ -116,15 +116,14 @@ describe('TestSummaryHeaderComponent', () => {
 
       it(`shows the number of ${statusName} test suites in the ${statusName} counter`, () => {
         expect(
-          fixture.debugElement.query(By.css(`.test-suite-counts .count-indicator.${statusCssClass} .count`))
-            .nativeElement.textContent
+          fixture.debugElement.query(By.css(`.test-counts .count-indicator.${statusCssClass} .count`)).nativeElement
+            .textContent
         ).toBe(count);
       });
 
       it(`shows a rate partition for ${statusName} test suites in the rate indicator`, () => {
         expect(
-          fixture.debugElement.query(By.css(`.test-suite-rates .rate-indicator.${statusCssClass}`)).nativeElement
-            .textContent
+          fixture.debugElement.query(By.css(`.test-rates .rate-indicator.${statusCssClass}`)).nativeElement.textContent
         ).toBe(`${count} ${statusName}`);
       });
     });
@@ -157,7 +156,7 @@ describe('TestSummaryHeaderComponent', () => {
     it('hides the rate partition for that status in the rate indicator', () => {
       expect(
         fixture.debugElement
-          .query(By.css('.test-suite-rates .rate-indicator.skipped'))
+          .query(By.css('.test-rates .rate-indicator.skipped'))
           .nativeElement.attributes.getNamedItem('hidden').value
       ).toBe('');
     });
@@ -166,7 +165,7 @@ describe('TestSummaryHeaderComponent', () => {
       ['failed', 'passed', 'inconclusive'].forEach(statusCssClass => {
         expect(
           fixture.debugElement
-            .query(By.css(`.test-suite-rates .rate-indicator.${statusCssClass}`))
+            .query(By.css(`.test-rates .rate-indicator.${statusCssClass}`))
             .nativeElement.attributes.getNamedItem('hidden')
         ).toBeNull();
       });
@@ -176,7 +175,7 @@ describe('TestSummaryHeaderComponent', () => {
       ['failed', 'passed', 'skipped', 'inconclusive'].forEach(statusCssClass => {
         expect(
           fixture.debugElement
-            .query(By.css(`.test-suite-counts .count-indicator.${statusCssClass} .count`))
+            .query(By.css(`.test-counts .count-indicator.${statusCssClass} .count`))
             .nativeElement.attributes.getNamedItem('hidden')
         ).toBeNull();
       });
@@ -184,8 +183,7 @@ describe('TestSummaryHeaderComponent', () => {
 
     it('shows 0 in the counter of that status', () => {
       expect(
-        fixture.debugElement.query(By.css('.test-suite-counts .count-indicator.skipped .count')).nativeElement
-          .textContent
+        fixture.debugElement.query(By.css('.test-counts .count-indicator.skipped .count')).nativeElement.textContent
       ).toBe('0');
     });
   });
