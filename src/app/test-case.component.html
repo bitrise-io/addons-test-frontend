@@ -1,20 +1,23 @@
 <div class="test-case">
   <div class="test-case-inner" [ngClass]="testCase.statusCssClass">
-    <div class="detail-wrapper status-name">
-      <div class="detail">
-        <div class="status-icon failed" inlineSVG="/assets/images/sign-cross.svg"></div>
-        <div class="status-icon passed" inlineSVG="/assets/images/sign-check.svg"></div>
-        <div class="status-icon skipped" inlineSVG="/assets/images/sign-arrowheads.svg"></div>
-        <div class="status-icon inconclusive" inlineSVG="/assets/images/sign-questionmark.svg"></div>
-        <div class="name">{{ testCase.name }}</div>
+    <div class="heading">
+      <div class="detail-wrapper status-name">
+        <div class="detail">
+          <div class="status-icon failed" inlineSVG="/assets/images/sign-cross.svg"></div>
+          <div class="status-icon passed" inlineSVG="/assets/images/sign-check.svg"></div>
+          <div class="status-icon skipped" inlineSVG="/assets/images/sign-arrowheads.svg"></div>
+          <div class="status-icon inconclusive" inlineSVG="/assets/images/sign-questionmark.svg"></div>
+          <div class="name">{{ testCase.name }}</div>
+        </div>
       </div>
+      <div class="detail-wrapper duration">
+        <div class="detail">{{ testCase.durationInMilliseconds | textFromDurationInMilliseconds }}</div>
+      </div>
+      <div class="detail-wrapper context">
+        <div class="detail">{{ testCase.context }}</div>
+      </div>
+      <button class="show-more-button" [class.active]="isSummaryVisible" inlineSVG="/assets/images/arrow-down.svg" (click)="isSummaryVisible = !isSummaryVisible"></button>
     </div>
-    <div class="detail-wrapper duration">
-      <div class="detail">{{ testCase.durationInMilliseconds | textFromDurationInMilliseconds }}</div>
-    </div>
-    <div class="detail-wrapper context">
-      <div class="detail">{{ testCase.context }}</div>
-    </div>
-    <button class="show-mode-button" inlineSVG="/assets/images/arrow-dashed-tail-right.svg"></button>
+    <div class="summary" *ngIf="isSummaryVisible">{{ testCase.summary }}</div>
   </div>
 </div>

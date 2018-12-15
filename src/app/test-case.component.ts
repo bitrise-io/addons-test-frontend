@@ -10,4 +10,6 @@ export class TestCaseComponent {
   @Input() testCase: TestCase;
 
   TestCaseStatus = TestCaseStatus;
+
+  isSummaryVisible = false;
 }
