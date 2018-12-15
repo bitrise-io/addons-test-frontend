@@ -27,16 +27,20 @@ export class TestSummaryHeaderComponent implements OnInit {
   ngOnInit() {
     const testReports = this.testReportService.getTestReports();
 
-    this.orderedTestSuiteStatuses.forEach((status: TestSuiteStatus) => {
-      this.testCountsByStatuses = Object.assign(this.testCountsByStatuses || {}, {
+    this.testCountsByStatuses = this.orderedTestSuiteStatuses.reduce(
+      (sumByStatus, status: TestSuiteStatus) => ({
+        ...sumByStatus,
         [status]: testReports.reduce(
-          (testSuiteCountWithStatus: number, testReport: TestReport) =>
-            (testSuiteCountWithStatus += testReport.testsWithStatus(status).length),
+          (sum, testReport: TestReport) => sum + testReport.testsWithStatus(status).length,
           0
         )
-      });
+      }),
+      {}
+    );
 
-      this.totalTestCount = (this.totalTestCount || 0) + this.testCountsByStatuses[status];
-    });
+    this.totalTestCount = this.orderedTestSuiteStatuses.reduce(
+      (sumByStatus, status: TestSuiteStatus) => sumByStatus + this.testCountsByStatuses[status],
+      0
+    );
   }
 }

@@ -176,7 +176,7 @@
 
 @include width-above(800px) {
   .test-suite {
-    height: 64px;
+    height: 8 * $grid-size;
 
     .test-suite-inner {
       display: flex;
@@ -198,7 +198,7 @@
 
         &:before {
           content: 'devices';
-          margin-left: 56px;
+          margin-left: 7 * $grid-size;
         }
 
         .detail {
