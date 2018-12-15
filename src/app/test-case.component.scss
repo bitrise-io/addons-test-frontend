@@ -1,0 +1,178 @@
+@import '../sass/constants';
+@import '../sass/mixins';
+
+:host:not(:last-of-type) .test-case {
+  margin-bottom: 16px;
+}
+
+:host:first-of-type .test-case {
+  position: relative;
+  margin-top: 32px;
+
+  .test-case-inner .detail-wrapper:before {
+    @include ui-element-subtitle;
+    position: absolute;
+    bottom: 100%;
+    line-height: 32px;
+    white-space: nowrap;
+    color: $brownish-grey;
+  }
+}
+
+:host:not(:first-of-type) .test-case .test-case-inner .detail-wrapper:before {
+  content: normal;
+}
+
+.test-case {
+  $border-width: 1px;
+  $colored-border-left-width: 8px;
+  $status-icon-size: 24px;
+
+  border: $border-width solid $white-three;
+  border-radius: 8px;
+  @include ui-modifier-container-shadow;
+
+  .test-case-inner {
+    height: 100%;
+    border-left: $colored-border-left-width solid;
+    @include border-left-radius(8px);
+
+    .detail-wrapper.status-name .detail .status-icon {
+      @include size($status-icon-size);
+    }
+
+    @mixin test-case-with-status-class($status-class) {
+      $color: '';
+
+      &.#{ $status-class } {
+        @if ($status-class == 'passed') {
+          $color: $green-teal;
+        }
+        @if ($status-class == 'failed') {
+          $color: $vivid-pink;
+        }
+
+        border-left-color: $color;
+
+        .detail-wrapper.status-name .detail .status-icon:not(.#{ $status-class }) {
+          display: none;
+        }
+
+        .detail-wrapper.status-name .detail .status-icon ::ng-deep svg {
+          fill: $color;
+        }
+      }
+    }
+
+    @include test-case-with-status-class(failed);
+    @include test-case-with-status-class(passed);
+
+    .detail-wrapper.status-name .detail .name {
+      @include ui-element-body;
+      @include ellipsis-oneliner;
+      color: $dark-blue-grey;
+    }
+
+    .detail-wrapper.duration .detail {
+      @include ui-element-body;
+      color: $dark-blue-grey;
+    }
+
+    .detail-wrapper.context .detail {
+    }
+
+    .show-more-button {
+    }
+  }
+}
+
+@include width-above(800px) {
+  .test-case {
+    height: 64px;
+
+    .test-case-inner {
+      display: flex;
+      align-items: center;
+
+      .detail-wrapper {
+        flex-grow: 1;
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        position: relative;
+        height: 100%;
+      }
+
+      .detail-wrapper.status-name {
+        width: 20%;
+        min-width: 128px;
+        padding-right: 4px;
+
+        &:before {
+          content: 'test case';
+          margin-left: 56px;
+        }
+
+        .detail {
+          display: flex;
+          align-items: center;
+
+          .status-icon {
+            @include margin-x(16px);
+          }
+
+          .name {
+            overflow: hidden;
+          }
+        }
+      }
+
+      .detail-wrapper.duration {
+        min-width: 88px;
+
+        &:before {
+          content: 'duration';
+        }
+
+        .detail {
+          @include padding-x(4px);
+        }
+      }
+
+      .detail-wrapper.context {
+      }
+
+      .show-more-button {
+      }
+    }
+  }
+}
+
+@include width-max(800px) {
+  :host .test-case .test-case-inner .detail-wrapper:before {
+    content: normal;
+  }
+
+  .test-case {
+    .test-case-inner {
+      display: flex;
+      align-items: center;
+      flex-wrap: wrap;
+      padding: 16px;
+
+      .detail-wrapper.status-name {
+        width: 100%;
+
+        .detail {
+          display: flex;
+          align-items: center;
+
+          .name {
+            margin-left: 16px;
+            overflow: hidden;
+          }
+        }
+      }
+    }
+  }
+}
