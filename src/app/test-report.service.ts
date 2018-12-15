@@ -40,9 +40,27 @@ Integer posuere erat a ante venenatis dapibus posuere velit aliquet. Donec id el
           deviceOperatingSystem: 'iOS 11.2',
           durationInMilliseconds: 20000,
           testCases: [
-            { status: TestCaseStatus.passed },
-            { status: TestCaseStatus.passed },
-            { status: TestCaseStatus.passed }
+            {
+              name: 'testCaseExample',
+              status: TestCaseStatus.passed,
+              durationInMilliseconds: 5000,
+              context: 'ios_simple:abcdefgh',
+              summary: 'Lorem ipsum'
+            },
+            {
+              name: 'testCaseExample',
+              status: TestCaseStatus.passed,
+              durationInMilliseconds: 5000,
+              context: 'ios_simple:abcdefgh',
+              summary: 'Lorem ipsum'
+            },
+            {
+              name: 'testCaseExample',
+              status: TestCaseStatus.passed,
+              durationInMilliseconds: 5000,
+              context: 'ios_simple:abcdefgh',
+              summary: 'Lorem ipsum'
+            }
           ],
           orientation: TestSuiteOrientation.portrait,
           locale: 'English'
@@ -53,9 +71,27 @@ Integer posuere erat a ante venenatis dapibus posuere velit aliquet. Donec id el
           deviceOperatingSystem: 'iOS 11.2',
           durationInMilliseconds: 160000,
           testCases: [
-            { status: TestCaseStatus.passed },
-            { status: TestCaseStatus.passed },
-            { status: TestCaseStatus.failed }
+            {
+              name: 'testCaseExample',
+              status: TestCaseStatus.passed,
+              durationInMilliseconds: 5000,
+              context: 'ios_simple:abcdefgh',
+              summary: 'Lorem ipsum'
+            },
+            {
+              name: 'testCaseExample',
+              status: TestCaseStatus.passed,
+              durationInMilliseconds: 5000,
+              context: 'ios_simple:abcdefgh',
+              summary: 'Lorem ipsum'
+            },
+            {
+              name: 'testCaseExample',
+              status: TestCaseStatus.failed,
+              durationInMilliseconds: 5000,
+              context: 'ios_simple:abcdefgh',
+              summary: 'Lorem ipsum'
+            }
           ],
           orientation: TestSuiteOrientation.portrait,
           locale: 'Japanese'
@@ -88,9 +124,27 @@ Integer posuere erat a ante venenatis dapibus posuere velit aliquet. Donec id el
           deviceOperatingSystem: 'Android Ice Cream Sandwich',
           durationInMilliseconds: 10,
           testCases: [
-            { status: TestCaseStatus.passed },
-            { status: TestCaseStatus.passed },
-            { status: TestCaseStatus.passed }
+            {
+              name: 'testCaseExample',
+              status: TestCaseStatus.passed,
+              durationInMilliseconds: 5000,
+              context: 'ios_simple:abcdefgh',
+              summary: 'Lorem ipsum'
+            },
+            {
+              name: 'testCaseExample',
+              status: TestCaseStatus.passed,
+              durationInMilliseconds: 5000,
+              context: 'ios_simple:abcdefgh',
+              summary: 'Lorem ipsum'
+            },
+            {
+              name: 'testCaseExample',
+              status: TestCaseStatus.passed,
+              durationInMilliseconds: 5000,
+              context: 'ios_simple:abcdefgh',
+              summary: 'Lorem ipsum'
+            }
           ],
           orientation: TestSuiteOrientation.portrait,
           locale: 'Japanese'
@@ -101,12 +155,48 @@ Integer posuere erat a ante venenatis dapibus posuere velit aliquet. Donec id el
           deviceOperatingSystem: 'iOS 11.2',
           durationInMilliseconds: 2050,
           testCases: [
-            { status: TestCaseStatus.passed },
-            { status: TestCaseStatus.failed },
-            { status: TestCaseStatus.failed },
-            { status: TestCaseStatus.passed },
-            { status: TestCaseStatus.failed },
-            { status: TestCaseStatus.failed }
+            {
+              name: 'testCaseExample',
+              status: TestCaseStatus.passed,
+              durationInMilliseconds: 5000,
+              context: 'ios_simple:abcdefgh',
+              summary: 'Lorem ipsum'
+            },
+            {
+              name: 'testCaseExample',
+              status: TestCaseStatus.failed,
+              durationInMilliseconds: 5000,
+              context: 'ios_simple:abcdefgh',
+              summary: 'Lorem ipsum'
+            },
+            {
+              name: 'testCaseExample',
+              status: TestCaseStatus.failed,
+              durationInMilliseconds: 5000,
+              context: 'ios_simple:abcdefgh',
+              summary: 'Lorem ipsum'
+            },
+            {
+              name: 'testCaseExample',
+              status: TestCaseStatus.passed,
+              durationInMilliseconds: 5000,
+              context: 'ios_simple:abcdefgh',
+              summary: 'Lorem ipsum'
+            },
+            {
+              name: 'testCaseExample',
+              status: TestCaseStatus.failed,
+              durationInMilliseconds: 5000,
+              context: 'ios_simple:abcdefgh',
+              summary: 'Lorem ipsum'
+            },
+            {
+              name: 'testCaseExample',
+              status: TestCaseStatus.failed,
+              durationInMilliseconds: 5000,
+              context: 'ios_simple:abcdefgh',
+              summary: 'Lorem ipsum'
+            }
           ],
           orientation: TestSuiteOrientation.portrait,
           locale: 'English'

@@ -21,7 +21,7 @@ export type TestSuiteResponse = {
   durationInMilliseconds: number;
   orientation: TestSuiteOrientation;
   locale: string;
-  testCases: TestCaseResponse[];
+  testCases?: TestCaseResponse[];
 };
 
 @Injectable()
