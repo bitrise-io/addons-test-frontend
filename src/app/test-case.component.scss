@@ -90,7 +90,7 @@
 
         ::ng-deep svg {
           display: block;
-          fill: $dark-blue-grey;
+          fill: $violet-blue;
         }
 
         &.active ::ng-deep svg {
@@ -208,6 +208,24 @@
               margin-left: 16px;
               overflow: hidden;
             }
+          }
+        }
+
+        .detail-wrapper.duration {
+          margin-top: 24px;
+        }
+
+        .detail-wrapper.context {
+          width: 100%;
+          margin-top: 16px;
+        }
+
+        .show-more-button {
+          width: 100%;
+          margin-top: 16px;
+
+          ::ng-deep svg {
+            @include margin-x(auto);
           }
         }
       }
