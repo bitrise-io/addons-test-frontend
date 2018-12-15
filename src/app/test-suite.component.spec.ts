@@ -1,7 +1,7 @@
 import { TestBed, ComponentFixture } from '@angular/core/testing';
 import { By } from '@angular/platform-browser';
 import { HttpClientTestingModule } from '@angular/common/http/testing';
-import { Pipe } from '@angular/core';
+import { Pipe, PipeTransform } from '@angular/core';
 import { InlineSVGModule } from 'ng-inline-svg';
 import { TestSuiteComponent } from './test-suite.component';
 import { TestSuite, TestSuiteStatus } from './test-suite.model';
