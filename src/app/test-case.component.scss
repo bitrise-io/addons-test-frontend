@@ -103,6 +103,11 @@
       @include ui-element-code-block;
       @include ui-modifier-code-block-greyer;
       @include ui-modifier-code-block-multiliner;
+
+      .code {
+        white-space: pre-wrap;
+        word-break: break-all;
+      }
     }
   }
 }
@@ -163,7 +168,12 @@
 
         .detail-wrapper.context {
           flex-grow: 5;
+          width: 400px;
           min-width: 400px;
+
+          .detail {
+            overflow-x: auto;
+          }
         }
 
         .show-more-button {
@@ -172,8 +182,7 @@
       }
 
       .summary {
-        @include margin-x(16px);
-        margin-bottom: 16px;
+        margin: 0 16px 16px;
       }
 
       &:after {
@@ -218,6 +227,11 @@
         .detail-wrapper.context {
           width: 100%;
           margin-top: 16px;
+
+          .detail {
+            display: block;
+            word-break: break-all;
+          }
         }
 
         .show-more-button {
@@ -231,8 +245,7 @@
       }
 
       .summary {
-        @include margin-x(16px);
-        margin-bottom: 16px;
+        margin: 0 16px 16px;
       }
 
       &:after {

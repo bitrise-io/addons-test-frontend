@@ -15,13 +15,11 @@ export class TestReportService {
           status: TestCaseStatus.failed,
           durationInMilliseconds: 3000,
           context: 'ios_simple:dsfhkjshUITESTX',
-          summary: `
-Nulla vitae elit libero, a pharetra augue. Sed posuere consectetur est at lobortis. Nullam id dolor id nibh ultricies vehicula ut id elit. Praesent commodo cursus magna, vel scelerisque nisl consectetur et.
+          summary: `Nulla vitae elit libero, a pharetra augue. Sed posuere consectetur est at lobortis. Nullam id dolor id nibh ultricies vehicula ut id elit. Praesent commodo cursus magna, vel scelerisque nisl consectetur et.
 
 Integer posuere erat a ante venenatis dapibus posuere velit aliquet. Donec id elit non mi porta gravida at eget metus. Vestibulum id ligula porta felis euismod semper. Aenean lacinia bibendum nulla sed consectetur.
 
-Donec ullamcorper nulla non metus auctor fringilla. Aenean eu leo quam. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Vestibulum id ligula porta felis euismod semper. Morbi leo risus. Cum sociis natoque penatibus et magnis dis parturient montes, nascetur ridiculus muDuis mollis, est non commodo luctus, nisi erat porttitor ligula, eget lacinia odio sem nec elit.
-        `
+Donec ullamcorper nulla non metus auctor fringilla. Aenean eu leo quam. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Vestibulum id ligula porta felis euismod semper. Morbi leo risus. Cum sociis natoque penatibus et magnis dis parturient montes, nascetur ridiculus muDuis mollis, est non commodo luctus, nisi erat porttitor ligula, eget lacinia odio sem nec elit.`
         },
         {
           name: 'testCaseExample2',

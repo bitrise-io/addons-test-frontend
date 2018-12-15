@@ -7,7 +7,7 @@
 }
 
 @mixin width-above($value) {
-  @media (min-width: $value) {
+  @media (min-width: $value + 1) {
     @content;
   }
 }

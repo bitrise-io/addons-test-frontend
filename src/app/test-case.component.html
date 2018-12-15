@@ -14,10 +14,10 @@
         <div class="detail">{{ testCase.durationInMilliseconds | textFromDurationInMilliseconds }}</div>
       </div>
       <div class="detail-wrapper context">
-        <div class="detail">{{ testCase.context }}</div>
+        <code class="detail">{{ testCase.context }}</code>
       </div>
       <button class="show-more-button" [class.active]="isSummaryVisible" inlineSVG="/assets/images/arrow-down.svg" (click)="isSummaryVisible = !isSummaryVisible"></button>
     </div>
-    <div class="summary" *ngIf="isSummaryVisible">{{ testCase.summary }}</div>
+    <pre class="summary" *ngIf="isSummaryVisible"><code class="code">{{ testCase.summary }}</code></pre>
   </div>
 </div>
