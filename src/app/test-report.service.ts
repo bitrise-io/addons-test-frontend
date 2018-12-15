@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { TestReport, TestReportResponse } from './test-report.model';
-import { TestSuiteStatus } from './test-suite.model';
+import { TestSuiteStatus, TestSuiteOrientation } from './test-suite.model';
 import { TestCaseStatus } from './test-case.model';
 
 @Injectable()
@@ -20,7 +20,7 @@ export class TestReportService {
             { status: TestCaseStatus.passed },
             { status: TestCaseStatus.passed }
           ],
-          orientation: 'portrait',
+          orientation: TestSuiteOrientation.portrait,
           locale: 'English'
         },
         {
@@ -33,7 +33,7 @@ export class TestReportService {
             { status: TestCaseStatus.passed },
             { status: TestCaseStatus.passed }
           ],
-          orientation: 'portrait',
+          orientation: TestSuiteOrientation.portrait,
           locale: 'English'
         },
         {
@@ -46,7 +46,7 @@ export class TestReportService {
             { status: TestCaseStatus.passed },
             { status: TestCaseStatus.failed }
           ],
-          orientation: 'portrait',
+          orientation: TestSuiteOrientation.portrait,
           locale: 'Japanese'
         },
         {
@@ -54,7 +54,7 @@ export class TestReportService {
           deviceName: 'Nexus7 clone, DVD 16:9 aspect ratio',
           deviceOperatingSystem: 'Android Oreo',
           durationInMilliseconds: 3700000,
-          orientation: 'landscape',
+          orientation: TestSuiteOrientation.landscape,
           locale: 'Japanese'
         },
         {
@@ -62,7 +62,7 @@ export class TestReportService {
           deviceName: 'iPhone 7',
           deviceOperatingSystem: 'iOS 11.2',
           durationInMilliseconds: 7200000,
-          orientation: 'landscape',
+          orientation: TestSuiteOrientation.landscape,
           locale: 'Japanese'
         },
         {
@@ -75,7 +75,7 @@ export class TestReportService {
             { status: TestCaseStatus.passed },
             { status: TestCaseStatus.passed }
           ],
-          orientation: 'portrait',
+          orientation: TestSuiteOrientation.portrait,
           locale: 'Japanese'
         },
         {
@@ -84,7 +84,7 @@ export class TestReportService {
           deviceOperatingSystem: 'iOS 11.2',
           durationInMilliseconds: 32000,
           testCases: [{ status: TestCaseStatus.passed }, { status: TestCaseStatus.failed }],
-          orientation: 'portrait',
+          orientation: TestSuiteOrientation.portrait,
           locale: 'English'
         }
       ]
@@ -103,7 +103,7 @@ export class TestReportService {
             { status: TestCaseStatus.passed },
             { status: TestCaseStatus.passed }
           ],
-          orientation: 'portrait',
+          orientation: TestSuiteOrientation.portrait,
           locale: 'Traditional chinese'
         },
         {
@@ -116,7 +116,7 @@ export class TestReportService {
             { status: TestCaseStatus.passed },
             { status: TestCaseStatus.passed }
           ],
-          orientation: 'portrait',
+          orientation: TestSuiteOrientation.portrait,
           locale: 'Traditional chinese'
         },
         {
@@ -132,7 +132,7 @@ export class TestReportService {
             { status: TestCaseStatus.failed },
             { status: TestCaseStatus.failed }
           ],
-          orientation: 'portrait',
+          orientation: TestSuiteOrientation.portrait,
           locale: 'English'
         }
       ]
@@ -151,7 +151,7 @@ export class TestReportService {
             { status: TestCaseStatus.passed },
             { status: TestCaseStatus.passed }
           ],
-          orientation: 'portrait',
+          orientation: TestSuiteOrientation.portrait,
           locale: 'English'
         },
         {
@@ -164,7 +164,7 @@ export class TestReportService {
             { status: TestCaseStatus.passed },
             { status: TestCaseStatus.passed }
           ],
-          orientation: 'portrait',
+          orientation: TestSuiteOrientation.portrait,
           locale: 'Japanese'
         },
         {
@@ -180,7 +180,7 @@ export class TestReportService {
             { status: TestCaseStatus.failed },
             { status: TestCaseStatus.failed }
           ],
-          orientation: 'portrait',
+          orientation: TestSuiteOrientation.portrait,
           locale: 'English'
         },
         {
@@ -188,7 +188,7 @@ export class TestReportService {
           deviceName: 'iPhone 7',
           deviceOperatingSystem: 'iOS 11.2',
           durationInMilliseconds: 20000,
-          orientation: 'landscape',
+          orientation: TestSuiteOrientation.landscape,
           locale: 'English'
         }
       ]
