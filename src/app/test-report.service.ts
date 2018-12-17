@@ -4,7 +4,7 @@ import * as MOCKED_DATA from './mocked-data.json';
 
 @Injectable()
 export class TestReportService {
-  private testReportResponses = (<any>MOCKED_DATA).test_reports;
+  private testReportResponses = MOCKED_DATA['test_reports'];
 
   getTestReports(): TestReport[] {
     return this.testReportResponses.map((testReportResponse: TestReportResponse) =>
