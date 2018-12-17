@@ -17,29 +17,29 @@ export class TestSummaryHeaderComponent implements OnInit {
     TestSuiteStatus.skipped,
     TestSuiteStatus.inconclusive
   ];
-  testSuiteCountsByStatuses: {
+  testCountsByStatuses: {
     [status: number]: number;
   };
-  totalTestSuitesCount: number;
+  totalTestCount: number;
 
   constructor(private testReportService: TestReportService) {}
 
   ngOnInit() {
     const testReports = this.testReportService.getTestReports();
 
-    this.testSuiteCountsByStatuses = this.orderedTestSuiteStatuses.reduce(
+    this.testCountsByStatuses = this.orderedTestSuiteStatuses.reduce(
       (sumByStatus, status: TestSuiteStatus) => ({
         ...sumByStatus,
         [status]: testReports.reduce(
-          (sum, testReport: TestReport) => sum + testReport.testSuitesWithStatus(status).length,
+          (sum, testReport: TestReport) => sum + testReport.testsWithStatus(status).length,
           0
         )
       }),
       {}
     );
 
-    this.totalTestSuitesCount = this.orderedTestSuiteStatuses.reduce(
-      (sumByStatus, status: TestSuiteStatus) => sumByStatus + this.testSuiteCountsByStatuses[status],
+    this.totalTestCount = this.orderedTestSuiteStatuses.reduce(
+      (sumByStatus, status: TestSuiteStatus) => sumByStatus + this.testCountsByStatuses[status],
       0
     );
   }

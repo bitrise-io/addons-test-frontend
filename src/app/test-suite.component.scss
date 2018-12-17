@@ -183,7 +183,6 @@
       align-items: center;
 
       .detail-wrapper {
-        flex-grow: 1;
         display: flex;
         flex-direction: column;
         justify-content: center;
@@ -192,7 +191,8 @@
       }
 
       .detail-wrapper.status-device {
-        width: 20%;
+        flex-grow: 3;
+        width: 256px;
         min-width: 128px;
         padding-right: 4px;
 
@@ -216,6 +216,7 @@
       }
 
       .detail-wrapper.duration {
+        flex-grow: 1;
         min-width: 88px;
 
         &:before {
@@ -228,9 +229,7 @@
       }
 
       .detail-wrapper.test-results {
-        flex-grow: 1;
-        flex-shrink: 5;
-        width: 30%;
+        flex-grow: 4;
         min-width: 120px;
 
         &:before {
@@ -239,8 +238,9 @@
       }
 
       .detail-wrapper.orientation {
+        flex-grow: 1;
         align-items: center;
-        min-width: 100px;
+        min-width: 104px;
         text-align: center;
 
         &:before {
@@ -249,9 +249,10 @@
       }
 
       .detail-wrapper.locale {
+        flex-grow: 1;
         align-items: center;
         width: 96px;
-        min-width: 0;
+        min-width: 96px;
         text-align: center;
 
         &:before {
@@ -267,8 +268,7 @@
       }
 
       .test-cases-button {
-        flex-shrink: 0;
-        width: 120px;
+        min-width: 120px;
         margin-right: 16px;
       }
     }

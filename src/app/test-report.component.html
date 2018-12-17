@@ -1,4 +1,9 @@
 <section class="test-report">
   <div class="name">{{ testReport.name }}</div>
-  <bitrise-test-suite *ngFor="let testSuite of testReport.testSuites" [testSuite]="testSuite"></bitrise-test-suite>
+  <div *ngIf="testReport.type === TestReportType.uiTest">
+    <bitrise-test-suite *ngFor="let testSuite of testReport.testSuites" [testSuite]="testSuite"></bitrise-test-suite>
+  </div>
+  <div *ngIf="testReport.type === TestReportType.unitTest">
+    <bitrise-test-case *ngFor="let testCase of testReport.testCases" [testCase]="testCase"></bitrise-test-case>
+  </div>
 </section>

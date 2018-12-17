@@ -1,9 +1,9 @@
 <section class="test-summary-header">
-  <div class="test-suite-counts">
+  <div class="test-counts">
     <div class="count-indicator total">
       <div class="icon" [inlineSVG]="'/assets/images/hashtag.svg'"></div>
       <div class="count-wrapper">
-        <div class="count">{{ totalTestSuitesCount }}</div>
+        <div class="count">{{ totalTestCount }}</div>
         <div class="name">total</div>
       </div>
     </div>
@@ -33,18 +33,18 @@
         [inlineSVG]="'/assets/images/sign-questionmark.svg'"
       ></div>
       <div class="count-wrapper">
-        <div class="count">{{ testSuiteCountsByStatuses[testSuiteStatus] }}</div>
+        <div class="count">{{ testCountsByStatuses[testSuiteStatus] }}</div>
         <div class="name">{{ TestSuite.statusName(testSuiteStatus) }}</div>
       </div>
     </div>
   </div>
-  <div class="test-suite-rates">
+  <div class="test-rates">
     <div
       class="rate-indicator"
       *ngFor="let testSuiteStatus of orderedTestSuiteStatuses"
-      [hidden]="testSuiteCountsByStatuses[testSuiteStatus] == 0"
+      [hidden]="testCountsByStatuses[testSuiteStatus] == 0"
       [ngClass]="TestSuite.statusCssClass(testSuiteStatus)"
-      [style.width]="(100 * testSuiteCountsByStatuses[testSuiteStatus]) / totalTestSuitesCount + '%'"
-    >{{ testSuiteCountsByStatuses[testSuiteStatus] }} {{ TestSuite.statusName(testSuiteStatus) }}</div>
+      [style.width]="(100 * testCountsByStatuses[testSuiteStatus]) / totalTestCount + '%'"
+    >{{ testCountsByStatuses[testSuiteStatus] }} {{ TestSuite.statusName(testSuiteStatus) }}</div>
   </div>
 </section>

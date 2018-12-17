@@ -10,6 +10,7 @@ import { AppHeaderComponent } from './app-header.component';
 import { TestReportService } from './test-report.service';
 import { TestReport } from './test-report.model';
 import { TestSuite } from './test-suite.model';
+import { TestCase } from './test-case.model';
 
 @Component({
   selector: 'bitrise-test-summary',
@@ -44,7 +45,7 @@ describe('AppHeaderComponent', () => {
   let fixture: ComponentFixture<AppHeaderComponent>;
   let appHeaderElement: AppHeaderComponent;
   let tabElements: DebugElement[];
-  let summedTestSuiteCountElement: DebugElement;
+  let summedFailedTestCountElement: DebugElement;
   let dropdownItemElements: DebugElement[];
 
   beforeEach(async(() => {
@@ -80,61 +81,77 @@ describe('AppHeaderComponent', () => {
   describe('when there are some test reports', () => {
     beforeEach(() => {
       service.testReports = [
-        { id: 1, name: 'Unit Test A', failedTestSuiteCount: 2 },
-        { id: 2, name: 'Unit Test X', failedTestSuiteCount: 0 },
-        { id: 3, name: 'Unit Test Y', failedTestSuiteCount: 1 }
+        { id: 1, name: 'UI Test A', failedTestSuiteCount: 2 },
+        { id: 2, name: 'UI Test B', failedTestSuiteCount: 0 },
+        { id: 3, name: 'UI Test C', failedTestSuiteCount: 1 },
+        { id: 4, name: 'Unit Test X', failedTestCaseCount: 3 },
+        { id: 5, name: 'Unit Test Y', failedTestCaseCount: 6 }
       ].map(specConfig => {
         const testReport = new TestReport();
         testReport.id = specConfig.id;
         testReport.name = specConfig.name;
-        testReport.testSuites = Array(specConfig.failedTestSuiteCount).fill(null).map(() => {
-          const testSuite = new TestSuite();
-          testSuite.status = 2;
 
-          return testSuite;
-        });
+        if (specConfig.failedTestSuiteCount !== undefined) {
+          testReport.testSuites = Array(specConfig.failedTestSuiteCount)
+            .fill(null)
+            .map(() => {
+              const testSuite = new TestSuite();
+              testSuite.status = 2;
 
-        return testReport;
+              return testSuite;
+            });
+
+          return testReport;
+        } else {
+          testReport.testCases = Array(specConfig.failedTestCaseCount)
+            .fill(null)
+            .map(() => {
+              const testCase = new TestCase();
+              testCase.status = 2;
+
+              return testCase;
+            });
+
+          return testReport;
+        }
       });
 
       fixture.detectChanges();
 
       tabElements = fixture.debugElement.queryAll(By.css('a.tabmenu-item'));
-      summedTestSuiteCountElement = fixture.debugElement.query(By.css('.summed-failed-test-suite-count'));
+      summedFailedTestCountElement = fixture.debugElement.query(By.css('.summed-failed-test-count'));
       dropdownItemElements = fixture.debugElement.queryAll(By.css('.tabmenu-select option'));
     });
 
-    it('loads as many tabs as there are test reports, plus one for the summary', () => {
-      expect(tabElements.length).toBe(4);
+    it('loads as many tabs (and items for the mobile-only dropdown) as there are test reports, plus one for the summary', () => {
+      expect(tabElements.length).toBe(6);
+      expect(dropdownItemElements.length).toBe(6);
     });
 
-    it('shows the name of the test reports in the tabs', () => {
-      expect(tabElements[1].query(By.css('.text')).nativeElement.textContent).toBe('Unit Test A');
-      expect(tabElements[2].query(By.css('.text')).nativeElement.textContent).toBe('Unit Test X');
-      expect(tabElements[3].query(By.css('.text')).nativeElement.textContent).toBe('Unit Test Y');
+    it('shows the name of the test reports in the tabs (and in the items of the mobile-only dropdown)', () => {
+      expect(tabElements[1].query(By.css('.text')).nativeElement.textContent).toBe('UI Test A');
+      expect(tabElements[2].query(By.css('.text')).nativeElement.textContent).toBe('UI Test B');
+      expect(tabElements[3].query(By.css('.text')).nativeElement.textContent).toBe('UI Test C');
+      expect(tabElements[4].query(By.css('.text')).nativeElement.textContent).toBe('Unit Test X');
+      expect(tabElements[5].query(By.css('.text')).nativeElement.textContent).toBe('Unit Test Y');
+
+      expect(dropdownItemElements[1].nativeElement.textContent).toBe('UI Test A');
+      expect(dropdownItemElements[2].nativeElement.textContent).toBe('UI Test B');
+      expect(dropdownItemElements[3].nativeElement.textContent).toBe('UI Test C');
+      expect(dropdownItemElements[4].nativeElement.textContent).toBe('Unit Test X');
+      expect(dropdownItemElements[5].nativeElement.textContent).toBe('Unit Test Y');
     });
 
-    it('shows bubble for test reports with failed test suites', () => {
+    it('shows bubble only for test reports with failed tests', () => {
       expect(tabElements[1].query(By.css('.notification-bubble'))).not.toBeNull();
-      expect(tabElements[3].query(By.css('.notification-bubble'))).not.toBeNull();
-    });
-
-    it('does not show bubble for test reports without failed test suites', () => {
       expect(tabElements[2].query(By.css('.notification-bubble'))).toBeNull();
+      expect(tabElements[3].query(By.css('.notification-bubble'))).not.toBeNull();
+      expect(tabElements[4].query(By.css('.notification-bubble'))).not.toBeNull();
+      expect(tabElements[5].query(By.css('.notification-bubble'))).not.toBeNull();
     });
 
-    it('shows the sum of failed test suites in the mobile-only section', () => {
-      expect(summedTestSuiteCountElement.query(By.css('.text')).nativeElement.textContent).toBe('3 failed tests');
-    });
-
-    it('loads as many items for the mobile-only dropdown as there are test reports, plus one for the summary', () => {
-      expect(dropdownItemElements.length).toBe(4);
-    });
-
-    it('shows the name of the test reports in the dropdown items', () => {
-      expect(dropdownItemElements[1].nativeElement.textContent).toBe('Unit Test A');
-      expect(dropdownItemElements[2].nativeElement.textContent).toBe('Unit Test X');
-      expect(dropdownItemElements[3].nativeElement.textContent).toBe('Unit Test Y');
+    it('shows the sum of failed tests in the mobile-only section', () => {
+      expect(summedFailedTestCountElement.query(By.css('.text')).nativeElement.textContent).toBe('12 failed tests');
     });
 
     describe('and a test report tab is selected', () => {
@@ -188,20 +205,17 @@ describe('AppHeaderComponent', () => {
       fixture.detectChanges();
 
       tabElements = fixture.debugElement.queryAll(By.css('a.tabmenu-item'));
-      summedTestSuiteCountElement = fixture.debugElement.query(By.css('.summed-failed-test-suite-count'));
+      summedFailedTestCountElement = fixture.debugElement.query(By.css('.summed-failed-test-count'));
       dropdownItemElements = fixture.debugElement.queryAll(By.css('.tabmenu-select option'));
     });
 
-    it('loads only one tab for the summary', () => {
+    it('loads only one tab for the summary (and for the mobile-only dropdown)', () => {
       expect(tabElements.length).toBe(1);
-    });
-
-    it('shows 0 failed test suites in the mobile-only section', () => {
-      expect(summedTestSuiteCountElement.query(By.css('.text')).nativeElement.textContent).toBe('0 failed tests');
-    });
-
-    it('loads only one dropdown item for the summary', () => {
       expect(dropdownItemElements.length).toBe(1);
+    });
+
+    it('shows 0 failed tests in the mobile-only section', () => {
+      expect(summedFailedTestCountElement.query(By.css('.text')).nativeElement.textContent).toBe('0 failed tests');
     });
   });
 });

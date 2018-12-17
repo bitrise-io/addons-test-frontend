@@ -8,6 +8,9 @@
 @include font-face("TTNorms", "/assets/fonts/ttnorms/35C30F_1_0", 700);
 @include font-face("TTNorms", "/assets/fonts/ttnorms/35C30F_3_0", 900);
 
+@include font-face("Inconsolata", "/assets/fonts/inconsolata/Inconsolata-Regular", 400);
+@include font-face("Inconsolata", "/assets/fonts/inconsolata/Inconsolata-Bold", 700);
+
 body {
   margin: 0;
 }

@@ -26,10 +26,12 @@ $white-three: #ececec !default;
 $white-darken: #dddddd !default;
 $warm-grey: #777777 !default;
 $brownish-grey: #616161 !default;
+$black: #222222 !default;
 $aqua: #0dd3c5 !default;
 $green-teal: #0fc389 !default;
 $water-blue-two: #0d83cd !default;
 $ocean-blue: #054ab0 !default;
+$violet-blue: #760fc3 !default;
 $dark-blue-grey: #351d48 !default;
 $vivid-pink: #ff2158 !default;
 
@@ -37,6 +39,15 @@ $vivid-pink: #ff2158 !default;
 
 @mixin default-font {
   font-family: TTNorms;
+  line-height: 1.5;
+  letter-spacing: normal;
+  font-weight: 500;
+  font-style: normal;
+  font-stretch: normal;
+}
+
+@mixin code-font {
+  font-family: Inconsolata;
   line-height: 1.5;
   letter-spacing: normal;
   font-weight: 500;
@@ -109,6 +120,16 @@ $vivid-pink: #ff2158 !default;
 
 @mixin ui-element-button-secondary-hover {
   background-image: linear-gradient(to top, #e4e4e4, #fefefe);
+}
+
+@mixin ui-element-code-block {
+  @include code-font;
+  border-radius: 4px;
+  padding: 8px;
+  line-height: 16px;
+  font-size: 16px;
+  color: $black;
+  background-color: $white-three;
 }
 
 @mixin ui-element-select {
@@ -196,6 +217,15 @@ $vivid-pink: #ff2158 !default;
 
 @mixin ui-modifier-button-shadow {
   box-shadow: 0 2px 4px 0 rgba(0, 0, 0, 0.08);
+}
+
+@mixin ui-modifier-code-block-greyer {
+  color: $brownish-grey;
+}
+
+@mixin ui-modifier-code-block-multiliner {
+  padding: 12px 16px;
+  line-height: 24px;
 }
 
 @mixin ui-modifier-container-shadow {

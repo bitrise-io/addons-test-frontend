@@ -13,7 +13,7 @@ import { TestSuiteStatus } from './test-suite.model';
 export class AppHeaderComponent implements OnInit {
   tabmenuItems: any[];
   selectedSmallTabmenuItem: any;
-  summedFailedTestSuiteCount: number;
+  summedFailedTestCount: number;
 
   constructor(private router: Router, private testReportService: TestReportService) {
     this.router.events.pipe(filter(event => event instanceof NavigationEnd)).subscribe((event: NavigationEnd) => {
@@ -23,8 +23,8 @@ export class AppHeaderComponent implements OnInit {
 
   ngOnInit() {
     const testReports = this.testReportService.getTestReports();
-    const failedTestSuiteCountsOfTestReports = testReports.map(
-      testReport => testReport.testSuitesWithStatus(TestSuiteStatus.failed).length
+    const failedTestCountsOfTestReports = testReports.map(
+      testReport => testReport.testsWithStatus(TestSuiteStatus.failed).length
     );
 
     this.tabmenuItems = [
@@ -36,13 +36,13 @@ export class AppHeaderComponent implements OnInit {
       testReports.map((testReport: TestReport, index: number) => ({
         name: testReport.name,
         routerLink: ['/testreport/' + testReport.id],
-        failedTestSuiteCount: failedTestSuiteCountsOfTestReports[index]
+        failedTestCount: failedTestCountsOfTestReports[index]
       }))
     );
 
-    this.summedFailedTestSuiteCount = failedTestSuiteCountsOfTestReports.reduce(
-      (summedFailedTestSuiteCount: number, failedTestSuiteCountOfTestReport: number) =>
-        summedFailedTestSuiteCount + failedTestSuiteCountOfTestReport,
+    this.summedFailedTestCount = failedTestCountsOfTestReports.reduce(
+      (summedFailedTestCount: number, failedTestCountOfTestReport: number) =>
+        summedFailedTestCount + failedTestCountOfTestReport,
       0
     );
   }
