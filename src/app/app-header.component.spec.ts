@@ -123,43 +123,35 @@ describe('AppHeaderComponent', () => {
       dropdownItemElements = fixture.debugElement.queryAll(By.css('.tabmenu-select option'));
     });
 
-    it('loads as many tabs as there are test reports, plus one for the summary', () => {
+    it('loads as many tabs (and items for the mobile-only dropdown) as there are test reports, plus one for the summary', () => {
       expect(tabElements.length).toBe(6);
+      expect(dropdownItemElements.length).toBe(6);
     });
 
-    it('shows the name of the test reports in the tabs', () => {
+    it('shows the name of the test reports in the tabs (and in the items of the mobile-only dropdown)', () => {
       expect(tabElements[1].query(By.css('.text')).nativeElement.textContent).toBe('UI Test A');
       expect(tabElements[2].query(By.css('.text')).nativeElement.textContent).toBe('UI Test B');
       expect(tabElements[3].query(By.css('.text')).nativeElement.textContent).toBe('UI Test C');
       expect(tabElements[4].query(By.css('.text')).nativeElement.textContent).toBe('Unit Test X');
       expect(tabElements[5].query(By.css('.text')).nativeElement.textContent).toBe('Unit Test Y');
-    });
 
-    it('shows bubble for test reports with failed tests', () => {
-      expect(tabElements[1].query(By.css('.notification-bubble'))).not.toBeNull();
-      expect(tabElements[3].query(By.css('.notification-bubble'))).not.toBeNull();
-      expect(tabElements[4].query(By.css('.notification-bubble'))).not.toBeNull();
-      expect(tabElements[5].query(By.css('.notification-bubble'))).not.toBeNull();
-    });
-
-    it('does not show bubble for test reports without failed tests', () => {
-      expect(tabElements[2].query(By.css('.notification-bubble'))).toBeNull();
-    });
-
-    it('shows the sum of failed tests in the mobile-only section', () => {
-      expect(summedFailedTestCountElement.query(By.css('.text')).nativeElement.textContent).toBe('12 failed tests');
-    });
-
-    it('loads as many items for the mobile-only dropdown as there are test reports, plus one for the summary', () => {
-      expect(dropdownItemElements.length).toBe(6);
-    });
-
-    it('shows the name of the test reports in the dropdown items', () => {
       expect(dropdownItemElements[1].nativeElement.textContent).toBe('UI Test A');
       expect(dropdownItemElements[2].nativeElement.textContent).toBe('UI Test B');
       expect(dropdownItemElements[3].nativeElement.textContent).toBe('UI Test C');
       expect(dropdownItemElements[4].nativeElement.textContent).toBe('Unit Test X');
       expect(dropdownItemElements[5].nativeElement.textContent).toBe('Unit Test Y');
+    });
+
+    it('shows bubble only for test reports with failed tests', () => {
+      expect(tabElements[1].query(By.css('.notification-bubble'))).not.toBeNull();
+      expect(tabElements[2].query(By.css('.notification-bubble'))).toBeNull();
+      expect(tabElements[3].query(By.css('.notification-bubble'))).not.toBeNull();
+      expect(tabElements[4].query(By.css('.notification-bubble'))).not.toBeNull();
+      expect(tabElements[5].query(By.css('.notification-bubble'))).not.toBeNull();
+    });
+
+    it('shows the sum of failed tests in the mobile-only section', () => {
+      expect(summedFailedTestCountElement.query(By.css('.text')).nativeElement.textContent).toBe('12 failed tests');
     });
 
     describe('and a test report tab is selected', () => {
@@ -217,16 +209,13 @@ describe('AppHeaderComponent', () => {
       dropdownItemElements = fixture.debugElement.queryAll(By.css('.tabmenu-select option'));
     });
 
-    it('loads only one tab for the summary', () => {
+    it('loads only one tab for the summary (and for the mobile-only dropdown)', () => {
       expect(tabElements.length).toBe(1);
+      expect(dropdownItemElements.length).toBe(1);
     });
 
     it('shows 0 failed tests in the mobile-only section', () => {
       expect(summedFailedTestCountElement.query(By.css('.text')).nativeElement.textContent).toBe('0 failed tests');
-    });
-
-    it('loads only one dropdown item for the summary', () => {
-      expect(dropdownItemElements.length).toBe(1);
     });
   });
 });
