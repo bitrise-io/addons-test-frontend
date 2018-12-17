@@ -1,0 +1,53 @@
+<div class="test-suite">
+  <div class="test-suite-inner" [ngClass]="testSuite.statusCssClass">
+    <div class="detail-wrapper status-device">
+      <div class="detail">
+        <div class="status-icon failed" inlineSVG="/assets/images/sign-cross.svg"></div>
+        <div class="status-icon passed" inlineSVG="/assets/images/sign-check.svg"></div>
+        <div class="status-icon skipped" inlineSVG="/assets/images/sign-arrowheads.svg"></div>
+        <div class="status-icon inconclusive" inlineSVG="/assets/images/sign-questionmark.svg"></div>
+        <div class="device">
+          <div class="name">{{ testSuite.deviceName }}</div>
+          <div class="operating-system">{{ testSuite.deviceOperatingSystem }}</div>
+        </div>
+      </div>
+    </div>
+    <div class="detail-wrapper duration">
+      <div class="detail">{{ testSuite.durationInMilliseconds | textFromDurationInMilliseconds }}</div>
+    </div>
+    <div class="detail-wrapper test-results">
+      <div class="detail">
+        <div
+          *ngIf="testSuite.status == TestSuiteStatus.inconclusive || testSuite.status == TestSuiteStatus.skipped"
+          class="test-result-bar"
+        ></div>
+        <div
+          *ngIf="testSuite.status == TestSuiteStatus.passed || testSuite.status == TestSuiteStatus.failed"
+          class="test-result-bar"
+        >
+          <div
+            class="test-case-bar passed"
+            *ngIf="passedTestCaseCount > 0"
+            [style.width.%]="(100 * passedTestCaseCount) / testSuite.testCases.length"
+          >{{ passedTestCaseCount }}</div>
+          <div
+            class="test-case-bar failed"
+            *ngIf="failedTestCaseCount > 0"
+            [style.width.%]="(100 * failedTestCaseCount) / testSuite.testCases.length"
+          >{{ failedTestCaseCount }}</div>
+        </div>
+      </div>
+    </div>
+    <div class="detail-wrapper orientation">
+      <div class="detail" [ngClass]="testSuite.orientationCssClass">
+        <div inlineSVG="/assets/images/mobile.svg"></div>
+      </div>
+    </div>
+    <div class="detail-wrapper locale">
+      <div class="detail">{{ testSuite.locale }}</div>
+    </div>
+    <a class="test-cases-button">
+      <span>Test Cases</span> <span class="arrow" inlineSVG="/assets/images/arrow-dashed-tail-right.svg"></span>
+    </a>
+  </div>
+</div>

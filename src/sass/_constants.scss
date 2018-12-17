@@ -8,17 +8,12 @@ $screen-xlarge-width: 1920px;
 // Sizes
 
 $beam-height: 47px;
+$grid-size: 8px !default;
 $centered-maxwidth: 1528px;
 $main-content-padding-x: 24px;
 $main-content-padding-x-smallscreen: 16px;
 $section-spacing-y: 32px;
 $ui-element-notification-bubble-size: 24px;
-$test-suite-info-part-icon-x: 64px;
-$test-suite-info-part-device-x: 20%;
-$test-suite-info-part-duration-x: 80px;
-$test-suite-info-part-results-x: 30%;
-$test-suite-info-part-orientation-x: 106px;
-$test-suite-info-part-locale-x: 64px;
 
 // Times
 
@@ -72,6 +67,11 @@ $vivid-pink: #ff2158 !default;
   font-weight: 700;
 }
 
+@mixin ui-element-description {
+  @include default-font;
+  font-size: 13px;
+}
+
 @mixin ui-element-subtitle {
   @include default-font;
   font-size: 13px;
@@ -87,8 +87,33 @@ $vivid-pink: #ff2158 !default;
   text-transform: uppercase;
 }
 
+@mixin ui-element-button-secondary {
+  @include default-font;
+  box-sizing: border-box;
+  justify-content: center;
+  align-items: center;
+  border: 1px solid $white-darken;
+  border-radius: 4px;
+  padding: 3px 8px;
+  line-height: 16px;
+  text-align: center;
+  font-size: 13px;
+  background-image: linear-gradient(to top, #f8f8f8, $white);
+  cursor: pointer;
+  color: $dark-blue-grey;
+
+  ::ng-deep svg {
+    fill: $dark-blue-grey;
+  }
+}
+
+@mixin ui-element-button-secondary-hover {
+  background-image: linear-gradient(to top, #e4e4e4, #fefefe);
+}
+
 @mixin ui-element-select {
-  @include ui-element-body;
+  @include default-font;
+  font-size: 16px;
   appearance: none;
   border: 1px solid $white-darken;
   border-radius: 4px;
@@ -169,6 +194,10 @@ $vivid-pink: #ff2158 !default;
 
 // UI modifiers
 
-@mixin ui-modifier-shadow {
+@mixin ui-modifier-button-shadow {
   box-shadow: 0 2px 4px 0 rgba(0, 0, 0, 0.08);
+}
+
+@mixin ui-modifier-container-shadow {
+  box-shadow: 0 2px 12px 0 rgba(0, 0, 0, 0.06);
 }

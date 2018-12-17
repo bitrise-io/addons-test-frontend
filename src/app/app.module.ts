@@ -15,6 +15,7 @@ import { TestSummaryHeaderComponent } from './test-summary-header.component';
 import { TestReportComponent } from './test-report.component';
 import { TestReportService } from './test-report.service';
 import { TestSuiteComponent } from './test-suite.component';
+import { TextFromDurationInMilliseconds } from './text-from-duration-in-milliseconds.pipe';
 
 @NgModule({
   declarations: [
@@ -22,6 +23,7 @@ import { TestSuiteComponent } from './test-suite.component';
     AppHeaderComponent,
     AppFooterComponent,
     MaximizePipe,
+    TextFromDurationInMilliseconds,
     TestSummaryComponent,
     TestSummaryHeaderComponent,
     TestReportComponent,
