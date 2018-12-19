@@ -5,7 +5,7 @@ import { Observable } from 'rxjs';
 import { Store, select } from '@ngrx/store';
 import { TestReport } from './test-report.model';
 import { TestSuiteStatus } from './test-suite.model';
-import { TestReportActionLoad } from './test-report.actions';
+import { TestReportStoreActionLoad } from './test-report.store';
 
 @Component({
   selector: 'bitrise-app-header',
@@ -34,7 +34,7 @@ export class AppHeaderComponent implements OnInit {
   }
 
   ngOnInit() {
-    this.store.dispatch(new TestReportActionLoad());
+    this.store.dispatch(new TestReportStoreActionLoad());
 
     this.testReports$.subscribe((testReports: TestReport[]) => {
       const failedTestCountsOfTestReports = testReports.map(

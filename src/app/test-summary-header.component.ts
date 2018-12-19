@@ -3,7 +3,7 @@ import { Observable } from 'rxjs';
 import { Store, select } from '@ngrx/store';
 import { TestReport } from './test-report.model';
 import { TestSuite, TestSuiteStatus } from './test-suite.model';
-import { TestReportActionLoad } from './test-report.actions';
+import { TestReportStoreActionLoad } from './test-report.store';
 
 @Component({
   selector: 'bitrise-test-summary-header',
@@ -34,7 +34,7 @@ export class TestSummaryHeaderComponent implements OnInit {
   }
 
   ngOnInit() {
-    this.store.dispatch(new TestReportActionLoad());
+    this.store.dispatch(new TestReportStoreActionLoad());
 
     this.testReports$.subscribe((testReports: TestReport[]) => {
       this.testCountsByStatuses = this.orderedTestSuiteStatuses.reduce(

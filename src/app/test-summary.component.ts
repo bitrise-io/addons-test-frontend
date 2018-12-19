@@ -2,7 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { Observable } from 'rxjs';
 import { Store, select } from '@ngrx/store';
 import { TestReport } from './test-report.model';
-import { TestReportActionLoad } from './test-report.actions';
+import { TestReportStoreActionLoad } from './test-report.store';
 
 @Component({
   selector: 'bitrise-test-summary',
@@ -22,7 +22,7 @@ export class TestSummaryComponent implements OnInit {
   }
 
   ngOnInit() {
-    this.store.dispatch(new TestReportActionLoad());
+    this.store.dispatch(new TestReportStoreActionLoad());
 
     this.testReports$.subscribe((testReports: TestReport[]) => {
       this.testReports = testReports;

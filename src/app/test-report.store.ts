@@ -1,13 +1,20 @@
 import { Action } from '@ngrx/store';
 import { TestReport, TestReportResponse } from './test-report.model';
-import { TestReportAction } from './test-report.actions';
 import * as MOCKED_DATA from './mocked-data.json';
 
-export const initialState: TestReport[] = undefined;
+enum TestReportStoreAction {
+  load = 'load'
+}
 
-export function testReportReducer(state = initialState, action: Action) {
+export class TestReportStoreActionLoad implements Action {
+  readonly type = TestReportStoreAction.load;
+}
+
+const initialState: TestReport[] = undefined;
+
+export function testReportStoreReducer(state = initialState, action: Action) {
   switch (action.type) {
-    case TestReportAction.load:
+    case TestReportStoreAction.load:
       return MOCKED_DATA['test_reports'].map((testReportResponse: TestReportResponse) =>
         new TestReport().deserialize(testReportResponse)
       );
