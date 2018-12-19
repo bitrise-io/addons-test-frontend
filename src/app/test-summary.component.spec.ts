@@ -1,18 +1,12 @@
-import { TestBed, async, ComponentFixture } from '@angular/core/testing';
+import { TestBed, async, ComponentFixture, inject } from '@angular/core/testing';
 import { By } from '@angular/platform-browser';
 import { Component, Input } from '@angular/core';
+import { BehaviorSubject } from 'rxjs';
+import { Store, StoreModule } from '@ngrx/store';
 import { InlineSVGModule } from 'ng-inline-svg';
 import { TestSummaryComponent } from './test-summary.component';
-import { TestReportService } from './test-report.service';
 import { TestReport } from './test-report.model';
-
-class MockTestReportService {
-  testReports: any[];
-
-  public getTestReports(): any[] {
-    return this.testReports;
-  }
-}
+import { testReportStoreReducer } from './test-report.store';
 
 @Component({
   selector: 'bitrise-test-summary-header',
@@ -28,19 +22,40 @@ class MockTestReportComponent {
   @Input() testReport: TestReport;
 }
 
+class MockStore<T> {
+  state: BehaviorSubject<T> = new BehaviorSubject(undefined);
+
+  setState(data: T) {
+    this.state.next(data);
+  }
+
+  dispatch() {}
+
+  pipe(operatorFunction: any) {
+    return operatorFunction(this.state);
+  }
+}
+
 describe('TestSummaryComponent', () => {
-  let service: MockTestReportService;
+  let store: MockStore<{
+    testReport: TestReport[];
+  }>;
   let fixture: ComponentFixture<TestSummaryComponent>;
   let testSummary: TestSummaryComponent;
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      imports: [InlineSVGModule.forRoot()],
+      imports: [StoreModule.forRoot({ testReport: testReportStoreReducer }), InlineSVGModule.forRoot()],
       declarations: [TestSummaryComponent, MockTestSummaryHeaderComponent, MockTestReportComponent],
-      providers: [{ provide: TestReportService, useClass: MockTestReportService }]
+      providers: [{ provide: Store, useClass: MockStore }]
     }).compileComponents();
+  }));
 
-    service = TestBed.get(TestReportService);
+  beforeEach(inject([Store], (mockStore: MockStore<{ testReport: TestReport[] }>) => {
+    store = mockStore;
+    store.setState({
+      testReport: undefined
+    });
   }));
 
   beforeEach(() => {
@@ -59,9 +74,11 @@ describe('TestSummaryComponent', () => {
 
   describe('when there are some test reports', () => {
     beforeEach(() => {
-      service.testReports = Array(3)
-        .fill(null)
-        .map(() => new TestReport());
+      store.setState({
+        testReport: Array(3)
+          .fill(null)
+          .map(() => new TestReport())
+      });
 
       fixture.detectChanges();
     });
