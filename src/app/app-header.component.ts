@@ -1,9 +1,11 @@
 import { Component, OnInit } from '@angular/core';
-import { TestReportService } from './test-report.service';
 import { Router, NavigationEnd } from '@angular/router';
 import { filter } from 'rxjs/operators';
+import { Observable } from 'rxjs';
+import { Store, select } from '@ngrx/store';
 import { TestReport } from './test-report.model';
 import { TestSuiteStatus } from './test-suite.model';
+import { TestReportActionLoad } from './test-report.actions';
 
 @Component({
   selector: 'bitrise-app-header',
@@ -11,39 +13,60 @@ import { TestSuiteStatus } from './test-suite.model';
   styleUrls: ['./app-header.component.scss']
 })
 export class AppHeaderComponent implements OnInit {
+  testReports$: Observable<TestReport[]>;
   tabmenuItems: any[];
   selectedSmallTabmenuItem: any;
   summedFailedTestCount: number;
 
-  constructor(private router: Router, private testReportService: TestReportService) {
-    this.router.events.pipe(filter(event => event instanceof NavigationEnd)).subscribe((event: NavigationEnd) => {
-      this.selectedSmallTabmenuItem = this.tabmenuItems.find(({ routerLink: [url] }) => url === event.url);
+  constructor(
+    private router: Router,
+    private store: Store<{
+      testReport: TestReport[];
+    }>
+  ) {
+    this.testReports$ = store.pipe(select('testReport'));
+
+    router.events.pipe(filter(event => event instanceof NavigationEnd)).subscribe((event: NavigationEnd) => {
+      if (this.tabmenuItems !== undefined) {
+        this.selectSmallTabmenuItemForUrl(event.url);
+      }
     });
   }
 
   ngOnInit() {
-    const testReports = this.testReportService.getTestReports();
-    const failedTestCountsOfTestReports = testReports.map(
-      testReport => testReport.testsWithStatus(TestSuiteStatus.failed).length
-    );
+    this.store.dispatch(new TestReportActionLoad());
 
-    this.tabmenuItems = [
-      {
-        name: 'Test Summary',
-        routerLink: ['/summary']
-      }
-    ].concat(
-      testReports.map((testReport: TestReport, index: number) => ({
-        name: testReport.name,
-        routerLink: ['/testreport/' + testReport.id],
-        failedTestCount: failedTestCountsOfTestReports[index]
-      }))
-    );
+    this.testReports$.subscribe((testReports: TestReport[]) => {
+      const failedTestCountsOfTestReports = testReports.map(
+        testReport => testReport.testsWithStatus(TestSuiteStatus.failed).length
+      );
 
-    this.summedFailedTestCount = failedTestCountsOfTestReports.reduce(
-      (summedFailedTestCount: number, failedTestCountOfTestReport: number) =>
-        summedFailedTestCount + failedTestCountOfTestReport,
-      0
+      this.tabmenuItems = [
+        {
+          name: 'Test Summary',
+          routerLink: ['/summary']
+        }
+      ].concat(
+        testReports.map((testReport: TestReport, index: number) => ({
+          name: testReport.name,
+          routerLink: ['/testreport/' + testReport.id],
+          failedTestCount: failedTestCountsOfTestReports[index]
+        }))
+      );
+
+      this.summedFailedTestCount = failedTestCountsOfTestReports.reduce(
+        (summedFailedTestCount: number, failedTestCountOfTestReport: number) =>
+          summedFailedTestCount + failedTestCountOfTestReport,
+        0
+      );
+
+      this.selectSmallTabmenuItemForUrl(this.router.url);
+    });
+  }
+
+  selectSmallTabmenuItemForUrl(url: string) {
+    this.selectedSmallTabmenuItem = this.tabmenuItems.find(
+      ({ routerLink: [tabmenuItemUrl] }) => tabmenuItemUrl === url
     );
   }
 

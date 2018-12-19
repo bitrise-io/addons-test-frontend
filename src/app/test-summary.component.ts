@@ -1,6 +1,8 @@
 import { Component, OnInit } from '@angular/core';
-import { TestReportService } from './test-report.service';
+import { Observable } from 'rxjs';
+import { Store, select } from '@ngrx/store';
 import { TestReport } from './test-report.model';
+import { TestReportActionLoad } from './test-report.actions';
 
 @Component({
   selector: 'bitrise-test-summary',
@@ -9,10 +11,21 @@ import { TestReport } from './test-report.model';
 })
 export class TestSummaryComponent implements OnInit {
   testReports: TestReport[];
+  testReports$: Observable<TestReport[]>;
 
-  constructor(private testReportService: TestReportService) {}
+  constructor(
+    private store: Store<{
+      testReport: TestReport[];
+    }>
+  ) {
+    this.testReports$ = store.pipe(select('testReport'));
+  }
 
   ngOnInit() {
-    this.testReports = this.testReportService.getTestReports();
+    this.store.dispatch(new TestReportActionLoad());
+
+    this.testReports$.subscribe((testReports: TestReport[]) => {
+      this.testReports = testReports;
+    });
   }
 }
