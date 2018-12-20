@@ -5,8 +5,8 @@ import { HttpClientTestingModule } from '@angular/common/http/testing';
 import { By } from '@angular/platform-browser';
 import { Pipe, PipeTransform, DebugElement, Component } from '@angular/core';
 import { FormsModule } from '@angular/forms';
-import { BehaviorSubject } from 'rxjs';
 import { Store, StoreModule } from '@ngrx/store';
+import { MockStore } from './store.mock';
 import { InlineSVGModule } from 'ng-inline-svg';
 import { AppHeaderComponent } from './app-header.component';
 import { TestReport } from './test-report.model';
@@ -30,20 +30,6 @@ class MockTestReportComponent {}
 class MockMaximizePipe implements PipeTransform {
   transform(value: number, maximumValue: number, maximumReachedPostfixCharacter: string): string {
     return '9+';
-  }
-}
-
-class MockStore<T> {
-  state: BehaviorSubject<T> = new BehaviorSubject(undefined);
-
-  setState(data: T) {
-    this.state.next(data);
-  }
-
-  dispatch() {}
-
-  pipe(operatorFunction: any) {
-    return operatorFunction(this.state);
   }
 }
 

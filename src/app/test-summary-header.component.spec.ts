@@ -1,28 +1,14 @@
 import { TestBed, async, ComponentFixture, inject } from '@angular/core/testing';
 import { HttpClientTestingModule } from '@angular/common/http/testing';
 import { By } from '@angular/platform-browser';
-import { BehaviorSubject } from 'rxjs';
 import { Store, StoreModule } from '@ngrx/store';
+import { MockStore } from './store.mock';
 import { InlineSVGModule } from 'ng-inline-svg';
 import { TestSummaryHeaderComponent } from './test-summary-header.component';
 import { TestReport } from './test-report.model';
 import { testReportStoreReducer } from './test-report.store';
 import { TestSuite, TestSuiteStatus } from './test-suite.model';
 import { TestCase, TestCaseStatus } from './test-case.model';
-
-class MockStore<T> {
-  state: BehaviorSubject<T> = new BehaviorSubject(undefined);
-
-  setState(data: T) {
-    this.state.next(data);
-  }
-
-  dispatch() {}
-
-  pipe(operatorFunction: any) {
-    return operatorFunction(this.state);
-  }
-}
 
 describe('TestSummaryHeaderComponent', () => {
   let store: MockStore<{
