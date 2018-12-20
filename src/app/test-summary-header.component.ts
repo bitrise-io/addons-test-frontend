@@ -1,7 +1,9 @@
 import { Component, OnInit } from '@angular/core';
-import { TestReportService } from './test-report.service';
+import { Observable } from 'rxjs';
+import { Store, select } from '@ngrx/store';
 import { TestReport } from './test-report.model';
 import { TestSuite, TestSuiteStatus } from './test-suite.model';
+import { TestReportStoreActionLoad } from './test-report.store';
 
 @Component({
   selector: 'bitrise-test-summary-header',
@@ -11,6 +13,7 @@ import { TestSuite, TestSuiteStatus } from './test-suite.model';
 export class TestSummaryHeaderComponent implements OnInit {
   TestSuite = TestSuite;
   TestSuiteStatus = TestSuiteStatus;
+  testReports$: Observable<TestReport[]>;
   orderedTestSuiteStatuses = [
     TestSuiteStatus.failed,
     TestSuiteStatus.passed,
@@ -22,25 +25,33 @@ export class TestSummaryHeaderComponent implements OnInit {
   };
   totalTestCount: number;
 
-  constructor(private testReportService: TestReportService) {}
+  constructor(
+    private store: Store<{
+      testReport: TestReport[];
+    }>
+  ) {
+    this.testReports$ = store.pipe(select('testReport'));
+  }
 
   ngOnInit() {
-    const testReports = this.testReportService.getTestReports();
+    this.store.dispatch(new TestReportStoreActionLoad());
 
-    this.testCountsByStatuses = this.orderedTestSuiteStatuses.reduce(
-      (sumByStatus, status: TestSuiteStatus) => ({
-        ...sumByStatus,
-        [status]: testReports.reduce(
-          (sum, testReport: TestReport) => sum + testReport.testsWithStatus(status).length,
-          0
-        )
-      }),
-      {}
-    );
+    this.testReports$.subscribe((testReports: TestReport[]) => {
+      this.testCountsByStatuses = this.orderedTestSuiteStatuses.reduce(
+        (sumByStatus, status: TestSuiteStatus) => ({
+          ...sumByStatus,
+          [status]: testReports.reduce(
+            (sum, testReport: TestReport) => sum + testReport.testsWithStatus(status).length,
+            0
+          )
+        }),
+        {}
+      );
 
-    this.totalTestCount = this.orderedTestSuiteStatuses.reduce(
-      (sumByStatus, status: TestSuiteStatus) => sumByStatus + this.testCountsByStatuses[status],
-      0
-    );
+      this.totalTestCount = this.orderedTestSuiteStatuses.reduce(
+        (sumByStatus, status: TestSuiteStatus) => sumByStatus + this.testCountsByStatuses[status],
+        0
+      );
+    });
   }
 }

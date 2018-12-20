@@ -220,6 +220,11 @@
   resolved "https://registry.yarnpkg.com/@bitrise/beam/-/beam-0.1.6.tgz#4cbd827ba056ac0058a91603b5bff47ae04e892f"
   integrity sha512-/Z8WxJ/Q3OBiGUoMDi5AJrVrEX0yn/xgJ1S2CmrqMEFMmsYpftceDHuWKJHe1YIifYfXVtHVh73dTHZWDO2YSg==
 
+"@ngrx/store@^6.0.1":
+  version "6.1.2"
+  resolved "https://registry.yarnpkg.com/@ngrx/store/-/store-6.1.2.tgz#20fb5ab4d79571b804a348093aa11a167fe2946f"
+  integrity sha512-W9MbXrwhIRmN1BlINF9BT+rHR046e1HNk7GqykcDJrK9wW74PJW3aE5iuPb2sTPipBMjPHsXzc73E4U/+OTAyw==
+
 "@ngtools/webpack@6.0.8":
   version "6.0.8"
   resolved "https://registry.yarnpkg.com/@ngtools/webpack/-/webpack-6.0.8.tgz#a05bce526aee9da62bb230a95fba83fee99d0bca"

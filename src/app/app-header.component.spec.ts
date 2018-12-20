@@ -1,14 +1,16 @@
-import { TestBed, async, ComponentFixture, fakeAsync, tick } from '@angular/core/testing';
+import { TestBed, async, ComponentFixture, fakeAsync, tick, inject } from '@angular/core/testing';
 import { Location } from '@angular/common';
 import { RouterTestingModule } from '@angular/router/testing';
 import { HttpClientTestingModule } from '@angular/common/http/testing';
 import { By } from '@angular/platform-browser';
 import { Pipe, PipeTransform, DebugElement, Component } from '@angular/core';
 import { FormsModule } from '@angular/forms';
+import { Store, StoreModule } from '@ngrx/store';
+import { MockStore } from './store.mock';
 import { InlineSVGModule } from 'ng-inline-svg';
 import { AppHeaderComponent } from './app-header.component';
-import { TestReportService } from './test-report.service';
 import { TestReport } from './test-report.model';
+import { testReportStoreReducer } from './test-report.store';
 import { TestSuite } from './test-suite.model';
 import { TestCase } from './test-case.model';
 
@@ -31,17 +33,11 @@ class MockMaximizePipe implements PipeTransform {
   }
 }
 
-class MockTestReportService {
-  testReports: TestReport[];
-
-  public getTestReports(): TestReport[] {
-    return this.testReports;
-  }
-}
-
 describe('AppHeaderComponent', () => {
   let location: Location;
-  let service: MockTestReportService;
+  let store: MockStore<{
+    testReport: TestReport[];
+  }>;
   let fixture: ComponentFixture<AppHeaderComponent>;
   let appHeaderElement: AppHeaderComponent;
   let tabElements: DebugElement[];
@@ -51,6 +47,7 @@ describe('AppHeaderComponent', () => {
   beforeEach(async(() => {
     TestBed.configureTestingModule({
       imports: [
+        StoreModule.forRoot({ testReport: testReportStoreReducer }),
         RouterTestingModule.withRoutes([
           { path: 'summary', component: MockTestSummaryComponent },
           { path: 'testreport/1', component: MockTestReportComponent },
@@ -62,10 +59,15 @@ describe('AppHeaderComponent', () => {
         InlineSVGModule.forRoot()
       ],
       declarations: [MockMaximizePipe, AppHeaderComponent, MockTestSummaryComponent, MockTestReportComponent],
-      providers: [{ provide: TestReportService, useClass: MockTestReportService }]
+      providers: [{ provide: Store, useClass: MockStore }]
     }).compileComponents();
+  }));
 
-    service = TestBed.get(TestReportService);
+  beforeEach(inject([Store], (mockStore: MockStore<{ testReport: TestReport[] }>) => {
+    store = mockStore;
+    store.setState({
+      testReport: undefined
+    });
   }));
 
   beforeEach(() => {
@@ -80,40 +82,42 @@ describe('AppHeaderComponent', () => {
 
   describe('when there are some test reports', () => {
     beforeEach(() => {
-      service.testReports = [
-        { id: 1, name: 'UI Test A', failedTestSuiteCount: 2 },
-        { id: 2, name: 'UI Test B', failedTestSuiteCount: 0 },
-        { id: 3, name: 'UI Test C', failedTestSuiteCount: 1 },
-        { id: 4, name: 'Unit Test X', failedTestCaseCount: 3 },
-        { id: 5, name: 'Unit Test Y', failedTestCaseCount: 6 }
-      ].map(specConfig => {
-        const testReport = new TestReport();
-        testReport.id = specConfig.id;
-        testReport.name = specConfig.name;
+      store.setState({
+        testReport: [
+          { id: 1, name: 'UI Test A', failedTestSuiteCount: 2 },
+          { id: 2, name: 'UI Test B', failedTestSuiteCount: 0 },
+          { id: 3, name: 'UI Test C', failedTestSuiteCount: 1 },
+          { id: 4, name: 'Unit Test X', failedTestCaseCount: 3 },
+          { id: 5, name: 'Unit Test Y', failedTestCaseCount: 6 }
+        ].map(specConfig => {
+          const testReport = new TestReport();
+          testReport.id = specConfig.id;
+          testReport.name = specConfig.name;
 
-        if (specConfig.failedTestSuiteCount !== undefined) {
-          testReport.testSuites = Array(specConfig.failedTestSuiteCount)
-            .fill(null)
-            .map(() => {
-              const testSuite = new TestSuite();
-              testSuite.status = 2;
+          if (specConfig.failedTestSuiteCount !== undefined) {
+            testReport.testSuites = Array(specConfig.failedTestSuiteCount)
+              .fill(null)
+              .map(() => {
+                const testSuite = new TestSuite();
+                testSuite.status = 2;
 
-              return testSuite;
-            });
+                return testSuite;
+              });
 
-          return testReport;
-        } else {
-          testReport.testCases = Array(specConfig.failedTestCaseCount)
-            .fill(null)
-            .map(() => {
-              const testCase = new TestCase();
-              testCase.status = 2;
+            return testReport;
+          } else {
+            testReport.testCases = Array(specConfig.failedTestCaseCount)
+              .fill(null)
+              .map(() => {
+                const testCase = new TestCase();
+                testCase.status = 2;
 
-              return testCase;
-            });
+                return testCase;
+              });
 
-          return testReport;
-        }
+            return testReport;
+          }
+        })
       });
 
       fixture.detectChanges();
@@ -200,7 +204,9 @@ describe('AppHeaderComponent', () => {
 
   describe('when there are no test reports', () => {
     beforeEach(() => {
-      service.testReports = [];
+      store.setState({
+        testReport: []
+      });
 
       fixture.detectChanges();
 
