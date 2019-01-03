@@ -6,13 +6,14 @@ import { By } from '@angular/platform-browser';
 import { Pipe, PipeTransform, DebugElement, Component } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { Store, StoreModule } from '@ngrx/store';
-import { MockStore } from './store.mock';
 import { InlineSVGModule } from 'ng-inline-svg';
+
+import { MockStore } from '../../store.mock';
 import { AppHeaderComponent } from './app-header.component';
-import { TestReport } from './test-report.model';
-import { testReportStoreReducer } from './test-report.store';
-import { TestSuite } from './test-suite.model';
-import { TestCase } from './test-case.model';
+import { TestReport } from '../../models/test-report.model';
+import { testReportStoreReducer } from '../test-report/test-report.store';
+import { TestSuite } from '../../models/test-suite.model';
+import { TestCase } from '../../models/test-case.model';
 
 @Component({
   selector: 'bitrise-test-summary',

@@ -3,9 +3,9 @@ import { Router, NavigationEnd } from '@angular/router';
 import { filter } from 'rxjs/operators';
 import { Observable } from 'rxjs';
 import { Store, select } from '@ngrx/store';
-import { TestReport } from './test-report.model';
-import { TestSuiteStatus } from './test-suite.model';
-import { TestReportStoreActionLoad } from './test-report.store';
+import { TestReport } from '../../models/test-report.model';
+import { TestSuiteStatus } from '../../models/test-suite.model';
+import { TestReportStoreActionLoad } from '../test-report/test-report.store';
 
 @Component({
   selector: 'bitrise-app-header',

@@ -2,13 +2,14 @@ import { TestBed, async, ComponentFixture, inject } from '@angular/core/testing'
 import { HttpClientTestingModule } from '@angular/common/http/testing';
 import { By } from '@angular/platform-browser';
 import { Store, StoreModule } from '@ngrx/store';
-import { MockStore } from './store.mock';
 import { InlineSVGModule } from 'ng-inline-svg';
+
+import { MockStore } from '../../store.mock';
 import { TestSummaryHeaderComponent } from './test-summary-header.component';
-import { TestReport } from './test-report.model';
-import { testReportStoreReducer } from './test-report.store';
-import { TestSuite, TestSuiteStatus } from './test-suite.model';
-import { TestCase, TestCaseStatus } from './test-case.model';
+import { TestReport } from '../../models/test-report.model';
+import { testReportStoreReducer } from '../test-report/test-report.store';
+import { TestSuite, TestSuiteStatus } from '../../models/test-suite.model';
+import { TestCase, TestCaseStatus } from '../../models/test-case.model';
 
 describe('TestSummaryHeaderComponent', () => {
   let store: MockStore<{

@@ -45,25 +45,23 @@ describe('TestReport', () => {
           .map(() => new TestCase());
       });
 
-      [TestCaseStatus.passed, TestCaseStatus.failed].forEach(
-        (status: TestCaseStatus) => {
-          describe(`and some test cases have ${status} status`, () => {
-            beforeEach(() => {
-              testReport.testCases[0].status = status;
-              testReport.testCases[1].status = status;
-            });
-
-            it('returns only those test cases', () => {
-              expect(testReport.testsWithStatus(status)).toContain(testReport.testCases[0]);
-              expect(testReport.testsWithStatus(status)).toContain(testReport.testCases[1]);
-              expect(testReport.testsWithStatus(status)).not.toContain(testReport.testCases[2]);
-              expect(testReport.testsWithStatus(status)).not.toContain(testReport.testCases[3]);
-              expect(testReport.testsWithStatus(status)).not.toContain(testReport.testCases[4]);
-              expect(testReport.testsWithStatus(status)).not.toContain(testReport.testCases[5]);
-            });
+      [TestCaseStatus.passed, TestCaseStatus.failed].forEach((status: TestCaseStatus) => {
+        describe(`and some test cases have ${status} status`, () => {
+          beforeEach(() => {
+            testReport.testCases[0].status = status;
+            testReport.testCases[1].status = status;
           });
-        }
-      );
+
+          it('returns only those test cases', () => {
+            expect(testReport.testsWithStatus(status)).toContain(testReport.testCases[0]);
+            expect(testReport.testsWithStatus(status)).toContain(testReport.testCases[1]);
+            expect(testReport.testsWithStatus(status)).not.toContain(testReport.testCases[2]);
+            expect(testReport.testsWithStatus(status)).not.toContain(testReport.testCases[3]);
+            expect(testReport.testsWithStatus(status)).not.toContain(testReport.testCases[4]);
+            expect(testReport.testsWithStatus(status)).not.toContain(testReport.testCases[5]);
+          });
+        });
+      });
     });
   });
 });

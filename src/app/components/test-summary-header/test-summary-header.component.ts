@@ -1,9 +1,9 @@
 import { Component, OnInit } from '@angular/core';
 import { Observable } from 'rxjs';
 import { Store, select } from '@ngrx/store';
-import { TestReport } from './test-report.model';
-import { TestSuite, TestSuiteStatus } from './test-suite.model';
-import { TestReportStoreActionLoad } from './test-report.store';
+import { TestReport } from '../../models/test-report.model';
+import { TestSuite, TestSuiteStatus } from '../../models/test-suite.model';
+import { TestReportStoreActionLoad } from '../test-report/test-report.store';
 
 @Component({
   selector: 'bitrise-test-summary-header',

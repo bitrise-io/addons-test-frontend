@@ -1,6 +1,6 @@
 import { Action } from '@ngrx/store';
-import { TestReport, TestReportResponse } from './test-report.model';
-import * as MOCKED_DATA from './mocked-data.json';
+import { TestReport, TestReportResponse } from '../../models/test-report.model';
+import * as MOCKED_DATA from '../../mocked-data.json';
 
 enum TestReportStoreAction {
   load = 'load'
