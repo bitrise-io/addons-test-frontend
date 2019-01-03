@@ -1,3 +1,6 @@
+import { ServicesModule } from '../app/services/services.module';
+
 export const environment = {
-  production: true
+  production: true,
+  ServicesModule
 };

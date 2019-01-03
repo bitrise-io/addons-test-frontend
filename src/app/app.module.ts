@@ -19,6 +19,7 @@ import { TestSummaryHeaderComponent } from './components/test-summary-header/tes
 import { TestReportComponent } from './components/test-report/test-report.component';
 import { TestSuiteComponent } from './components/test-suite/test-suite.component';
 import { TestCaseComponent } from './components/test-case/test-case.component';
+import { environment } from 'src/environments/environment';
 
 @NgModule({
   declarations: [
@@ -39,7 +40,8 @@ import { TestCaseComponent } from './components/test-case/test-case.component';
     HttpClientModule,
     FormsModule,
     StoreModule.forRoot({ testReport: testReportStoreReducer }),
-    InlineSVGModule.forRoot()
+    InlineSVGModule.forRoot(),
+    environment.ServicesModule
   ],
   providers: [],
   bootstrap: [AppComponent]
