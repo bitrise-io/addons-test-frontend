@@ -5,6 +5,8 @@ import { Router } from '@angular/router';
 import { Component } from '@angular/core';
 import { InlineSVGModule } from 'ng-inline-svg';
 import { AppComponent } from './app.component';
+import { environment } from 'src/environments/environment';
+import { HttpClientModule } from '@angular/common/http';
 
 @Component({
   selector: 'bitrise-app-header',
@@ -42,7 +44,9 @@ describe('AppComponent', () => {
         RouterTestingModule.withRoutes([
           { path: 'mocked-route-a', component: MockRouterOutletAComponent },
           { path: 'mocked-route-b', component: MockRouterOutletBComponent }
-        ])
+        ]),
+        HttpClientModule,
+        environment.ServicesModule
       ],
       declarations: [
         AppComponent,
