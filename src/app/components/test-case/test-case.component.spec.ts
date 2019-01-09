@@ -4,7 +4,7 @@ import { HttpClientTestingModule } from '@angular/common/http/testing';
 import { Pipe, PipeTransform } from '@angular/core';
 import { InlineSVGModule } from 'ng-inline-svg';
 import { TestCaseComponent } from './test-case.component';
-import { TestCase } from './test-case.model';
+import { TestCase } from '../../models/test-case.model';
 
 @Pipe({ name: 'textFromDurationInMilliseconds' })
 class MockTextFromDurationInMilliseconds implements PipeTransform {

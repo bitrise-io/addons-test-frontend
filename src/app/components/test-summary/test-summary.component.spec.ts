@@ -2,11 +2,12 @@ import { TestBed, async, ComponentFixture, inject } from '@angular/core/testing'
 import { By } from '@angular/platform-browser';
 import { Component, Input } from '@angular/core';
 import { Store, StoreModule } from '@ngrx/store';
-import { MockStore } from './store.mock';
 import { InlineSVGModule } from 'ng-inline-svg';
+
+import { MockStore } from '../../store.mock';
 import { TestSummaryComponent } from './test-summary.component';
-import { TestReport } from './test-report.model';
-import { testReportStoreReducer } from './test-report.store';
+import { TestReport } from '../../models/test-report.model';
+import { testReportStoreReducer } from '../test-report/test-report.store';
 
 @Component({
   selector: 'bitrise-test-summary-header',

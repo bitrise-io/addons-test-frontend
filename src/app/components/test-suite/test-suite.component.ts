@@ -1,6 +1,6 @@
 import { Component, Input, OnInit } from '@angular/core';
-import { TestSuite, TestSuiteStatus } from './test-suite.model';
-import { TestCase, TestCaseStatus } from './test-case.model';
+import { TestSuite, TestSuiteStatus } from '../../models/test-suite.model';
+import { TestCase, TestCaseStatus } from '../../models/test-case.model';
 
 @Component({
   selector: 'bitrise-test-suite',

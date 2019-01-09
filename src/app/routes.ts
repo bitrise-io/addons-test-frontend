@@ -1,7 +1,7 @@
 import { Routes } from '@angular/router';
 
-import { TestSummaryComponent } from './test-summary.component';
-import { TestReportComponent } from './test-report.component';
+import { TestSummaryComponent } from './components/test-summary/test-summary.component';
+import { TestReportComponent } from './components/test-report/test-report.component';
 
 export const appRoutes: Routes = [
   { path: 'summary', component: TestSummaryComponent },
