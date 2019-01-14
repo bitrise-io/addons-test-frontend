@@ -55,12 +55,12 @@ describe('TestReportWrapperComponent', () => {
   });
 
   describe('when there are some test reports', () => {
-    let testReportIds = [1, 2, 3];
+    const testReportIds = [1, 2, 3];
 
     beforeEach(() => {
       store.setState({
         testReport: testReportIds.map((testReportId: number) => {
-          let testReport = new TestReport();
+          const testReport = new TestReport();
           testReport.id = testReportId;
 
           return testReport;
