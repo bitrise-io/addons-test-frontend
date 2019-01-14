@@ -15,6 +15,7 @@ import { AppHeaderComponent } from './components/app-header/app-header.component
 import { AppFooterComponent } from './components/app-footer/app-footer.component';
 import { testReportStoreReducer } from './components/test-report/test-report.store';
 import { TestSummaryComponent } from './components/test-summary/test-summary.component';
+import { TestReportWrapperComponent } from './components/test-report-wrapper/test-report-wrapper.component';
 import { TestSummaryHeaderComponent } from './components/test-summary-header/test-summary-header.component';
 import { TestReportComponent } from './components/test-report/test-report.component';
 import { TestSuiteComponent } from './components/test-suite/test-suite.component';
@@ -29,6 +30,7 @@ import { environment } from 'src/environments/environment';
     MaximizePipe,
     TextFromDurationInMilliseconds,
     TestSummaryComponent,
+    TestReportWrapperComponent,
     TestSummaryHeaderComponent,
     TestReportComponent,
     TestSuiteComponent,
