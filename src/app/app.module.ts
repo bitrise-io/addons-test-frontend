@@ -19,6 +19,7 @@ import { TestSummaryHeaderComponent } from './components/test-summary-header/tes
 import { TestReportComponent } from './components/test-report/test-report.component';
 import { TestSuiteComponent } from './components/test-suite/test-suite.component';
 import { TestCaseComponent } from './components/test-case/test-case.component';
+import { TestSuiteDetailsComponent } from './components/test-suite-details/test-suite-details.component';
 import { environment } from 'src/environments/environment';
 
 @NgModule({
@@ -32,7 +33,8 @@ import { environment } from 'src/environments/environment';
     TestSummaryHeaderComponent,
     TestReportComponent,
     TestSuiteComponent,
-    TestCaseComponent
+    TestCaseComponent,
+    TestSuiteDetailsComponent
   ],
   imports: [
     BrowserModule,
