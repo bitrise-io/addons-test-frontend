@@ -22,7 +22,7 @@ export class TestReportWrapperComponent implements OnInit, OnDestroy {
     private store: Store<{
       testReport: TestReport[];
     }>,
-    private activatedRoute: ActivatedRoute;
+    private activatedRoute: ActivatedRoute
   ) {
     this.testReports$ = store.pipe(select('testReport'));
   }
@@ -35,7 +35,9 @@ export class TestReportWrapperComponent implements OnInit, OnDestroy {
     });
 
     this.activatedRouteParamsChangeSubscription = this.activatedRoute.params.subscribe((params: Params) => {
-      this.testReport = this.testReports.find((testReport: TestReport) => testReport.id === Number(params['testReportId']));
+      this.testReport = this.testReports.find(
+        (testReport: TestReport) => testReport.id === Number(params['testReportId'])
+      );
     });
   }
 
