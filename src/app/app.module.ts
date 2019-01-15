@@ -21,6 +21,13 @@ import { TestSuiteComponent } from './components/test-suite/test-suite.component
 import { TestCaseComponent } from './components/test-case/test-case.component';
 import { TestSuiteDetailsComponent } from './components/test-suite-details/test-suite-details.component';
 import { environment } from 'src/environments/environment';
+import { TestSuiteDetailsHeaderComponent } from './components/test-suite-details-header/test-suite-details-header.component';
+import { TestSuiteDetailsMenuTestCasesComponent } from './components/test-suite-details/menu/test-cases/test-suite-details-menu-test-cases.component';
+import { TestSuiteDetailsMenuPerformanceComponent } from './components/test-suite-details/menu/performance/test-suite-details-menu-performance.component';
+import { TestSuiteDetailsMenuVideoComponent } from './components/test-suite-details/menu/video/test-suite-details-menu-video.component';
+import { TestSuiteDetailsMenuScreenshotsComponent } from './components/test-suite-details/menu/screenshots/test-suite-details-menu-screenshots.component';
+import { TestSuiteDetailsMenuTestArtifactsComponent } from './components/test-suite-details/menu/testartifacts/test-suite-details-menu-test-artifacts.component';
+import { TestSuiteDetailsMenuLogsComponent } from './components/test-suite-details/menu/logs/test-suite-details-menu-logs.component';
 
 @NgModule({
   declarations: [
@@ -34,7 +41,14 @@ import { environment } from 'src/environments/environment';
     TestReportComponent,
     TestSuiteComponent,
     TestCaseComponent,
-    TestSuiteDetailsComponent
+    TestSuiteDetailsComponent,
+    TestSuiteDetailsHeaderComponent,
+    TestSuiteDetailsMenuTestCasesComponent,
+    TestSuiteDetailsMenuPerformanceComponent,
+    TestSuiteDetailsMenuVideoComponent,
+    TestSuiteDetailsMenuScreenshotsComponent,
+    TestSuiteDetailsMenuTestArtifactsComponent,
+    TestSuiteDetailsMenuLogsComponent
   ],
   imports: [
     BrowserModule,
