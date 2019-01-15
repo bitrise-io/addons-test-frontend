@@ -214,6 +214,27 @@ $vivid-pink: #ff2158 !default;
   }
 }
 
+@mixin ui-element-status-rate-indicator {
+  display: flex;
+
+  .status-rate {
+    @include ui-element-subtitle;
+    height: 24px;
+    box-sizing: border-box;
+    padding-right: 8px;
+    overflow: hidden;
+    line-height: 24px;
+  }
+
+  &.text-top .status-rate {
+    border-bottom: 6px solid;
+  }
+
+  &.text-bottom .status-rate {
+    border-top: 6px solid;
+  }
+}
+
 // UI modifiers
 
 @mixin ui-modifier-button-shadow {
@@ -231,4 +252,9 @@ $vivid-pink: #ff2158 !default;
 
 @mixin ui-modifier-container-shadow {
   box-shadow: 0 2px 12px 0 rgba(0, 0, 0, 0.06);
+}
+
+@mixin ui-modifier-status-rate-with-color($color) {
+  @include border-y-color($color);
+  color: $color;
 }

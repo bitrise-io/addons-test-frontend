@@ -1,0 +1,15 @@
+@import '../../../sass/constants';
+@import '../../../sass/mixins';
+
+.test-case-rates {
+  @include ui-element-status-rate-indicator;
+  margin-top: 32px;
+
+  .status-rate.failed {
+    @include ui-modifier-status-rate-with-color($vivid-pink);
+  }
+
+  .status-rate.passed {
+    @include ui-modifier-status-rate-with-color($green-teal);
+  }
+}

@@ -1,0 +1,11 @@
+<div class="test-case-rates text-bottom">
+  <div
+    class="status-rate"
+    *ngFor="let testCaseStatus of orderedTestCaseStatuses"
+    [hidden]="testCaseCountsByStatuses[testCaseStatus] == 0"
+    [ngClass]="TestCase.statusCssClass(testCaseStatus)"
+    [style.width]="(100 * testCaseCountsByStatuses[testCaseStatus]) / totalTestCaseCount + '%'"
+  >
+    {{ testCaseCountsByStatuses[testCaseStatus] }} {{ TestCase.statusName(testCaseStatus) }}
+  </div>
+</div>

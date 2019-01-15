@@ -67,37 +67,23 @@
   }
 
   .test-rates {
-    display: flex;
+    @include ui-element-status-rate-indicator;
     margin-top: 32px;
 
-    .rate-indicator {
-      height: 24px;
-      box-sizing: border-box;
-      border-bottom: 6px solid;
-      padding-right: 8px;
-      overflow: hidden;
-      @include ui-element-subtitle;
+    .status-rate.failed {
+      @include ui-modifier-status-rate-with-color($vivid-pink);
+    }
 
-      @mixin rate-indicator-with-color($color) {
-        border-bottom-color: $color;
-        color: $color;
-      }
+    .status-rate.passed {
+      @include ui-modifier-status-rate-with-color($green-teal);
+    }
 
-      &.failed {
-        @include rate-indicator-with-color($vivid-pink);
-      }
+    .status-rate.skipped {
+      @include ui-modifier-status-rate-with-color($warm-grey);
+    }
 
-      &.passed {
-        @include rate-indicator-with-color($green-teal);
-      }
-
-      &.skipped {
-        @include rate-indicator-with-color($warm-grey);
-      }
-
-      &.inconclusive {
-        @include rate-indicator-with-color($ocean-blue);
-      }
+    .status-rate.inconclusive {
+      @include ui-modifier-status-rate-with-color($ocean-blue);
     }
   }
 

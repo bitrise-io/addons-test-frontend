@@ -38,9 +38,9 @@
       </div>
     </div>
   </div>
-  <div class="test-rates">
+  <div class="test-rates text-top">
     <div
-      class="rate-indicator"
+      class="status-rate"
       *ngFor="let testSuiteStatus of orderedTestSuiteStatuses"
       [hidden]="testCountsByStatuses[testSuiteStatus] == 0"
       [ngClass]="TestSuite.statusCssClass(testSuiteStatus)"
