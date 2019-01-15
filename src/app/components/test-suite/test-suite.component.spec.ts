@@ -4,6 +4,7 @@ import { HttpClientTestingModule } from '@angular/common/http/testing';
 import { Pipe, PipeTransform } from '@angular/core';
 import { InlineSVGModule } from 'ng-inline-svg';
 import { TestSuiteComponent } from './test-suite.component';
+import { TestReport } from 'src/app/models/test-report.model';
 import { TestSuite, TestSuiteStatus } from '../../models/test-suite.model';
 import { TestCase, TestCaseStatus } from '../../models/test-case.model';
 
@@ -29,6 +30,8 @@ describe('TestSuiteComponent', () => {
   beforeEach(() => {
     fixture = TestBed.createComponent(TestSuiteComponent);
     testSuiteComponent = fixture.debugElement.componentInstance;
+    testSuiteComponent.testReport = new TestReport();
+    testSuiteComponent.testSuite = new TestSuite();
   });
 
   it('creates the test suite component', () => {
@@ -37,7 +40,6 @@ describe('TestSuiteComponent', () => {
 
   describe('when test suite only has passed test cases', () => {
     beforeEach(() => {
-      testSuiteComponent.testSuite = new TestSuite();
       testSuiteComponent.testSuite.status = TestSuiteStatus.passed;
       testSuiteComponent.testSuite.testCases = Array(3)
         .fill(null)
@@ -64,7 +66,6 @@ describe('TestSuiteComponent', () => {
 
   describe('when test suite only has failed test cases', () => {
     beforeEach(() => {
-      testSuiteComponent.testSuite = new TestSuite();
       testSuiteComponent.testSuite.status = TestSuiteStatus.failed;
       testSuiteComponent.testSuite.testCases = Array(3)
         .fill(null)
@@ -91,7 +92,6 @@ describe('TestSuiteComponent', () => {
 
   describe('when test suite has both passed and failed test cases', () => {
     beforeEach(() => {
-      testSuiteComponent.testSuite = new TestSuite();
       testSuiteComponent.testSuite.status = TestSuiteStatus.failed;
       testSuiteComponent.testSuite.testCases = Array(3)
         .fill(null)
@@ -116,7 +116,6 @@ describe('TestSuiteComponent', () => {
 
   describe('when test suite is not yet finished', () => {
     beforeEach(() => {
-      testSuiteComponent.testSuite = new TestSuite();
       testSuiteComponent.testSuite.status = TestSuiteStatus.inconclusive;
 
       fixture.detectChanges();
@@ -134,7 +133,6 @@ describe('TestSuiteComponent', () => {
 
   describe('when test suite is skipped', () => {
     beforeEach(() => {
-      testSuiteComponent.testSuite = new TestSuite();
       testSuiteComponent.testSuite.status = TestSuiteStatus.skipped;
 
       fixture.detectChanges();
