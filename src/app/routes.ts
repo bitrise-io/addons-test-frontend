@@ -1,7 +1,7 @@
 import { Routes } from '@angular/router';
 
 import { TestSummaryComponent } from './components/test-summary/test-summary.component';
-import { TestReportComponent } from './components/test-report/test-report.component';
+import { TestReportWrapperComponent } from './components/test-report-wrapper/test-report-wrapper.component';
 import { TestSuiteDetailsComponent } from './components/test-suite-details/test-suite-details.component';
 import { TestSuiteDetailsMenuTestCasesComponent } from './components/test-suite-details/menu/test-cases/test-suite-details-menu-test-cases.component';
 import { TestSuiteDetailsMenuPerformanceComponent } from './components/test-suite-details/menu/performance/test-suite-details-menu-performance.component';
@@ -12,7 +12,7 @@ import { TestSuiteDetailsMenuLogsComponent } from './components/test-suite-detai
 
 export const appRoutes: Routes = [
   { path: 'summary', component: TestSummaryComponent },
-  { path: 'testreport/:testReportId', component: TestReportComponent },
+  { path: 'testreport/:testReportId', component: TestReportWrapperComponent },
   {
     path: 'testreport/:testReportId/testsuite/:testSuiteId',
     component: TestSuiteDetailsComponent,
