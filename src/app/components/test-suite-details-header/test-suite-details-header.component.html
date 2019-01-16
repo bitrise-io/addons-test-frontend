@@ -1,13 +1,20 @@
 <section class="navigation">
   <a [routerLink]="['../../']" class="navigation-button all-devices">
-    <span class="arrow" inlineSVG="/assets/images/arrow-quit.svg"></span>
-    <span>All devices</span>
+    <span class="arrow" inlineSVG="/assets/images/arrow-quit.svg"></span> <span>All devices</span>
   </a>
-  <a [routerLink]="['../../']" class="navigation-button previous-device">
+  <a
+    [routerLink]="['../../testsuite/' + previousTestSuite.id + '/testcases']"
+    *ngIf="previousTestSuite"
+    class="navigation-button previous-device"
+  >
     <span class="arrow" inlineSVG="/assets/images/arrow-dashed-tail-left.svg"></span>
     <span>Previous device</span>
   </a>
-  <a [routerLink]="['../../']" class="navigation-button next-device">
+  <a
+    [routerLink]="['../../testsuite/' + nextTestSuite.id + '/testcases']"
+    *ngIf="nextTestSuite"
+    class="navigation-button next-device"
+  >
     <span>Next device</span>
     <span class="arrow" inlineSVG="/assets/images/arrow-dashed-tail-right.svg"></span>
   </a>
@@ -21,7 +28,8 @@
     </div>
     <div class="minor-detail orientation">
       <span inlineSVG="/assets/images/mobile.svg"></span>
-      <span class="text">{{ testSuite.orientation | titlecase }}</span></div>
+      <span class="text">{{ testSuite.orientation | titlecase }}</span>
+    </div>
     <div class="minor-detail locale">
       <span inlineSVG="/assets/images/flag.svg"></span>
       <span class="text">{{ testSuite.locale }}</span>
@@ -35,7 +43,5 @@
     [hidden]="testCaseCountsByStatuses[testCaseStatus] == 0"
     [ngClass]="TestCase.statusCssClass(testCaseStatus)"
     [style.width]="(100 * testCaseCountsByStatuses[testCaseStatus]) / totalTestCaseCount + '%'"
-  >
-    {{ testCaseCountsByStatuses[testCaseStatus] }} {{ TestCase.statusName(testCaseStatus) }}
-  </div>
+  >{{ testCaseCountsByStatuses[testCaseStatus] }} {{ TestCase.statusName(testCaseStatus) }}</div>
 </section>

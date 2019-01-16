@@ -9,6 +9,8 @@ import { TestCase, TestCaseStatus } from 'src/app/models/test-case.model';
 })
 export class TestSuiteDetailsHeaderComponent implements OnInit {
   @Input() testSuite: TestSuite;
+  @Input() previousTestSuite: TestSuite;
+  @Input() nextTestSuite: TestSuite;
 
   TestCase = TestCase;
 

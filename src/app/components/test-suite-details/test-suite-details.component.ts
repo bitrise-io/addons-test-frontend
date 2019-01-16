@@ -14,8 +14,13 @@ import { TestReportStoreActionLoad } from '../test-report/test-report.store';
 export class TestSuiteDetailsComponent implements OnInit {
   @Input() testSuite: TestSuite;
 
+  testReports: TestReport[];
   testReports$: Observable<TestReport[]>;
+  testSuites: TestSuite[];
+  previousTestSuite: TestSuite;
+  nextTestSuite: TestSuite;
   testReportsSubscription: Subscription;
+  activatedRouteParamsChangeSubscription: Subscription;
 
   testSuiteDetailsMenuItems = [
     {
@@ -57,17 +62,32 @@ export class TestSuiteDetailsComponent implements OnInit {
     this.store.dispatch(new TestReportStoreActionLoad());
 
     this.testReportsSubscription = this.testReports$.subscribe((testReports: TestReport[]) => {
-      const testReport = testReports.find(
-        (testReport: TestReport) => testReport.id === Number(this.activatedRoute.snapshot.params['testReportId'])
-      );
+      this.testReports = testReports;
+      this.configureFromUrlParams();
+    });
 
-      this.testSuite = testReport.testSuites.find(
-        (testSuite: TestSuite) => testSuite.id === Number(this.activatedRoute.snapshot.params['testSuiteId'])
-      )
+    this.activatedRouteParamsChangeSubscription = this.activatedRoute.params.subscribe((params: Params) => {
+      this.configureFromUrlParams(params);
     });
   }
 
   ngOnDestroy() {
     this.testReportsSubscription.unsubscribe();
+    this.activatedRouteParamsChangeSubscription.unsubscribe();
+  }
+
+  configureFromUrlParams(params = this.activatedRoute.snapshot.params) {
+    const testReport = this.testReports.find(
+      (testReport: TestReport) => testReport.id === Number(params['testReportId'])
+    );
+
+    this.testSuite = testReport.testSuites.find(
+      (testSuite: TestSuite) => testSuite.id === Number(params['testSuiteId'])
+    );
+
+    const testSuiteIndex = testReport.testSuites.findIndex(testSuite => testSuite === this.testSuite);
+    this.previousTestSuite = testSuiteIndex > 0 ? testReport.testSuites[testSuiteIndex - 1] : null;
+    this.nextTestSuite =
+      testSuiteIndex < testReport.testSuites.length - 1 ? testReport.testSuites[testSuiteIndex + 1] : null;
   }
 }
