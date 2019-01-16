@@ -24,5 +24,5 @@ export class TestSuiteDetailsComponent {
   }, {
     name: 'Logs',
     subpath: 'logs'
-  }]
+  }];
 }
