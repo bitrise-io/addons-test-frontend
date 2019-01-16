@@ -24,7 +24,7 @@ export class TestSuiteDetailsHeaderComponent implements OnInit {
     this.testCaseCountsByStatuses = this.orderedTestCaseStatuses.reduce(
       (sumByStatus, status: TestCaseStatus) => ({
         ...sumByStatus,
-        [status]: this.testSuite.testCases.filter((testCase: TestCase) => testCase.status == status).length
+        [status]: this.testSuite.testCases.filter((testCase: TestCase) => testCase.status === status).length
       }),
       {}
     );

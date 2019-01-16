@@ -1,4 +1,4 @@
-import { Component, Input, OnInit } from '@angular/core';
+import { Component, Input, OnInit, OnDestroy } from '@angular/core';
 import { ActivatedRoute, Params } from '@angular/router';
 import { Observable, Subscription } from 'rxjs';
 import { Store, select } from '@ngrx/store';
@@ -11,7 +11,7 @@ import { TestReportStoreActionLoad } from '../test-report/test-report.store';
   templateUrl: './test-suite-details.component.html',
   styleUrls: ['./test-suite-details.component.scss']
 })
-export class TestSuiteDetailsComponent implements OnInit {
+export class TestSuiteDetailsComponent implements OnInit, OnDestroy {
   @Input() testSuite: TestSuite;
 
   testReports: TestReport[];
@@ -77,17 +77,17 @@ export class TestSuiteDetailsComponent implements OnInit {
   }
 
   configureFromUrlParams(params = this.activatedRoute.snapshot.params) {
-    const testReport = this.testReports.find(
+    const selectedTestReport = this.testReports.find(
       (testReport: TestReport) => testReport.id === Number(params['testReportId'])
     );
 
-    this.testSuite = testReport.testSuites.find(
+    this.testSuite = selectedTestReport.testSuites.find(
       (testSuite: TestSuite) => testSuite.id === Number(params['testSuiteId'])
     );
 
-    const testSuiteIndex = testReport.testSuites.findIndex(testSuite => testSuite === this.testSuite);
-    this.previousTestSuite = testSuiteIndex > 0 ? testReport.testSuites[testSuiteIndex - 1] : null;
+    const testSuiteIndex = selectedTestReport.testSuites.findIndex(testSuite => testSuite === this.testSuite);
+    this.previousTestSuite = testSuiteIndex > 0 ? selectedTestReport.testSuites[testSuiteIndex - 1] : null;
     this.nextTestSuite =
-      testSuiteIndex < testReport.testSuites.length - 1 ? testReport.testSuites[testSuiteIndex + 1] : null;
+      testSuiteIndex < selectedTestReport.testSuites.length - 1 ? selectedTestReport.testSuites[testSuiteIndex + 1] : null;
   }
 }
