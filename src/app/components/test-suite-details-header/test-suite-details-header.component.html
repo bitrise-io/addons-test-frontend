@@ -1,4 +1,34 @@
-<div class="test-case-rates text-bottom">
+<section class="navigation">
+  <a [routerLink]="['../../']" class="navigation-button all-devices">
+    <span class="arrow" inlineSVG="/assets/images/arrow-quit.svg"></span>
+    <span>All devices</span>
+  </a>
+  <a [routerLink]="['../../']" class="navigation-button previous-device">
+    <span class="arrow" inlineSVG="/assets/images/arrow-dashed-tail-left.svg"></span>
+    <span>Previous device</span>
+  </a>
+  <a [routerLink]="['../../']" class="navigation-button next-device">
+    <span>Next device</span>
+    <span class="arrow" inlineSVG="/assets/images/arrow-dashed-tail-right.svg"></span>
+  </a>
+</section>
+<section class="details">
+  <div class="device">{{ testSuite.deviceName }}</div>
+  <div class="minor-details">
+    <div class="minor-detail duration">
+      <span inlineSVG="/assets/images/clock.svg"></span>
+      <span class="text">{{ testSuite.durationInMilliseconds | textFromDurationInMilliseconds }}</span>
+    </div>
+    <div class="minor-detail orientation">
+      <span inlineSVG="/assets/images/mobile.svg"></span>
+      <span class="text">{{ testSuite.orientation | titlecase }}</span></div>
+    <div class="minor-detail locale">
+      <span inlineSVG="/assets/images/flag.svg"></span>
+      <span class="text">{{ testSuite.locale }}</span>
+    </div>
+  </div>
+</section>
+<section class="test-case-rates text-bottom">
   <div
     class="status-rate"
     *ngFor="let testCaseStatus of orderedTestCaseStatuses"
@@ -8,4 +38,4 @@
   >
     {{ testCaseCountsByStatuses[testCaseStatus] }} {{ TestCase.statusName(testCaseStatus) }}
   </div>
-</div>
+</section>

@@ -24,6 +24,7 @@ $default-hovertime: 0.2s;
 $white: #ffffff !default;
 $white-three: #ececec !default;
 $white-darken: #dddddd !default;
+$greyish: #acacac !default;
 $warm-grey: #777777 !default;
 $brownish-grey: #616161 !default;
 $black: #222222 !default;
@@ -59,6 +60,12 @@ $vivid-pink: #ff2158 !default;
   @include default-font;
   font-size: 34px;
   letter-spacing: 0.2px;
+  font-weight: 700;
+}
+
+@mixin ui-element-header-4 {
+  @include default-font;
+  font-size: 25px;
   font-weight: 700;
 }
 
@@ -105,7 +112,7 @@ $vivid-pink: #ff2158 !default;
   align-items: center;
   border: 1px solid $white-darken;
   border-radius: 4px;
-  padding: 3px 8px;
+  padding: 7px 8px;
   line-height: 16px;
   text-align: center;
   font-size: 13px;
