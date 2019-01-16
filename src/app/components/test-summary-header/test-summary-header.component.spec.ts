@@ -166,7 +166,7 @@ describe('TestSummaryHeaderComponent', () => {
 
       it(`shows a rate partition for ${specConfig.statusName} tests in the rate indicator`, () => {
         expect(
-          fixture.debugElement.query(By.css(`.test-rates .rate-indicator.${specConfig.statusCssClass}`)).nativeElement
+          fixture.debugElement.query(By.css(`.test-rates .status-rate.${specConfig.statusCssClass}`)).nativeElement
             .textContent
         ).toBe(`${specConfig.expectedCount} ${specConfig.statusName}`);
       });
@@ -202,7 +202,7 @@ describe('TestSummaryHeaderComponent', () => {
     it('hides the rate partition for that status in the rate indicator', () => {
       expect(
         fixture.debugElement
-          .query(By.css('.test-rates .rate-indicator.skipped'))
+          .query(By.css('.test-rates .status-rate.skipped'))
           .nativeElement.attributes.getNamedItem('hidden').value
       ).toBe('');
     });
@@ -211,7 +211,7 @@ describe('TestSummaryHeaderComponent', () => {
       ['failed', 'passed', 'inconclusive'].forEach(statusCssClass => {
         expect(
           fixture.debugElement
-            .query(By.css(`.test-rates .rate-indicator.${statusCssClass}`))
+            .query(By.css(`.test-rates .status-rate.${statusCssClass}`))
             .nativeElement.attributes.getNamedItem('hidden')
         ).toBeNull();
       });

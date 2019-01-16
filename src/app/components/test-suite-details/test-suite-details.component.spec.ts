@@ -1,13 +1,20 @@
+import { Component, Input } from '@angular/core';
 import { TestBed, ComponentFixture } from '@angular/core/testing';
-import { Component } from '@angular/core';
-import { TestSuiteDetailsComponent } from './test-suite-details.component';
 import { RouterTestingModule } from '@angular/router/testing';
+import { StoreModule } from '@ngrx/store';
+import { TestSuite } from 'src/app/models/test-suite.model';
+import { TestSuiteDetailsComponent } from './test-suite-details.component';
+import { testReportStoreReducer } from '../test-report/test-report.store';
 
 @Component({
   selector: 'bitrise-test-suite-details-header',
   template: ''
 })
-class MockTestSuiteDetailsHeaderComponent {}
+class MockTestSuiteDetailsHeaderComponent {
+  @Input() testSuite: TestSuite;
+  @Input() previousTestSuite: TestSuite;
+  @Input() nextTestSuite: TestSuite;
+}
 
 describe('TestSuiteDetailsComponent', () => {
   let fixture: ComponentFixture<TestSuiteDetailsComponent>;
@@ -15,7 +22,7 @@ describe('TestSuiteDetailsComponent', () => {
 
   beforeEach(() => {
     TestBed.configureTestingModule({
-      imports: [RouterTestingModule],
+      imports: [RouterTestingModule, StoreModule.forRoot({ testReport: testReportStoreReducer })],
       declarations: [TestSuiteDetailsComponent, MockTestSuiteDetailsHeaderComponent],
       providers: []
     }).compileComponents();
