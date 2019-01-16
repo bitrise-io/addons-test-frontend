@@ -1,6 +1,7 @@
 import { TestBed, ComponentFixture } from '@angular/core/testing';
 import { Component } from '@angular/core';
 import { TestSuiteDetailsComponent } from './test-suite-details.component';
+import { RouterTestingModule } from '@angular/router/testing';
 
 @Component({
   selector: 'bitrise-test-suite-details-header',
@@ -14,6 +15,7 @@ describe('TestSuiteDetailsComponent', () => {
 
   beforeEach(() => {
     TestBed.configureTestingModule({
+      imports: [RouterTestingModule],
       declarations: [TestSuiteDetailsComponent, MockTestSuiteDetailsHeaderComponent],
       providers: []
     }).compileComponents();
