@@ -80,14 +80,14 @@ describe('AppComponent', () => {
   }));
 
   it('renders component matching the current route', fakeAsync(() => {
-    router.navigate(['mocked-route-a']);
+    fixture.ngZone.run(() => router.navigate(['mocked-route-a']));
 
     tick();
 
     expect(fixture.debugElement.query(By.css('bitrise-mock-router-outlet-a-component'))).not.toBeNull();
     expect(fixture.debugElement.query(By.css('bitrise-mock-router-outlet-b-component'))).toBeNull();
 
-    router.navigate(['mocked-route-b']);
+    fixture.ngZone.run(() => router.navigate(['mocked-route-b']));
 
     tick();
 

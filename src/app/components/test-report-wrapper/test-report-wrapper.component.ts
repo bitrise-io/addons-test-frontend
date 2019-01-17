@@ -1,7 +1,9 @@
 import { Component, OnInit, OnDestroy } from '@angular/core';
 import { ActivatedRoute, Params } from '@angular/router';
 import { Observable, Subscription } from 'rxjs';
-import { Store, select } from '@ngrx/store';
+import { combineLatest } from 'rxjs';
+import { map } from 'rxjs/operators';
+import { Store } from '@ngrx/store';
 
 import { TestReport } from '../../models/test-report.model';
 import { TestReportStoreActionLoad } from '../test-report/test-report.store';
@@ -15,8 +17,7 @@ export class TestReportWrapperComponent implements OnInit, OnDestroy {
   testReports: TestReport[];
   testReports$: Observable<TestReport[]>;
   testReport: TestReport;
-  testReportsSubscription: Subscription;
-  activatedRouteParamsChangeSubscription: Subscription;
+  combinedSubscription: Subscription;
 
   constructor(
     private store: Store<{
@@ -24,25 +25,26 @@ export class TestReportWrapperComponent implements OnInit, OnDestroy {
     }>,
     private activatedRoute: ActivatedRoute
   ) {
-    this.testReports$ = store.pipe(select('testReport'));
+    this.testReports$ = store.select('testReport');
   }
 
   ngOnInit() {
     this.store.dispatch(new TestReportStoreActionLoad());
 
-    this.testReportsSubscription = this.testReports$.subscribe((testReports: TestReport[]) => {
-      this.testReports = testReports;
-    });
-
-    this.activatedRouteParamsChangeSubscription = this.activatedRoute.params.subscribe((params: Params) => {
-      this.testReport = this.testReports.find(
-        (testReport: TestReport) => testReport.id === Number(params['testReportId'])
-      );
-    });
+    this.combinedSubscription = combineLatest(this.activatedRoute.params, this.testReports$)
+      .pipe(
+        map(results => {
+          const params = results[0];
+          const testReports = results[1];
+          this.testReport = testReports.find(
+            (testReport: TestReport) => testReport.id === Number(params['testReportId'])
+          );
+        })
+      )
+      .subscribe();
   }
 
   ngOnDestroy() {
-    this.testReportsSubscription.unsubscribe();
-    this.activatedRouteParamsChangeSubscription.unsubscribe();
+    this.combinedSubscription.unsubscribe();
   }
 }
