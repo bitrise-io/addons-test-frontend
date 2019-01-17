@@ -2,7 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { Router, NavigationEnd } from '@angular/router';
 import { filter } from 'rxjs/operators';
 import { Observable } from 'rxjs';
-import { Store, select } from '@ngrx/store';
+import { Store } from '@ngrx/store';
 import { TestReport } from '../../models/test-report.model';
 import { TestSuiteStatus } from '../../models/test-suite.model';
 import { TestReportStoreActionLoad } from '../test-report/test-report.store';
@@ -24,7 +24,7 @@ export class AppHeaderComponent implements OnInit {
       testReport: TestReport[];
     }>
   ) {
-    this.testReports$ = store.pipe(select('testReport'));
+    this.testReports$ = store.select('testReport');
 
     router.events.pipe(filter(event => event instanceof NavigationEnd)).subscribe((event: NavigationEnd) => {
       if (this.tabmenuItems !== undefined) {

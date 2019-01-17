@@ -1,15 +1,18 @@
-import { BehaviorSubject } from 'rxjs';
+import { BehaviorSubject, Observable } from 'rxjs';
 
 export class MockStore<T> {
-  state: BehaviorSubject<T> = new BehaviorSubject(undefined);
+  private state: BehaviorSubject<T> = new BehaviorSubject(undefined);
+  private selector: any;
 
   setState(data: T) {
-    this.state.next(data);
+    this.state.next(data[this.selector]);
   }
 
-  dispatch() {}
+  select(selector: any): Observable<T> {
+    this.selector = selector;
 
-  pipe(operatorFunction: any) {
-    return operatorFunction(this.state);
+    return this.state.asObservable();
   }
+
+  dispatch(_action: any) {}
 }
