@@ -1,9 +1,9 @@
 <div class="centered-max-width main-content-padding-x">
   <bitrise-test-suite-details-header></bitrise-test-suite-details-header>
   <section class="test-suite-details-body-wrapper">
-    <ul class="test-suite-details-menu">
-      <li *ngFor="let testSuiteDetailsMenuItem of testSuiteDetailsMenuItems">
-        <a [routerLink]="[testSuiteDetailsMenuItem.subpath]" routerLinkActive="active">{{ testSuiteDetailsMenuItem.name }}</a>
+    <ul class="menu">
+      <li *ngFor="let testSuiteDetailsMenuItem of testSuiteDetailsMenuItems" class="menu-item">
+        <a [routerLink]="[testSuiteDetailsMenuItem.subpath]" routerLinkActive="active" class="link">{{ testSuiteDetailsMenuItem.name }}</a>
       </li>
     </ul>
     <router-outlet></router-outlet>
