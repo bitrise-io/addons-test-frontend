@@ -21,7 +21,7 @@ class MockTestSuiteDetailsHeaderComponent {
   @Input() nextTestSuite: TestSuite;
 }
 
-describe('TestSuiteDetailsComponent', () => {
+xdescribe('TestSuiteDetailsComponent', () => {
   let store: MockStore<{
     testReport: TestReport[];
   }>;
