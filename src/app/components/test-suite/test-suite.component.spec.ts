@@ -1,6 +1,7 @@
 import { TestBed, ComponentFixture } from '@angular/core/testing';
 import { By } from '@angular/platform-browser';
 import { HttpClientTestingModule } from '@angular/common/http/testing';
+import { RouterTestingModule } from '@angular/router/testing';
 import { Pipe, PipeTransform } from '@angular/core';
 import { InlineSVGModule } from 'ng-inline-svg';
 import { TestSuiteComponent } from './test-suite.component';
@@ -21,7 +22,7 @@ describe('TestSuiteComponent', () => {
 
   beforeEach(() => {
     TestBed.configureTestingModule({
-      imports: [HttpClientTestingModule, InlineSVGModule.forRoot()],
+      imports: [HttpClientTestingModule, RouterTestingModule, InlineSVGModule.forRoot()],
       declarations: [MockTextFromDurationInMilliseconds, TestSuiteComponent],
       providers: []
     }).compileComponents();
