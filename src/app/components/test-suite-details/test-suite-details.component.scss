@@ -6,6 +6,7 @@
 
   .test-suite-details-body-wrapper {
     display: flex;
+    margin-top: $section-spacing-y;
 
     .menu {
       flex-shrink: 0;
@@ -56,6 +57,7 @@
         @include ui-modifier-button-shadow;
         display: block;
         width: 100%;
+        margin-bottom: $section-spacing-y;
       }
     }
 
