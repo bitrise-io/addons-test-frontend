@@ -2,6 +2,8 @@ import { TestBed, ComponentFixture } from '@angular/core/testing';
 import { Component } from '@angular/core';
 import { TestSuiteDetailsComponent } from './test-suite-details.component';
 import { RouterTestingModule } from '@angular/router/testing';
+import { FormsModule } from '@angular/forms';
+import { ActivatedRoute } from '@angular/router';
 
 @Component({
   selector: 'bitrise-test-suite-details-header',
@@ -15,9 +17,21 @@ describe('TestSuiteDetailsComponent', () => {
 
   beforeEach(() => {
     TestBed.configureTestingModule({
-      imports: [RouterTestingModule],
+      imports: [RouterTestingModule, FormsModule],
       declarations: [TestSuiteDetailsComponent, MockTestSuiteDetailsHeaderComponent],
-      providers: []
+      providers: [
+        {
+          provide: ActivatedRoute,
+          useValue: {
+            snapshot: {},
+            firstChild: {
+              snapshot: {
+                routeConfig: { path: 'testcases' }
+              }
+            }
+          }
+        }
+      ]
     }).compileComponents();
 
     fixture = TestBed.createComponent(TestSuiteDetailsComponent);

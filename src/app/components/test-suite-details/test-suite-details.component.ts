@@ -1,4 +1,3 @@
-import { Location } from '@angular/common';
 import { Component, OnInit, OnDestroy } from '@angular/core';
 import { Router, ActivatedRoute } from '@angular/router';
 import { Subscription } from 'rxjs';
@@ -42,7 +41,7 @@ export class TestSuiteDetailsComponent implements OnInit, OnDestroy {
     subpath: string;
   };
 
-  constructor(private location: Location, private router: Router, private activatedRoute: ActivatedRoute) {}
+  constructor(private router: Router, private activatedRoute: ActivatedRoute) {}
 
   ngOnInit() {
     this.selectedTestSuiteDetailsMenuItem = this.testSuiteDetailsMenuItems.find(
