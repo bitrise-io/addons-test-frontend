@@ -6,13 +6,16 @@
     [nextTestSuite]="nextTestSuite"
   ></bitrise-test-suite-details-header>
   <section class="test-suite-details-body-wrapper">
-    <ul class="test-suite-details-menu">
-      <li *ngFor="let testSuiteDetailsMenuItem of testSuiteDetailsMenuItems">
-        <a [routerLink]="[testSuiteDetailsMenuItem.subpath]" routerLinkActive="active">{{
+    <ul class="menu">
+      <li *ngFor="let testSuiteDetailsMenuItem of testSuiteDetailsMenuItems" class="menu-item">
+        <a [routerLink]="[testSuiteDetailsMenuItem.subpath]" routerLinkActive="active" class="link">{{
           testSuiteDetailsMenuItem.name
         }}</a>
       </li>
     </ul>
+    <select class="menu-select" [(ngModel)]="selectedTestSuiteDetailsMenuItem" (change)="selectedTestSuiteDetailsMenuItemChanged()">
+      <option *ngFor="let testSuiteDetailsMenuItem of testSuiteDetailsMenuItems" [ngValue]="testSuiteDetailsMenuItem">{{ testSuiteDetailsMenuItem.name }}</option>
+    </select>
     <router-outlet></router-outlet>
   </section>
 </div>

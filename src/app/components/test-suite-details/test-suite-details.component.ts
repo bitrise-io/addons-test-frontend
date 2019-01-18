@@ -1,5 +1,5 @@
 import { Component, Input, OnInit, OnDestroy } from '@angular/core';
-import { ActivatedRoute, Params } from '@angular/router';
+import { ActivatedRoute, Params, Router } from '@angular/router';
 import { Observable, Subscription } from 'rxjs';
 import { Store, select } from '@ngrx/store';
 import { TestReport } from 'src/app/models/test-report.model';
@@ -48,8 +48,13 @@ export class TestSuiteDetailsComponent implements OnInit, OnDestroy {
       subpath: 'logs'
     }
   ];
+  selectedTestSuiteDetailsMenuItem: {
+    name: string;
+    subpath: string;
+  };
 
   constructor(
+    private router: Router,
     private store: Store<{
       testReport: TestReport[];
     }>,
@@ -59,6 +64,11 @@ export class TestSuiteDetailsComponent implements OnInit, OnDestroy {
   }
 
   ngOnInit() {
+    this.selectedTestSuiteDetailsMenuItem = this.testSuiteDetailsMenuItems.find(
+      (testSuiteDetailsMenuItem: any) =>
+        testSuiteDetailsMenuItem.subpath === this.activatedRoute.firstChild.snapshot.routeConfig.path
+    );
+
     this.store.dispatch(new TestReportStoreActionLoad());
 
     this.testReportsSubscription = this.testReports$.subscribe((testReports: TestReport[]) => {
@@ -89,5 +99,9 @@ export class TestSuiteDetailsComponent implements OnInit, OnDestroy {
     this.previousTestSuite = testSuiteIndex > 0 ? selectedTestReport.testSuites[testSuiteIndex - 1] : null;
     this.nextTestSuite =
       testSuiteIndex < selectedTestReport.testSuites.length - 1 ? selectedTestReport.testSuites[testSuiteIndex + 1] : null;
+  }
+
+  selectedTestSuiteDetailsMenuItemChanged() {
+    this.router.navigate([`./${this.selectedTestSuiteDetailsMenuItem.subpath}`], { relativeTo: this.activatedRoute });
   }
 }
