@@ -55,7 +55,7 @@ export class TestSuiteDetailsComponent implements OnInit, OnDestroy {
     }>,
     private activatedRoute: ActivatedRoute
   ) {
-    this.testReports$ = store.pipe(select('testReport'));
+    this.testReports$ = store.select('testReport');
   }
 
   ngOnInit() {
