@@ -1,0 +1,98 @@
+@import '../../../sass/constants';
+@import '../../../sass/mixins';
+
+.navigation {
+  display: flex;
+  margin-top: $section-spacing-y;
+
+  .navigation-button {
+    @include ui-element-button-secondary;
+    display: flex;
+
+    &:hover {
+      @include ui-element-button-secondary-hover;
+    }
+
+    .arrow {
+      @include margin-y(-4px);
+
+      ::ng-deep svg {
+        display: block;
+      }
+    }
+
+    &.all-devices .arrow {
+      margin-right: 8px;
+    }
+
+    &.previous-device .arrow {
+      margin-right: 8px;
+    }
+
+    &.next-device .arrow {
+      margin-left: 8px;
+    }
+
+    &.all-devices {
+      margin-right: auto;
+    }
+
+    &.previous-device, &.next-device {
+      margin-left: 8px;
+    }
+  }
+}
+
+.details {
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+  margin-top: 18px;
+
+  .device {
+    @include ui-element-header-4;
+    line-height: 40px;
+    margin-right: 48px;
+    color: $dark-blue-grey;
+  }
+
+  .minor-details {
+    display: flex;
+    align-items: center;
+    flex-wrap: wrap;
+
+    .minor-detail {
+      display: flex;
+      align-items: center;
+      @include margin-y(8px);
+
+      &:not(:last-child) {
+        margin-right: 40px;
+      }
+
+      ::ng-deep svg {
+        display: block;
+        margin-right: 8px;
+        fill: $greyish;
+      }
+
+      .text {
+        @include ui-element-body;
+        color: $brownish-grey;
+      }
+    }
+  }
+}
+
+.test-case-rates {
+  @include ui-element-status-rate-indicator;
+  margin-top: 18px;
+
+  .status-rate.failed {
+    @include ui-modifier-status-rate-with-color($vivid-pink);
+  }
+
+  .status-rate.passed {
+    @include ui-modifier-status-rate-with-color($green-teal);
+  }
+}

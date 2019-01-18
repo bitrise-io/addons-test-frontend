@@ -1,9 +1,16 @@
 <div class="test-suite-details centered-max-width main-content-padding-x">
-  <bitrise-test-suite-details-header></bitrise-test-suite-details-header>
+  <bitrise-test-suite-details-header
+    [testSuite]="testSuite"
+    *ngIf="testSuite"
+    [previousTestSuite]="previousTestSuite"
+    [nextTestSuite]="nextTestSuite"
+  ></bitrise-test-suite-details-header>
   <section class="test-suite-details-body-wrapper">
     <ul class="menu">
       <li *ngFor="let testSuiteDetailsMenuItem of testSuiteDetailsMenuItems" class="menu-item">
-        <a [routerLink]="[testSuiteDetailsMenuItem.subpath]" routerLinkActive="active" class="link">{{ testSuiteDetailsMenuItem.name }}</a>
+        <a [routerLink]="[testSuiteDetailsMenuItem.subpath]" routerLinkActive="active" class="link">{{
+          testSuiteDetailsMenuItem.name
+        }}</a>
       </li>
     </ul>
     <select class="menu-select" [(ngModel)]="selectedTestSuiteDetailsMenuItem" (change)="selectedTestSuiteDetailsMenuItemChanged()">

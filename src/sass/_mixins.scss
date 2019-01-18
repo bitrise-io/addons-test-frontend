@@ -67,6 +67,16 @@
   border-bottom: $value;
 }
 
+@mixin border-x-color($value) {
+  border-left-color: $value;
+  border-right-color: $value;
+}
+
+@mixin border-y-color($value) {
+  border-top-color: $value;
+  border-bottom-color: $value;
+}
+
 @mixin padding-x($value) {
   padding-left: $value;
   padding-right: $value;

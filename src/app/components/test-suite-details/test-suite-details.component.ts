@@ -1,6 +1,10 @@
-import { Component, OnInit, OnDestroy } from '@angular/core';
-import { Router, ActivatedRoute } from '@angular/router';
-import { Subscription } from 'rxjs';
+import { Component, Input, OnInit, OnDestroy } from '@angular/core';
+import { ActivatedRoute, Params, Router } from '@angular/router';
+import { Observable, Subscription } from 'rxjs';
+import { Store, select } from '@ngrx/store';
+import { TestReport } from 'src/app/models/test-report.model';
+import { TestSuite } from 'src/app/models/test-suite.model';
+import { TestReportStoreActionLoad } from '../test-report/test-report.store';
 
 @Component({
   selector: 'bitrise-test-suite-details',
@@ -8,7 +12,15 @@ import { Subscription } from 'rxjs';
   styleUrls: ['./test-suite-details.component.scss']
 })
 export class TestSuiteDetailsComponent implements OnInit, OnDestroy {
-  activatedRouteParamsSubscription: Subscription;
+  @Input() testSuite: TestSuite;
+
+  testReports: TestReport[];
+  testReports$: Observable<TestReport[]>;
+  testSuites: TestSuite[];
+  previousTestSuite: TestSuite;
+  nextTestSuite: TestSuite;
+  testReportsSubscription: Subscription;
+  activatedRouteParamsChangeSubscription: Subscription;
 
   testSuiteDetailsMenuItems = [
     {
@@ -41,16 +53,53 @@ export class TestSuiteDetailsComponent implements OnInit, OnDestroy {
     subpath: string;
   };
 
-  constructor(private router: Router, private activatedRoute: ActivatedRoute) {}
+  constructor(
+    private router: Router,
+    private store: Store<{
+      testReport: TestReport[];
+    }>,
+    private activatedRoute: ActivatedRoute
+  ) {
+    this.testReports$ = store.select('testReport');
+  }
 
   ngOnInit() {
     this.selectedTestSuiteDetailsMenuItem = this.testSuiteDetailsMenuItems.find(
       (testSuiteDetailsMenuItem: any) =>
         testSuiteDetailsMenuItem.subpath === this.activatedRoute.firstChild.snapshot.routeConfig.path
     );
+
+    this.store.dispatch(new TestReportStoreActionLoad());
+
+    this.testReportsSubscription = this.testReports$.subscribe((testReports: TestReport[]) => {
+      this.testReports = testReports;
+      this.configureFromUrlParams();
+    });
+
+    this.activatedRouteParamsChangeSubscription = this.activatedRoute.params.subscribe((params: Params) => {
+      this.configureFromUrlParams(params);
+    });
   }
 
-  ngOnDestroy() {}
+  ngOnDestroy() {
+    this.testReportsSubscription.unsubscribe();
+    this.activatedRouteParamsChangeSubscription.unsubscribe();
+  }
+
+  configureFromUrlParams(params = this.activatedRoute.snapshot.params) {
+    const selectedTestReport = this.testReports.find(
+      (testReport: TestReport) => testReport.id === Number(params['testReportId'])
+    );
+
+    this.testSuite = selectedTestReport.testSuites.find(
+      (testSuite: TestSuite) => testSuite.id === Number(params['testSuiteId'])
+    );
+
+    const testSuiteIndex = selectedTestReport.testSuites.findIndex(testSuite => testSuite === this.testSuite);
+    this.previousTestSuite = testSuiteIndex > 0 ? selectedTestReport.testSuites[testSuiteIndex - 1] : null;
+    this.nextTestSuite =
+      testSuiteIndex < selectedTestReport.testSuites.length - 1 ? selectedTestReport.testSuites[testSuiteIndex + 1] : null;
+  }
 
   selectedTestSuiteDetailsMenuItemChanged() {
     this.router.navigate([`./${this.selectedTestSuiteDetailsMenuItem.subpath}`], { relativeTo: this.activatedRoute });
