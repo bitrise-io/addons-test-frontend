@@ -20,7 +20,10 @@ import { TestSummaryHeaderComponent } from './components/test-summary-header/tes
 import { TestReportComponent } from './components/test-report/test-report.component';
 import { TestSuiteComponent } from './components/test-suite/test-suite.component';
 import { TestCaseComponent } from './components/test-case/test-case.component';
+import { TestSuiteDetailsComponent } from './components/test-suite-details/test-suite-details.component';
 import { environment } from 'src/environments/environment';
+import { TestSuiteDetailsHeaderComponent } from './components/test-suite-details-header/test-suite-details-header.component';
+import { TestSuiteDetailsMenuModule } from './components/test-suite-details/menu/menu.module';
 
 @NgModule({
   declarations: [
@@ -34,7 +37,9 @@ import { environment } from 'src/environments/environment';
     TestSummaryHeaderComponent,
     TestReportComponent,
     TestSuiteComponent,
-    TestCaseComponent
+    TestCaseComponent,
+    TestSuiteDetailsComponent,
+    TestSuiteDetailsHeaderComponent
   ],
   imports: [
     BrowserModule,
@@ -43,7 +48,8 @@ import { environment } from 'src/environments/environment';
     FormsModule,
     StoreModule.forRoot({ testReport: testReportStoreReducer }),
     InlineSVGModule.forRoot(),
-    environment.ServicesModule
+    environment.ServicesModule,
+    TestSuiteDetailsMenuModule
   ],
   providers: [],
   bootstrap: [AppComponent]

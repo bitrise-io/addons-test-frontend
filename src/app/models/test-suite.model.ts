@@ -15,6 +15,7 @@ export enum TestSuiteOrientation {
 }
 
 export type TestSuiteResponse = {
+  id: number;
   status: TestSuiteStatus;
   deviceName: string;
   deviceOperatingSystem: string;
@@ -26,6 +27,7 @@ export type TestSuiteResponse = {
 
 @Injectable()
 export class TestSuite implements Deserializable {
+  id: number;
   status: TestSuiteStatus;
   deviceName: string;
   deviceOperatingSystem: string;
@@ -78,6 +80,7 @@ export class TestSuite implements Deserializable {
   }
 
   deserialize(testSuiteResponse: TestSuiteResponse) {
+    this.id = testSuiteResponse.id;
     this.status = testSuiteResponse.status;
     this.deviceName = testSuiteResponse.deviceName;
     this.deviceOperatingSystem = testSuiteResponse.deviceOperatingSystem;

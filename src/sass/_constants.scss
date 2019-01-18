@@ -112,6 +112,7 @@ $vivid-pink: #ff2158 !default;
   background-image: linear-gradient(to top, #f8f8f8, $white);
   cursor: pointer;
   color: $dark-blue-grey;
+  text-decoration: none;
 
   ::ng-deep svg {
     fill: $dark-blue-grey;

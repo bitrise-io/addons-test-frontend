@@ -25,6 +25,7 @@
       "name": "UI Test A",
       "testSuites": [
         {
+          "id": 5,
           "status": 1,
           "deviceName": "iPhone 7",
           "deviceOperatingSystem": "iOS 11.2",
@@ -56,6 +57,7 @@
           "locale": "English"
         },
         {
+          "id": 10,
           "status": 2,
           "deviceName": "iPad Mini 2016",
           "deviceOperatingSystem": "iOS 11.2",
@@ -87,6 +89,7 @@
           "locale": "Japanese"
         },
         {
+          "id": 20,
           "status": 0,
           "deviceName": "Nexus7 clone, DVD 16:9 aspect ratio",
           "deviceOperatingSystem": "Android Oreo",
@@ -95,6 +98,7 @@
           "locale": "Traditional chinese"
         },
         {
+          "id": 30,
           "status": 3,
           "deviceName": "iPhone 7",
           "deviceOperatingSystem": "iOS 11.2",
@@ -109,6 +113,7 @@
       "name": "UI Test B",
       "testSuites": [
         {
+          "id": 40,
           "status": 1,
           "deviceName": "Galaxy S4 mini",
           "deviceOperatingSystem": "Android Ice Cream Sandwich",
@@ -140,6 +145,7 @@
           "locale": "Japanese"
         },
         {
+          "id": 50,
           "status": 2,
           "deviceName": "iPhone 7",
           "deviceOperatingSystem": "iOS 11.2",
@@ -192,6 +198,7 @@
           "locale": "English"
         },
         {
+          "id": 60,
           "status": 0,
           "deviceName": "iPhone 7",
           "deviceOperatingSystem": "iOS 11.2",
