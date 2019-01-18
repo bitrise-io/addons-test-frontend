@@ -3,7 +3,7 @@
     <span class="arrow" inlineSVG="/assets/images/arrow-quit.svg"></span> <span>All devices</span>
   </a>
   <a
-    [routerLink]="['../../testsuite/' + previousTestSuite.id + '/testcases']"
+    [routerLink]="['../../testsuite', previousTestSuite.id]"
     *ngIf="previousTestSuite"
     class="navigation-button previous-device"
   >
@@ -11,7 +11,7 @@
     <span>Previous device</span>
   </a>
   <a
-    [routerLink]="['../../testsuite/' + nextTestSuite.id + '/testcases']"
+    [routerLink]="['../../testsuite', nextTestSuite.id]"
     *ngIf="nextTestSuite"
     class="navigation-button next-device"
   >
