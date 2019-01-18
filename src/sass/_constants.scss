@@ -24,6 +24,7 @@ $default-hovertime: 0.2s;
 $white: #ffffff !default;
 $white-three: #ececec !default;
 $white-darken: #dddddd !default;
+$greyish: #acacac !default;
 $warm-grey: #777777 !default;
 $brownish-grey: #616161 !default;
 $black: #222222 !default;
@@ -59,6 +60,12 @@ $vivid-pink: #ff2158 !default;
   @include default-font;
   font-size: 34px;
   letter-spacing: 0.2px;
+  font-weight: 700;
+}
+
+@mixin ui-element-header-4 {
+  @include default-font;
+  font-size: 25px;
   font-weight: 700;
 }
 
@@ -105,7 +112,7 @@ $vivid-pink: #ff2158 !default;
   align-items: center;
   border: 1px solid $white-darken;
   border-radius: 4px;
-  padding: 3px 8px;
+  padding: 7px 8px;
   line-height: 16px;
   text-align: center;
   font-size: 13px;
@@ -214,6 +221,27 @@ $vivid-pink: #ff2158 !default;
   }
 }
 
+@mixin ui-element-status-rate-indicator {
+  display: flex;
+
+  .status-rate {
+    @include ui-element-subtitle;
+    height: 24px;
+    box-sizing: border-box;
+    padding-right: 8px;
+    overflow: hidden;
+    line-height: 24px;
+  }
+
+  &.text-top .status-rate {
+    border-bottom: 6px solid;
+  }
+
+  &.text-bottom .status-rate {
+    border-top: 6px solid;
+  }
+}
+
 // UI modifiers
 
 @mixin ui-modifier-button-shadow {
@@ -231,4 +259,9 @@ $vivid-pink: #ff2158 !default;
 
 @mixin ui-modifier-container-shadow {
   box-shadow: 0 2px 12px 0 rgba(0, 0, 0, 0.06);
+}
+
+@mixin ui-modifier-status-rate-with-color($color) {
+  @include border-y-color($color);
+  color: $color;
 }
