@@ -18,6 +18,18 @@
   }
 }
 
+@mixin width-above-screen-medium {
+  @include width-above($screen-medium-width) {
+    @content;
+  }
+}
+
+@mixin width-max-screen-medium {
+  @include width-max($screen-medium-width) {
+    @content;
+  }
+}
+
 @mixin width-above-screen-small {
   @include width-above($screen-small-width) {
     @content;

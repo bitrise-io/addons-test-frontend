@@ -1,32 +1,67 @@
 @import '../../../sass/constants';
 @import '../../../sass/mixins';
 
-.test-suite-details-body-wrapper {
-  display: flex;
+.test-suite-details {
+  box-sizing: border-box;
 
-  .menu {
-    flex-shrink: 0;
-    width: 30 * $grid-size;
-    @include margin-y(0);
-    padding-left: 0;
-    list-style: none;
+  .test-suite-details-body-wrapper {
+    display: flex;
 
-    .menu-item {
+    .menu {
+      flex-shrink: 0;
+      width: 30 * $grid-size;
+      @include margin-y(0);
+      padding-left: 0;
+      list-style: none;
 
-      .link {
-        @include default-font;
-        display: block;
-        line-height: 3 * $grid-size;
-        border-radius: $grid-size;
-        padding: 1.5 * $grid-size 2 * $grid-size;
-        text-decoration: none;
-        color: $dark-blue-grey;
-        transition: color $default-hovertime, background-color $default-hovertime;
+      .menu-item {
 
-        &:hover, &.active {
-          color: $white;
-          background-color: $dark-blue-grey;
+        .link {
+          @include default-font;
+          display: block;
+          line-height: 3 * $grid-size;
+          border-radius: $grid-size;
+          padding: 1.5 * $grid-size 2 * $grid-size;
+          text-decoration: none;
+          color: $dark-blue-grey;
+          transition: color $default-hovertime, background-color $default-hovertime;
+
+          &:hover {
+            background-color: $pale-grey;
+          }
+
+          &.active {
+            color: $white;
+            background-color: $dark-blue-grey;
+          }
         }
+      }
+    }
+
+    @include width-max-screen-medium {
+      .menu {
+        width: 20 * $grid-size;
+      }
+    }
+
+    @include width-max-screen-small {
+      display: block;
+
+      .menu {
+        display: none;
+      }
+
+      .menu-select {
+        @include ui-element-select;
+        @include ui-modifier-button-shadow;
+        display: block;
+        width: 100%;
+      }
+    }
+
+    @include width-above-screen-small {
+      .menu-select {
+        display: none;
       }
     }
   }
