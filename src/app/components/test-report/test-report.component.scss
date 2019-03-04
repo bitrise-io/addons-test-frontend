@@ -6,11 +6,7 @@
 
   .name {
     @include ui-element-header-5;
+    @include ui-modifier-header-5-underlined-purple-bold;
     margin-bottom: 7 * $grid-size;
-    @include padding-y(20px);
-    border-bottom: 2px solid $white-three;
-    line-height: 3 * $grid-size;
-    font-weight: 700;
-    color: $dark-blue-grey;
   }
 }

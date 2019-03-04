@@ -245,6 +245,14 @@ $vivid-pink: #ff2158 !default;
 
 // UI modifiers
 
+@mixin ui-modifier-header-5-underlined-purple-bold {
+  border-bottom: 2px solid $white-three;
+  @include padding-y(20px);
+  line-height: 3 * $grid-size;
+  font-weight: 700;
+  color: $dark-blue-grey;
+}
+
 @mixin ui-modifier-button-shadow {
   box-shadow: 0 2px 4px 0 rgba(0, 0, 0, 0.08);
 }
