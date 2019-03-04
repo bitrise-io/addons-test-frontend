@@ -37,6 +37,11 @@ $violet-blue: #760fc3 !default;
 $dark-blue-grey: #351d48 !default;
 $vivid-pink: #ff2158 !default;
 
+// Z-indices
+
+$zindex-metric_seek_pin: 50;
+$zindex-metric_seek_value: 100;
+
 // UI elements
 
 @mixin default-font {
