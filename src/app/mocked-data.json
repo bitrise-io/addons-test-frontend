@@ -208,5 +208,75 @@
         }
       ]
     }
-  ]
+  ],
+  "performance": {
+    "metrics": {
+      "cpu": {
+        "name": "CPU performance",
+        "sampleGroups": [
+          {
+            "samples": [
+              { "time": 0, "value": 30 },
+              { "time": 2000, "value": 5 },
+              { "time": 4000, "value": 45 },
+              { "time": 6000, "value": 20 },
+              { "time": 8000, "value": 92 },
+              { "time": 10000, "value": 60 },
+              { "time": 12000, "value": 80 },
+              { "time": 14000, "value": 12 }
+            ]
+          }
+        ]
+      },
+      "memory": {
+        "name": "Memory usage (KB)",
+        "sampleGroups": [
+          {
+            "samples": [
+              { "time": 0, "value": 100 },
+              { "time": 2000, "value": 5 },
+              { "time": 4000, "value": 453 },
+              { "time": 6000, "value": 20 },
+              { "time": 8000, "value": 32 },
+              { "time": 10000, "value": 515 },
+              { "time": 12000, "value": 321 },
+              { "time": 14000, "value": 120 }
+            ]
+          }
+        ]
+      },
+      "network": {
+        "name": "Network (KB/S)",
+        "sampleGroups": [
+          {
+            "name": "upload",
+            "samples": [
+              { "time": 0, "value": 100 },
+              { "time": 2000, "value": 5 },
+              { "time": 4000, "value": 453 },
+              { "time": 6000, "value": 20 },
+              { "time": 8000, "value": 32 },
+              { "time": 10000, "value": 515 },
+              { "time": 12000, "value": 321 },
+              { "time": 14000, "value": 120 }
+            ]
+          },
+          {
+            "name": "download",
+            "samples": [
+              { "time": 0, "value": 3 },
+              { "time": 2000, "value": 19 },
+              { "time": 4000, "value": 215 },
+              { "time": 6000, "value": 501 },
+              { "time": 8000, "value": 409 },
+              { "time": 10000, "value": 60 },
+              { "time": 12000, "value": 29 },
+              { "time": 14000, "value": 660 }
+            ]
+          }
+        ]
+      }
+    },
+    "durationInMilliseconds": 14000
+  }
 }

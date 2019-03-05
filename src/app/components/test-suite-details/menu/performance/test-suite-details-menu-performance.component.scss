@@ -57,13 +57,29 @@
         transform: rotate(180deg);
       }
     }
+
+    @include width-max-screen-medium {
+      flex-wrap: wrap;
+
+      .legend {
+        order: 1;
+        display: block;
+        width: 100%;
+        margin-top: $grid-size;
+
+        .legend-item:not(:first-child) {
+          margin-left: 0;
+          margin-top: $grid-size;
+        }
+      }
+    }
   }
 
   .metric-figure {
-    $open-duration: 0.2s;
     $scale-width: 4 * $grid-size;
-    $scale-height: $scale-width;
+    $scale-height: 4 * $grid-size;
     $scale-lineheight: 2 * $grid-size;
+    $open-duration: 0.2s;
 
     display: flex;
     margin: 0;
@@ -94,7 +110,7 @@
 
       .samples-with-grid {
         position: relative;
-        height: 230px;
+        height: 30 * $grid-size;
         transition: height $open-duration;
 
         svg.grid,
@@ -141,7 +157,7 @@
         display: flex;
         justify-content: space-between;
         align-items: center;
-        height: $scale-width;
+        height: $scale-height;
         border-top: 2px solid $metrics_ruler-color;
         color: $metrics_ruler-color;
       }
@@ -157,7 +173,7 @@
       }
 
       .metric-with-horizontal-scale .samples-with-grid {
-        height: 40px;
+        height: 5 * $grid-size;
 
         svg.grid {
           opacity: 0;
@@ -177,22 +193,6 @@
 
             .legend-item:last-child:before {
               background-color: $color_alt;
-            }
-          }
-
-          @include width-max-screen-medium {
-            flex-wrap: wrap;
-
-            .legend {
-              order: 1;
-              display: block;
-              width: 100%;
-              margin-top: $grid-size;
-
-              .legend-item:not(:first-child) {
-                margin-left: 0;
-                margin-top: $grid-size;
-              }
             }
           }
         }

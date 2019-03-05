@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { DatePipe } from '@angular/common';
+import * as MOCKED_DATA from '../../../../mocked-data.json';
 
 @Component({
   selector: 'bitrise-test-suite-details-menu-performance',
@@ -11,34 +12,24 @@ export class TestSuiteDetailsMenuPerformanceComponent implements OnInit {
     {
       id: 'cpu',
       cssClass: 'cpu',
-      name: 'CPU performance',
       isOpen: false,
-      sampleGroups: [],
+      sampleGroups: undefined,
       valueGrid: undefined,
       sampleCurves: undefined
     },
     {
       id: 'memory',
       cssClass: 'memory',
-      name: 'Memory usage (KB)',
       isOpen: false,
-      sampleGroups: [],
+      sampleGroups: undefined,
       valueGrid: undefined,
       sampleCurves: undefined
     },
     {
       id: 'network',
       cssClass: 'network',
-      name: 'Network (KB/S)',
       isOpen: false,
-      sampleGroups: [
-        {
-          title: 'upload'
-        },
-        {
-          title: 'download'
-        }
-      ],
+      sampleGroups: undefined,
       valueGrid: undefined,
       sampleCurves: undefined
     }
@@ -49,82 +40,18 @@ export class TestSuiteDetailsMenuPerformanceComponent implements OnInit {
   constructor(private datePipe: DatePipe) {}
 
   ngOnInit() {
-    this.loadMetrics();
+    this.loadPerformanceData();
   }
 
-  loadMetrics = function() {
-    const data: {
-      [id: string]: {
-        title?: string;
-        samples: {
-          time: number;
-          value: number;
-        }[];
-      }[];
-    } = {
-      cpu: [
-        {
-          samples: [
-            { time: 0, value: 30 },
-            { time: 2000, value: 5 },
-            { time: 4000, value: 45 },
-            { time: 6000, value: 20 },
-            { time: 8000, value: 92 },
-            { time: 10000, value: 60 },
-            { time: 12000, value: 80 },
-            { time: 14000, value: 12 }
-          ]
-        }
-      ],
-      memory: [
-        {
-          samples: [
-            { time: 0, value: 100 },
-            { time: 2000, value: 5 },
-            { time: 4000, value: 453 },
-            { time: 6000, value: 20 },
-            { time: 8000, value: 32 },
-            { time: 10000, value: 515 },
-            { time: 12000, value: 321 },
-            { time: 14000, value: 120 }
-          ]
-        }
-      ],
-      network: [
-        {
-          title: 'upload',
-          samples: [
-            { time: 0, value: 100 },
-            { time: 2000, value: 5 },
-            { time: 4000, value: 453 },
-            { time: 6000, value: 20 },
-            { time: 8000, value: 32 },
-            { time: 10000, value: 515 },
-            { time: 12000, value: 321 },
-            { time: 14000, value: 120 }
-          ]
-        },
-        {
-          title: 'download',
-          samples: [
-            { time: 0, value: 3 },
-            { time: 2000, value: 19 },
-            { time: 4000, value: 215 },
-            { time: 6000, value: 501 },
-            { time: 8000, value: 409 },
-            { time: 10000, value: 60 },
-            { time: 12000, value: 29 },
-            { time: 14000, value: 660 }
-          ]
-        }
-      ]
-    };
-    this.durationInMilliseconds = 14000;
+  loadPerformanceData = function() {
+    const performanceData = MOCKED_DATA['performance']
+    this.durationInMilliseconds = performanceData.durationInMilliseconds;
 
-    Object.keys(data).forEach((typeId: string) => {
-      const sampleGroupsOfType = data[typeId];
-      const metricOfType = this.metrics.find(metric => metric.id === typeId);
-      metricOfType.sampleGroups = sampleGroupsOfType;
+    Object.keys(performanceData.metrics).forEach((typeId: string) => {
+      const metricData = performanceData.metrics[typeId];
+      const metric = this.metrics.find(metric => metric.id === typeId);
+      metric.name = metricData.name;
+      metric.sampleGroups = metricData.sampleGroups;
     });
 
     this.metrics.forEach((metric: any) => {

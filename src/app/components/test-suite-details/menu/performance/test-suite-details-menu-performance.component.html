@@ -3,7 +3,7 @@
   <div class="header">
     <div class="title">{{ metric.name }}</div>
     <ul class="legend" *ngIf="metric.sampleGroups.length > 1">
-      <li class="legend-item" *ngFor="let sampleGroup of metric.sampleGroups">{{ sampleGroup.title }}</li>
+      <li class="legend-item" *ngFor="let sampleGroup of metric.sampleGroups">{{ sampleGroup.name }}</li>
     </ul>
     <button class="metric-toggle" [ngClass]="{ open: metric.isOpen }" (click)="metric.isOpen = !metric.isOpen">
       <span class="arrow" [inlineSVG]="'/assets/images/arrow-down.svg'"></span>
