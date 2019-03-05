@@ -44,13 +44,14 @@ export class TestSuiteDetailsMenuPerformanceComponent implements OnInit {
   }
 
   loadPerformanceData = function() {
-    const performanceData = MOCKED_DATA['performance']
+    const performanceData = MOCKED_DATA['performance'];
     this.durationInMilliseconds = performanceData.durationInMilliseconds;
 
     Object.keys(performanceData.metrics).forEach((typeId: string) => {
       const metricData = performanceData.metrics[typeId];
       const metric = this.metrics.find(metric => metric.id === typeId);
       metric.name = metricData.name;
+      metric.currentTimeInMilliseconds = metricData.currentTimeInMilliseconds;
       metric.sampleGroups = metricData.sampleGroups;
     });
 
@@ -81,6 +82,41 @@ export class TestSuiteDetailsMenuPerformanceComponent implements OnInit {
       .map((_element: any, index: number, array: any[]) => {
         return (this.durationInMilliseconds * index) / (array.length - 1);
       });
+  };
+
+  durationAsPercent = function(metric) {
+    return (100 * metric.currentTimeInMilliseconds) / this.durationInMilliseconds;
+  };
+
+  sampleValueAtCurrentTime = function(metric, samples: {
+    time: number,
+    value: number
+  }[]) {
+    const indexOfSampleAfterCurrentTime = samples.findIndex(
+      (sample: { time: number; value: number }) => sample.time >= metric.currentTimeInMilliseconds
+    );
+
+    const sampleAfterCurrentTime = samples[indexOfSampleAfterCurrentTime];
+    if (sampleAfterCurrentTime.time === metric.currentTimeInMilliseconds) {
+      return sampleAfterCurrentTime.value;
+    }
+    else {
+      const sampleBeforeCurrentTime = samples[indexOfSampleAfterCurrentTime - 1];
+      return (sampleBeforeCurrentTime.value + sampleAfterCurrentTime.value) / 2;
+    }
+  };
+
+  sampleValueAsPercentAtCurrentTime = function(metric, samples: {
+    time: number,
+    value: number
+  }[]) {
+    return 100 * this.sampleValueAtCurrentTime(metric, samples) / this.highestValueFromSamples(samples);
+  };
+
+  printableSampleValuesAtCurrentTime = function(metric) {
+    return metric.sampleGroups.map((sampleGroup) => {
+      return this.printableValueForMetric(this.sampleValueAtCurrentTime(metric, sampleGroup.samples), metric);
+    }).join(', ');
   };
 
   highestValueFromSamples = function(

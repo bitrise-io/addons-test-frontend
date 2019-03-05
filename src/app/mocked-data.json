@@ -213,6 +213,7 @@
     "metrics": {
       "cpu": {
         "name": "CPU performance",
+        "currentTimeInMilliseconds": 3000,
         "sampleGroups": [
           {
             "samples": [
@@ -230,6 +231,7 @@
       },
       "memory": {
         "name": "Memory usage (KB)",
+        "currentTimeInMilliseconds": 8000,
         "sampleGroups": [
           {
             "samples": [
@@ -247,6 +249,7 @@
       },
       "network": {
         "name": "Network (KB/S)",
+        "currentTimeInMilliseconds": 4000,
         "sampleGroups": [
           {
             "name": "upload",
