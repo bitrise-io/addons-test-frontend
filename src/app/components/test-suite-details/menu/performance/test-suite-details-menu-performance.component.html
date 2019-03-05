@@ -40,7 +40,7 @@
             attr.fill="url({{ sampleCurveFillURL(metric) }})"
           ></path>
         </svg>
-        <button class="seek">
+        <button class="seek" (click)="metricSeekSelected($event, metric)">
           <span class="seek-cursor" [style.left.%]="durationAsPercent(metric)">
             <span class="pin" *ngFor="let sampleGroup of metric.sampleGroups" [style.bottom.%]="sampleValueAsPercentAtCurrentTime(metric, sampleGroup.samples)"></span>
             <span class="seek-value">{{ printableSampleValuesAtCurrentTime(metric) }}</span>

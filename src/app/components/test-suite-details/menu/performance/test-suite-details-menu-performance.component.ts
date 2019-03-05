@@ -88,10 +88,13 @@ export class TestSuiteDetailsMenuPerformanceComponent implements OnInit {
     return (100 * metric.currentTimeInMilliseconds) / this.durationInMilliseconds;
   };
 
-  sampleValueAtCurrentTime = function(metric, samples: {
-    time: number,
-    value: number
-  }[]) {
+  sampleValueAtCurrentTime = function(
+    metric,
+    samples: {
+      time: number;
+      value: number;
+    }[]
+  ) {
     const indexOfSampleAfterCurrentTime = samples.findIndex(
       (sample: { time: number; value: number }) => sample.time >= metric.currentTimeInMilliseconds
     );
@@ -99,24 +102,33 @@ export class TestSuiteDetailsMenuPerformanceComponent implements OnInit {
     const sampleAfterCurrentTime = samples[indexOfSampleAfterCurrentTime];
     if (sampleAfterCurrentTime.time === metric.currentTimeInMilliseconds) {
       return sampleAfterCurrentTime.value;
-    }
-    else {
+    } else {
       const sampleBeforeCurrentTime = samples[indexOfSampleAfterCurrentTime - 1];
-      return (sampleBeforeCurrentTime.value + sampleAfterCurrentTime.value) / 2;
+      return (
+        sampleBeforeCurrentTime.value +
+        ((sampleAfterCurrentTime.value - sampleBeforeCurrentTime.value) *
+          (metric.currentTimeInMilliseconds - sampleBeforeCurrentTime.time)) /
+          (sampleAfterCurrentTime.time - sampleBeforeCurrentTime.time)
+      );
     }
   };
 
-  sampleValueAsPercentAtCurrentTime = function(metric, samples: {
-    time: number,
-    value: number
-  }[]) {
-    return 100 * this.sampleValueAtCurrentTime(metric, samples) / this.highestValueFromSamples(samples);
+  sampleValueAsPercentAtCurrentTime = function(
+    metric,
+    samples: {
+      time: number;
+      value: number;
+    }[]
+  ) {
+    return (100 * this.sampleValueAtCurrentTime(metric, samples)) / this.highestValueFromSamples(samples);
   };
 
   printableSampleValuesAtCurrentTime = function(metric) {
-    return metric.sampleGroups.map((sampleGroup) => {
-      return this.printableValueForMetric(this.sampleValueAtCurrentTime(metric, sampleGroup.samples), metric);
-    }).join(', ');
+    return metric.sampleGroups
+      .map(sampleGroup => {
+        return this.printableValueForMetric(this.sampleValueAtCurrentTime(metric, sampleGroup.samples), metric);
+      })
+      .join(', ');
   };
 
   highestValueFromSamples = function(
@@ -211,5 +223,16 @@ export class TestSuiteDetailsMenuPerformanceComponent implements OnInit {
 
   sampleCurveFillURL = function(metric) {
     return window.location + '#' + this.sampleCurveLinearGradientID(metric);
+  };
+
+  metricSeekSelected = function(event, metric) {
+    var fullScaleWidth = event.currentTarget.offsetWidth;
+
+    var positionX = event.offsetX;
+    if (event.target != event.currentTarget) {
+      positionX += event.target.getBoundingClientRect().left - event.currentTarget.getBoundingClientRect().left;
+    }
+
+    metric.currentTimeInMilliseconds = (this.durationInMilliseconds * positionX) / fullScaleWidth;
   };
 }
