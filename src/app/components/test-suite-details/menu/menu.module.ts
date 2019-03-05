@@ -7,17 +7,20 @@ import { TestSuiteDetailsMenuVideoComponent } from './video/test-suite-details-m
 import { TestSuiteDetailsMenuScreenshotsComponent } from './screenshots/test-suite-details-menu-screenshots.component';
 import { TestSuiteDetailsMenuTestArtifactsComponent } from './testartifacts/test-suite-details-menu-test-artifacts.component';
 import { TestSuiteDetailsMenuLogsComponent } from './logs/test-suite-details-menu-logs.component';
+import { HeadingTextComponent } from '../../heading-text/heading-text.component';
 
 @NgModule({
   imports: [CommonModule, InlineSVGModule.forRoot()],
   providers: [DatePipe],
   declarations: [
+    HeadingTextComponent,
     TestSuiteDetailsMenuTestCasesComponent,
     TestSuiteDetailsMenuPerformanceComponent,
     TestSuiteDetailsMenuVideoComponent,
     TestSuiteDetailsMenuScreenshotsComponent,
     TestSuiteDetailsMenuTestArtifactsComponent,
     TestSuiteDetailsMenuLogsComponent
-  ]
+  ],
+  exports: [HeadingTextComponent]
 })
 export class TestSuiteDetailsMenuModule {}

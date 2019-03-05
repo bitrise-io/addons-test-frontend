@@ -1,0 +1,9 @@
+@import '../../../../../sass/constants';
+
+:host {
+  flex-grow: 1;
+}
+
+.test-cases {
+  margin-left: 5 * $grid-size;
+}
