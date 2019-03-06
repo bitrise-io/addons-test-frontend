@@ -1,9 +1,23 @@
 @import '../../../../../sass/constants';
+@import '../../../../../sass/mixins';
 
 :host {
   flex-grow: 1;
 }
 
 .test-cases {
+  margin-top: -0.5 * $grid-size;
   margin-left: 5 * $grid-size;
+
+  @include width-max-screen-medium {
+    margin-left: 2 * $grid-size;
+  }
+
+  @include width-max-screen-small {
+    margin-left: 0;
+
+    bitrise-heading-text {
+      display: none;
+    }
+  }
 }

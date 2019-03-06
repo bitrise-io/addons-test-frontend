@@ -112,84 +112,143 @@
   }
 }
 
-@include width-above(800px) {
-  .test-case {
-    .test-case-inner {
-      .heading {
-        height: 64px;
-        display: flex;
-        align-items: center;
+@mixin wide {
+  .test-case-inner {
+    .heading {
+      height: 64px;
+      display: flex;
+      align-items: center;
 
-        .detail-wrapper {
+      .detail-wrapper {
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        position: relative;
+        height: 100%;
+      }
+
+      .detail-wrapper.status-name {
+        flex-grow: 256;
+        min-width: 128px;
+        padding-right: 4px;
+
+        &:before {
+          content: 'test case';
+          margin-left: 56px;
+        }
+
+        .detail {
           display: flex;
-          flex-direction: column;
-          justify-content: center;
-          position: relative;
-          height: 100%;
-        }
+          align-items: center;
 
-        .detail-wrapper.status-name {
-          flex-grow: 3;
-          width: 256px;
-          min-width: 128px;
-          padding-right: 4px;
-
-          &:before {
-            content: 'test case';
-            margin-left: 56px;
+          .status-icon {
+            @include margin-x(16px);
           }
 
-          .detail {
-            display: flex;
-            align-items: center;
-
-            .status-icon {
-              @include margin-x(16px);
-            }
-
-            .name {
-              overflow: hidden;
-            }
+          .name {
+            overflow: hidden;
           }
-        }
-
-        .detail-wrapper.duration {
-          flex-grow: 2;
-          min-width: 88px;
-
-          &:before {
-            content: 'duration';
-          }
-
-          .detail {
-            @include padding-x(4px);
-          }
-        }
-
-        .detail-wrapper.context {
-          flex-grow: 5;
-          width: 400px;
-          min-width: 400px;
-
-          .detail {
-            overflow-x: auto;
-          }
-        }
-
-        .show-more-button {
-          @include margin-x(16px);
         }
       }
 
-      .summary {
-        margin: 0 16px 16px;
+      .detail-wrapper.duration {
+        flex-grow: 2;
+        min-width: 88px;
+
+        &:before {
+          content: 'duration';
+        }
+
+        .detail {
+          @include padding-x(4px);
+        }
       }
 
-      &:after {
-        content: '';
-        display: flex;
+      .detail-wrapper.context {
+        flex-grow: 400;
+        min-width: 400px;
+
+        .detail {
+          overflow-x: auto;
+        }
+      }
+
+      .show-more-button {
+        @include margin-x(16px);
       }
     }
+
+    .summary {
+      margin: 0 16px 16px;
+    }
+
+    &:after {
+      content: '';
+      display: flex;
+    }
+  }
+}
+
+@mixin narrow {
+  .test-case-inner {
+    .heading {
+      display: flex;
+      align-items: center;
+      flex-wrap: wrap;
+      padding: 16px;
+
+      .detail-wrapper.status-name {
+        width: 100%;
+
+        .detail {
+          display: flex;
+          align-items: center;
+
+          .name {
+            margin-left: 16px;
+            overflow: hidden;
+          }
+        }
+      }
+
+      .detail-wrapper.duration {
+        margin-top: 24px;
+      }
+
+      .detail-wrapper.context {
+        width: 100%;
+        margin-top: 16px;
+
+        .detail {
+          display: block;
+          word-break: break-all;
+        }
+      }
+
+      .show-more-button {
+        width: 100%;
+        margin-top: 16px;
+
+        ::ng-deep svg {
+          @include margin-x(auto);
+        }
+      }
+    }
+
+    .summary {
+      margin: 0 16px 16px;
+    }
+
+    &:after {
+      content: '';
+      display: flex;
+    }
+  }
+}
+
+@include width-above(800px) {
+  .test-case:not(.test-case--narrow) {
+    @include wide;
   }
 }
 
@@ -198,60 +257,21 @@
     content: normal;
   }
 
-  .test-case {
-    .test-case-inner {
-      .heading {
-        display: flex;
-        align-items: center;
-        flex-wrap: wrap;
-        padding: 16px;
+  .test-case:not(.test-case--narrow) {
+    @include narrow;
+  }
+}
 
-        .detail-wrapper.status-name {
-          width: 100%;
+.test-case--narrow {
+  @include width-above(800px + $menu-width-lg) {
+    @include wide;
+  }
 
-          .detail {
-            display: flex;
-            align-items: center;
-
-            .name {
-              margin-left: 16px;
-              overflow: hidden;
-            }
-          }
-        }
-
-        .detail-wrapper.duration {
-          margin-top: 24px;
-        }
-
-        .detail-wrapper.context {
-          width: 100%;
-          margin-top: 16px;
-
-          .detail {
-            display: block;
-            word-break: break-all;
-          }
-        }
-
-        .show-more-button {
-          width: 100%;
-          margin-top: 16px;
-
-          ::ng-deep svg {
-            @include margin-x(auto);
-          }
-        }
-      }
-
-      .summary {
-        margin: 0 16px 16px;
-      }
-
-      &:after {
-        content: '';
-        display: flex;
-      }
+  @include width-max(800px + $menu-width-lg) {
+    :host .test-case .test-case-inner .detail-wrapper:before {
+      content: normal;
     }
+
+    @include narrow;
   }
 }

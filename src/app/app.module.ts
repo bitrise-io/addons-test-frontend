@@ -6,9 +6,10 @@ import { FormsModule } from '@angular/forms';
 import { InlineSVGModule } from 'ng-inline-svg';
 import { StoreModule } from '@ngrx/store';
 
+import { environment } from 'src/environments/environment';
+
 import { appRoutes } from './routes';
 import { MaximizePipe } from './pipes/maximize.pipe';
-import { TextFromDurationInMilliseconds } from './pipes/text-from-duration-in-milliseconds.pipe';
 
 import { AppComponent } from './app.component';
 import { AppHeaderComponent } from './components/app-header/app-header.component';
@@ -19,9 +20,7 @@ import { TestReportWrapperComponent } from './components/test-report-wrapper/tes
 import { TestSummaryHeaderComponent } from './components/test-summary-header/test-summary-header.component';
 import { TestReportComponent } from './components/test-report/test-report.component';
 import { TestSuiteComponent } from './components/test-suite/test-suite.component';
-import { TestCaseComponent } from './components/test-case/test-case.component';
 import { TestSuiteDetailsComponent } from './components/test-suite-details/test-suite-details.component';
-import { environment } from 'src/environments/environment';
 import { TestSuiteDetailsHeaderComponent } from './components/test-suite-details-header/test-suite-details-header.component';
 import { TestSuiteDetailsMenuModule } from './components/test-suite-details/menu/menu.module';
 
@@ -31,13 +30,11 @@ import { TestSuiteDetailsMenuModule } from './components/test-suite-details/menu
     AppHeaderComponent,
     AppFooterComponent,
     MaximizePipe,
-    TextFromDurationInMilliseconds,
     TestSummaryComponent,
     TestReportWrapperComponent,
     TestSummaryHeaderComponent,
     TestReportComponent,
     TestSuiteComponent,
-    TestCaseComponent,
     TestSuiteDetailsComponent,
     TestSuiteDetailsHeaderComponent
   ],
