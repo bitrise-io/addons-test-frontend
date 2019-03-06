@@ -7,10 +7,11 @@
 
   .navigation-button {
     @include ui-element-button-secondary;
+    @include ui-modifier-button-secondary-small;
     display: flex;
 
     &:hover {
-      @include ui-element-button-secondary-hover;
+      @include ui-modifier-button-secondary-hover;
     }
 
     .arrow {
