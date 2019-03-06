@@ -281,5 +281,20 @@
       }
     },
     "durationInMilliseconds": 14000
+  },
+  "test_artifacts": {
+    "list": [{
+      "filename": "file.txt",
+      "downloadURL": "https://www.bitrise.io/assets/svg/logo-bitrise.svg"
+    },
+    {
+      "filename": "file.apk",
+      "downloadURL": "https://www.bitrise.io/assets/svg/logo-bitrise.svg"
+    },
+    {
+      "filename": "file.png",
+      "downloadURL": "https://www.bitrise.io/assets/svg/logo-bitrise.svg"
+    }],
+    "downloadAllURL": "https://www.bitrise.io/assets/svg/logo-bitrise.svg"
   }
 }
