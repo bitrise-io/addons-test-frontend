@@ -16,7 +16,10 @@ export class TestSuiteDetailsMenuTestArtifactsComponent implements OnInit {
 
   constructor(
     private store: Store<{
-      testArtifact: TestArtifact[];
+      testArtifact: {
+        testArtifacts: TestArtifact[],
+        downloadAllURL: string
+      };
     }>
   ) {
     this.testArtifacts$ = store.select('testArtifact');

@@ -20,7 +20,7 @@ export class TestArtifactStoreActionLoad implements Action {
 }
 
 const initialTestReportState: TestReport[] = undefined;
-const initialTestArtifactState: TestArtifact[] = undefined;
+const initialTestArtifactState: any = undefined;
 
 export function testReportStoreReducer(state = initialTestReportState, action: Action) {
   switch (action.type) {
