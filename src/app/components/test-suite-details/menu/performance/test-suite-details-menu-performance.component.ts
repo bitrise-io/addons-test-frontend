@@ -49,10 +49,10 @@ export class TestSuiteDetailsMenuPerformanceComponent implements OnInit {
 
     Object.keys(performanceData.metrics).forEach((typeId: string) => {
       const metricData = performanceData.metrics[typeId];
-      const metric = this.metrics.find(metric => metric.id === typeId);
-      metric.name = metricData.name;
-      metric.currentTimeInMilliseconds = metricData.currentTimeInMilliseconds;
-      metric.sampleGroups = metricData.sampleGroups;
+      const metricWithType = this.metrics.find(metric => metric.id === typeId);
+      metricWithType.name = metricData.name;
+      metricWithType.currentTimeInMilliseconds = metricData.currentTimeInMilliseconds;
+      metricWithType.sampleGroups = metricData.sampleGroups;
     });
 
     this.metrics.forEach((metric: any) => {
@@ -169,19 +169,19 @@ export class TestSuiteDetailsMenuPerformanceComponent implements OnInit {
           value: number;
         }[]
       ) => {
-        var positionX = (100 * sample.time) / this.durationInMilliseconds;
-        var positionY =
+        const positionX = (100 * sample.time) / this.durationInMilliseconds;
+        const positionY =
           100 -
           (100 * sample.value) /
             (this.highestValueFromSamples(samples) > 0 ? this.highestValueFromSamples(samples) : 1);
 
-        if (index == 0) {
+        if (index === 0) {
           pathCurve += ' L-100 ' + positionY;
         }
 
         pathCurve += ' L' + positionX + ' ' + positionY;
 
-        if (index == array.length - 1) {
+        if (index === array.length - 1) {
           pathCurve += ' L' + positionX + ' 100 L200 100 L200 200 Z';
         }
       }
@@ -209,7 +209,7 @@ export class TestSuiteDetailsMenuPerformanceComponent implements OnInit {
       return durationInMilliseconds;
     }
 
-    var date = new Date();
+    const date = new Date();
 
     date.setMinutes(Math.floor(durationInMilliseconds / 1000 / 60));
     date.setSeconds(Math.floor((durationInMilliseconds / 1000) % 60));
@@ -226,10 +226,10 @@ export class TestSuiteDetailsMenuPerformanceComponent implements OnInit {
   };
 
   metricSeekSelected = function(event, metric) {
-    var fullScaleWidth = event.currentTarget.offsetWidth;
+    const fullScaleWidth = event.currentTarget.offsetWidth;
 
-    var positionX = event.offsetX;
-    if (event.target != event.currentTarget) {
+    let positionX = event.offsetX;
+    if (event.target !== event.currentTarget) {
       positionX += event.target.getBoundingClientRect().left - event.currentTarget.getBoundingClientRect().left;
     }
 
