@@ -1,1 +1,56 @@
-performance
+<div class="name">Performance</div>
+<div class="metric" *ngFor="let metric of metrics; let last = last" [ngClass]="metric.cssClass">
+  <div class="header">
+    <div class="title">{{ metric.name }}</div>
+    <ul class="legend" *ngIf="metric.sampleGroups.length > 1">
+      <li class="legend-item" *ngFor="let sampleGroup of metric.sampleGroups">{{ sampleGroup.name }}</li>
+    </ul>
+    <button class="metric-toggle" [ngClass]="{ open: metric.isOpen }" (click)="metric.isOpen = !metric.isOpen">
+      <span class="arrow" [inlineSVG]="'/assets/images/arrow-down.svg'"></span>
+    </button>
+  </div>
+  <figure class="metric-figure" [ngClass]="{ open: metric.isOpen }">
+    <div class="vertical-scale">
+      <div class="value-grid-element" *ngFor="let value of metric.valueGrid">
+        {{ printableValueForMetric(value, metric) }}
+      </div>
+    </div>
+    <div class="metric-with-horizontal-scale">
+      <div class="samples-with-grid">
+        <svg class="grid" viewBox="0 0 100 100" preserveAspectRatio="none">
+          <path
+            class="grid"
+            *ngFor="let value of metric.valueGrid.slice(0, metric.valueGrid.length - 1); let index = index"
+            attr.d="M0 {{ (100 * index) / (metric.valueGrid.length - 1) }} L100 {{
+              (100 * index) / (metric.valueGrid.length - 1)
+            }}"
+          ></path>
+        </svg>
+        <svg class="samples" viewBox="0 -0.5 100 100.5" preserveAspectRatio="none">
+          <defs>
+            <linearGradient id="{{ sampleCurveLinearGradientID(metric) }}" x1="0%" y1="0%" x2="0%" y2="100%">
+              <stop offset="0%" stop-opacity="0.6" />
+              <stop offset="50%" stop-opacity="0.1" />
+            </linearGradient>
+          </defs>
+          <path
+            class="sample-curve"
+            *ngFor="let sampleCurve of metric.sampleCurves"
+            attr.d="{{ sampleCurve }}"
+            attr.fill="url({{ sampleCurveFillURL(metric) }})"
+          ></path>
+        </svg>
+        <button class="seek" (click)="metricSeekSelected($event, metric)">
+          <span class="seek-cursor" [style.left.%]="durationAsPercent(metric)">
+            <span class="pin" *ngFor="let sampleGroup of metric.sampleGroups" [style.bottom.%]="sampleValueAsPercentAtCurrentTime(metric, sampleGroup.samples)"></span>
+            <span class="seek-value">{{ printableSampleValuesAtCurrentTime(metric) }}</span>
+          </span>
+        </button>
+      </div>
+      <div class="horizontal-scale" metrics-horizontal-scale>
+        <div *ngFor="let time of timeGrid">{{ printableDuration(time) }}</div>
+      </div>
+    </div>
+  </figure>
+  <hr class="separator" *ngIf="!last" />
+</div>

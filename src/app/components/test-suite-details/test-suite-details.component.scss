@@ -39,6 +39,11 @@
       }
     }
 
+    ::ng-deep router-outlet + * {
+      flex-grow: 1;
+      margin-left: 6 * $grid-size;
+    }
+
     @include width-max-screen-medium {
       .menu {
         width: 20 * $grid-size;

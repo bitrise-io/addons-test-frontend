@@ -1,0 +1,293 @@
+@import '../../../../../sass/constants';
+@import '../../../../../sass/mixins';
+
+.name {
+  @include ui-element-header-5;
+  @include ui-modifier-header-5-underlined-purple-bold;
+}
+
+.metric {
+  $metrics_ruler-color: $greyish;
+
+  .header {
+    display: flex;
+    justify-content: space-between;
+    @include padding-y(16px);
+
+    .title {
+      @include ui-element-subtitle;
+      color: $dark-blue-grey;
+    }
+
+    .legend {
+      display: flex;
+      @include margin-y(0);
+      padding-left: 0;
+
+      .legend-item {
+        @include ui-element-tag;
+        display: flex;
+        align-items: center;
+        color: $greyish;
+
+        &:before {
+          content: '';
+          @include size(3 * $grid-size, 3px);
+          margin-right: $grid-size;
+        }
+
+        &:not(:first-child) {
+          margin-left: 3 * $grid-size;
+        }
+      }
+    }
+
+    .metric-toggle {
+      border: none;
+      padding: 0;
+      background-color: transparent;
+      cursor: pointer;
+
+      ::ng-deep svg {
+        display: block;
+        fill: $violet-blue;
+      }
+
+      &.open ::ng-deep svg {
+        transform: rotate(180deg);
+      }
+    }
+
+    @include width-max-screen-medium {
+      flex-wrap: wrap;
+
+      .legend {
+        order: 1;
+        display: block;
+        width: 100%;
+        margin-top: $grid-size;
+
+        .legend-item:not(:first-child) {
+          margin-left: 0;
+          margin-top: $grid-size;
+        }
+      }
+    }
+  }
+
+  .metric-figure {
+    $scale-width: 4 * $grid-size;
+    $scale-height: 4 * $grid-size;
+    $scale-lineheight: 2 * $grid-size;
+    $open-duration: 0.2s;
+
+    display: flex;
+    margin: 0;
+
+    .vertical-scale {
+      @include ui-element-tag;
+      flex-shrink: 0;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      align-items: flex-end;
+      width: $scale-width;
+      margin-right: $grid-size;
+      margin-top: -$scale-lineheight / 2;
+      margin-bottom: $scale-height - $scale-lineheight / 2;
+      transition: opacity $open-duration;
+      color: $metrics_ruler-color;
+
+      .value-grid-element {
+        height: $scale-lineheight;
+        line-height: $scale-lineheight;
+        transition: height $open-duration;
+      }
+    }
+
+    .metric-with-horizontal-scale {
+      flex-grow: 1;
+
+      .samples-with-grid {
+        position: relative;
+        height: 30 * $grid-size;
+        transition: height $open-duration;
+
+        svg.grid,
+        svg.samples {
+          position: absolute;
+          bottom: 0;
+          width: 100%;
+        }
+
+        svg.grid {
+          height: 100%;
+          transition: opacity $open-duration;
+
+          path.grid {
+            stroke: $metrics_ruler-color;
+            stroke-dasharray: 2, 4;
+            vector-effect: non-scaling-stroke;
+          }
+        }
+
+        svg.samples {
+          path.sample-curve {
+            vector-effect: non-scaling-stroke;
+            stroke: black;
+            stroke-width: 2px;
+            stroke-linejoin: round;
+          }
+
+          @keyframes grow-up {
+            0% {
+              height: 0;
+            }
+            100% {
+              height: 100%;
+            }
+          }
+
+          animation: grow-up 1s ease-in-out forwards;
+        }
+
+        button.seek {
+          @include size(100%);
+          position: absolute;
+          top: 0;
+          left: 0;
+          border: none;
+          padding: 0;
+          background-color: transparent;
+
+          .seek-cursor {
+            position: absolute;
+            bottom: 0;
+            transform: translateX(-50%);
+            height: 100%;
+
+            &:before {
+              $width: 1px;
+
+              content: "";
+              position: absolute;
+              left: 50%;
+              @include size(1px, 100%);
+              margin-right: - $width / 2;
+              background-color: $black;
+            }
+
+            .pin {
+              $size: 8px;
+
+              z-index: $zindex-metric_seek_pin;
+              position: absolute;
+              right: 50%;
+              margin-right: - $size / 2;
+              margin-bottom: - $size / 2;
+              border-radius: $size / 2;
+              @include size($size);
+              background-color: $black;
+            }
+
+            .seek-value {
+              @include ui-element-tag;
+              position: relative;
+              z-index: $zindex-metric_seek_value;
+              display: block;
+              line-height: $grid-size + 8px;
+              border-radius: 4px;
+              padding: $grid-size - 4px $grid-size;
+              color: $white;
+              background-color: $black;
+            }
+          }
+        }
+      }
+
+      .horizontal-scale {
+        @include ui-element-tag;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        height: $scale-height;
+        border-top: 2px solid $metrics_ruler-color;
+        color: $metrics_ruler-color;
+      }
+    }
+
+    &:not(.open) {
+      .vertical-scale {
+        opacity: 0;
+
+        .value-grid-element {
+          height: 0;
+        }
+      }
+
+      .metric-with-horizontal-scale .samples-with-grid {
+        height: 5 * $grid-size;
+
+        svg.grid {
+          opacity: 0;
+        }
+      }
+    }
+  }
+
+  @mixin style_for_type($type, $color, $color_alt: null, $gradient-color: null) {
+    &.#{ $type } {
+      @if ($color_alt) {
+        .header {
+          .legend {
+            .legend-item:first-child:before {
+              background-color: $color;
+            }
+
+            .legend-item:last-child:before {
+              background-color: $color_alt;
+            }
+          }
+        }
+      }
+
+      .metric-figure .metric-with-horizontal-scale .samples-with-grid svg.samples {
+        @if ($gradient-color) {
+          defs linearGradient {
+            stop {
+              stop-color: $gradient-color;
+            }
+          }
+        } @else {
+          path.sample-curve {
+            fill: none;
+          }
+        }
+
+        path.sample-curve {
+          @if ($color_alt) {
+            &:first-of-type {
+              stroke: $color;
+            }
+
+            &:last-of-type {
+              stroke: $color_alt;
+            }
+          } @else {
+            stroke: $color;
+          }
+        }
+      }
+    }
+  }
+
+  @include style_for_type('cpu', $green-teal, null, $green-teal);
+  @include style_for_type('memory', $violet-blue, null, $violet-blue);
+  @include style_for_type('network', $green-teal, $water-blue-two);
+}
+
+.separator {
+  margin: 0;
+  border: none;
+  border-bottom: 2px solid $white-three;
+}
