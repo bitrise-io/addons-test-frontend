@@ -1,0 +1,94 @@
+@import '../../../../../sass/constants';
+@import '../../../../../sass/mixins';
+
+.name {
+  @include ui-element-header-5;
+  @include ui-modifier-header-5-underlined-purple-bold;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+
+  .download-all {
+    @include ui-element-button-secondary;
+    @include ui-modifier-button-shadow;
+    display: flex;
+    margin-left: $grid-size;
+
+    &:hover {
+      @include ui-modifier-button-secondary-hover;
+    }
+
+    .arrow {
+      margin-right: $grid-size;
+
+      ::ng-deep svg {
+        display: block;
+      }
+    }
+  }
+}
+
+.test-artifacts {
+  .test-artifact {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    border-bottom: 2px solid $white-three;
+    @include padding-y($grid-size - 2);
+    padding-left: 2 * $grid-size;
+
+    .filename {
+      @include ui-element-body-highlight;
+      line-height: 2 * $grid-size;
+      margin-right: $grid-size;
+      word-break: break-all;
+      color: $dark-blue-grey;
+    }
+
+    .download {
+      @include ui-element-button-secondary;
+      @include ui-modifier-button-secondary-small;
+      @include ui-modifier-button-shadow;
+      display: flex;
+      margin-left: auto;
+
+      &:hover {
+        @include ui-modifier-button-secondary-hover;
+      }
+
+      .arrow {
+        margin-right: $grid-size;
+        @include margin-y(-4px);
+
+        ::ng-deep svg {
+          display: block;
+        }
+      }
+    }
+  }
+}
+
+@include width-max(400px) {
+  .name {
+    display: block;
+
+    .download-all {
+      margin-left: 0;
+      width: 100%;
+    }
+  }
+
+  .test-artifacts {
+    .test-artifact {
+      display: block;
+      padding-left: 0;
+      @include padding-y(2 * $grid-size - 2);
+
+      .download {
+        margin-top: $grid-size;
+        margin-left: 0;
+        width: 100%;
+      }
+    }
+  }
+}

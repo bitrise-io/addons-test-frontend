@@ -13,7 +13,7 @@ import { TextFromDurationInMilliseconds } from './pipes/text-from-duration-in-mi
 import { AppComponent } from './app.component';
 import { AppHeaderComponent } from './components/app-header/app-header.component';
 import { AppFooterComponent } from './components/app-footer/app-footer.component';
-import { testReportStoreReducer } from './components/test-report/test-report.store';
+import { testReportStoreReducer, testArtifactStoreReducer } from './components/test-report/test-report.store';
 import { TestSummaryComponent } from './components/test-summary/test-summary.component';
 import { TestReportWrapperComponent } from './components/test-report-wrapper/test-report-wrapper.component';
 import { TestSummaryHeaderComponent } from './components/test-summary-header/test-summary-header.component';
@@ -46,7 +46,7 @@ import { TestSuiteDetailsMenuModule } from './components/test-suite-details/menu
     RouterModule.forRoot(appRoutes),
     HttpClientModule,
     FormsModule,
-    StoreModule.forRoot({ testReport: testReportStoreReducer }),
+    StoreModule.forRoot({ testReport: testReportStoreReducer, testArtifact: testArtifactStoreReducer }),
     InlineSVGModule.forRoot(),
     environment.ServicesModule,
     TestSuiteDetailsMenuModule

@@ -118,10 +118,10 @@ $zindex-metric_seek_value: 100;
   align-items: center;
   border: 1px solid $white-darken;
   border-radius: 4px;
-  padding: 7px 8px;
-  line-height: 16px;
+  padding: 11px 12px;
+  line-height: 24px;
   text-align: center;
-  font-size: 13px;
+  font-size: 16px;
   background-image: linear-gradient(to top, #f8f8f8, $white);
   cursor: pointer;
   color: $dark-blue-grey;
@@ -132,8 +132,14 @@ $zindex-metric_seek_value: 100;
   }
 }
 
-@mixin ui-element-button-secondary-hover {
+@mixin ui-modifier-button-secondary-hover {
   background-image: linear-gradient(to top, #e4e4e4, #fefefe);
+}
+
+@mixin ui-modifier-button-secondary-small {
+  padding: 7px 8px;
+  line-height: 16px;
+  font-size: 13px;
 }
 
 @mixin ui-element-code-block {
@@ -252,8 +258,8 @@ $zindex-metric_seek_value: 100;
 
 @mixin ui-modifier-header-5-underlined-purple-bold {
   border-bottom: 2px solid $white-three;
-  @include padding-y(20px);
-  line-height: 3 * $grid-size;
+  @include padding-y($grid-size - 1px);
+  line-height: 6 * $grid-size;
   font-weight: 700;
   color: $dark-blue-grey;
 }
