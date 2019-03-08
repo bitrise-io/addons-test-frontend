@@ -8,6 +8,7 @@ import { TestCase, TestCaseStatus } from '../../models/test-case.model';
 })
 export class TestCaseComponent {
   @Input() testCase: TestCase;
+  @Input() isNarrow = false;
 
   TestCaseStatus = TestCaseStatus;
 

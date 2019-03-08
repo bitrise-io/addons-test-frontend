@@ -10,13 +10,12 @@
 
     .menu {
       flex-shrink: 0;
-      width: 30 * $grid-size;
+      width: $menu-width-lg;
       @include margin-y(0);
       padding-left: 0;
       list-style: none;
 
       .menu-item {
-
         .link {
           @include default-font;
           display: block;
@@ -46,7 +45,7 @@
 
     @include width-max-screen-medium {
       .menu {
-        width: 20 * $grid-size;
+        width: $menu-width-md;
       }
     }
 

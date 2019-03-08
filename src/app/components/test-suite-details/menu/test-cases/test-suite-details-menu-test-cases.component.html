@@ -1,1 +1,10 @@
-test cases
+<div class="test-cases">
+  <bitrise-heading-text>Test Cases</bitrise-heading-text>
+  <ng-container *ngIf="testSuite">
+    <bitrise-test-case
+      *ngFor="let testCase of testSuite.testCases"
+      [testCase]="testCase"
+      [isNarrow]="true"
+    ></bitrise-test-case>
+  </ng-container>
+</div>

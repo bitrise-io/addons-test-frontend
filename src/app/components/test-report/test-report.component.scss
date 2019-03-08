@@ -1,8 +1,7 @@
 @import '../../../sass/constants';
-@import '../../../sass/mixins';
 
 .test-report {
-  margin-top: 32px;
+  margin-top: 4 * $grid-size;
 
   .name {
     @include ui-element-header-5;

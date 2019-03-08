@@ -1,3 +1,5 @@
+@import './mixins';
+
 // Screen sizes
 
 $screen-small-width: 600px;
@@ -14,6 +16,9 @@ $main-content-padding-x: 24px;
 $main-content-padding-x-smallscreen: 16px;
 $section-spacing-y: 32px;
 $ui-element-notification-bubble-size: 24px;
+
+$menu-width-lg: 30 * $grid-size;
+$menu-width-md: 20 * $grid-size;
 
 // Times
 
