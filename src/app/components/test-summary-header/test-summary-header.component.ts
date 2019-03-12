@@ -3,7 +3,7 @@ import { Observable } from 'rxjs';
 import { Store } from '@ngrx/store';
 import { TestReport } from '../../models/test-report.model';
 import { TestSuite, TestSuiteStatus } from '../../models/test-suite.model';
-import { TestReportStoreActionLoad } from '../test-report/test-report.store';
+import { TestReportStoreActionLoad, TestReportStoreState } from '../test-report/test-report.store';
 
 @Component({
   selector: 'bitrise-test-summary-header',
@@ -14,6 +14,7 @@ export class TestSummaryHeaderComponent implements OnInit {
   TestSuite = TestSuite;
   TestSuiteStatus = TestSuiteStatus;
   testReports$: Observable<TestReport[]>;
+  testFilter$: Observable<TestSuiteStatus>;
   orderedTestSuiteStatuses = [
     TestSuiteStatus.failed,
     TestSuiteStatus.passed,
@@ -25,18 +26,28 @@ export class TestSummaryHeaderComponent implements OnInit {
   };
   totalTestCount: number;
 
-  constructor(
-    private store: Store<{
-      testReport: TestReport[];
-    }>
-  ) {
-    this.testReports$ = store.select('testReport');
+  selectedStatus: TestSuiteStatus;
+
+  constructor(private store: Store<TestReportStoreState>) {
+    this.testReports$ = store.select('testReports');
+    this.testFilter$ = store.select('filter');
+  }
+
+  isStatusFilteredOut(status: TestSuiteStatus) {
+    if (this.selectedStatus || this.selectedStatus === 0) {
+      return status !== this.selectedStatus;
+    } else {
+      return false;
+    }
   }
 
   ngOnInit() {
     this.store.dispatch(new TestReportStoreActionLoad());
 
-    this.testReports$.subscribe((testReports: TestReport[]) => {
+    this.testFilter$.subscribe((filter) => {
+      this.selectedStatus = filter;
+    });
+    this.testReports$.subscribe((testReports) => {
       this.testCountsByStatuses = this.orderedTestSuiteStatuses.reduce(
         (sumByStatus, status: TestSuiteStatus) => ({
           ...sumByStatus,

@@ -4,8 +4,12 @@ import { filter } from 'rxjs/operators';
 import { Observable } from 'rxjs';
 import { Store } from '@ngrx/store';
 import { TestReport } from '../../models/test-report.model';
-import { TestSuiteStatus } from '../../models/test-suite.model';
-import { TestReportStoreActionLoad } from '../test-report/test-report.store';
+import { TestSuiteStatus, TestSuite } from '../../models/test-suite.model';
+import {
+  TestReportStoreActionLoad,
+  TestReportStoreState,
+  TestReportStoreActionFilter
+} from '../test-report/test-report.store';
 
 @Component({
   selector: 'bitrise-app-header',
@@ -18,15 +22,28 @@ export class AppHeaderComponent implements OnInit {
   selectedSmallTabmenuItem: any;
   summedFailedTestCount: number;
 
-  constructor(
-    private router: Router,
-    private store: Store<{
-      testReport: TestReport[];
-    }>
-  ) {
-    this.testReports$ = store.select('testReport');
+  _selectedStatus = TestSuiteStatus.failed;
+  get selectedStatus() {
+    return this._selectedStatus;
+  }
+  set selectedStatus(status: TestSuiteStatus) {
+    this._selectedStatus = status;
+    this.store.dispatch(new TestReportStoreActionFilter(status));
+  }
 
-    router.events.pipe(filter(event => event instanceof NavigationEnd)).subscribe((event: NavigationEnd) => {
+  statusMenuItems = [{ name: 'All', value: null }].concat(
+    [TestSuiteStatus.failed, TestSuiteStatus.passed, TestSuiteStatus.skipped, TestSuiteStatus.inconclusive].map(
+      (item) => ({
+        name: TestSuite.statusName(item).replace(/^./, (x) => x.toUpperCase()),
+        value: item
+      })
+    )
+  );
+
+  constructor(private router: Router, private store: Store<TestReportStoreState>) {
+    this.testReports$ = store.select('testReports');
+
+    router.events.pipe(filter((event) => event instanceof NavigationEnd)).subscribe((event: NavigationEnd) => {
       if (this.tabmenuItems !== undefined) {
         this.selectSmallTabmenuItemForUrl(event.url);
       }
@@ -36,9 +53,9 @@ export class AppHeaderComponent implements OnInit {
   ngOnInit() {
     this.store.dispatch(new TestReportStoreActionLoad());
 
-    this.testReports$.subscribe((testReports: TestReport[]) => {
+    this.testReports$.subscribe((testReports) => {
       const failedTestCountsOfTestReports = testReports.map(
-        testReport => testReport.testsWithStatus(TestSuiteStatus.failed).length
+        (testReport) => testReport.testsWithStatus(TestSuiteStatus.failed).length
       );
 
       this.tabmenuItems = [

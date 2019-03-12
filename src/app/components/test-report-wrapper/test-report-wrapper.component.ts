@@ -1,12 +1,12 @@
 import { Component, OnInit, OnDestroy } from '@angular/core';
-import { ActivatedRoute, Params } from '@angular/router';
+import { ActivatedRoute } from '@angular/router';
 import { Observable, Subscription } from 'rxjs';
 import { combineLatest } from 'rxjs';
 import { map } from 'rxjs/operators';
 import { Store } from '@ngrx/store';
 
 import { TestReport } from '../../models/test-report.model';
-import { TestReportStoreActionLoad } from '../test-report/test-report.store';
+import { TestReportStoreActionLoad, TestReportStoreState } from '../test-report/test-report.store';
 
 @Component({
   selector: 'bitrise-test-report-wrapper',
@@ -19,13 +19,8 @@ export class TestReportWrapperComponent implements OnInit, OnDestroy {
   testReport: TestReport;
   combinedSubscription: Subscription;
 
-  constructor(
-    private store: Store<{
-      testReport: TestReport[];
-    }>,
-    private activatedRoute: ActivatedRoute
-  ) {
-    this.testReports$ = store.select('testReport');
+  constructor(private store: Store<TestReportStoreState>, private activatedRoute: ActivatedRoute) {
+    this.testReports$ = store.select('filteredReports');
   }
 
   ngOnInit() {
@@ -33,12 +28,8 @@ export class TestReportWrapperComponent implements OnInit, OnDestroy {
 
     this.combinedSubscription = combineLatest(this.activatedRoute.params, this.testReports$)
       .pipe(
-        map(results => {
-          const params = results[0];
-          const testReports = results[1];
-          this.testReport = testReports.find(
-            (testReport: TestReport) => testReport.id === Number(params['testReportId'])
-          );
+        map(([params, reports]) => {
+          this.testReport = reports.find((testReport: TestReport) => testReport.id === Number(params['testReportId']));
         })
       )
       .subscribe();

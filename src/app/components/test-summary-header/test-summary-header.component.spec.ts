@@ -7,14 +7,15 @@ import { InlineSVGModule } from 'ng-inline-svg';
 import { MockStore } from '../../store.mock';
 import { TestSummaryHeaderComponent } from './test-summary-header.component';
 import { TestReport } from '../../models/test-report.model';
-import { testReportStoreReducer } from '../test-report/test-report.store';
+import {
+  testReportStoreReducer,
+  TestReportStoreState
+} from '../test-report/test-report.store';
 import { TestSuite, TestSuiteStatus } from '../../models/test-suite.model';
 import { TestCase, TestCaseStatus } from '../../models/test-case.model';
 
 describe('TestSummaryHeaderComponent', () => {
-  let store: MockStore<{
-    testReport: TestReport[];
-  }>;
+  let store: MockStore<TestReportStoreState>;
   let fixture: ComponentFixture<TestSummaryHeaderComponent>;
   let testSummaryHeader: TestSummaryHeaderComponent;
 
@@ -83,10 +84,12 @@ describe('TestSummaryHeaderComponent', () => {
     }).compileComponents();
   }));
 
-  beforeEach(inject([Store], (mockStore: MockStore<{ testReport: TestReport[] }>) => {
+  beforeEach(inject([Store], (mockStore: MockStore<TestReportStoreState>) => {
     store = mockStore;
     store.setState({
-      testReport: undefined
+      testReports: [],
+      filteredReports: [],
+      filter: TestSuiteStatus.failed
     });
   }));
 
@@ -102,7 +105,9 @@ describe('TestSummaryHeaderComponent', () => {
   describe('when there are some test reports', () => {
     beforeEach(() => {
       store.setState({
-        testReport: [
+        filteredReports: [],
+        filter: null,
+        testReports: [
           {
             id: 1,
             name: 'UI Test A',
@@ -156,7 +161,7 @@ describe('TestSummaryHeaderComponent', () => {
       { statusName: 'passed', statusCssClass: 'passed', expectedCount: '11' },
       { statusName: 'skipped', statusCssClass: 'skipped', expectedCount: '4' },
       { statusName: 'inconclusive', statusCssClass: 'inconclusive', expectedCount: '15' }
-    ].forEach(specConfig => {
+    ].forEach((specConfig) => {
       it(`shows the number of ${specConfig.statusName} tests in the ${specConfig.statusName} counter`, () => {
         expect(
           fixture.debugElement.query(By.css(`.test-counts .count-indicator.${specConfig.statusCssClass} .count`))
@@ -176,7 +181,9 @@ describe('TestSummaryHeaderComponent', () => {
   describe('when there are no tests with a certain status', () => {
     beforeEach(() => {
       store.setState({
-        testReport: [
+        filteredReports: [],
+        filter: null,
+        testReports: [
           {
             id: 1,
             name: 'UI Test A',
@@ -208,7 +215,7 @@ describe('TestSummaryHeaderComponent', () => {
     });
 
     it('does not hide the rate partition for other statuses in the rate indicator', () => {
-      ['failed', 'passed', 'inconclusive'].forEach(statusCssClass => {
+      ['failed', 'passed', 'inconclusive'].forEach((statusCssClass) => {
         expect(
           fixture.debugElement
             .query(By.css(`.test-rates .status-rate.${statusCssClass}`))
@@ -218,7 +225,7 @@ describe('TestSummaryHeaderComponent', () => {
     });
 
     it('does not hide the counter of any statuses', () => {
-      ['failed', 'passed', 'skipped', 'inconclusive'].forEach(statusCssClass => {
+      ['failed', 'passed', 'skipped', 'inconclusive'].forEach((statusCssClass) => {
         expect(
           fixture.debugElement
             .query(By.css(`.test-counts .count-indicator.${statusCssClass} .count`))

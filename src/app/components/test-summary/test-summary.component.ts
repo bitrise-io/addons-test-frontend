@@ -3,7 +3,7 @@ import { Observable } from 'rxjs';
 import { Store } from '@ngrx/store';
 
 import { TestReport } from '../../models/test-report.model';
-import { TestReportStoreActionLoad } from '../test-report/test-report.store';
+import { TestReportStoreActionLoad, TestReportStoreState } from '../test-report/test-report.store';
 
 @Component({
   selector: 'bitrise-test-summary',
@@ -14,12 +14,8 @@ export class TestSummaryComponent implements OnInit {
   testReports: TestReport[];
   testReports$: Observable<TestReport[]>;
 
-  constructor(
-    private store: Store<{
-      testReport: TestReport[];
-    }>
-  ) {
-    this.testReports$ = store.select('testReport');
+  constructor(private store: Store<TestReportStoreState>) {
+    this.testReports$ = store.select('filteredReports');
   }
 
   ngOnInit() {

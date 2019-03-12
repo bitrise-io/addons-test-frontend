@@ -18,10 +18,12 @@
         routerLinkActive="active"
       >
         <span class="text">{{ tabmenuItem.name }}</span>
-        <span class="notification-bubble error failed-test-count" *ngIf="tabmenuItem.failedTestCount > 0">{{
-          tabmenuItem.failedTestCount | maximizeTo: 9
-        }}</span>
+        <span class="notification-bubble error failed-test-count" *ngIf="tabmenuItem.failedTestCount > 0"
+          >{{ tabmenuItem.failedTestCount | maximizeTo: 9 }}</span
+        >
       </a>
+      <div class="status-offset"></div>
+      <ng-container [ngTemplateOutlet]="statusSelect"></ng-container>
     </nav>
   </div>
 </section>
@@ -33,4 +35,10 @@
   <select class="tabmenu-select" [(ngModel)]="selectedSmallTabmenuItem" (change)="selectedSmallTabmenuItemChanged()">
     <option *ngFor="let tabmenuItem of tabmenuItems" [ngValue]="tabmenuItem">{{ tabmenuItem.name }}</option>
   </select>
+  <ng-container [ngTemplateOutlet]="statusSelect"></ng-container>
 </section>
+<ng-template #statusSelect>
+  <select class="status-select" [(ngModel)]="selectedStatus">
+    <option *ngFor="let item of statusMenuItems" [ngValue]="item.value">{{ item.name }}</option>
+  </select>
+</ng-template>
