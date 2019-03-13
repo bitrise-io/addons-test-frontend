@@ -11,6 +11,7 @@
       class="count-indicator"
       *ngFor="let testSuiteStatus of orderedTestSuiteStatuses"
       [ngClass]="TestSuite.statusCssClass(testSuiteStatus)"
+      [class.filtered-out]="isStatusFilteredOut(testSuiteStatus)"
     >
       <div
         class="icon"

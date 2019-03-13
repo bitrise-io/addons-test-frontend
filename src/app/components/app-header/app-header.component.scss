@@ -76,6 +76,16 @@
           margin-left: 16px;
         }
       }
+      .status-offset {
+        flex-grow: 1;
+      }
+      .status-select {
+        height: 48px;
+        flex-grow: 0.5;
+        @include ui-element-select;
+        @include ui-modifier-button-shadow;
+        display: block;
+      }
     }
   }
 
@@ -143,10 +153,12 @@
       }
     }
 
-    .tabmenu-select {
+    .tabmenu-select,
+    .status-select {
       @include ui-element-select;
       @include ui-modifier-button-shadow;
       display: block;
+      margin-bottom: 16px;
       width: 100%;
     }
   }

@@ -5,7 +5,7 @@ import { map, first } from 'rxjs/operators';
 import { Store } from '@ngrx/store';
 
 import { TestReport } from 'src/app/models/test-report.model';
-import { TestReportStoreActionLoad } from 'src/app/components/test-report/test-report.store';
+import { TestReportStoreActionLoad, TestReportStoreState } from 'src/app/components/test-report/test-report.store';
 import { TestSuite } from 'src/app/models/test-suite.model';
 
 @Component({
@@ -18,15 +18,15 @@ export class TestSuiteDetailsMenuTestCasesComponent implements OnInit {
   testSuite: TestSuite;
   testReports$: Observable<TestReport[]>;
 
-  constructor(private store: Store<{ testReport: TestReport[] }>, private activatedRoute: ActivatedRoute) {
-    this.testReports$ = store.select('testReport');
+  constructor(private store: Store<TestReportStoreState>, private activatedRoute: ActivatedRoute) {
+    this.testReports$ = store.select('testReports');
   }
 
   ngOnInit() {
     this.store.dispatch(new TestReportStoreActionLoad());
 
-    const routeParams = combineLatest(this.activatedRoute.pathFromRoot.map(t => t.params)).pipe(
-      map(paramObjects => Object.assign({}, ...paramObjects))
+    const routeParams = combineLatest(this.activatedRoute.pathFromRoot.map((t) => t.params)).pipe(
+      map((paramObjects) => Object.assign({}, ...paramObjects))
     );
 
     combineLatest(routeParams, this.testReports$)
@@ -37,7 +37,9 @@ export class TestSuiteDetailsMenuTestCasesComponent implements OnInit {
           const testSuiteId = Number(params.testSuiteId);
 
           const testReport: TestReport = testReports.find(({ id }: TestReport) => id === testReportId);
-          this.testSuite = testReport.testSuites.find(({ id }: TestSuite) => id === testSuiteId);
+          if (testReport) {
+            this.testSuite = testReport.testSuites.find(({ id }: TestSuite) => id === testSuiteId);
+          }
         })
       )
       .subscribe();

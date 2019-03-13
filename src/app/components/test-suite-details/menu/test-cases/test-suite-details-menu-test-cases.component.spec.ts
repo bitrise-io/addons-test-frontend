@@ -9,7 +9,7 @@ import { TestReport } from 'src/app/models/test-report.model';
 
 describe('TestSuiteDetailsMenuTestCasesComponent', () => {
   let store: MockStore<{
-    testReport: TestReport[];
+    testReports: TestReport[];
   }>;
   let fixture: ComponentFixture<TestSuiteDetailsMenuTestCasesComponent>;
   let component: TestSuiteDetailsMenuTestCasesComponent;
@@ -29,12 +29,12 @@ describe('TestSuiteDetailsMenuTestCasesComponent', () => {
     }).compileComponents();
   }));
 
-  beforeEach(inject([Store], (mockStore: MockStore<{ testReport: TestReport[] }>) => {
+  beforeEach(inject([Store], (mockStore: MockStore<{ testReports: TestReport[] }>) => {
     fixture = TestBed.createComponent(TestSuiteDetailsMenuTestCasesComponent);
     component = fixture.componentInstance;
     store = mockStore;
     store.setState({
-      testReport: []
+      testReports: []
     });
     fixture.detectChanges();
   }));

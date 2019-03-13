@@ -1,10 +1,10 @@
 import { Component, Input, OnInit, OnDestroy } from '@angular/core';
 import { ActivatedRoute, Params, Router } from '@angular/router';
 import { Observable, Subscription } from 'rxjs';
-import { Store, select } from '@ngrx/store';
+import { Store } from '@ngrx/store';
 import { TestReport } from 'src/app/models/test-report.model';
 import { TestSuite } from 'src/app/models/test-suite.model';
-import { TestReportStoreActionLoad } from '../test-report/test-report.store';
+import { TestReportStoreActionLoad, TestReportStoreState } from '../test-report/test-report.store';
 
 @Component({
   selector: 'bitrise-test-suite-details',
@@ -55,12 +55,10 @@ export class TestSuiteDetailsComponent implements OnInit, OnDestroy {
 
   constructor(
     private router: Router,
-    private store: Store<{
-      testReport: TestReport[];
-    }>,
+    private store: Store<TestReportStoreState>,
     private activatedRoute: ActivatedRoute
   ) {
-    this.testReports$ = store.select('testReport');
+    this.testReports$ = store.select('testReports');
   }
 
   ngOnInit() {
@@ -95,10 +93,12 @@ export class TestSuiteDetailsComponent implements OnInit, OnDestroy {
       (testSuite: TestSuite) => testSuite.id === Number(params['testSuiteId'])
     );
 
-    const testSuiteIndex = selectedTestReport.testSuites.findIndex(testSuite => testSuite === this.testSuite);
+    const testSuiteIndex = selectedTestReport.testSuites.findIndex((testSuite) => testSuite === this.testSuite);
     this.previousTestSuite = testSuiteIndex > 0 ? selectedTestReport.testSuites[testSuiteIndex - 1] : null;
     this.nextTestSuite =
-      testSuiteIndex < selectedTestReport.testSuites.length - 1 ? selectedTestReport.testSuites[testSuiteIndex + 1] : null;
+      testSuiteIndex < selectedTestReport.testSuites.length - 1
+        ? selectedTestReport.testSuites[testSuiteIndex + 1]
+        : null;
   }
 
   selectedTestSuiteDetailsMenuItemChanged() {

@@ -7,7 +7,7 @@ import { InlineSVGModule } from 'ng-inline-svg';
 import { MockStore } from '../../store.mock';
 import { TestSummaryComponent } from './test-summary.component';
 import { TestReport } from '../../models/test-report.model';
-import { testReportStoreReducer } from '../test-report/test-report.store';
+import { testReportStoreReducer, TestReportStoreState } from '../test-report/test-report.store';
 
 @Component({
   selector: 'bitrise-test-summary-header',
@@ -24,9 +24,7 @@ class MockTestReportComponent {
 }
 
 describe('TestSummaryComponent', () => {
-  let store: MockStore<{
-    testReport: TestReport[];
-  }>;
+  let store: MockStore<TestReportStoreState>;
   let fixture: ComponentFixture<TestSummaryComponent>;
   let testSummary: TestSummaryComponent;
 
@@ -38,10 +36,12 @@ describe('TestSummaryComponent', () => {
     }).compileComponents();
   }));
 
-  beforeEach(inject([Store], (mockStore: MockStore<{ testReport: TestReport[] }>) => {
+  beforeEach(inject([Store], (mockStore: MockStore<TestReportStoreState>) => {
     store = mockStore;
     store.setState({
-      testReport: undefined
+      testReports: undefined,
+      filteredReports: undefined,
+      filter: null
     });
   }));
 
@@ -62,7 +62,9 @@ describe('TestSummaryComponent', () => {
   describe('when there are some test reports', () => {
     beforeEach(() => {
       store.setState({
-        testReport: Array(3)
+        testReports: [],
+        filter: null,
+        filteredReports: Array(3)
           .fill(null)
           .map(() => new TestReport())
       });

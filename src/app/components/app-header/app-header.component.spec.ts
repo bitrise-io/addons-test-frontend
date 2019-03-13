@@ -11,7 +11,7 @@ import { InlineSVGModule } from 'ng-inline-svg';
 import { MockStore } from '../../store.mock';
 import { AppHeaderComponent } from './app-header.component';
 import { TestReport } from '../../models/test-report.model';
-import { testReportStoreReducer } from '../test-report/test-report.store';
+import { testReportStoreReducer, TestReportStoreState } from '../test-report/test-report.store';
 import { TestSuite } from '../../models/test-suite.model';
 import { TestCase } from '../../models/test-case.model';
 
@@ -36,9 +36,7 @@ class MockMaximizePipe implements PipeTransform {
 
 describe('AppHeaderComponent', () => {
   let location: Location;
-  let store: MockStore<{
-    testReport: TestReport[];
-  }>;
+  let store: MockStore<TestReportStoreState>;
   let fixture: ComponentFixture<AppHeaderComponent>;
   let appHeaderElement: AppHeaderComponent;
   let tabElements: DebugElement[];
@@ -64,10 +62,12 @@ describe('AppHeaderComponent', () => {
     }).compileComponents();
   }));
 
-  beforeEach(inject([Store], (mockStore: MockStore<{ testReport: TestReport[] }>) => {
+  beforeEach(inject([Store], (mockStore: MockStore<TestReportStoreState>) => {
     store = mockStore;
     store.setState({
-      testReport: undefined
+      testReports: [],
+      filteredReports: [],
+      filter: null
     });
   }));
 
@@ -84,13 +84,15 @@ describe('AppHeaderComponent', () => {
   describe('when there are some test reports', () => {
     beforeEach(() => {
       store.setState({
-        testReport: [
+        filteredReports: [],
+        filter: null,
+        testReports: [
           { id: 1, name: 'UI Test A', failedTestSuiteCount: 2 },
           { id: 2, name: 'UI Test B', failedTestSuiteCount: 0 },
           { id: 3, name: 'UI Test C', failedTestSuiteCount: 1 },
           { id: 4, name: 'Unit Test X', failedTestCaseCount: 3 },
           { id: 5, name: 'Unit Test Y', failedTestCaseCount: 6 }
-        ].map(specConfig => {
+        ].map((specConfig) => {
           const testReport = new TestReport();
           testReport.id = specConfig.id;
           testReport.name = specConfig.name;
@@ -121,6 +123,7 @@ describe('AppHeaderComponent', () => {
         })
       });
 
+      fixture.componentInstance.selectedStatus = null;
       fixture.detectChanges();
 
       tabElements = fixture.debugElement.queryAll(By.css('a.tabmenu-item'));
@@ -206,7 +209,9 @@ describe('AppHeaderComponent', () => {
   describe('when there are no test reports', () => {
     beforeEach(() => {
       store.setState({
-        testReport: []
+        testReports: [],
+        filteredReports: [],
+        filter: null
       });
 
       fixture.detectChanges();
