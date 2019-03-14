@@ -14,8 +14,8 @@ export class TestSummaryComponent implements OnInit {
   testReports: TestReport[];
   testReports$: Observable<TestReport[]>;
 
-  constructor(private store: Store<TestReportStoreState>) {
-    this.testReports$ = store.select('filteredReports');
+  constructor(private store: Store<{ testReport: TestReportStoreState }>) {
+    this.testReports$ = store.select('testReport', 'filteredReports');
   }
 
   ngOnInit() {

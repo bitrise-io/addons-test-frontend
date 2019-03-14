@@ -5,11 +5,11 @@ import { StoreModule, Store } from '@ngrx/store';
 import { ActivatedRoute } from '@angular/router';
 import { FormsModule } from '@angular/forms';
 import { from } from 'rxjs';
-import { MockStore } from '../../store.mock';
 import { TestSuiteDetailsComponent } from './test-suite-details.component';
-import { testReportStoreReducer } from '../test-report/test-report.store';
+import { testReportStoreReducer, TestReportStoreState } from '../test-report/test-report.store';
 import { TestReport } from '../../models/test-report.model';
 import { TestSuite } from '../../models/test-suite.model';
+import { MockStore, provideMockStore } from 'src/app/mock-store/testing';
 
 @Component({
   selector: 'bitrise-test-suite-details-header',
@@ -23,7 +23,7 @@ class MockTestSuiteDetailsHeaderComponent {
 
 xdescribe('TestSuiteDetailsComponent', () => {
   let store: MockStore<{
-    testReport: TestReport[];
+    testReport: TestReportStoreState;
   }>;
   let fixture: ComponentFixture<TestSuiteDetailsComponent>;
   let testSuiteDetailsComponent: TestSuiteDetailsComponent;
@@ -47,7 +47,7 @@ xdescribe('TestSuiteDetailsComponent', () => {
             }
           }
         },
-        { provide: Store, useClass: MockStore }
+        provideMockStore({})
       ]
     }).compileComponents();
 
@@ -57,17 +57,21 @@ xdescribe('TestSuiteDetailsComponent', () => {
     fixture.detectChanges();
   });
 
-  beforeEach(inject([Store], (mockStore: MockStore<{ testReport: TestReport[] }>) => {
+  beforeEach(inject([Store], (mockStore: MockStore<{ testReport: TestReportStoreState }>) => {
     const testReportIds = [1, 2, 3];
 
     store = mockStore;
     store.setState({
-      testReport: testReportIds.map((testReportId: number) => {
-        const testReport = new TestReport();
-        testReport.id = testReportId;
+      testReport: {
+        testReports: testReportIds.map((testReportId: number) => {
+          const testReport = new TestReport();
+          testReport.id = testReportId;
 
-        return testReport;
-      })
+          return testReport;
+        }),
+        filteredReports: [],
+        filter: null
+      }
     });
   }));
 

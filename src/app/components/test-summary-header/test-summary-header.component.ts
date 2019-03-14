@@ -28,9 +28,9 @@ export class TestSummaryHeaderComponent implements OnInit {
 
   selectedStatus: TestSuiteStatus;
 
-  constructor(private store: Store<TestReportStoreState>) {
-    this.testReports$ = store.select('testReports');
-    this.testFilter$ = store.select('filter');
+  constructor(private store: Store<{ testReport: TestReportStoreState }>) {
+    this.testReports$ = store.select('testReport', 'testReports');
+    this.testFilter$ = store.select('testReport', 'filter');
   }
 
   isStatusFilteredOut(status: TestSuiteStatus) {

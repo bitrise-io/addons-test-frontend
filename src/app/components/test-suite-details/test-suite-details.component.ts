@@ -55,10 +55,10 @@ export class TestSuiteDetailsComponent implements OnInit, OnDestroy {
 
   constructor(
     private router: Router,
-    private store: Store<TestReportStoreState>,
+    private store: Store<{ testReport: TestReportStoreState }>,
     private activatedRoute: ActivatedRoute
   ) {
-    this.testReports$ = store.select('testReports');
+    this.testReports$ = store.select('testReport', 'testReports');
   }
 
   ngOnInit() {

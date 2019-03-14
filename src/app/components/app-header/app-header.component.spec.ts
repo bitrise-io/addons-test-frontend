@@ -8,12 +8,12 @@ import { FormsModule } from '@angular/forms';
 import { Store, StoreModule } from '@ngrx/store';
 import { InlineSVGModule } from 'ng-inline-svg';
 
-import { MockStore } from '../../store.mock';
 import { AppHeaderComponent } from './app-header.component';
 import { TestReport } from '../../models/test-report.model';
 import { testReportStoreReducer, TestReportStoreState } from '../test-report/test-report.store';
 import { TestSuite } from '../../models/test-suite.model';
 import { TestCase } from '../../models/test-case.model';
+import { MockStore, provideMockStore } from 'src/app/mock-store/testing';
 
 @Component({
   selector: 'bitrise-test-summary',
@@ -36,7 +36,7 @@ class MockMaximizePipe implements PipeTransform {
 
 describe('AppHeaderComponent', () => {
   let location: Location;
-  let store: MockStore<TestReportStoreState>;
+  let store: MockStore<{ testReport: TestReportStoreState }>;
   let fixture: ComponentFixture<AppHeaderComponent>;
   let appHeaderElement: AppHeaderComponent;
   let tabElements: DebugElement[];
@@ -57,17 +57,19 @@ describe('AppHeaderComponent', () => {
         FormsModule,
         InlineSVGModule.forRoot()
       ],
-      declarations: [MockMaximizePipe, AppHeaderComponent, MockTestSummaryComponent, MockTestReportComponent],
-      providers: [{ provide: Store, useClass: MockStore }]
+      providers: [provideMockStore({})],
+      declarations: [MockMaximizePipe, AppHeaderComponent, MockTestSummaryComponent, MockTestReportComponent]
     }).compileComponents();
   }));
 
-  beforeEach(inject([Store], (mockStore: MockStore<TestReportStoreState>) => {
+  beforeEach(inject([Store], (mockStore: MockStore<{ testReport: TestReportStoreState }>) => {
     store = mockStore;
     store.setState({
-      testReports: [],
-      filteredReports: [],
-      filter: null
+      testReport: {
+        testReports: [],
+        filteredReports: [],
+        filter: null
+      }
     });
   }));
 
@@ -84,43 +86,45 @@ describe('AppHeaderComponent', () => {
   describe('when there are some test reports', () => {
     beforeEach(() => {
       store.setState({
-        filteredReports: [],
-        filter: null,
-        testReports: [
-          { id: 1, name: 'UI Test A', failedTestSuiteCount: 2 },
-          { id: 2, name: 'UI Test B', failedTestSuiteCount: 0 },
-          { id: 3, name: 'UI Test C', failedTestSuiteCount: 1 },
-          { id: 4, name: 'Unit Test X', failedTestCaseCount: 3 },
-          { id: 5, name: 'Unit Test Y', failedTestCaseCount: 6 }
-        ].map((specConfig) => {
-          const testReport = new TestReport();
-          testReport.id = specConfig.id;
-          testReport.name = specConfig.name;
+        testReport: {
+          filteredReports: [],
+          filter: null,
+          testReports: [
+            { id: 1, name: 'UI Test A', failedTestSuiteCount: 2 },
+            { id: 2, name: 'UI Test B', failedTestSuiteCount: 0 },
+            { id: 3, name: 'UI Test C', failedTestSuiteCount: 1 },
+            { id: 4, name: 'Unit Test X', failedTestCaseCount: 3 },
+            { id: 5, name: 'Unit Test Y', failedTestCaseCount: 6 }
+          ].map((specConfig) => {
+            const testReport = new TestReport();
+            testReport.id = specConfig.id;
+            testReport.name = specConfig.name;
 
-          if (specConfig.failedTestSuiteCount !== undefined) {
-            testReport.testSuites = Array(specConfig.failedTestSuiteCount)
-              .fill(null)
-              .map(() => {
-                const testSuite = new TestSuite();
-                testSuite.status = 2;
+            if (specConfig.failedTestSuiteCount !== undefined) {
+              testReport.testSuites = Array(specConfig.failedTestSuiteCount)
+                .fill(null)
+                .map(() => {
+                  const testSuite = new TestSuite();
+                  testSuite.status = 2;
 
-                return testSuite;
-              });
+                  return testSuite;
+                });
 
-            return testReport;
-          } else {
-            testReport.testCases = Array(specConfig.failedTestCaseCount)
-              .fill(null)
-              .map(() => {
-                const testCase = new TestCase();
-                testCase.status = 2;
+              return testReport;
+            } else {
+              testReport.testCases = Array(specConfig.failedTestCaseCount)
+                .fill(null)
+                .map(() => {
+                  const testCase = new TestCase();
+                  testCase.status = 2;
 
-                return testCase;
-              });
+                  return testCase;
+                });
 
-            return testReport;
-          }
-        })
+              return testReport;
+            }
+          })
+        }
       });
 
       fixture.componentInstance.selectedStatus = null;
@@ -209,9 +213,11 @@ describe('AppHeaderComponent', () => {
   describe('when there are no test reports', () => {
     beforeEach(() => {
       store.setState({
-        testReports: [],
-        filteredReports: [],
-        filter: null
+        testReport: {
+          testReports: [],
+          filteredReports: [],
+          filter: null
+        }
       });
 
       fixture.detectChanges();

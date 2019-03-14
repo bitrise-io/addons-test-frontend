@@ -6,7 +6,7 @@ import { InlineSVGModule } from 'ng-inline-svg';
 import { TestSuiteDetailsMenuTestArtifactsComponent } from './test-suite-details-menu-test-artifacts.component';
 import { TestArtifact } from '../../../../models/test-artifact.model';
 import { testArtifactStoreReducer } from '../../../test-report/test-report.store';
-import { MockStore } from 'src/app/store.mock';
+import { MockStore, provideMockStore } from 'src/app/mock-store/testing';
 
 describe('TestSuiteDetailsMenuTestArtifactsComponent', () => {
   let fixture: ComponentFixture<TestSuiteDetailsMenuTestArtifactsComponent>;
@@ -26,7 +26,7 @@ describe('TestSuiteDetailsMenuTestArtifactsComponent', () => {
         InlineSVGModule.forRoot()
       ],
       declarations: [TestSuiteDetailsMenuTestArtifactsComponent],
-      providers: [{ provide: Store, useClass: MockStore }]
+      providers: [provideMockStore({})]
     }).compileComponents();
 
     fixture = TestBed.createComponent(TestSuiteDetailsMenuTestArtifactsComponent);

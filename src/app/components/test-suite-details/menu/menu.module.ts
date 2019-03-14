@@ -1,5 +1,5 @@
 import { NgModule } from '@angular/core';
-import { CommonModule } from '@angular/common';
+import { CommonModule, DatePipe } from '@angular/common';
 import { InlineSVGModule } from 'ng-inline-svg';
 import { BrowserModule } from '@angular/platform-browser';
 
@@ -15,6 +15,7 @@ import { TextFromDurationInMilliseconds } from 'src/app/pipes/text-from-duration
 
 @NgModule({
   imports: [BrowserModule, CommonModule, InlineSVGModule.forRoot()],
+  providers: [DatePipe],
   declarations: [
     TextFromDurationInMilliseconds,
     HeadingTextComponent,

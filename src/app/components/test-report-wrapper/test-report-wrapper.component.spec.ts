@@ -5,11 +5,11 @@ import { RouterTestingModule } from '@angular/router/testing';
 import { Store, StoreModule } from '@ngrx/store';
 import { InlineSVGModule } from 'ng-inline-svg';
 
-import { MockStore } from '../../store.mock';
 import { TestReportWrapperComponent } from './test-report-wrapper.component';
 import { TestReport } from '../../models/test-report.model';
-import { testReportStoreReducer } from '../test-report/test-report.store';
+import { testReportStoreReducer, TestReportStoreState } from '../test-report/test-report.store';
 import { Router } from '@angular/router';
+import { provideMockStore, MockStore } from 'src/app/mock-store/testing';
 
 @Component({
   selector: 'bitrise-test-report',
@@ -22,7 +22,7 @@ class MockTestReportComponent {
 xdescribe('TestReportWrapperComponent', () => {
   let router: Router;
   let store: MockStore<{
-    testReport: TestReport[];
+    testReport: TestReportStoreState;
   }>;
   let fixture: ComponentFixture<TestReportWrapperComponent>;
   let testReportWrapper: TestReportWrapperComponent;
@@ -40,13 +40,13 @@ xdescribe('TestReportWrapperComponent', () => {
         InlineSVGModule.forRoot()
       ],
       declarations: [TestReportWrapperComponent, MockTestReportComponent],
-      providers: [{ provide: Store, useClass: MockStore }]
+      providers: [provideMockStore({})]
     }).compileComponents();
 
     router = TestBed.get(Router);
   }));
 
-  beforeEach(inject([Store], (mockStore: MockStore<{ testReport: TestReport[] }>) => {
+  beforeEach(inject([Store], (mockStore: MockStore<{ testReport: TestReportStoreState }>) => {
     store = mockStore;
     store.setState({
       testReport: undefined
@@ -70,12 +70,16 @@ xdescribe('TestReportWrapperComponent', () => {
 
     beforeEach(() => {
       store.setState({
-        testReport: testReportIds.map((testReportId: number) => {
-          const testReport = new TestReport();
-          testReport.id = testReportId;
+        testReport: {
+          filteredReports: [],
+          filter: null,
+          testReports: testReportIds.map((testReportId: number) => {
+            const testReport = new TestReport();
+            testReport.id = testReportId;
 
-          return testReport;
-        })
+            return testReport;
+          })
+        }
       });
 
       fixture.detectChanges();
