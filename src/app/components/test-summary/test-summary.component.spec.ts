@@ -4,10 +4,10 @@ import { Component, Input } from '@angular/core';
 import { Store, StoreModule } from '@ngrx/store';
 import { InlineSVGModule } from 'ng-inline-svg';
 
-import { MockStore } from '../../store.mock';
 import { TestSummaryComponent } from './test-summary.component';
 import { TestReport } from '../../models/test-report.model';
 import { testReportStoreReducer, TestReportStoreState } from '../test-report/test-report.store';
+import { provideMockStore, MockStore } from 'src/app/mock-store/testing';
 
 @Component({
   selector: 'bitrise-test-summary-header',
@@ -24,7 +24,7 @@ class MockTestReportComponent {
 }
 
 describe('TestSummaryComponent', () => {
-  let store: MockStore<TestReportStoreState>;
+  let store: MockStore<{ testReport: TestReportStoreState }>;
   let fixture: ComponentFixture<TestSummaryComponent>;
   let testSummary: TestSummaryComponent;
 
@@ -32,16 +32,18 @@ describe('TestSummaryComponent', () => {
     TestBed.configureTestingModule({
       imports: [StoreModule.forRoot({ testReport: testReportStoreReducer }), InlineSVGModule.forRoot()],
       declarations: [TestSummaryComponent, MockTestSummaryHeaderComponent, MockTestReportComponent],
-      providers: [{ provide: Store, useClass: MockStore }]
+      providers: [provideMockStore({})]
     }).compileComponents();
   }));
 
-  beforeEach(inject([Store], (mockStore: MockStore<TestReportStoreState>) => {
+  beforeEach(inject([Store], (mockStore: MockStore<{ testReport: TestReportStoreState }>) => {
     store = mockStore;
     store.setState({
-      testReports: undefined,
-      filteredReports: undefined,
-      filter: null
+      testReport: {
+        testReports: undefined,
+        filteredReports: undefined,
+        filter: null
+      }
     });
   }));
 
@@ -62,11 +64,13 @@ describe('TestSummaryComponent', () => {
   describe('when there are some test reports', () => {
     beforeEach(() => {
       store.setState({
-        testReports: [],
-        filter: null,
-        filteredReports: Array(3)
-          .fill(null)
-          .map(() => new TestReport())
+        testReport: {
+          testReports: [],
+          filter: null,
+          filteredReports: Array(3)
+            .fill(null)
+            .map(() => new TestReport())
+        }
       });
 
       fixture.detectChanges();

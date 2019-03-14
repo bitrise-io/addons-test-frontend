@@ -19,8 +19,8 @@ export class TestReportWrapperComponent implements OnInit, OnDestroy {
   testReport: TestReport;
   combinedSubscription: Subscription;
 
-  constructor(private store: Store<TestReportStoreState>, private activatedRoute: ActivatedRoute) {
-    this.testReports$ = store.select('filteredReports');
+  constructor(private store: Store<{ testReport: TestReportStoreState }>, private activatedRoute: ActivatedRoute) {
+    this.testReports$ = store.select('testReport', 'filteredReports');
   }
 
   ngOnInit() {

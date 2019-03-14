@@ -18,8 +18,8 @@ export class TestSuiteDetailsMenuTestCasesComponent implements OnInit {
   testSuite: TestSuite;
   testReports$: Observable<TestReport[]>;
 
-  constructor(private store: Store<TestReportStoreState>, private activatedRoute: ActivatedRoute) {
-    this.testReports$ = store.select('testReports');
+  constructor(private store: Store<{ testReport: TestReportStoreState }>, private activatedRoute: ActivatedRoute) {
+    this.testReports$ = store.select('testReport', 'testReports');
   }
 
   ngOnInit() {

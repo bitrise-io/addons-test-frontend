@@ -4,18 +4,15 @@ import { By } from '@angular/platform-browser';
 import { Store, StoreModule } from '@ngrx/store';
 import { InlineSVGModule } from 'ng-inline-svg';
 
-import { MockStore } from '../../store.mock';
 import { TestSummaryHeaderComponent } from './test-summary-header.component';
 import { TestReport } from '../../models/test-report.model';
-import {
-  testReportStoreReducer,
-  TestReportStoreState
-} from '../test-report/test-report.store';
+import { testReportStoreReducer, TestReportStoreState } from '../test-report/test-report.store';
 import { TestSuite, TestSuiteStatus } from '../../models/test-suite.model';
 import { TestCase, TestCaseStatus } from '../../models/test-case.model';
+import { MockStore, provideMockStore } from 'src/app/mock-store/testing';
 
 describe('TestSummaryHeaderComponent', () => {
-  let store: MockStore<TestReportStoreState>;
+  let store: MockStore<{ testReport: TestReportStoreState }>;
   let fixture: ComponentFixture<TestSummaryHeaderComponent>;
   let testSummaryHeader: TestSummaryHeaderComponent;
 
@@ -80,16 +77,18 @@ describe('TestSummaryHeaderComponent', () => {
         InlineSVGModule.forRoot()
       ],
       declarations: [TestSummaryHeaderComponent],
-      providers: [{ provide: Store, useClass: MockStore }]
+      providers: [provideMockStore({})]
     }).compileComponents();
   }));
 
-  beforeEach(inject([Store], (mockStore: MockStore<TestReportStoreState>) => {
+  beforeEach(inject([Store], (mockStore: MockStore<{ testReport: TestReportStoreState }>) => {
     store = mockStore;
     store.setState({
-      testReports: [],
-      filteredReports: [],
-      filter: TestSuiteStatus.failed
+      testReport: {
+        testReports: [],
+        filteredReports: [],
+        filter: TestSuiteStatus.failed
+      }
     });
   }));
 
@@ -105,46 +104,48 @@ describe('TestSummaryHeaderComponent', () => {
   describe('when there are some test reports', () => {
     beforeEach(() => {
       store.setState({
-        filteredReports: [],
-        filter: null,
-        testReports: [
-          {
-            id: 1,
-            name: 'UI Test A',
-            inconclusiveTestSuiteCount: 5,
-            passedTestSuiteCount: 3,
-            failedTestSuiteCount: 2,
-            skippedTestSuiteCount: 0
-          },
-          {
-            id: 2,
-            name: 'UI Test B',
-            inconclusiveTestSuiteCount: 3,
-            passedTestSuiteCount: 2,
-            failedTestSuiteCount: 0,
-            skippedTestSuiteCount: 1
-          },
-          {
-            id: 3,
-            name: 'UI Test C',
-            inconclusiveTestSuiteCount: 7,
-            passedTestSuiteCount: 4,
-            failedTestSuiteCount: 1,
-            skippedTestSuiteCount: 3
-          },
-          {
-            id: 4,
-            name: 'Unit Test X',
-            passedTestCaseCount: 2,
-            failedTestCaseCount: 3
-          },
-          {
-            id: 5,
-            name: 'Unit Test Y',
-            passedTestCaseCount: 0,
-            failedTestCaseCount: 1
-          }
-        ].map(testReportsFromSpecConfig)
+        testReport: {
+          filteredReports: [],
+          filter: null,
+          testReports: [
+            {
+              id: 1,
+              name: 'UI Test A',
+              inconclusiveTestSuiteCount: 5,
+              passedTestSuiteCount: 3,
+              failedTestSuiteCount: 2,
+              skippedTestSuiteCount: 0
+            },
+            {
+              id: 2,
+              name: 'UI Test B',
+              inconclusiveTestSuiteCount: 3,
+              passedTestSuiteCount: 2,
+              failedTestSuiteCount: 0,
+              skippedTestSuiteCount: 1
+            },
+            {
+              id: 3,
+              name: 'UI Test C',
+              inconclusiveTestSuiteCount: 7,
+              passedTestSuiteCount: 4,
+              failedTestSuiteCount: 1,
+              skippedTestSuiteCount: 3
+            },
+            {
+              id: 4,
+              name: 'Unit Test X',
+              passedTestCaseCount: 2,
+              failedTestCaseCount: 3
+            },
+            {
+              id: 5,
+              name: 'Unit Test Y',
+              passedTestCaseCount: 0,
+              failedTestCaseCount: 1
+            }
+          ].map(testReportsFromSpecConfig)
+        }
       });
 
       fixture.detectChanges();
@@ -181,26 +182,28 @@ describe('TestSummaryHeaderComponent', () => {
   describe('when there are no tests with a certain status', () => {
     beforeEach(() => {
       store.setState({
-        filteredReports: [],
-        filter: null,
-        testReports: [
-          {
-            id: 1,
-            name: 'UI Test A',
-            inconclusiveTestSuiteCount: 5,
-            passedTestSuiteCount: 3,
-            failedTestSuiteCount: 2,
-            skippedTestSuiteCount: 0
-          },
-          {
-            id: 2,
-            name: 'UI Test B',
-            inconclusiveTestSuiteCount: 3,
-            passedTestSuiteCount: 2,
-            failedTestSuiteCount: 0,
-            skippedTestSuiteCount: 0
-          }
-        ].map(testReportsFromSpecConfig)
+        testReport: {
+          filteredReports: [],
+          filter: null,
+          testReports: [
+            {
+              id: 1,
+              name: 'UI Test A',
+              inconclusiveTestSuiteCount: 5,
+              passedTestSuiteCount: 3,
+              failedTestSuiteCount: 2,
+              skippedTestSuiteCount: 0
+            },
+            {
+              id: 2,
+              name: 'UI Test B',
+              inconclusiveTestSuiteCount: 3,
+              passedTestSuiteCount: 2,
+              failedTestSuiteCount: 0,
+              skippedTestSuiteCount: 0
+            }
+          ].map(testReportsFromSpecConfig)
+        }
       });
 
       fixture.detectChanges();

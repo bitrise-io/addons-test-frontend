@@ -40,8 +40,8 @@ export class AppHeaderComponent implements OnInit {
     )
   );
 
-  constructor(private router: Router, private store: Store<TestReportStoreState>) {
-    this.testReports$ = store.select('testReports');
+  constructor(private router: Router, private store: Store<{ testReport: TestReportStoreState }>) {
+    this.testReports$ = store.select('testReport', 'testReports');
 
     router.events.pipe(filter((event) => event instanceof NavigationEnd)).subscribe((event: NavigationEnd) => {
       if (this.tabmenuItems !== undefined) {

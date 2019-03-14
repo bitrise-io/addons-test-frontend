@@ -4,12 +4,12 @@ import { Store } from '@ngrx/store';
 
 import { TestSuiteDetailsMenuTestCasesComponent } from './test-suite-details-menu-test-cases.component';
 import { TestSuiteDetailsMenuModule } from '../menu.module';
-import { MockStore } from 'src/app/store.mock';
-import { TestReport } from 'src/app/models/test-report.model';
+import { MockStore, provideMockStore } from 'src/app/mock-store/testing';
+import { TestReportStoreState } from 'src/app/components/test-report/test-report.store';
 
 describe('TestSuiteDetailsMenuTestCasesComponent', () => {
   let store: MockStore<{
-    testReports: TestReport[];
+    testReport: TestReportStoreState;
   }>;
   let fixture: ComponentFixture<TestSuiteDetailsMenuTestCasesComponent>;
   let component: TestSuiteDetailsMenuTestCasesComponent;
@@ -25,16 +25,20 @@ describe('TestSuiteDetailsMenuTestCasesComponent', () => {
           }
         ])
       ],
-      providers: [{ provide: Store, useClass: MockStore }]
+      providers: [provideMockStore({})]
     }).compileComponents();
   }));
 
-  beforeEach(inject([Store], (mockStore: MockStore<{ testReports: TestReport[] }>) => {
+  beforeEach(inject([Store], (mockStore: MockStore<{ testReport: TestReportStoreState }>) => {
     fixture = TestBed.createComponent(TestSuiteDetailsMenuTestCasesComponent);
     component = fixture.componentInstance;
     store = mockStore;
     store.setState({
-      testReports: []
+      testReport: {
+        testReports: [],
+        filteredReports: [],
+        filter: null
+      }
     });
     fixture.detectChanges();
   }));
