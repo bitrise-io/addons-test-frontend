@@ -5,7 +5,8 @@ import { map, first } from 'rxjs/operators';
 import { Store } from '@ngrx/store';
 
 import { TestReport } from 'src/app/models/test-report.model';
-import { TestReportStoreActionLoad, TestReportStoreState } from 'src/app/components/test-report/test-report.store';
+import { TestReportStoreState } from 'src/app/store/reports/reducer';
+import { FetchReports } from 'src/app/store/reports/actions';
 import { TestSuite } from 'src/app/models/test-suite.model';
 
 @Component({
@@ -23,10 +24,10 @@ export class TestSuiteDetailsMenuTestCasesComponent implements OnInit {
   }
 
   ngOnInit() {
-    this.store.dispatch(new TestReportStoreActionLoad());
+    this.store.dispatch(new FetchReports());
 
-    const routeParams = combineLatest(this.activatedRoute.pathFromRoot.map((t) => t.params)).pipe(
-      map((paramObjects) => Object.assign({}, ...paramObjects))
+    const routeParams = combineLatest(this.activatedRoute.pathFromRoot.map(t => t.params)).pipe(
+      map(paramObjects => Object.assign({}, ...paramObjects))
     );
 
     combineLatest(routeParams, this.testReports$)

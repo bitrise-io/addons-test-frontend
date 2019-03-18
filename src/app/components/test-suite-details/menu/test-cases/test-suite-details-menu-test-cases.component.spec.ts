@@ -5,7 +5,7 @@ import { Store } from '@ngrx/store';
 import { TestSuiteDetailsMenuTestCasesComponent } from './test-suite-details-menu-test-cases.component';
 import { TestSuiteDetailsMenuModule } from '../menu.module';
 import { MockStore, provideMockStore } from 'src/app/mock-store/testing';
-import { TestReportStoreState } from 'src/app/components/test-report/test-report.store';
+import { TestReportStoreState } from 'src/app/store/reports/reducer';
 
 describe('TestSuiteDetailsMenuTestCasesComponent', () => {
   let store: MockStore<{

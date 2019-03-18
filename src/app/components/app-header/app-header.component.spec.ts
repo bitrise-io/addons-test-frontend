@@ -10,7 +10,7 @@ import { InlineSVGModule } from 'ng-inline-svg';
 
 import { AppHeaderComponent } from './app-header.component';
 import { TestReport } from '../../models/test-report.model';
-import { testReportStoreReducer, TestReportStoreState } from '../test-report/test-report.store';
+import { testReportStoreReducer, TestReportStoreState } from 'src/app/store/reports/reducer';
 import { TestSuite } from '../../models/test-suite.model';
 import { TestCase } from '../../models/test-case.model';
 import { MockStore, provideMockStore } from 'src/app/mock-store/testing';
@@ -95,7 +95,7 @@ describe('AppHeaderComponent', () => {
             { id: 3, name: 'UI Test C', failedTestSuiteCount: 1 },
             { id: 4, name: 'Unit Test X', failedTestCaseCount: 3 },
             { id: 5, name: 'Unit Test Y', failedTestCaseCount: 6 }
-          ].map((specConfig) => {
+          ].map(specConfig => {
             const testReport = new TestReport();
             testReport.id = specConfig.id;
             testReport.name = specConfig.name;

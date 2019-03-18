@@ -7,7 +7,7 @@ import { InlineSVGModule } from 'ng-inline-svg';
 
 import { TestReportWrapperComponent } from './test-report-wrapper.component';
 import { TestReport } from '../../models/test-report.model';
-import { testReportStoreReducer, TestReportStoreState } from '../test-report/test-report.store';
+import { testReportStoreReducer, TestReportStoreState } from 'src/app/store/reports/reducer';
 import { Router } from '@angular/router';
 import { provideMockStore, MockStore } from 'src/app/mock-store/testing';
 

@@ -3,7 +3,8 @@ import { Observable } from 'rxjs';
 import { Store } from '@ngrx/store';
 
 import { TestReport } from '../../models/test-report.model';
-import { TestReportStoreActionLoad, TestReportStoreState } from '../test-report/test-report.store';
+import { TestReportStoreState } from 'src/app/store/reports/reducer';
+import { FetchReports } from 'src/app/store/reports/actions';
 
 @Component({
   selector: 'bitrise-test-summary',
@@ -19,7 +20,7 @@ export class TestSummaryComponent implements OnInit {
   }
 
   ngOnInit() {
-    this.store.dispatch(new TestReportStoreActionLoad());
+    this.store.dispatch(new FetchReports());
 
     this.testReports$.subscribe((testReports: TestReport[]) => {
       this.testReports = testReports;
