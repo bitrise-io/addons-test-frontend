@@ -12,12 +12,14 @@ import { TestSuiteDetailsMenuLogsComponent } from './logs/test-suite-details-men
 import { HeadingTextComponent } from '../../heading-text/heading-text.component';
 import { TestCaseComponent } from '../../test-case/test-case.component';
 import { TextFromDurationInMilliseconds } from 'src/app/pipes/text-from-duration-in-milliseconds.pipe';
+import { PlaybackTimePipe } from 'src/app/pipes/playback-time.pipe';
 
 @NgModule({
   imports: [BrowserModule, CommonModule, InlineSVGModule.forRoot()],
   providers: [DatePipe],
   declarations: [
     TextFromDurationInMilliseconds,
+    PlaybackTimePipe,
     HeadingTextComponent,
     TestCaseComponent,
     TestSuiteDetailsMenuTestCasesComponent,
