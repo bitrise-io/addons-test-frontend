@@ -5,8 +5,8 @@ import { Store } from '@ngrx/store';
 
 import { TestReport } from 'src/app/models/test-report.model';
 import { TestSuite } from 'src/app/models/test-suite.model';
-import { TestReportStoreState } from 'src/app/store/reports/reducer';
-import { FetchReports } from 'src/app/store/reports/actions';
+import { TestReportState } from 'src/app/store/reports/reducer';
+import { StartPollingReports } from 'src/app/store/reports/actions';
 
 @Component({
   selector: 'bitrise-test-suite-details',
@@ -57,7 +57,7 @@ export class TestSuiteDetailsComponent implements OnInit, OnDestroy {
 
   constructor(
     private router: Router,
-    private store: Store<{ testReport: TestReportStoreState }>,
+    private store: Store<{ testReport: TestReportState }>,
     private activatedRoute: ActivatedRoute
   ) {
     this.testReports$ = store.select('testReport', 'testReports');
@@ -69,7 +69,7 @@ export class TestSuiteDetailsComponent implements OnInit, OnDestroy {
         testSuiteDetailsMenuItem.subpath === this.activatedRoute.firstChild.snapshot.routeConfig.path
     );
 
-    this.store.dispatch(new FetchReports());
+    this.store.dispatch(new StartPollingReports());
 
     this.testReportsSubscription = this.testReports$.subscribe((testReports: TestReport[]) => {
       this.testReports = testReports;

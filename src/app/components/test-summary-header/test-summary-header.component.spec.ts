@@ -6,13 +6,13 @@ import { InlineSVGModule } from 'ng-inline-svg';
 
 import { TestSummaryHeaderComponent } from './test-summary-header.component';
 import { TestReport } from '../../models/test-report.model';
-import { testReportStoreReducer, TestReportStoreState } from 'src/app/store/reports/reducer';
+import { reportsReducer, TestReportState } from 'src/app/store/reports/reducer';
 import { TestSuite, TestSuiteStatus } from '../../models/test-suite.model';
 import { TestCase, TestCaseStatus } from '../../models/test-case.model';
 import { MockStore, provideMockStore } from 'src/app/mock-store/testing';
 
 describe('TestSummaryHeaderComponent', () => {
-  let store: MockStore<{ testReport: TestReportStoreState }>;
+  let store: MockStore<{ testReport: TestReportState }>;
   let fixture: ComponentFixture<TestSummaryHeaderComponent>;
   let testSummaryHeader: TestSummaryHeaderComponent;
 
@@ -73,7 +73,7 @@ describe('TestSummaryHeaderComponent', () => {
     TestBed.configureTestingModule({
       imports: [
         HttpClientTestingModule,
-        StoreModule.forRoot({ testReport: testReportStoreReducer }),
+        StoreModule.forRoot({ testReport: reportsReducer }),
         InlineSVGModule.forRoot()
       ],
       declarations: [TestSummaryHeaderComponent],
@@ -81,7 +81,7 @@ describe('TestSummaryHeaderComponent', () => {
     }).compileComponents();
   }));
 
-  beforeEach(inject([Store], (mockStore: MockStore<{ testReport: TestReportStoreState }>) => {
+  beforeEach(inject([Store], (mockStore: MockStore<{ testReport: TestReportState }>) => {
     store = mockStore;
     store.setState({
       testReport: {

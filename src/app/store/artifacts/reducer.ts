@@ -1,26 +1,27 @@
-import { ArtifactActionTypes, ArtifactActions } from './actions';
-import { TestArtifactResponse, TestArtifact } from 'src/app/models/test-artifact.model';
+import { ArtifactActionTypes, ArtifactActions, ReceiveArtifact } from './actions';
+import { TestArtifact } from 'src/app/models/test-artifact.model';
 
-import * as MOCKED_DATA from '../../mocked-data.json';
-
-interface ArtifactStoreState {
+export interface ArtifactStoreState {
   testArtifacts: TestArtifact[];
-  downloadAllUrl: string;
+  downloadAllURL: string;
 }
 
 const initialState: ArtifactStoreState = {
   testArtifacts: [],
-  downloadAllUrl: null
+  downloadAllURL: null
 };
 
-export const testArtifactStoreReducer = (state = initialState, action: ArtifactActions) => {
+export const artifactsReducer = (state = initialState, action: ArtifactActions) => {
   switch (action.type) {
     case ArtifactActionTypes.Receive:
+      const {
+        payload: { testArtifacts, downloadAllURL }
+      } = <ReceiveArtifact>action;
+
       return {
-        testArtifacts: MOCKED_DATA['test_artifacts']['list'].map((testArtifactResponse: TestArtifactResponse) =>
-          new TestArtifact().deserialize(testArtifactResponse)
-        ),
-        downloadAllURL: MOCKED_DATA['test_artifacts']['downloadAllURL']
+        ...state,
+        testArtifacts,
+        downloadAllURL
       };
     default:
       return state;

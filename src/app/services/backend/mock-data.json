@@ -1,0 +1,302 @@
+{
+  "test_reports": [
+    {
+      "id": 1,
+      "name": "Unit Test A",
+      "testCases": [
+        {
+          "name": "testCaseExample1",
+          "status": 2,
+          "durationInMilliseconds": 3000,
+          "context": "ios_simple:dsfhkjshUITESTX",
+          "summary": "Nulla vitae elit libero, a pharetra augue. Sed posuere consectetur est at lobortis.\n\nNullam id dolor id nibh ultricies vehicula ut id elit. Praesent commodo cursus magna, vel scelerisque nisl consectetur et.\n\nInteger posuere erat a ante venenatis dapibus posuere velit aliquet. Donec id elit non mi porta gravida at eget metus."
+        },
+        {
+          "name": "testCaseExample2",
+          "status": 1,
+          "durationInMilliseconds": 5000,
+          "context": "ios_complicated:abcdefgh",
+          "summary": "Lorem ipsum"
+        }
+      ]
+    },
+    {
+      "id": 2,
+      "name": "UI Test A",
+      "testSuites": [
+        {
+          "id": 5,
+          "status": 1,
+          "deviceName": "iPhone 7",
+          "deviceOperatingSystem": "iOS 11.2",
+          "durationInMilliseconds": 20000,
+          "testCases": [
+            {
+              "name": "testCaseExample",
+              "status": 1,
+              "durationInMilliseconds": 5000,
+              "context": "ios_simple:abcdefgh",
+              "summary": "Lorem ipsum"
+            },
+            {
+              "name": "testCaseExample",
+              "status": 1,
+              "durationInMilliseconds": 5000,
+              "context": "ios_simple:abcdefgh",
+              "summary": "Lorem ipsum"
+            },
+            {
+              "name": "testCaseExample",
+              "status": 1,
+              "durationInMilliseconds": 5000,
+              "context": "ios_simple:abcdefgh",
+              "summary": "Lorem ipsum"
+            }
+          ],
+          "orientation": "portrait",
+          "locale": "English"
+        },
+        {
+          "id": 10,
+          "status": 2,
+          "deviceName": "iPad Mini 2016",
+          "deviceOperatingSystem": "iOS 11.2",
+          "durationInMilliseconds": 160000,
+          "testCases": [
+            {
+              "name": "testCaseExample",
+              "status": 1,
+              "durationInMilliseconds": 5000,
+              "context": "ios_simple:abcdefgh",
+              "summary": "Lorem ipsum"
+            },
+            {
+              "name": "testCaseExample",
+              "status": 1,
+              "durationInMilliseconds": 5000,
+              "context": "ios_simple:abcdefgh",
+              "summary": "Lorem ipsum"
+            },
+            {
+              "name": "testCaseExample",
+              "status": 2,
+              "durationInMilliseconds": 5000,
+              "context": "ios_simple:abcdefgh",
+              "summary": "Lorem ipsum"
+            }
+          ],
+          "orientation": "portrait",
+          "locale": "Japanese"
+        },
+        {
+          "id": 20,
+          "status": 0,
+          "deviceName": "Nexus7 clone, DVD 16:9 aspect ratio",
+          "deviceOperatingSystem": "Android Oreo",
+          "durationInMilliseconds": 3700000,
+          "orientation": "landscape",
+          "locale": "Traditional chinese"
+        },
+        {
+          "id": 30,
+          "status": 3,
+          "deviceName": "iPhone 7",
+          "deviceOperatingSystem": "iOS 11.2",
+          "durationInMilliseconds": 7200000,
+          "orientation": "landscape",
+          "locale": "Japanese"
+        }
+      ]
+    },
+    {
+      "id": 3,
+      "name": "UI Test B",
+      "testSuites": [
+        {
+          "id": 40,
+          "status": 1,
+          "deviceName": "Galaxy S4 mini",
+          "deviceOperatingSystem": "Android Ice Cream Sandwich",
+          "durationInMilliseconds": 10,
+          "testCases": [
+            {
+              "name": "testCaseExample",
+              "status": 1,
+              "durationInMilliseconds": 5000,
+              "context": "ios_simple:abcdefgh",
+              "summary": "Lorem ipsum"
+            },
+            {
+              "name": "testCaseExample",
+              "status": 1,
+              "durationInMilliseconds": 5000,
+              "context": "ios_simple:abcdefgh",
+              "summary": "Lorem ipsum"
+            },
+            {
+              "name": "testCaseExample",
+              "status": 1,
+              "durationInMilliseconds": 5000,
+              "context": "ios_simple:abcdefgh",
+              "summary": "Lorem ipsum"
+            }
+          ],
+          "orientation": "portrait",
+          "locale": "Japanese"
+        },
+        {
+          "id": 50,
+          "status": 2,
+          "deviceName": "iPhone 7",
+          "deviceOperatingSystem": "iOS 11.2",
+          "durationInMilliseconds": 2050,
+          "testCases": [
+            {
+              "name": "testCaseExample",
+              "status": 1,
+              "durationInMilliseconds": 5000,
+              "context": "ios_simple:abcdefgh",
+              "summary": "Lorem ipsum"
+            },
+            {
+              "name": "testCaseExample",
+              "status": 2,
+              "durationInMilliseconds": 5000,
+              "context": "ios_simple:abcdefgh",
+              "summary": "Lorem ipsum"
+            },
+            {
+              "name": "testCaseExample",
+              "status": 2,
+              "durationInMilliseconds": 5000,
+              "context": "ios_simple:abcdefgh",
+              "summary": "Lorem ipsum"
+            },
+            {
+              "name": "testCaseExample",
+              "status": 1,
+              "durationInMilliseconds": 5000,
+              "context": "ios_simple:abcdefgh",
+              "summary": "Lorem ipsum"
+            },
+            {
+              "name": "testCaseExample",
+              "status": 2,
+              "durationInMilliseconds": 5000,
+              "context": "ios_simple:abcdefgh",
+              "summary": "Lorem ipsum"
+            },
+            {
+              "name": "testCaseExample",
+              "status": 2,
+              "durationInMilliseconds": 5000,
+              "context": "ios_simple:abcdefgh",
+              "summary": "Lorem ipsum"
+            }
+          ],
+          "orientation": "portrait",
+          "locale": "English"
+        },
+        {
+          "id": 60,
+          "status": 0,
+          "deviceName": "iPhone 7",
+          "deviceOperatingSystem": "iOS 11.2",
+          "durationInMilliseconds": 20000,
+          "orientation": "landscape",
+          "locale": "English"
+        }
+      ]
+    }
+  ],
+  "performance": {
+    "metrics": {
+      "cpu": {
+        "name": "CPU performance",
+        "currentTimeInMilliseconds": 3000,
+        "sampleGroups": [
+          {
+            "samples": [
+              { "time": 0, "value": 30 },
+              { "time": 2000, "value": 5 },
+              { "time": 4000, "value": 45 },
+              { "time": 6000, "value": 20 },
+              { "time": 8000, "value": 92 },
+              { "time": 10000, "value": 60 },
+              { "time": 12000, "value": 80 },
+              { "time": 14000, "value": 12 }
+            ]
+          }
+        ]
+      },
+      "memory": {
+        "name": "Memory usage (KB)",
+        "currentTimeInMilliseconds": 8000,
+        "sampleGroups": [
+          {
+            "samples": [
+              { "time": 0, "value": 100 },
+              { "time": 2000, "value": 5 },
+              { "time": 4000, "value": 453 },
+              { "time": 6000, "value": 20 },
+              { "time": 8000, "value": 32 },
+              { "time": 10000, "value": 515 },
+              { "time": 12000, "value": 321 },
+              { "time": 14000, "value": 120 }
+            ]
+          }
+        ]
+      },
+      "network": {
+        "name": "Network (KB/S)",
+        "currentTimeInMilliseconds": 4000,
+        "sampleGroups": [
+          {
+            "name": "upload",
+            "samples": [
+              { "time": 0, "value": 100 },
+              { "time": 2000, "value": 5 },
+              { "time": 4000, "value": 453 },
+              { "time": 6000, "value": 20 },
+              { "time": 8000, "value": 32 },
+              { "time": 10000, "value": 515 },
+              { "time": 12000, "value": 321 },
+              { "time": 14000, "value": 120 }
+            ]
+          },
+          {
+            "name": "download",
+            "samples": [
+              { "time": 0, "value": 3 },
+              { "time": 2000, "value": 19 },
+              { "time": 4000, "value": 215 },
+              { "time": 6000, "value": 501 },
+              { "time": 8000, "value": 409 },
+              { "time": 10000, "value": 60 },
+              { "time": 12000, "value": 29 },
+              { "time": 14000, "value": 660 }
+            ]
+          }
+        ]
+      }
+    },
+    "durationInMilliseconds": 14000
+  },
+  "test_artifacts": {
+    "list": [
+      {
+        "filename": "file.txt",
+        "downloadURL": "https://www.bitrise.io/assets/svg/logo-bitrise.svg"
+      },
+      {
+        "filename": "file.apk",
+        "downloadURL": "https://www.bitrise.io/assets/svg/logo-bitrise.svg"
+      },
+      {
+        "filename": "file.png",
+        "downloadURL": "https://www.bitrise.io/assets/svg/logo-bitrise.svg"
+      }
+    ],
+    "downloadAllURL": "https://www.bitrise.io/assets/svg/logo-bitrise.svg"
+  }
+}

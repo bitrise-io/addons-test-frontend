@@ -5,8 +5,8 @@ import { map, first } from 'rxjs/operators';
 import { Store } from '@ngrx/store';
 
 import { TestReport } from 'src/app/models/test-report.model';
-import { TestReportStoreState } from 'src/app/store/reports/reducer';
-import { FetchReports } from 'src/app/store/reports/actions';
+import { TestReportState } from 'src/app/store/reports/reducer';
+import { StartPollingReports } from 'src/app/store/reports/actions';
 import { TestSuite } from 'src/app/models/test-suite.model';
 
 @Component({
@@ -19,12 +19,12 @@ export class TestSuiteDetailsMenuTestCasesComponent implements OnInit {
   testSuite: TestSuite;
   testReports$: Observable<TestReport[]>;
 
-  constructor(private store: Store<{ testReport: TestReportStoreState }>, private activatedRoute: ActivatedRoute) {
+  constructor(private store: Store<{ testReport: TestReportState }>, private activatedRoute: ActivatedRoute) {
     this.testReports$ = store.select('testReport', 'testReports');
   }
 
   ngOnInit() {
-    this.store.dispatch(new FetchReports());
+    this.store.dispatch(new StartPollingReports());
 
     const routeParams = combineLatest(this.activatedRoute.pathFromRoot.map(t => t.params)).pipe(
       map(paramObjects => Object.assign({}, ...paramObjects))

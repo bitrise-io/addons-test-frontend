@@ -15,8 +15,8 @@ import { MaximizePipe } from './pipes/maximize.pipe';
 import { AppComponent } from './app.component';
 import { AppHeaderComponent } from './components/app-header/app-header.component';
 import { AppFooterComponent } from './components/app-footer/app-footer.component';
-import { testArtifactStoreReducer } from 'src/app/store/artifacts/reducer';
-import { testReportStoreReducer } from 'src/app/store/reports/reducer';
+import { artifactsReducer } from 'src/app/store/artifacts/reducer';
+import { reportsReducer } from 'src/app/store/reports/reducer';
 import { TestSummaryComponent } from './components/test-summary/test-summary.component';
 import { TestReportWrapperComponent } from './components/test-report-wrapper/test-report-wrapper.component';
 import { TestSummaryHeaderComponent } from './components/test-summary-header/test-summary-header.component';
@@ -48,7 +48,7 @@ import { ArtifactEffects } from './store/artifacts/effects';
     RouterModule.forRoot(appRoutes),
     HttpClientModule,
     FormsModule,
-    StoreModule.forRoot({ testReport: testReportStoreReducer, testArtifact: testArtifactStoreReducer }),
+    StoreModule.forRoot({ testReport: reportsReducer, testArtifact: artifactsReducer }),
     EffectsModule.forRoot([ReportEffects, ArtifactEffects]),
     InlineSVGModule.forRoot(),
     environment.ServicesModule,

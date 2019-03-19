@@ -5,11 +5,11 @@ import { Store } from '@ngrx/store';
 import { TestSuiteDetailsMenuTestCasesComponent } from './test-suite-details-menu-test-cases.component';
 import { TestSuiteDetailsMenuModule } from '../menu.module';
 import { MockStore, provideMockStore } from 'src/app/mock-store/testing';
-import { TestReportStoreState } from 'src/app/store/reports/reducer';
+import { TestReportState } from 'src/app/store/reports/reducer';
 
 describe('TestSuiteDetailsMenuTestCasesComponent', () => {
   let store: MockStore<{
-    testReport: TestReportStoreState;
+    testReport: TestReportState;
   }>;
   let fixture: ComponentFixture<TestSuiteDetailsMenuTestCasesComponent>;
   let component: TestSuiteDetailsMenuTestCasesComponent;
@@ -29,7 +29,7 @@ describe('TestSuiteDetailsMenuTestCasesComponent', () => {
     }).compileComponents();
   }));
 
-  beforeEach(inject([Store], (mockStore: MockStore<{ testReport: TestReportStoreState }>) => {
+  beforeEach(inject([Store], (mockStore: MockStore<{ testReport: TestReportState }>) => {
     fixture = TestBed.createComponent(TestSuiteDetailsMenuTestCasesComponent);
     component = fixture.componentInstance;
     store = mockStore;
