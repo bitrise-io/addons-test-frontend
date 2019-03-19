@@ -1,6 +1,10 @@
 import { Component, OnInit } from '@angular/core';
 import { DatePipe } from '@angular/common';
-import * as MOCKED_DATA from '../../../../mocked-data.json';
+import { Store } from '@ngrx/store';
+import { Observable } from 'rxjs';
+
+import { Performance } from 'src/app/models/performance.model';
+import { FetchPerformance } from 'src/app/store/performance/actions';
 
 @Component({
   selector: 'bitrise-test-suite-details-menu-performance',
@@ -11,40 +15,37 @@ export class TestSuiteDetailsMenuPerformanceComponent implements OnInit {
   metrics = [
     {
       id: 'cpu',
-      cssClass: 'cpu',
-      isOpen: false,
-      sampleGroups: undefined,
-      valueGrid: undefined,
-      sampleCurves: undefined
+      cssClass: 'cpu'
     },
     {
       id: 'memory',
-      cssClass: 'memory',
-      isOpen: false,
-      sampleGroups: undefined,
-      valueGrid: undefined,
-      sampleCurves: undefined
+      cssClass: 'memory'
     },
     {
       id: 'network',
-      cssClass: 'network',
-      isOpen: false,
-      sampleGroups: undefined,
-      valueGrid: undefined,
-      sampleCurves: undefined
+      cssClass: 'network'
     }
   ];
   durationInMilliseconds: number;
   timeGrid: number[];
+  hasLoaded = false;
 
-  constructor(private datePipe: DatePipe) {}
+  performance$: Observable<Performance>;
 
-  ngOnInit() {
-    this.loadPerformanceData();
+  constructor(private datePipe: DatePipe, private store: Store<{ performance: Performance }>) {
+    this.performance$ = store.select('performance');
   }
 
-  loadPerformanceData = function() {
-    const performanceData = MOCKED_DATA['performance'];
+  ngOnInit() {
+    this.store.dispatch(new FetchPerformance());
+
+    this.performance$.subscribe(performance => {
+      this.hasLoaded = true;
+      this.parsePerformanceData(performance);
+    });
+  }
+
+  parsePerformanceData = function(performanceData: Performance) {
     this.durationInMilliseconds = performanceData.durationInMilliseconds;
 
     Object.keys(performanceData.metrics).forEach((typeId: string) => {

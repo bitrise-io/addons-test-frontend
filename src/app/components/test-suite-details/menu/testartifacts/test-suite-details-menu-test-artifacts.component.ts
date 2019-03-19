@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { Observable } from 'rxjs';
 import { Store } from '@ngrx/store';
-import { TestArtifact } from 'src/app/models/test-artifact.model.js';
+import { TestArtifact } from 'src/app/models/test-artifact.model';
 import { FetchArtifact } from 'src/app/store/artifacts/actions';
 
 @Component({
