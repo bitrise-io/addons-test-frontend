@@ -91,6 +91,11 @@ export class TestSuiteDetailsComponent implements OnInit, OnDestroy {
       (testReport: TestReport) => testReport.id === Number(params['testReportId'])
     );
 
+    if (!selectedTestReport) {
+      // TODO 404?
+      return;
+    }
+
     this.testSuite = selectedTestReport.testSuites.find(
       (testSuite: TestSuite) => testSuite.id === Number(params['testSuiteId'])
     );

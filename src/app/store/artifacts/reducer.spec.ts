@@ -22,7 +22,7 @@ describe('Artifacts reducer', () => {
     expect(newState.downloadAllURL).toBe('download-all-url');
   });
 
-  it("doesn't update the state for an unknown action", () => {
+  it(`doesn't update the state for an unknown action`, () => {
     const newState = artifactsReducer(initialState, <ArtifactActions>(<unknown>{ type: 'Unknown' }));
 
     expect(newState).toBe(initialState);

@@ -23,7 +23,7 @@ describe('Performance reducer', () => {
     expect(newState).toBe(performance);
   });
 
-  it("doesn't update the state for an unknown action", () => {
+  it(`doesn't update the state for an unknown action`, () => {
     const newState = performanceReducer(initialState, <PerformanceActions>(<unknown>{ type: 'Unknown' }));
 
     expect(newState).toBe(initialState);

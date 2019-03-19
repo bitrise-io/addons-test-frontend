@@ -43,7 +43,7 @@ describe('Reports reducer', () => {
     expect(newState.filteredReports.length).toBe(initialState.filteredReports.length);
   });
 
-  it("doesn't update the state for an unknown action", () => {
+  it(`doesn't update the state for an unknown action`, () => {
     const newState = reportsReducer(initialState, <ReportActions>(<unknown>{ type: 'Unknown' }));
 
     expect(newState).toBe(initialState);

@@ -1,7 +1,7 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, OnDestroy } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
-import { Observable, combineLatest } from 'rxjs';
-import { map, first } from 'rxjs/operators';
+import { Observable, combineLatest, Subscription } from 'rxjs';
+import { map } from 'rxjs/operators';
 import { Store } from '@ngrx/store';
 
 import { TestReport } from 'src/app/models/test-report.model';
@@ -14,10 +14,11 @@ import { TestSuite } from 'src/app/models/test-suite.model';
   templateUrl: './test-suite-details-menu-test-cases.component.html',
   styleUrls: ['./test-suite-details-menu-test-cases.component.scss']
 })
-export class TestSuiteDetailsMenuTestCasesComponent implements OnInit {
+export class TestSuiteDetailsMenuTestCasesComponent implements OnInit, OnDestroy {
   testReport: TestReport;
   testSuite: TestSuite;
   testReports$: Observable<TestReport[]>;
+  subscription: Subscription;
 
   constructor(private store: Store<{ testReport: TestReportState }>, private activatedRoute: ActivatedRoute) {
     this.testReports$ = store.select('testReport', 'testReports');
@@ -30,9 +31,8 @@ export class TestSuiteDetailsMenuTestCasesComponent implements OnInit {
       map(paramObjects => Object.assign({}, ...paramObjects))
     );
 
-    combineLatest(routeParams, this.testReports$)
+    this.subscription = combineLatest(routeParams, this.testReports$)
       .pipe(
-        first(),
         map(([params, testReports]) => {
           const testReportId = Number(params.testReportId);
           const testSuiteId = Number(params.testSuiteId);
@@ -44,5 +44,9 @@ export class TestSuiteDetailsMenuTestCasesComponent implements OnInit {
         })
       )
       .subscribe();
+  }
+
+  ngOnDestroy() {
+    this.subscription.unsubscribe();
   }
 }
