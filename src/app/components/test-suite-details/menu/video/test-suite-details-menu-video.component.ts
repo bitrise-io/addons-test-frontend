@@ -1,4 +1,4 @@
-import { Component, ViewChild, ElementRef, NgZone, Input } from '@angular/core';
+import { Component, ViewChild, ElementRef, NgZone } from '@angular/core';
 
 @Component({
   selector: 'bitrise-test-suite-details-menu-video',
@@ -18,7 +18,6 @@ export class TestSuiteDetailsMenuVideoComponent {
   hoveredPoint: number;
   duration: number;
 
-  @Input()
   videoURL = 'http://localhost:8000/video.mp4';
 
   set isPlaying(play: boolean) {
