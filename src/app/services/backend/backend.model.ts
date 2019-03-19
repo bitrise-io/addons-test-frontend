@@ -16,7 +16,7 @@ export interface TestReportsResult {
 }
 
 export interface BackendService {
-  getPerformace(): Observable<Performance>;
+  getPerformance(): Observable<Performance>;
   getArtifacts(): Observable<TestArtifactsResult>;
   getReports(): Observable<TestReportsResult>;
 }

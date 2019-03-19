@@ -10,7 +10,7 @@ import * as MOCKED_DATA from './mock-data.json';
 
 @Injectable()
 export class MockBackendService implements BackendService {
-  getPerformace(): Observable<Performance> {
+  getPerformance(): Observable<Performance> {
     const { performance }: any = MOCKED_DATA;
     return of(performance);
   }

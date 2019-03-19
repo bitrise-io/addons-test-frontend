@@ -21,7 +21,7 @@ describe('BackendService', () => {
 
   describe('mock data shape', () => {
     it('should load performance data', () => {
-      service.getPerformace().subscribe((performance: Performance) => {
+      service.getPerformance().subscribe((performance: Performance) => {
         let keys = Object.keys(performance);
         expect(keys).toContain('metrics');
         expect(keys).toContain('durationInMilliseconds');

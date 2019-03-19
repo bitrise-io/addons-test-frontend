@@ -13,7 +13,7 @@ import * as MOCKED_DATA from './mock-data.json';
 export class RealBackendService implements BackendService {
   constructor(private httpClient: HttpClient) {}
 
-  getPerformace(): Observable<Performance> {
+  getPerformance(): Observable<Performance> {
     const { performance }: any = MOCKED_DATA;
     return of(performance);
   }
