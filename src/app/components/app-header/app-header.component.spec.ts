@@ -10,7 +10,7 @@ import { InlineSVGModule } from 'ng-inline-svg';
 
 import { AppHeaderComponent } from './app-header.component';
 import { TestReport } from '../../models/test-report.model';
-import { reportsReducer, TestReportState } from 'src/app/store/reports/reducer';
+import reportsReducer, { TestReportState } from 'src/app/store/reports/reducer';
 import { TestSuite } from '../../models/test-suite.model';
 import { TestCase } from '../../models/test-case.model';
 import { MockStore, provideMockStore } from 'src/app/mock-store/testing';

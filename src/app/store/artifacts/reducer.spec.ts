@@ -1,4 +1,4 @@
-import { artifactsReducer, ArtifactStoreState } from './reducer';
+import artifactsReducer, { ArtifactStoreState } from './reducer';
 import { ReceiveArtifact, ArtifactActions } from './actions';
 import { TestArtifact } from 'src/app/models/test-artifact.model';
 

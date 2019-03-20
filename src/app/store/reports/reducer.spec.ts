@@ -1,4 +1,4 @@
-import { reportsReducer, TestReportState } from './reducer';
+import reportsReducer, { TestReportState } from 'src/app/store/reports/reducer';
 import { ReceiveReports, ReceiveFilteredReports, FilterReports, ReportActions } from './actions';
 import { TestSuiteStatus } from 'src/app/models/test-suite.model';
 import { TestReport } from 'src/app/models/test-report.model';

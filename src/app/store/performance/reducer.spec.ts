@@ -1,4 +1,4 @@
-import { performanceReducer } from './reducer';
+import performanceReducer from './reducer';
 import { ReceivePerformance, PerformanceActions } from './actions';
 import { Performance } from 'src/app/models/performance.model';
 

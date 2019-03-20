@@ -11,7 +11,7 @@ const initialState: ArtifactStoreState = {
   downloadAllURL: null
 };
 
-export const artifactsReducer = (state = initialState, action: ArtifactActions) => {
+export default (state = initialState, action: ArtifactActions) => {
   switch (action.type) {
     case ArtifactActionTypes.Receive:
       const {

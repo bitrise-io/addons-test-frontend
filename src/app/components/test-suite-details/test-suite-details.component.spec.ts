@@ -5,8 +5,9 @@ import { StoreModule, Store } from '@ngrx/store';
 import { ActivatedRoute } from '@angular/router';
 import { FormsModule } from '@angular/forms';
 import { from } from 'rxjs';
+
 import { TestSuiteDetailsComponent } from './test-suite-details.component';
-import { reportsReducer, TestReportState } from 'src/app/store/reports/reducer';
+import reportsReducer, { TestReportState } from 'src/app/store/reports/reducer';
 import { TestReport } from '../../models/test-report.model';
 import { TestSuite } from '../../models/test-suite.model';
 import { MockStore, provideMockStore } from 'src/app/mock-store/testing';

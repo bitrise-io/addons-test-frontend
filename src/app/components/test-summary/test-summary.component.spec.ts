@@ -6,7 +6,7 @@ import { InlineSVGModule } from 'ng-inline-svg';
 
 import { TestSummaryComponent } from './test-summary.component';
 import { TestReport } from '../../models/test-report.model';
-import { reportsReducer, TestReportState } from 'src/app/store/reports/reducer';
+import reportsReducer, { TestReportState } from 'src/app/store/reports/reducer';
 import { provideMockStore, MockStore } from 'src/app/mock-store/testing';
 
 @Component({
