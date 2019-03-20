@@ -1,6 +1,6 @@
 import { PlaybackTimePipe } from './playback-time.pipe';
 
-fdescribe('playbackTime', () => {
+describe('playbackTime', () => {
   let playbackTime: PlaybackTimePipe;
 
   beforeEach(() => {
