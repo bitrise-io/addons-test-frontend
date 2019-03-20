@@ -17,6 +17,7 @@ export class TestSuiteDetailsMenuVideoComponent {
   playedDuration = 0;
   hoveredPoint: number;
   duration: number;
+  isExpandMode = false;
 
   videoURL = 'http://localhost:8000/video.mp4';
 
