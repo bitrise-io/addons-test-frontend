@@ -19,7 +19,7 @@ export class TestSuiteDetailsMenuVideoComponent {
   duration: number;
   isExpandMode = false;
 
-  videoURL = 'http://localhost:8000/video.mp4';
+  videoURL = 'http://commondatastorage.googleapis.com/gtv-videos-bucket/sample/BigBuckBunny.mp4';
 
   set isPlaying(play: boolean) {
     if (play) {

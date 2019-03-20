@@ -3,7 +3,7 @@ import { TestBed, ComponentFixture } from '@angular/core/testing';
 import { TestSuiteDetailsMenuVideoComponent } from './test-suite-details-menu-video.component';
 import { PlaybackTimePipe } from 'src/app/pipes/playback-time.pipe';
 
-fdescribe('TestSuiteDetailsMenuVideoComponent', () => {
+describe('TestSuiteDetailsMenuVideoComponent', () => {
   let fixture: ComponentFixture<TestSuiteDetailsMenuVideoComponent>;
   let testVideoComponent: TestSuiteDetailsMenuVideoComponent;
   beforeEach(() => {
