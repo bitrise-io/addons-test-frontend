@@ -5,3 +5,164 @@
   @include ui-element-header-5;
   @include ui-modifier-header-5-underlined-purple-bold;
 }
+
+header.test,
+section,
+.notification {
+  margin-bottom: 18px;
+}
+
+section.video {
+  .content {
+    background-color: black;
+
+    video {
+      display: block;
+      max-width: 100%;
+      max-height: 350px;
+      margin-left: auto;
+      margin-right: auto;
+      transition: max-height 0.3s;
+
+      &.expanded {
+        max-height: 700px;
+      }
+    }
+
+    .controller {
+      position: relative;
+      background-color: #252525;
+
+      button.seek {
+        display: block;
+        @include position(absolute, null, null, 100%);
+        @include size(100%, 3px);
+        padding: 0;
+        border: none;
+        @include no-default-focus-styling;
+        @include transition(height 0.2s);
+        background-color: #252525;
+        cursor: pointer;
+
+        span.hovered {
+          @include position(absolute, 0, null, null, 0);
+          height: 100%;
+          background-color: rgba(white, 0.3);
+        }
+
+        span.played {
+          position: relative;
+          display: block;
+          height: 100%;
+          background-color: #32eab5;
+        }
+      }
+
+      .menu {
+        position: relative;
+        display: flex;
+        height: 50px;
+        align-items: center;
+
+        button.play-pause-toggle,
+        a.download,
+        button.full-screen-toggle {
+          @include padding-x(25px);
+          @include no-default-focus-styling;
+        }
+
+        button.play-pause-toggle {
+          margin-left: 0;
+          margin-right: auto;
+          border: none;
+          background-color: transparent;
+          cursor: pointer;
+
+          &.playing .svg-wrapper.play,
+          &:not(.playing) .svg-wrapper.pause {
+            display: none;
+          }
+
+          .svg-wrapper {
+            @include svg-color(white);
+          }
+
+          .svg-wrapper svg ::ng-deep {
+            @include transition(fill 0.2s);
+          }
+
+          .svg-wrapper.play svg ::ng-deep {
+            @include size(13px, 14px);
+          }
+
+          .svg-wrapper.pause svg ::ng-deep {
+            @include size(13px, 14px);
+          }
+
+          &:hover,
+          &:focus {
+            .svg-wrapper {
+              @include svg-color($green-teal);
+            }
+          }
+        }
+
+        span.current-time {
+          @include position(absolute, 50%, null, null, 50%);
+          transform: translate(-50%, -50%);
+          @include default-font;
+          font-size: 12px;
+          color: $warm-grey;
+        }
+
+        a.download,
+        button.full-screen-toggle {
+          @include svg-color(white);
+          svg {
+            @include transition(fill 0.2s);
+          }
+
+          &:hover,
+          &:focus {
+            @include svg-color($green-teal);
+          }
+        }
+
+        a.download {
+          text-align: center;
+
+          svg {
+            @include size(9px, 14px);
+          }
+        }
+
+        button.full-screen-toggle {
+          @include margin-x(0);
+          border: none;
+          background-color: transparent;
+          cursor: pointer;
+
+          svg {
+            @include size(15px);
+          }
+        }
+
+        @include width-max($screen-medium-width) {
+          button.play-pause-toggle,
+          a.download,
+          button.full-screen-toggle {
+            $button-size: 36px;
+
+            height: $button-size;
+            line-height: $button-size;
+            @include padding-x(12px);
+          }
+        }
+      }
+    }
+
+    &:hover .controller button.seek {
+      height: 8px;
+    }
+  }
+}
