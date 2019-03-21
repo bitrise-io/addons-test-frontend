@@ -1,9 +1,11 @@
 import { Component, OnInit } from '@angular/core';
 import { Observable } from 'rxjs';
 import { Store } from '@ngrx/store';
+
 import { TestReport } from '../../models/test-report.model';
 import { TestSuite, TestSuiteStatus } from '../../models/test-suite.model';
-import { TestReportStoreActionLoad, TestReportStoreState } from '../test-report/test-report.store';
+import { TestReportState } from 'src/app/store/reports/reducer';
+import { StartPollingReports } from 'src/app/store/reports/actions';
 
 @Component({
   selector: 'bitrise-test-summary-header',
@@ -28,7 +30,7 @@ export class TestSummaryHeaderComponent implements OnInit {
 
   selectedStatus: TestSuiteStatus;
 
-  constructor(private store: Store<{ testReport: TestReportStoreState }>) {
+  constructor(private store: Store<{ testReport: TestReportState }>) {
     this.testReports$ = store.select('testReport', 'testReports');
     this.testFilter$ = store.select('testReport', 'filter');
   }
@@ -42,12 +44,12 @@ export class TestSummaryHeaderComponent implements OnInit {
   }
 
   ngOnInit() {
-    this.store.dispatch(new TestReportStoreActionLoad());
+    this.store.dispatch(new StartPollingReports());
 
-    this.testFilter$.subscribe((filter) => {
+    this.testFilter$.subscribe(filter => {
       this.selectedStatus = filter;
     });
-    this.testReports$.subscribe((testReports) => {
+    this.testReports$.subscribe(testReports => {
       this.testCountsByStatuses = this.orderedTestSuiteStatuses.reduce(
         (sumByStatus, status: TestSuiteStatus) => ({
           ...sumByStatus,

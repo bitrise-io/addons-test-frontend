@@ -1,8 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { Observable } from 'rxjs';
 import { Store } from '@ngrx/store';
-import { TestArtifact } from 'src/app/models/test-artifact.model.js';
-import { TestArtifactStoreActionLoad } from 'src/app/components/test-report/test-report.store';
+import { TestArtifact } from 'src/app/models/test-artifact.model';
+import { FetchArtifact } from 'src/app/store/artifacts/actions';
 
 @Component({
   selector: 'bitrise-test-suite-details-menu-test-artifacts',
@@ -17,8 +17,8 @@ export class TestSuiteDetailsMenuTestArtifactsComponent implements OnInit {
   constructor(
     private store: Store<{
       testArtifact: {
-        testArtifacts: TestArtifact[],
-        downloadAllURL: string
+        testArtifacts: TestArtifact[];
+        downloadAllURL: string;
       };
     }>
   ) {
@@ -26,7 +26,7 @@ export class TestSuiteDetailsMenuTestArtifactsComponent implements OnInit {
   }
 
   ngOnInit() {
-    this.store.dispatch(new TestArtifactStoreActionLoad());
+    this.store.dispatch(new FetchArtifact());
 
     this.testArtifacts$.subscribe((testArtifactsData: any) => {
       this.testArtifacts = testArtifactsData.testArtifacts;

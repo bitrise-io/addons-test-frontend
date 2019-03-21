@@ -5,8 +5,9 @@ import { StoreModule, Store } from '@ngrx/store';
 import { ActivatedRoute } from '@angular/router';
 import { FormsModule } from '@angular/forms';
 import { from } from 'rxjs';
+
 import { TestSuiteDetailsComponent } from './test-suite-details.component';
-import { testReportStoreReducer, TestReportStoreState } from '../test-report/test-report.store';
+import reportsReducer, { TestReportState } from 'src/app/store/reports/reducer';
 import { TestReport } from '../../models/test-report.model';
 import { TestSuite } from '../../models/test-suite.model';
 import { MockStore, provideMockStore } from 'src/app/mock-store/testing';
@@ -23,14 +24,14 @@ class MockTestSuiteDetailsHeaderComponent {
 
 xdescribe('TestSuiteDetailsComponent', () => {
   let store: MockStore<{
-    testReport: TestReportStoreState;
+    testReport: TestReportState;
   }>;
   let fixture: ComponentFixture<TestSuiteDetailsComponent>;
   let testSuiteDetailsComponent: TestSuiteDetailsComponent;
 
   beforeEach(() => {
     TestBed.configureTestingModule({
-      imports: [RouterTestingModule, FormsModule, StoreModule.forRoot({ testReport: testReportStoreReducer })],
+      imports: [RouterTestingModule, FormsModule, StoreModule.forRoot({ testReport: reportsReducer })],
       declarations: [TestSuiteDetailsComponent, MockTestSuiteDetailsHeaderComponent],
       providers: [
         {
@@ -57,7 +58,7 @@ xdescribe('TestSuiteDetailsComponent', () => {
     fixture.detectChanges();
   });
 
-  beforeEach(inject([Store], (mockStore: MockStore<{ testReport: TestReportStoreState }>) => {
+  beforeEach(inject([Store], (mockStore: MockStore<{ testReport: TestReportState }>) => {
     const testReportIds = [1, 2, 3];
 
     store = mockStore;

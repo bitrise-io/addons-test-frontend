@@ -5,7 +5,7 @@ import { Store, StoreModule } from '@ngrx/store';
 import { InlineSVGModule } from 'ng-inline-svg';
 import { TestSuiteDetailsMenuTestArtifactsComponent } from './test-suite-details-menu-test-artifacts.component';
 import { TestArtifact } from '../../../../models/test-artifact.model';
-import { testArtifactStoreReducer } from '../../../test-report/test-report.store';
+import artifactsReducer from 'src/app/store/artifacts/reducer';
 import { MockStore, provideMockStore } from 'src/app/mock-store/testing';
 
 describe('TestSuiteDetailsMenuTestArtifactsComponent', () => {
@@ -22,7 +22,7 @@ describe('TestSuiteDetailsMenuTestArtifactsComponent', () => {
     TestBed.configureTestingModule({
       imports: [
         HttpClientTestingModule,
-        StoreModule.forRoot({ testArtifact: testArtifactStoreReducer }),
+        StoreModule.forRoot({ testArtifact: artifactsReducer }),
         InlineSVGModule.forRoot()
       ],
       declarations: [TestSuiteDetailsMenuTestArtifactsComponent],

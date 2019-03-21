@@ -7,7 +7,7 @@ import { InlineSVGModule } from 'ng-inline-svg';
 
 import { TestReportWrapperComponent } from './test-report-wrapper.component';
 import { TestReport } from '../../models/test-report.model';
-import { testReportStoreReducer, TestReportStoreState } from '../test-report/test-report.store';
+import reportsReducer, { TestReportState } from 'src/app/store/reports/reducer';
 import { Router } from '@angular/router';
 import { provideMockStore, MockStore } from 'src/app/mock-store/testing';
 
@@ -22,7 +22,7 @@ class MockTestReportComponent {
 xdescribe('TestReportWrapperComponent', () => {
   let router: Router;
   let store: MockStore<{
-    testReport: TestReportStoreState;
+    testReport: TestReportState;
   }>;
   let fixture: ComponentFixture<TestReportWrapperComponent>;
   let testReportWrapper: TestReportWrapperComponent;
@@ -36,7 +36,7 @@ xdescribe('TestReportWrapperComponent', () => {
             component: TestReportWrapperComponent
           }
         ]),
-        StoreModule.forRoot({ testReport: testReportStoreReducer }),
+        StoreModule.forRoot({ testReport: reportsReducer }),
         InlineSVGModule.forRoot()
       ],
       declarations: [TestReportWrapperComponent, MockTestReportComponent],
@@ -46,7 +46,7 @@ xdescribe('TestReportWrapperComponent', () => {
     router = TestBed.get(Router);
   }));
 
-  beforeEach(inject([Store], (mockStore: MockStore<{ testReport: TestReportStoreState }>) => {
+  beforeEach(inject([Store], (mockStore: MockStore<{ testReport: TestReportState }>) => {
     store = mockStore;
     store.setState({
       testReport: undefined

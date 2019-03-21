@@ -6,7 +6,7 @@ import { InlineSVGModule } from 'ng-inline-svg';
 
 import { TestSummaryComponent } from './test-summary.component';
 import { TestReport } from '../../models/test-report.model';
-import { testReportStoreReducer, TestReportStoreState } from '../test-report/test-report.store';
+import reportsReducer, { TestReportState } from 'src/app/store/reports/reducer';
 import { provideMockStore, MockStore } from 'src/app/mock-store/testing';
 
 @Component({
@@ -24,19 +24,19 @@ class MockTestReportComponent {
 }
 
 describe('TestSummaryComponent', () => {
-  let store: MockStore<{ testReport: TestReportStoreState }>;
+  let store: MockStore<{ testReport: TestReportState }>;
   let fixture: ComponentFixture<TestSummaryComponent>;
   let testSummary: TestSummaryComponent;
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      imports: [StoreModule.forRoot({ testReport: testReportStoreReducer }), InlineSVGModule.forRoot()],
+      imports: [StoreModule.forRoot({ testReport: reportsReducer }), InlineSVGModule.forRoot()],
       declarations: [TestSummaryComponent, MockTestSummaryHeaderComponent, MockTestReportComponent],
       providers: [provideMockStore({})]
     }).compileComponents();
   }));
 
-  beforeEach(inject([Store], (mockStore: MockStore<{ testReport: TestReportStoreState }>) => {
+  beforeEach(inject([Store], (mockStore: MockStore<{ testReport: TestReportState }>) => {
     store = mockStore;
     store.setState({
       testReport: {

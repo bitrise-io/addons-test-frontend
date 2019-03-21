@@ -10,7 +10,7 @@ import { InlineSVGModule } from 'ng-inline-svg';
 
 import { AppHeaderComponent } from './app-header.component';
 import { TestReport } from '../../models/test-report.model';
-import { testReportStoreReducer, TestReportStoreState } from '../test-report/test-report.store';
+import reportsReducer, { TestReportState } from 'src/app/store/reports/reducer';
 import { TestSuite } from '../../models/test-suite.model';
 import { TestCase } from '../../models/test-case.model';
 import { MockStore, provideMockStore } from 'src/app/mock-store/testing';
@@ -36,7 +36,7 @@ class MockMaximizePipe implements PipeTransform {
 
 describe('AppHeaderComponent', () => {
   let location: Location;
-  let store: MockStore<{ testReport: TestReportStoreState }>;
+  let store: MockStore<{ testReport: TestReportState }>;
   let fixture: ComponentFixture<AppHeaderComponent>;
   let appHeaderElement: AppHeaderComponent;
   let tabElements: DebugElement[];
@@ -46,7 +46,7 @@ describe('AppHeaderComponent', () => {
   beforeEach(async(() => {
     TestBed.configureTestingModule({
       imports: [
-        StoreModule.forRoot({ testReport: testReportStoreReducer }),
+        StoreModule.forRoot({ testReport: reportsReducer }),
         RouterTestingModule.withRoutes([
           { path: 'summary', component: MockTestSummaryComponent },
           { path: 'testreport/1', component: MockTestReportComponent },
@@ -62,7 +62,7 @@ describe('AppHeaderComponent', () => {
     }).compileComponents();
   }));
 
-  beforeEach(inject([Store], (mockStore: MockStore<{ testReport: TestReportStoreState }>) => {
+  beforeEach(inject([Store], (mockStore: MockStore<{ testReport: TestReportState }>) => {
     store = mockStore;
     store.setState({
       testReport: {

@@ -2,9 +2,11 @@ import { Component, Input, OnInit, OnDestroy } from '@angular/core';
 import { ActivatedRoute, Params, Router } from '@angular/router';
 import { Observable, Subscription } from 'rxjs';
 import { Store } from '@ngrx/store';
+
 import { TestReport } from 'src/app/models/test-report.model';
 import { TestSuite } from 'src/app/models/test-suite.model';
-import { TestReportStoreActionLoad, TestReportStoreState } from '../test-report/test-report.store';
+import { TestReportState } from 'src/app/store/reports/reducer';
+import { StartPollingReports } from 'src/app/store/reports/actions';
 
 @Component({
   selector: 'bitrise-test-suite-details',
@@ -55,7 +57,7 @@ export class TestSuiteDetailsComponent implements OnInit, OnDestroy {
 
   constructor(
     private router: Router,
-    private store: Store<{ testReport: TestReportStoreState }>,
+    private store: Store<{ testReport: TestReportState }>,
     private activatedRoute: ActivatedRoute
   ) {
     this.testReports$ = store.select('testReport', 'testReports');
@@ -67,7 +69,7 @@ export class TestSuiteDetailsComponent implements OnInit, OnDestroy {
         testSuiteDetailsMenuItem.subpath === this.activatedRoute.firstChild.snapshot.routeConfig.path
     );
 
-    this.store.dispatch(new TestReportStoreActionLoad());
+    this.store.dispatch(new StartPollingReports());
 
     this.testReportsSubscription = this.testReports$.subscribe((testReports: TestReport[]) => {
       this.testReports = testReports;
@@ -89,11 +91,16 @@ export class TestSuiteDetailsComponent implements OnInit, OnDestroy {
       (testReport: TestReport) => testReport.id === Number(params['testReportId'])
     );
 
+    if (!selectedTestReport) {
+      // TODO 404?
+      return;
+    }
+
     this.testSuite = selectedTestReport.testSuites.find(
       (testSuite: TestSuite) => testSuite.id === Number(params['testSuiteId'])
     );
 
-    const testSuiteIndex = selectedTestReport.testSuites.findIndex((testSuite) => testSuite === this.testSuite);
+    const testSuiteIndex = selectedTestReport.testSuites.findIndex(testSuite => testSuite === this.testSuite);
     this.previousTestSuite = testSuiteIndex > 0 ? selectedTestReport.testSuites[testSuiteIndex - 1] : null;
     this.nextTestSuite =
       testSuiteIndex < selectedTestReport.testSuites.length - 1

@@ -5,6 +5,7 @@ import { HttpClientModule } from '@angular/common/http';
 import { FormsModule } from '@angular/forms';
 import { InlineSVGModule } from 'ng-inline-svg';
 import { StoreModule } from '@ngrx/store';
+import { EffectsModule } from '@ngrx/effects';
 
 import { environment } from 'src/environments/environment';
 
@@ -14,7 +15,6 @@ import { MaximizePipe } from './pipes/maximize.pipe';
 import { AppComponent } from './app.component';
 import { AppHeaderComponent } from './components/app-header/app-header.component';
 import { AppFooterComponent } from './components/app-footer/app-footer.component';
-import { testReportStoreReducer, testArtifactStoreReducer } from './components/test-report/test-report.store';
 import { TestSummaryComponent } from './components/test-summary/test-summary.component';
 import { TestReportWrapperComponent } from './components/test-report-wrapper/test-report-wrapper.component';
 import { TestSummaryHeaderComponent } from './components/test-summary-header/test-summary-header.component';
@@ -23,6 +23,13 @@ import { TestSuiteComponent } from './components/test-suite/test-suite.component
 import { TestSuiteDetailsComponent } from './components/test-suite-details/test-suite-details.component';
 import { TestSuiteDetailsHeaderComponent } from './components/test-suite-details-header/test-suite-details-header.component';
 import { TestSuiteDetailsMenuModule } from './components/test-suite-details/menu/menu.module';
+
+import artifactsReducer from 'src/app/store/artifacts/reducer';
+import reportsReducer from 'src/app/store/reports/reducer';
+import performanceReducer from 'src/app/store/performance/reducer';
+import { ReportEffects } from 'src/app/store/reports/effects';
+import { ArtifactEffects } from 'src/app/store/artifacts/effects';
+import { PerformanceEffects } from 'src/app/store/performance/effects';
 
 @NgModule({
   declarations: [
@@ -43,7 +50,12 @@ import { TestSuiteDetailsMenuModule } from './components/test-suite-details/menu
     RouterModule.forRoot(appRoutes),
     HttpClientModule,
     FormsModule,
-    StoreModule.forRoot({ testReport: testReportStoreReducer, testArtifact: testArtifactStoreReducer }),
+    StoreModule.forRoot({
+      testReport: reportsReducer,
+      testArtifact: artifactsReducer,
+      performance: performanceReducer
+    }),
+    EffectsModule.forRoot([ReportEffects, ArtifactEffects, PerformanceEffects]),
     InlineSVGModule.forRoot(),
     environment.ServicesModule,
     TestSuiteDetailsMenuModule
