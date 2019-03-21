@@ -162,7 +162,7 @@ describe('TestSummaryHeaderComponent', () => {
       { statusName: 'passed', statusCssClass: 'passed', expectedCount: '11' },
       { statusName: 'skipped', statusCssClass: 'skipped', expectedCount: '4' },
       { statusName: 'inconclusive', statusCssClass: 'inconclusive', expectedCount: '15' }
-    ].forEach(specConfig => {
+    ].forEach((specConfig) => {
       it(`shows the number of ${specConfig.statusName} tests in the ${specConfig.statusName} counter`, () => {
         expect(
           fixture.debugElement.query(By.css(`.test-counts .count-indicator.${specConfig.statusCssClass} .count`))
@@ -218,7 +218,7 @@ describe('TestSummaryHeaderComponent', () => {
     });
 
     it('does not hide the rate partition for other statuses in the rate indicator', () => {
-      ['failed', 'passed', 'inconclusive'].forEach(statusCssClass => {
+      ['failed', 'passed', 'inconclusive'].forEach((statusCssClass) => {
         expect(
           fixture.debugElement
             .query(By.css(`.test-rates .status-rate.${statusCssClass}`))
@@ -228,7 +228,7 @@ describe('TestSummaryHeaderComponent', () => {
     });
 
     it('does not hide the counter of any statuses', () => {
-      ['failed', 'passed', 'skipped', 'inconclusive'].forEach(statusCssClass => {
+      ['failed', 'passed', 'skipped', 'inconclusive'].forEach((statusCssClass) => {
         expect(
           fixture.debugElement
             .query(By.css(`.test-counts .count-indicator.${statusCssClass} .count`))

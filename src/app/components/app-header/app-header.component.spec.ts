@@ -95,7 +95,7 @@ describe('AppHeaderComponent', () => {
             { id: 3, name: 'UI Test C', failedTestSuiteCount: 1 },
             { id: 4, name: 'Unit Test X', failedTestCaseCount: 3 },
             { id: 5, name: 'Unit Test Y', failedTestCaseCount: 6 }
-          ].map(specConfig => {
+          ].map((specConfig) => {
             const testReport = new TestReport();
             testReport.id = specConfig.id;
             testReport.name = specConfig.name;
