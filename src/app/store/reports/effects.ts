@@ -9,20 +9,24 @@ import { BackendService, BACKEND_SERVICE, TestReportsResult } from 'src/app/serv
 import { TestReportState } from './reducer';
 import filterReports from './filter-reports';
 
+const UPDATE_INTERVAL_MS = 5000;
+
 @Injectable()
 export class ReportEffects {
   @Effect()
   $fetchReports: Observable<ReportActions> = this.actions$.pipe(
     ofType(ReportActionTypes.StartPolling),
     switchMap(() =>
-      timer(0, 4000).pipe(
+      timer(0, UPDATE_INTERVAL_MS).pipe(
         withLatestFrom(this.store$),
-        switchMap(([, { testReport: { filter } }]: [any, { testReport: TestReportState }]) =>
-          this.backendService.getReports().pipe(
+        switchMap(([_, testReportState]: [any, { testReport: TestReportState }]) => {
+          const { testReport: { filter } } = testReportState; // prettier-ignore
+
+          return this.backendService.getReports().pipe(
             map((result: TestReportsResult) => new ReceiveReports(result)),
             merge(of(new FilterReports({ filter })))
-          )
-        )
+          );
+        })
       )
     )
   );
@@ -31,17 +35,12 @@ export class ReportEffects {
   $filterReports: Observable<ReportActions> = this.actions$.pipe(
     ofType(ReportActionTypes.Filter),
     withLatestFrom(this.store$),
-    map(
-      ([
-        {
-          payload: { filter }
-        },
-        {
-          testReport: { testReports }
-        }
-      ]: [FilterReports, { testReport: TestReportState }]) =>
-        new ReceiveFilteredReports({ testReports: filterReports(testReports, filter) })
-    )
+    map(([filterReportsActions, testReportState]: [FilterReports, { testReport: TestReportState }]) => {
+      const { payload: { filter } } = filterReportsActions; // prettier-ignore
+      const { testReport: { testReports } } = testReportState; // prettier-ignore
+
+      return new ReceiveFilteredReports({ testReports: filterReports(testReports, filter) });
+    })
   );
 
   constructor(
