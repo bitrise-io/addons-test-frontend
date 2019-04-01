@@ -38,7 +38,8 @@
       margin-right: auto;
     }
 
-    &.previous-device, &.next-device {
+    &.previous-device,
+    &.next-device {
       margin-left: 8px;
     }
   }
@@ -69,6 +70,10 @@
 
       &:not(:last-child) {
         margin-right: 40px;
+      }
+
+      &.landscape ::ng-deep svg {
+        transform: rotate(-90deg);
       }
 
       ::ng-deep svg {

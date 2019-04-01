@@ -23,6 +23,13 @@ export type TestSuiteResponse = {
   orientation: TestSuiteOrientation;
   locale: string;
   testCases?: TestCaseResponse[];
+  screenshots?: TestSuiteScreenshot[];
+  downloadAllScreenshotsURL?: string;
+};
+
+export type TestSuiteScreenshot = {
+  url: string;
+  filename: string;
 };
 
 @Injectable()
@@ -35,6 +42,8 @@ export class TestSuite implements Deserializable {
   orientation: TestSuiteOrientation;
   locale: string;
   testCases: TestCase[];
+  screenshots?: TestSuiteScreenshot[];
+  downloadAllScreenshotsURL?: string;
 
   public static statusName(status: TestSuiteStatus): string {
     const statusNames = {
@@ -92,6 +101,8 @@ export class TestSuite implements Deserializable {
       : [];
     this.orientation = testSuiteResponse.orientation;
     this.locale = testSuiteResponse.locale;
+    this.screenshots = testSuiteResponse.screenshots;
+    this.downloadAllScreenshotsURL = testSuiteResponse.downloadAllScreenshotsURL;
 
     return this;
   }
