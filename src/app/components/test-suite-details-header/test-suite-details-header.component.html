@@ -10,11 +10,7 @@
     <span class="arrow" inlineSVG="/assets/images/arrow-dashed-tail-left.svg"></span>
     <span>Previous device</span>
   </a>
-  <a
-    [routerLink]="['../../testsuite', nextTestSuite.id]"
-    *ngIf="nextTestSuite"
-    class="navigation-button next-device"
-  >
+  <a [routerLink]="['../../testsuite', nextTestSuite.id]" *ngIf="nextTestSuite" class="navigation-button next-device">
     <span>Next device</span>
     <span class="arrow" inlineSVG="/assets/images/arrow-dashed-tail-right.svg"></span>
   </a>
@@ -26,7 +22,7 @@
       <span inlineSVG="/assets/images/clock.svg"></span>
       <span class="text">{{ testSuite.durationInMilliseconds | textFromDurationInMilliseconds }}</span>
     </div>
-    <div class="minor-detail orientation">
+    <div class="minor-detail orientation" [ngClass]="testSuite.orientationCssClass">
       <span inlineSVG="/assets/images/mobile.svg"></span>
       <span class="text">{{ testSuite.orientation | titlecase }}</span>
     </div>
@@ -43,5 +39,7 @@
     [hidden]="testCaseCountsByStatuses[testCaseStatus] == 0"
     [ngClass]="TestCase.statusCssClass(testCaseStatus)"
     [style.width]="(100 * testCaseCountsByStatuses[testCaseStatus]) / totalTestCaseCount + '%'"
-  >{{ testCaseCountsByStatuses[testCaseStatus] }} {{ TestCase.statusName(testCaseStatus) }}</div>
+  >
+    {{ testCaseCountsByStatuses[testCaseStatus] }} {{ TestCase.statusName(testCaseStatus) }}
+  </div>
 </section>
