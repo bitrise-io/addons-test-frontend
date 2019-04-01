@@ -1,0 +1,72 @@
+@import '../../../../../sass/constants';
+@import '../../../../../sass/mixins';
+
+.screenshots {
+  &__download-all {
+    @include ui-element-button-secondary;
+    @include ui-modifier-button-shadow;
+    display: flex;
+    margin-left: $grid-size;
+
+    &:hover {
+      @include ui-modifier-button-secondary-hover;
+    }
+
+    .arrow {
+      margin-right: $grid-size;
+
+      ::ng-deep svg {
+        display: block;
+      }
+    }
+  }
+
+  &__grid {
+    @include width-above-screen-small {
+      display: grid;
+      grid: auto-flow / repeat(3, 29%);
+      grid-column-gap: 6.5%;
+      grid-row-gap: 6 * $grid-size;
+    }
+
+    &__item {
+      text-align: center;
+      margin-bottom: 6 * $grid-size;
+
+      @include width-above-screen-small {
+        grid-row-gap: 6 * $grid-size;
+      }
+
+      img {
+        width: 100%;
+      }
+
+      &__label {
+        @include ui-element-description;
+        color: $brownish-grey;
+      }
+
+      &__download {
+        @include ui-element-button-secondary;
+        @include ui-modifier-button-secondary-small;
+        @include ui-modifier-button-shadow;
+        display: inline-block;
+        margin-top: $grid-size / 2;
+        padding: 2px;
+        width: 4 * $grid-size;
+        height: 4 * $grid-size;
+
+        &:hover {
+          @include ui-modifier-button-secondary-hover;
+        }
+      }
+    }
+
+    &--portrait {
+      @include width-above-screen-medium {
+        grid: auto-flow / repeat(5, 16%);
+        grid-column-gap: 5%;
+      }
+    }
+  }
+}

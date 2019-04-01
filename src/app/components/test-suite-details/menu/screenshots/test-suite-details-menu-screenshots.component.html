@@ -1,1 +1,27 @@
-screenshots
+<div class="screenshots">
+  <bitrise-heading-text>
+    <span>Screenshots</span>
+    <a
+      class="screenshots__download-all"
+      *ngIf="downloadAllScreenshotsURL"
+      href="{{ downloadAllScreenshotsURL }}"
+      target="_blank"
+    >
+      <div class="arrow" inlineSVG="/assets/images/download.svg"></div>
+      <span>Download All Screenshots</span>
+    </a>
+  </bitrise-heading-text>
+  <div [ngClass]="gridCssClass" *ngIf="screenshots">
+    <div class="screenshots__grid__item" *ngFor="let screenshot of screenshots">
+      <img [src]="screenshot.url" alt="screenshot.filename" />
+      <div class="screenshots__grid__item__label">{{ screenshot.filename }}</div>
+      <a
+        class="screenshots__grid__item__download"
+        href="{{ screenshot.url }}"
+        target="_blank"
+        inlineSVG="/assets/images/download.svg"
+      >
+      </a>
+    </div>
+  </div>
+</div>

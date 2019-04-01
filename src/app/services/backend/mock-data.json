@@ -54,7 +54,38 @@
             }
           ],
           "orientation": "portrait",
-          "locale": "English"
+          "locale": "English",
+          "downloadAllScreenshotsURL": "http://some-url-to.download-screen.shots",
+          "screenshots": [
+            {
+              "url": "https://loremflickr.com/425/667",
+              "filename": "screenshot-whatever-1.portrait.png"
+            },
+            {
+              "url": "https://loremflickr.com/425/667?1",
+              "filename": "screenshot-whatever-2.portrait.png"
+            },
+            {
+              "url": "https://loremflickr.com/425/667?2",
+              "filename": "screenshot-whatever-3.portrait.png"
+            },
+            {
+              "url": "https://loremflickr.com/425/667?3",
+              "filename": "screenshot-whatever-4.portrait.png"
+            },
+            {
+              "url": "https://loremflickr.com/425/667?4",
+              "filename": "screenshot-whatever-5.portrait.png"
+            },
+            {
+              "url": "https://loremflickr.com/425/667?5",
+              "filename": "screenshot-whatever-6.portrait.png"
+            },
+            {
+              "url": "https://loremflickr.com/425/667?6",
+              "filename": "screenshot-whatever-7.portrait.png"
+            }
+          ]
         },
         {
           "id": 10,
@@ -86,7 +117,18 @@
             }
           ],
           "orientation": "portrait",
-          "locale": "Japanese"
+          "locale": "Japanese",
+          "downloadAllScreenshotsURL": "http://some-url-to.download-screen.shots",
+          "screenshots": [
+            {
+              "url": "https://loremflickr.com/384/512",
+              "filename": "screenshot-whatever-1.portrait.png"
+            },
+            {
+              "url": "https://loremflickr.com/384/512?1",
+              "filename": "screenshot-whatever-2.portrait.png"
+            }
+          ]
         },
         {
           "id": 20,
@@ -95,7 +137,26 @@
           "deviceOperatingSystem": "Android Oreo",
           "durationInMilliseconds": 3700000,
           "orientation": "landscape",
-          "locale": "Traditional chinese"
+          "locale": "Traditional chinese",
+          "downloadAllScreenshotsURL": "http://some-url-to.download-screen.shots",
+          "screenshots": [
+            {
+              "url": "https://loremflickr.com/640/400",
+              "filename": "screenshot-whatever-1.landscape.png"
+            },
+            {
+              "url": "https://loremflickr.com/640/400?1",
+              "filename": "screenshot-whatever-2.landscape.png"
+            },
+            {
+              "url": "https://loremflickr.com/640/400?2",
+              "filename": "screenshot-whatever-3.landscape.png"
+            },
+            {
+              "url": "https://loremflickr.com/640/400?3",
+              "filename": "screenshot-whatever-4.landscape.png"
+            }
+          ]
         },
         {
           "id": 30,
@@ -104,7 +165,26 @@
           "deviceOperatingSystem": "iOS 11.2",
           "durationInMilliseconds": 7200000,
           "orientation": "landscape",
-          "locale": "Japanese"
+          "locale": "Japanese",
+          "downloadAllScreenshotsURL": "http://some-url-to.download-screen.shots",
+          "screenshots": [
+            {
+              "url": "https://loremflickr.com/667/425",
+              "filename": "screenshot-whatever-1.landscape.png"
+            },
+            {
+              "url": "https://loremflickr.com/667/425?1",
+              "filename": "screenshot-whatever-2.landscape.png"
+            },
+            {
+              "url": "https://loremflickr.com/667/425?2",
+              "filename": "screenshot-whatever-3.landscape.png"
+            },
+            {
+              "url": "https://loremflickr.com/667/425?3",
+              "filename": "screenshot-whatever-4.landscape.png"
+            }
+          ]
         }
       ]
     },
@@ -142,7 +222,18 @@
             }
           ],
           "orientation": "portrait",
-          "locale": "Japanese"
+          "locale": "Japanese",
+          "downloadAllScreenshotsURL": "http://some-url-to.download-screen.shots",
+          "screenshots": [
+            {
+              "url": "https://loremflickr.com/270/480",
+              "filename": "screenshot-whatever-1.portrait.png"
+            },
+            {
+              "url": "https://loremflickr.com/270/480?1",
+              "filename": "screenshot-whatever-2.portrait.png"
+            }
+          ]
         },
         {
           "id": 50,
@@ -195,7 +286,22 @@
             }
           ],
           "orientation": "portrait",
-          "locale": "English"
+          "locale": "English",
+          "downloadAllScreenshotsURL": "http://some-url-to.download-screen.shots",
+          "screenshots": [
+            {
+              "url": "https://loremflickr.com/425/667",
+              "filename": "screenshot-whatever-1.portrait.png"
+            },
+            {
+              "url": "https://loremflickr.com/425/667?1",
+              "filename": "screenshot-whatever-2.portrait.png"
+            },
+            {
+              "url": "https://loremflickr.com/425/667?2",
+              "filename": "screenshot-whatever-3.portrait.png"
+            }
+          ]
         },
         {
           "id": 60,
@@ -204,7 +310,22 @@
           "deviceOperatingSystem": "iOS 11.2",
           "durationInMilliseconds": 20000,
           "orientation": "landscape",
-          "locale": "English"
+          "locale": "English",
+          "downloadAllScreenshotsURL": "http://some-url-to.download-screen.shots",
+          "screenshots": [
+            {
+              "url": "https://loremflickr.com/667/425",
+              "filename": "screenshot-whatever-1.landscape.png"
+            },
+            {
+              "url": "https://loremflickr.com/667/425?1",
+              "filename": "screenshot-whatever-2.landscape.png"
+            },
+            {
+              "url": "https://loremflickr.com/667/425?2",
+              "filename": "screenshot-whatever-3.landscape.png"
+            }
+          ]
         }
       ]
     }
@@ -217,14 +338,38 @@
         "sampleGroups": [
           {
             "samples": [
-              { "time": 0, "value": 30 },
-              { "time": 2000, "value": 5 },
-              { "time": 4000, "value": 45 },
-              { "time": 6000, "value": 20 },
-              { "time": 8000, "value": 92 },
-              { "time": 10000, "value": 60 },
-              { "time": 12000, "value": 80 },
-              { "time": 14000, "value": 12 }
+              {
+                "time": 0,
+                "value": 30
+              },
+              {
+                "time": 2000,
+                "value": 5
+              },
+              {
+                "time": 4000,
+                "value": 45
+              },
+              {
+                "time": 6000,
+                "value": 20
+              },
+              {
+                "time": 8000,
+                "value": 92
+              },
+              {
+                "time": 10000,
+                "value": 60
+              },
+              {
+                "time": 12000,
+                "value": 80
+              },
+              {
+                "time": 14000,
+                "value": 12
+              }
             ]
           }
         ]
@@ -235,14 +380,38 @@
         "sampleGroups": [
           {
             "samples": [
-              { "time": 0, "value": 100 },
-              { "time": 2000, "value": 5 },
-              { "time": 4000, "value": 453 },
-              { "time": 6000, "value": 20 },
-              { "time": 8000, "value": 32 },
-              { "time": 10000, "value": 515 },
-              { "time": 12000, "value": 321 },
-              { "time": 14000, "value": 120 }
+              {
+                "time": 0,
+                "value": 100
+              },
+              {
+                "time": 2000,
+                "value": 5
+              },
+              {
+                "time": 4000,
+                "value": 453
+              },
+              {
+                "time": 6000,
+                "value": 20
+              },
+              {
+                "time": 8000,
+                "value": 32
+              },
+              {
+                "time": 10000,
+                "value": 515
+              },
+              {
+                "time": 12000,
+                "value": 321
+              },
+              {
+                "time": 14000,
+                "value": 120
+              }
             ]
           }
         ]
@@ -254,27 +423,75 @@
           {
             "name": "upload",
             "samples": [
-              { "time": 0, "value": 100 },
-              { "time": 2000, "value": 5 },
-              { "time": 4000, "value": 453 },
-              { "time": 6000, "value": 20 },
-              { "time": 8000, "value": 32 },
-              { "time": 10000, "value": 515 },
-              { "time": 12000, "value": 321 },
-              { "time": 14000, "value": 120 }
+              {
+                "time": 0,
+                "value": 100
+              },
+              {
+                "time": 2000,
+                "value": 5
+              },
+              {
+                "time": 4000,
+                "value": 453
+              },
+              {
+                "time": 6000,
+                "value": 20
+              },
+              {
+                "time": 8000,
+                "value": 32
+              },
+              {
+                "time": 10000,
+                "value": 515
+              },
+              {
+                "time": 12000,
+                "value": 321
+              },
+              {
+                "time": 14000,
+                "value": 120
+              }
             ]
           },
           {
             "name": "download",
             "samples": [
-              { "time": 0, "value": 3 },
-              { "time": 2000, "value": 19 },
-              { "time": 4000, "value": 215 },
-              { "time": 6000, "value": 501 },
-              { "time": 8000, "value": 409 },
-              { "time": 10000, "value": 60 },
-              { "time": 12000, "value": 29 },
-              { "time": 14000, "value": 660 }
+              {
+                "time": 0,
+                "value": 3
+              },
+              {
+                "time": 2000,
+                "value": 19
+              },
+              {
+                "time": 4000,
+                "value": 215
+              },
+              {
+                "time": 6000,
+                "value": 501
+              },
+              {
+                "time": 8000,
+                "value": 409
+              },
+              {
+                "time": 10000,
+                "value": 60
+              },
+              {
+                "time": 12000,
+                "value": 29
+              },
+              {
+                "time": 14000,
+                "value": 660
+              }
             ]
           }
         ]
