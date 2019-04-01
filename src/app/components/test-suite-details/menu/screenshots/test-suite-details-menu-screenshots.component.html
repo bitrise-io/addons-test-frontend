@@ -17,7 +17,7 @@
       <div class="screenshots__grid__item__label">{{ screenshot.filename }}</div>
       <a
         class="screenshots__grid__item__download"
-        href="{{ screenshot.url }}"
+        [href]="screenshot.url"
         target="_blank"
         inlineSVG="/assets/images/download.svg"
       >
