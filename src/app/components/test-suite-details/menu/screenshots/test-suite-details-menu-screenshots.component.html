@@ -4,7 +4,7 @@
     <a
       class="screenshots__download-all"
       *ngIf="downloadAllScreenshotsURL"
-      href="{{ downloadAllScreenshotsURL }}"
+      [href]="downloadAllScreenshotsURL"
       target="_blank"
     >
       <div class="arrow" inlineSVG="/assets/images/download.svg"></div>
