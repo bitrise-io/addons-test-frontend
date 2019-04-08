@@ -45,7 +45,7 @@
   .line {
     display: flex;
     align-items: center;
-    @include margin-y($grid-size);
+    @include padding-y($grid-size);
     cursor: pointer;
 
     &:hover {
@@ -102,5 +102,23 @@
     @include style_for_type("error", $vivid-pink);
     @include style_for_type("assert", $vivid-pink);
 
+    @include width-max(1200px) {
+      .date {
+        width: 13 * $grid-size;
+      }
+
+      .tag {
+        width: 15 * $grid-size;
+      }
+    }
+
+    @include width-max-screen-medium {
+      flex-direction: column;
+      align-items: flex-start;
+
+      .date, .tag, .message {
+        width: 100%;
+      }
+    }
   }
 }

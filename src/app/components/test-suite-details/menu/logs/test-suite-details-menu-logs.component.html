@@ -12,7 +12,7 @@
   <div class="line" *ngFor="let logLine of log.lines" [class]="logLine.typeCssClass" [ngClass]="{'expanded': logLine.isExpanded}" (click)="logLine.isExpanded = !logLine.isExpanded">
     <div class="type-icon" [inlineSVG]="logLine.typeIconUrl"></div>
     <div class="date">{{ logLine.date | date: 'HH:mm:ss:SSS' }}</div>
-    <div class="tag">{{ logLine.tag }}</div>
-    <div class="message">{{ logLine.message }}</div>
+    <div class="tag" title="{{ logLine.tag }}">{{ logLine.tag }}</div>
+    <div class="message" title="{{ logLine.message }}">{{ logLine.message }}</div>
   </div>
 </div>
