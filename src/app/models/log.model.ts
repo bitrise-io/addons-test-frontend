@@ -2,6 +2,9 @@ import { Injectable } from '@angular/core';
 import { Deserializable } from './deserializable.model';
 import { LogLine, LogLineResponse, LogLineType } from './log-line.model';
 
+const IOS_LOG_LINE_REGEXP = /^(.*)  ([0-9]{0,2}) ([0-9]{0,2}):([0-9]{0,2}):([0-9]{0,2}) ([^\[]*)\[[0-9]*] <([^>]*)>: (.*)$/;
+const ANDROID_LOG_LINE_REGEXP = /^([0-9]+)-([0-9]+) ([0-9]+)\:([0-9]+)\:([0-9]+)\.([0-9]+)\: (?:[0-9]+\-[0-9]+\/.+ |)([V|D|I|W|E|A])\/(.+)\([0-9]+\)\: (.+)$/;
+
 export enum LogProjectType {
   ios = 0,
   android = 1
@@ -14,17 +17,77 @@ export class Log implements Deserializable {
   lines: LogLine[];
 
   deserialize(logResponse: LogResponse) {
-    const logProjectType = LogProjectType.android;
+    const detectedLogProjectType = [LogProjectType.ios, LogProjectType.android].find(
+      (logProjectType: LogProjectType) =>
+        logResponse
+          .split('\n')
+          .find((logLineResponse: LogLineResponse) =>
+            [IOS_LOG_LINE_REGEXP, ANDROID_LOG_LINE_REGEXP][logProjectType].test(logLineResponse)
+          ) !== undefined
+    );
 
-    switch (logProjectType) {
-      // case LogProjectType.ios:
-      //   return this.deserializeIos(logResponse);
+    switch (detectedLogProjectType) {
+      case LogProjectType.ios:
+        return this.deserializeIos(logResponse);
       case LogProjectType.android:
         return this.deserializeAndroid(logResponse);
+      default:
+        this.lines = [];
+
+        return this;
     }
   }
 
   deserializeIos(logResponse: LogResponse) {
+    this.lines = [];
+    logResponse.split('\n').forEach((logLineResponse: LogLineResponse) => {
+      const logLine = new LogLine();
+
+      try {
+        if (!IOS_LOG_LINE_REGEXP.test(logLineResponse)) {
+          if (this.lines.length > 0) {
+            this.lines[this.lines.length - 1].message += '\n' + logLineResponse;
+
+            return;
+          } else {
+            throw Error(`Log line not matching expected pattern: ${logLineResponse}`);
+          }
+        }
+
+        switch (IOS_LOG_LINE_REGEXP.exec(logLineResponse)[7]) {
+          case 'Notice':
+            logLine.type = LogLineType.info;
+
+            break;
+          case 'Error':
+            logLine.type = LogLineType.error;
+
+            break;
+          default:
+            throw Error(`Log line type unknown: ${IOS_LOG_LINE_REGEXP.exec(logLineResponse)[7]}`);
+        }
+
+        const month = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'].indexOf(
+          IOS_LOG_LINE_REGEXP.exec(logLineResponse)[1]
+        );
+        const day = Number(IOS_LOG_LINE_REGEXP.exec(logLineResponse)[2]);
+        const hour = Number(IOS_LOG_LINE_REGEXP.exec(logLineResponse)[3]);
+        const minute = Number(IOS_LOG_LINE_REGEXP.exec(logLineResponse)[4]);
+        const second = Number(IOS_LOG_LINE_REGEXP.exec(logLineResponse)[5]);
+        logLine.date = new Date(new Date().getFullYear(), month, day, hour, minute, second);
+
+        logLine.tag = IOS_LOG_LINE_REGEXP.exec(logLineResponse)[6];
+        logLine.message = IOS_LOG_LINE_REGEXP.exec(logLineResponse)[8];
+      } catch (error) {
+        logLine.type = LogLineType.verbose;
+        logLine.date = undefined;
+        logLine.tag = undefined;
+        logLine.message = logLineResponse;
+      }
+
+      this.lines.push(logLine);
+    });
+
     return this;
   }
 
@@ -33,22 +96,20 @@ export class Log implements Deserializable {
       const logLine = new LogLine();
 
       try {
-        const regexp = /^([0-9]+)-([0-9]+) ([0-9]+)\:([0-9]+)\:([0-9]+)\.([0-9]+)\: (?:[0-9]+\-[0-9]+\/.+ |)([V|D|I|W|E|A])\/(.+)\([0-9]+\)\: (.+)$/;
-
         logLine.type = ['A', 'E', 'W', 'I', 'D', 'V'].findIndex(
-          (typeCharacter) => typeCharacter === regexp.exec(logLineResponse)[7]
+          (typeCharacter) => typeCharacter === ANDROID_LOG_LINE_REGEXP.exec(logLineResponse)[7]
         );
 
-        const month = Number(regexp.exec(logLineResponse)[1]);
-        const day = Number(regexp.exec(logLineResponse)[2]);
-        const hour = Number(regexp.exec(logLineResponse)[3]);
-        const minute = Number(regexp.exec(logLineResponse)[4]);
-        const second = Number(regexp.exec(logLineResponse)[5]);
-        const millisecond = Number(regexp.exec(logLineResponse)[6]);
+        const month = Number(ANDROID_LOG_LINE_REGEXP.exec(logLineResponse)[1]);
+        const day = Number(ANDROID_LOG_LINE_REGEXP.exec(logLineResponse)[2]);
+        const hour = Number(ANDROID_LOG_LINE_REGEXP.exec(logLineResponse)[3]);
+        const minute = Number(ANDROID_LOG_LINE_REGEXP.exec(logLineResponse)[4]);
+        const second = Number(ANDROID_LOG_LINE_REGEXP.exec(logLineResponse)[5]);
+        const millisecond = Number(ANDROID_LOG_LINE_REGEXP.exec(logLineResponse)[6]);
         logLine.date = new Date(new Date().getFullYear(), month, day, hour, minute, second, millisecond);
 
-        logLine.tag = regexp.exec(logLineResponse)[8];
-        logLine.message = regexp.exec(logLineResponse)[9];
+        logLine.tag = ANDROID_LOG_LINE_REGEXP.exec(logLineResponse)[8];
+        logLine.message = ANDROID_LOG_LINE_REGEXP.exec(logLineResponse)[9];
       } catch (error) {
         logLine.type = LogLineType.verbose;
         logLine.date = undefined;
