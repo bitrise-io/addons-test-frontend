@@ -2,6 +2,7 @@ import { NgModule } from '@angular/core';
 import { CommonModule, DatePipe } from '@angular/common';
 import { InlineSVGModule } from 'ng-inline-svg';
 import { BrowserModule } from '@angular/platform-browser';
+import { FormsModule } from '@angular/forms';
 
 import { TestSuiteDetailsMenuTestCasesComponent } from './test-cases/test-suite-details-menu-test-cases.component';
 import { TestSuiteDetailsMenuPerformanceComponent } from './performance/test-suite-details-menu-performance.component';
@@ -15,7 +16,7 @@ import { TextFromDurationInMilliseconds } from 'src/app/pipes/text-from-duration
 import { PlaybackTimePipe } from 'src/app/pipes/playback-time.pipe';
 
 @NgModule({
-  imports: [BrowserModule, CommonModule, InlineSVGModule.forRoot()],
+  imports: [BrowserModule, CommonModule, FormsModule, InlineSVGModule.forRoot()],
   providers: [DatePipe],
   declarations: [
     TextFromDurationInMilliseconds,

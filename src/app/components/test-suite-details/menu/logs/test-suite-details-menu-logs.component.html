@@ -1,1 +1,18 @@
-logs
+<div class="name">
+  <span>Logs</span>
+  <a class="download-log" *ngIf="downloadLogURL" href="{{ downloadLogURL }}" target="_blank">
+    <div class="arrow" inlineSVG="/assets/images/download.svg"></div>
+    <span>Download Log</span>
+  </a>
+</div>
+<select class="type-filter-select" [(ngModel)]="selectedTypeFilterItem" (change)="selectedTypeFilterItemChanged()">
+  <option *ngFor="let typeFilterItem of typeFilterItems" [ngValue]="typeFilterItem">{{ typeFilterItem.name }}</option>
+</select>
+<div class="log-box" *ngIf="log">
+  <div class="line" *ngFor="let logLine of log.lines" [class]="logLine.typeCssClass" [ngClass]="{'expanded': logLine.isExpanded}" (click)="logLine.isExpanded = !logLine.isExpanded">
+    <div class="type-icon" [inlineSVG]="logLine.typeIconUrl"></div>
+    <div class="date">{{ logLine.date | date: 'HH:mm:ss:SSS' }}</div>
+    <div class="tag">{{ logLine.tag }}</div>
+    <div class="message">{{ logLine.message }}</div>
+  </div>
+</div>

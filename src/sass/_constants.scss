@@ -35,12 +35,14 @@ $brownish-grey: #616161 !default;
 $black: #222222 !default;
 $aqua: #0dd3c5 !default;
 $green-teal: #0fc389 !default;
+$sky-blue: #86c1e6 !default;
 $water-blue-two: #0d83cd !default;
 $ocean-blue: #054ab0 !default;
 $pale-grey: #f8f0ff !default;
 $violet-blue: #760fc3 !default;
 $dark-blue-grey: #351d48 !default;
 $vivid-pink: #ff2158 !default;
+$marigold: #ffc500 !default;
 
 // Z-indices
 
@@ -275,6 +277,11 @@ $zindex-metric_seek_value: 100;
 
 @mixin ui-modifier-code-block-greyer {
   color: $brownish-grey;
+}
+
+@mixin ui-modifier-code-block-dark {
+  color: $white;
+  background-color: $dark-blue-grey;
 }
 
 @mixin ui-modifier-code-block-multiliner {
