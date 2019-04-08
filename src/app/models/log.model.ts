@@ -5,7 +5,7 @@ import { LogLine, LogLineResponse, LogLineType } from './log-line.model';
 const IOS_LOG_LINE_REGEXP = /^(.*)  ([0-9]{0,2}) ([0-9]{0,2}):([0-9]{0,2}):([0-9]{0,2}) ([^\[]*)\[[0-9]*] <([^>]*)>: (.*)$/;
 const ANDROID_LOG_LINE_REGEXP = /^([0-9]+)-([0-9]+) ([0-9]+)\:([0-9]+)\:([0-9]+)\.([0-9]+)\: (?:[0-9]+\-[0-9]+\/.+ |)([V|D|I|W|E|A])\/(.+)\([0-9]+\)\: (.+)$/;
 
-export enum LogProjectType {
+export enum LogPlatform {
   ios = 0,
   android = 1
 }
@@ -17,19 +17,19 @@ export class Log implements Deserializable {
   lines: LogLine[];
 
   deserialize(logResponse: LogResponse) {
-    const detectedLogProjectType = [LogProjectType.ios, LogProjectType.android].find(
-      (logProjectType: LogProjectType) =>
+    const detectedLogPlatform = [LogPlatform.ios, LogPlatform.android].find(
+      (logPlatform: LogPlatform) =>
         logResponse
           .split('\n')
           .find((logLineResponse: LogLineResponse) =>
-            [IOS_LOG_LINE_REGEXP, ANDROID_LOG_LINE_REGEXP][logProjectType].test(logLineResponse)
+            [IOS_LOG_LINE_REGEXP, ANDROID_LOG_LINE_REGEXP][logPlatform].test(logLineResponse)
           ) !== undefined
     );
 
-    switch (detectedLogProjectType) {
-      case LogProjectType.ios:
+    switch (detectedLogPlatform) {
+      case LogPlatform.ios:
         return this.deserializeIos(logResponse);
-      case LogProjectType.android:
+      case LogPlatform.android:
         return this.deserializeAndroid(logResponse);
       default:
         this.lines = [];
