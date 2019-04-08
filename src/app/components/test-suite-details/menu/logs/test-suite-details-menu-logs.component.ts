@@ -17,6 +17,7 @@ export class TestSuiteDetailsMenuLogsComponent implements OnInit {
     name: 'Warnings'
   }];
   selectedTypeFilterItem = this.typeFilterItems[0];
+  maximumNumberOfVisibleLines = 20;
 
   log: Log;
 

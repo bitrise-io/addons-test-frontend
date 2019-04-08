@@ -9,10 +9,11 @@
   <option *ngFor="let typeFilterItem of typeFilterItems" [ngValue]="typeFilterItem">{{ typeFilterItem.name }}</option>
 </select>
 <div class="log-box" *ngIf="log">
-  <div class="line" *ngFor="let logLine of log.lines" [class]="logLine.typeCssClass" [ngClass]="{'expanded': logLine.isExpanded}" (click)="logLine.isExpanded = !logLine.isExpanded">
+  <div class="line" *ngFor="let logLine of log.lines | slice:0:maximumNumberOfVisibleLines" [class]="logLine.typeCssClass" [ngClass]="{'expanded': logLine.isExpanded}" (click)="logLine.isExpanded = !logLine.isExpanded">
     <div class="type-icon" [inlineSVG]="logLine.typeIconUrl"></div>
     <div class="date">{{ logLine.date | date: 'HH:mm:ss:SSS' }}</div>
     <div class="tag" title="{{ logLine.tag }}">{{ logLine.tag }}</div>
     <div class="message" title="{{ logLine.message }}">{{ logLine.message }}</div>
   </div>
 </div>
+<button class="load-more-logs" (click)="maximumNumberOfVisibleLines = maximumNumberOfVisibleLines + 20" *ngIf="maximumNumberOfVisibleLines < log.lines.length">Load more</button>

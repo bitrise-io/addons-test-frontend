@@ -95,12 +95,12 @@
       }
     }
 
-    @include style_for_type("verbose", $sky-blue);
-    @include style_for_type("debug", $sky-blue);
-    @include style_for_type("info", $water-blue-two);
-    @include style_for_type("warning", $marigold);
-    @include style_for_type("error", $vivid-pink);
-    @include style_for_type("assert", $vivid-pink);
+    @include style_for_type('verbose', $sky-blue);
+    @include style_for_type('debug', $sky-blue);
+    @include style_for_type('info', $water-blue-two);
+    @include style_for_type('warning', $marigold);
+    @include style_for_type('error', $vivid-pink);
+    @include style_for_type('assert', $vivid-pink);
 
     @include width-max(1200px) {
       .date {
@@ -116,9 +116,18 @@
       flex-direction: column;
       align-items: flex-start;
 
-      .date, .tag, .message {
+      .date,
+      .tag,
+      .message {
         width: 100%;
       }
     }
   }
+}
+
+.load-more-logs {
+  @include ui-element-button-secondary;
+  @include ui-modifier-button-shadow;
+  width: 100%;
+  margin-top: 2 * $grid-size;
 }
