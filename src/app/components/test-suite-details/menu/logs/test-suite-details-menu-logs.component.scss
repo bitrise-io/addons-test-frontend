@@ -34,6 +34,10 @@
   display: block;
   width: 28 * $grid-size;
   margin-top: 2 * $grid-size;
+
+  @include width-max-screen-small {
+    width: 100%;
+  }
 }
 
 .log-box {

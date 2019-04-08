@@ -29,13 +29,15 @@ export class Log implements Deserializable {
   }
 
   deserializeAndroid(logResponse: LogResponse) {
-    this.lines = logResponse.split('\n').map(function(logLineResponse: LogLineResponse) {
+    this.lines = logResponse.split('\n').map((logLineResponse: LogLineResponse) => {
       const logLine = new LogLine();
 
       try {
         const regexp = /^([0-9]+)-([0-9]+) ([0-9]+)\:([0-9]+)\:([0-9]+)\.([0-9]+)\: (?:[0-9]+\-[0-9]+\/.+ |)([V|D|I|W|E|A])\/(.+)\([0-9]+\)\: (.+)$/;
 
-        logLine.type = ['A','E','W','I','D','V'].findIndex((typeCharacter) => typeCharacter === regexp.exec(logLineResponse)[7]);
+        logLine.type = ['A', 'E', 'W', 'I', 'D', 'V'].findIndex(
+          (typeCharacter) => typeCharacter === regexp.exec(logLineResponse)[7]
+        );
 
         const month = Number(regexp.exec(logLineResponse)[1]);
         const day = Number(regexp.exec(logLineResponse)[2]);
