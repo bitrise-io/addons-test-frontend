@@ -1,6 +1,6 @@
 import { TestBed, fakeAsync } from '@angular/core/testing';
 
-import { BackendService, BACKEND_SERVICE, TestArtifactsResult, TestReportsResult } from './backend.model';
+import { BackendService, BACKEND_SERVICE, TestArtifactsResult, TestReportsResult, LogResult } from './backend.model';
 import { MockServicesModule } from '../services.mock.module';
 
 import { Performance } from 'src/app/models/performance.model';
@@ -62,6 +62,14 @@ describe('BackendService', () => {
 
         keys = Object.keys(result.testReports[1]);
         expect(keys).toContain('testSuites');
+      });
+    });
+
+    it('should load log data', () => {
+      service.getLog().subscribe((logResult: LogResult) => {
+        let keys = Object.keys(logResult);
+        expect(keys).toContain('log');
+        expect(keys).toContain('downloadURL');
       });
     });
   });

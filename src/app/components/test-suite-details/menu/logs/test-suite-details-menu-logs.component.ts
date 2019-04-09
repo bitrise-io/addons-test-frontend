@@ -1,6 +1,9 @@
 import { Component, OnInit } from '@angular/core';
+import { Observable } from 'rxjs';
+import { Store } from '@ngrx/store';
 import { Log } from 'src/app/models/log.model';
 import { LogLine, LogLineType } from 'src/app/models/log-line.model';
+import { FetchLog } from 'src/app/store/log/actions';
 
 const INITIAL_MAXIMUM_NUMBER_OF_VISIBLE_LINES = 20;
 
@@ -30,8 +33,20 @@ export class TestSuiteDetailsMenuLogsComponent implements OnInit {
   maximumNumberOfVisibleLines: Number;
   INITIAL_MAXIMUM_NUMBER_OF_VISIBLE_LINES = INITIAL_MAXIMUM_NUMBER_OF_VISIBLE_LINES;
 
+  log$: Observable<any>;
   log: Log;
   filteredLogLines: LogLine[];
+
+  constructor(
+    private store: Store<{
+      log: {
+        log: Log;
+        downloadURL: string;
+      };
+    }>
+  ) {
+    this.log$ = store.select('log');
+  }
 
   selectedTypeFilterItemChanged() {
     this.updateFilteredLogLines();
@@ -39,11 +54,16 @@ export class TestSuiteDetailsMenuLogsComponent implements OnInit {
   }
 
   ngOnInit() {
-    const logResponse = '';
-    this.log = new Log().deserialize(logResponse);
+    this.store.dispatch(new FetchLog());
 
-    this.updateFilteredLogLines();
-    this.resetMaximumNumberOfVisibleLines();
+    this.log$.subscribe((logData: any) => {
+      console.log(logData);
+      this.log = logData.log;
+      this.downloadLogURL = logData.downloadURL;
+
+      this.updateFilteredLogLines();
+      this.resetMaximumNumberOfVisibleLines();
+    });
   }
 
   updateFilteredLogLines() {
