@@ -67,7 +67,7 @@ describe('BackendService', () => {
 
     it('should load log data', () => {
       service.getLog().subscribe((logResult: LogResult) => {
-        let keys = Object.keys(logResult);
+        const keys = Object.keys(logResult);
         expect(keys).toContain('log');
         expect(keys).toContain('downloadURL');
       });

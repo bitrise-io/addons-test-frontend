@@ -2,7 +2,9 @@ import { Injectable } from '@angular/core';
 import { Deserializable } from './deserializable.model';
 import { LogLine, LogLineResponse, LogLineType } from './log-line.model';
 
+// tslint:disable-next-line:max-line-length
 const IOS_LOG_LINE_REGEXP = /^(.*)  ([0-9]{0,2}) ([0-9]{0,2}):([0-9]{0,2}):([0-9]{0,2}) ([^\[]*)\[[0-9]*] <([^>]*)>: (.*)$/;
+// tslint:disable-next-line:max-line-length
 const ANDROID_LOG_LINE_REGEXP = /^([0-9]+)-([0-9]+) ([0-9]+)\:([0-9]+)\:([0-9]+)\.([0-9]+)\: (?:[0-9]+\-[0-9]+\/.+ |)([V|D|I|W|E|A])\/(.+)\([0-9]+\)\: (.+)$/;
 
 export enum LogPlatform {

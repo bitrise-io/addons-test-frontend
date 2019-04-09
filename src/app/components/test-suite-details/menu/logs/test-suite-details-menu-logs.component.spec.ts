@@ -103,7 +103,7 @@ describe('TestSuiteDetailsMenuLogsComponent', () => {
 01-01 08:00:19.123: D/AndroidRuntime(18): Praesent euismod eleifend nibh, ut facilisis nunc maximus sed
 01-01 08:00:20.123: D/AndroidRuntime(19): Fusce laoreet laoreet massa, vitae mattis odio commodo vitae
 01-01 08:00:21.123: D/AndroidRuntime(20): Etiam vitae sollicitudin ante, vitae posuere velit
-01-01 08:00:22.123: D/AndroidRuntime(21): Nulla consequat, nisl eget scelerisque porttitor, est ex condimentum urna, ac pharetra lectus erat a ante`
+01-01 08:00:22.123: D/AndroidRuntime(21): Nulla consequat, nisl eget scelerisque porttitor`
           ),
           downloadURL: 'https://bitrise.io/download-log'
         }

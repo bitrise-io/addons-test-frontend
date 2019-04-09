@@ -8,24 +8,11 @@ describe('Log reducer', () => {
     downloadURL: null
   };
 
-  it('updates the state with iOS log', () => {
+  it('updates the state with log', () => {
     const newState = logReducer(
       initialState,
       new ReceiveLog({
-        log: new Log().deserialize('Jan  3 06:16:37 iPhone locationd[64] <Notice>: @WifiFlow, nexttimer, 15\nJan  3 06:16:37 iPhone locationd[64] <Notice>: @WifiFlow, nexttimer, 15'),
-        downloadURL: 'download-url'
-      })
-    );
-
-    expect(newState.log.lines.length).toBe(2);
-    expect(newState.downloadURL).toBe('download-url');
-  });
-
-  it('updates the state with Android log', () => {
-    const newState = logReducer(
-      initialState,
-      new ReceiveLog({
-        log: new Log().deserialize('01-01 08:00:04.123: I/Remoter(3): Sed eu luctus ex\n01-01 08:00:04.123: I/Remoter(3): Sed eu luctus ex'),
+        log: new Log().deserialize('test log line #1\ntest log line #2'),
         downloadURL: 'download-url'
       })
     );
