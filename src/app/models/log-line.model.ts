@@ -19,19 +19,6 @@ export class LogLine {
   message: string;
   isExpanded: false;
 
-  public static typeName(type: LogLineType): string {
-    const typeNames = {
-      [LogLineType.assert]: 'Assert',
-      [LogLineType.error]: 'Error',
-      [LogLineType.warning]: 'Warning',
-      [LogLineType.info]: 'Info',
-      [LogLineType.debug]: 'Debug',
-      [LogLineType.verbose]: 'Verbose'
-    };
-
-    return typeNames[type];
-  }
-
   public static typeCssClass(type: LogLineType): string {
     const typeCssClasses = {
       [LogLineType.assert]: 'assert',
@@ -56,10 +43,6 @@ export class LogLine {
     };
 
     return typeCssClasses[type];
-  }
-
-  get typeName() {
-    return LogLine.typeName(this.type);
   }
 
   get typeCssClass() {

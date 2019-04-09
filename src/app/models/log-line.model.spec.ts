@@ -1,24 +1,7 @@
 import { LogLine, LogLineType } from './log-line.model';
 
-fdescribe('LogLine', () => {
+describe('LogLine', () => {
   let logLine: LogLine;
-
-  describe('class method typeName', () => {
-    [
-      { logLineType: LogLineType.assert, expectedName: 'Assert' },
-      { logLineType: LogLineType.error, expectedName: 'Error' },
-      { logLineType: LogLineType.warning, expectedName: 'Warning' },
-      { logLineType: LogLineType.info, expectedName: 'Info' },
-      { logLineType: LogLineType.debug, expectedName: 'Debug' },
-      { logLineType: LogLineType.verbose, expectedName: 'Verbose' }
-    ].forEach((specConfig: any) => {
-      describe(`when providing type ${specConfig.logLineType}`, () => {
-        it(`returns name ${specConfig.expectedName}`, () => {
-          expect(LogLine.typeName(specConfig.logLineType)).toBe(specConfig.expectedName);
-        });
-      });
-    });
-  });
 
   describe('class method typeCssClass', () => {
     [
@@ -49,31 +32,6 @@ fdescribe('LogLine', () => {
       describe(`when providing type ${specConfig.logLineType}`, () => {
         it(`returns icon URL ${specConfig.expectedIconUrl}`, () => {
           expect(LogLine.typeIconUrl(specConfig.logLineType)).toBe(specConfig.expectedIconUrl);
-        });
-      });
-    });
-  });
-
-  describe('typeName', () => {
-    beforeEach(() => {
-      logLine = new LogLine();
-    });
-
-    [
-      { logLineType: LogLineType.assert, expectedName: 'Assert' },
-      { logLineType: LogLineType.error, expectedName: 'Error' },
-      { logLineType: LogLineType.warning, expectedName: 'Warning' },
-      { logLineType: LogLineType.info, expectedName: 'Info' },
-      { logLineType: LogLineType.debug, expectedName: 'Debug' },
-      { logLineType: LogLineType.verbose, expectedName: 'Verbose' }
-    ].forEach((specConfig: any) => {
-      describe(`when test case has type ${specConfig.logLineType}`, () => {
-        beforeEach(() => {
-          logLine.type = specConfig.logLineType;
-        });
-
-        it(`returns name ${specConfig.expectedName}`, () => {
-          expect(logLine.typeName).toBe(specConfig.expectedName);
         });
       });
     });
