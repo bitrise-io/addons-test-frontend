@@ -117,7 +117,7 @@ describe('TestSuiteDetailsMenuLogsComponent', () => {
     });
   });
 
-  fdescribe('when type filter is turned on', () => {
+  describe('when type filter is turned on', () => {
     let dropdownElement: DebugElement;
 
     beforeEach(() => {

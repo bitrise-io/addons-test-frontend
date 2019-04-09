@@ -32,7 +32,15 @@ export class Log implements Deserializable {
       case LogPlatform.android:
         return this.deserializeAndroid(logResponse);
       default:
-        this.lines = [];
+        this.lines = logResponse.split('\n').map((logLineData: string) => {
+          const logLine = new LogLine();
+          logLine.type = null;
+          logLine.date = null;
+          logLine.tag = null;
+          logLine.message = logLineData;
+
+          return logLine;
+        });
 
         return this;
     }
@@ -80,8 +88,8 @@ export class Log implements Deserializable {
         logLine.message = IOS_LOG_LINE_REGEXP.exec(logLineResponse)[8];
       } catch (error) {
         logLine.type = LogLineType.verbose;
-        logLine.date = undefined;
-        logLine.tag = undefined;
+        logLine.date = null;
+        logLine.tag = null;
         logLine.message = logLineResponse;
       }
 
@@ -100,7 +108,7 @@ export class Log implements Deserializable {
           (typeCharacter) => typeCharacter === ANDROID_LOG_LINE_REGEXP.exec(logLineResponse)[7]
         );
 
-        const month = Number(ANDROID_LOG_LINE_REGEXP.exec(logLineResponse)[1]);
+        const month = Number(ANDROID_LOG_LINE_REGEXP.exec(logLineResponse)[1]) - 1;
         const day = Number(ANDROID_LOG_LINE_REGEXP.exec(logLineResponse)[2]);
         const hour = Number(ANDROID_LOG_LINE_REGEXP.exec(logLineResponse)[3]);
         const minute = Number(ANDROID_LOG_LINE_REGEXP.exec(logLineResponse)[4]);
