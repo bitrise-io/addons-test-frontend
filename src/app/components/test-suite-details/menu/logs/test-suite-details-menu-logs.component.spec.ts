@@ -9,7 +9,7 @@ import { InlineSVGModule } from 'ng-inline-svg';
 import { TestSuiteDetailsMenuLogsComponent } from './test-suite-details-menu-logs.component';
 import { Log } from '../../../../models/log.model';
 import logReducer from 'src/app/store/log/reducer';
-import { LogLine, LogLineType } from 'src/app/models/log-line.model';
+import { LogLine, LogLineLevel } from 'src/app/models/log-line.model';
 
 describe('TestSuiteDetailsMenuLogsComponent', () => {
   let fixture: ComponentFixture<TestSuiteDetailsMenuLogsComponent>;
@@ -96,7 +96,7 @@ describe('TestSuiteDetailsMenuLogsComponent', () => {
     });
   });
 
-  describe('when type filter is turned on', () => {
+  describe('when level filter is turned on', () => {
     let dropdownElement: DebugElement;
 
     beforeEach(() => {
@@ -104,13 +104,13 @@ describe('TestSuiteDetailsMenuLogsComponent', () => {
       log.lines = Array(7)
         .fill(null)
         .map(() => new LogLine());
-      log.lines[0].type = LogLineType.warning;
-      log.lines[1].type = LogLineType.warning;
-      log.lines[2].type = LogLineType.warning;
-      log.lines[3].type = LogLineType.info;
-      log.lines[4].type = LogLineType.info;
-      log.lines[5].type = LogLineType.error;
-      log.lines[6].type = LogLineType.error;
+      log.lines[0].level = LogLineLevel.warning;
+      log.lines[1].level = LogLineLevel.warning;
+      log.lines[2].level = LogLineLevel.warning;
+      log.lines[3].level = LogLineLevel.info;
+      log.lines[4].level = LogLineLevel.info;
+      log.lines[5].level = LogLineLevel.error;
+      log.lines[6].level = LogLineLevel.error;
       store.setState({
         log: {
           log: log,
@@ -120,14 +120,14 @@ describe('TestSuiteDetailsMenuLogsComponent', () => {
 
       fixture.detectChanges();
 
-      dropdownElement = fixture.debugElement.query(By.css('.type-filter-select'));
+      dropdownElement = fixture.debugElement.query(By.css('.level-filter-select'));
       dropdownElement.nativeElement.value = dropdownElement.nativeElement.options[1].value;
       dropdownElement.nativeElement.dispatchEvent(new Event('change'));
 
       fixture.detectChanges();
     });
 
-    it('only renders log lines with that type', () => {
+    it('only renders log lines with that level', () => {
       expect(fixture.debugElement.queryAll(By.css('.line')).length).toBe(2);
     });
   });

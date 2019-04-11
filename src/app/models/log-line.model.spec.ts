@@ -1,65 +1,65 @@
-import { LogLine, LogLineType } from './log-line.model';
+import { LogLine, LogLineLevel } from './log-line.model';
 import { Platform } from './platform.model';
 
 describe('LogLine', () => {
   let logLine: LogLine;
 
   [
-    { logLineType: LogLineType.assert, expectedCssClass: 'assert', expectedIconUrl: '/assets/images/sign-cross.svg' },
-    { logLineType: LogLineType.error, expectedCssClass: 'error', expectedIconUrl: '/assets/images/sign-cross.svg' },
+    { logLineLevel: LogLineLevel.assert, expectedCssClass: 'assert', expectedIconUrl: '/assets/images/sign-cross.svg' },
+    { logLineLevel: LogLineLevel.error, expectedCssClass: 'error', expectedIconUrl: '/assets/images/sign-cross.svg' },
     {
-      logLineType: LogLineType.warning,
+      logLineLevel: LogLineLevel.warning,
       expectedCssClass: 'warning',
       expectedIconUrl: '/assets/images/sign-exclamationmark.svg'
     },
-    { logLineType: LogLineType.info, expectedCssClass: 'info', expectedIconUrl: '/assets/images/sign-info.svg' },
-    { logLineType: LogLineType.debug, expectedCssClass: 'debug', expectedIconUrl: '/assets/images/bug.svg' },
-    { logLineType: LogLineType.verbose, expectedCssClass: 'verbose', expectedIconUrl: '/assets/images/bug.svg' }
+    { logLineLevel: LogLineLevel.info, expectedCssClass: 'info', expectedIconUrl: '/assets/images/sign-info.svg' },
+    { logLineLevel: LogLineLevel.debug, expectedCssClass: 'debug', expectedIconUrl: '/assets/images/bug.svg' },
+    { logLineLevel: LogLineLevel.verbose, expectedCssClass: 'verbose', expectedIconUrl: '/assets/images/bug.svg' }
   ].forEach((specConfig: any) => {
-    describe('class method typeCssClass', () => {
-      describe(`when providing type ${specConfig.logLineType}`, () => {
+    describe('class method levelCssClass', () => {
+      describe(`when providing level ${specConfig.logLineLevel}`, () => {
         it(`returns CSS class ${specConfig.expectedCssClass}`, () => {
-          expect(LogLine.typeCssClass(specConfig.logLineType)).toBe(specConfig.expectedCssClass);
+          expect(LogLine.levelCssClass(specConfig.logLineLevel)).toBe(specConfig.expectedCssClass);
         });
       });
     });
 
-    describe('class method typeIconUrl', () => {
-      describe(`when providing type ${specConfig.logLineType}`, () => {
+    describe('class method levelIconUrl', () => {
+      describe(`when providing level ${specConfig.logLineLevel}`, () => {
         it(`returns icon URL ${specConfig.expectedIconUrl}`, () => {
-          expect(LogLine.typeIconUrl(specConfig.logLineType)).toBe(specConfig.expectedIconUrl);
+          expect(LogLine.levelIconUrl(specConfig.logLineLevel)).toBe(specConfig.expectedIconUrl);
         });
       });
     });
 
-    describe('typeCssClass', () => {
+    describe('levelCssClass', () => {
       beforeEach(() => {
         logLine = new LogLine();
       });
 
-      describe(`when test case has type ${specConfig.logLineType}`, () => {
+      describe(`when test case has level ${specConfig.logLineLevel}`, () => {
         beforeEach(() => {
-          logLine.type = specConfig.logLineType;
+          logLine.level = specConfig.logLineLevel;
         });
 
         it(`returns CSS class ${specConfig.expectedCssClass}`, () => {
-          expect(logLine.typeCssClass).toBe(specConfig.expectedCssClass);
+          expect(logLine.levelCssClass).toBe(specConfig.expectedCssClass);
         });
       });
     });
 
-    describe('typeIconUrl', () => {
+    describe('levelIconUrl', () => {
       beforeEach(() => {
         logLine = new LogLine();
       });
 
-      describe(`when test case has type ${specConfig.logLineType}`, () => {
+      describe(`when test case has level ${specConfig.logLineLevel}`, () => {
         beforeEach(() => {
-          logLine.type = specConfig.logLineType;
+          logLine.level = specConfig.logLineLevel;
         });
 
         it(`returns icon URL ${specConfig.expectedIconUrl}`, () => {
-          expect(logLine.typeIconUrl).toBe(specConfig.expectedIconUrl);
+          expect(logLine.levelIconUrl).toBe(specConfig.expectedIconUrl);
         });
       });
     });
@@ -162,7 +162,7 @@ describe('LogLine', () => {
     {
       method: 'deserializeIos',
       rawLogLine: 'Jan  5 08:00:02 iPhone lockdownd[71] <Notice>: Praesent mollis risus ac orci cursus feugiat',
-      expectedType: LogLineType.info,
+      expectedLevel: LogLineLevel.info,
       expectedDate: new Date(`1900-01-05 08:00:02`),
       expectedTag: 'iPhone lockdownd',
       expectedMessage: 'Praesent mollis risus ac orci cursus feugiat'
@@ -171,7 +171,7 @@ describe('LogLine', () => {
       method: 'deserializeAndroid',
       rawLogLine:
         '01-01 08:00:08.123: D/AndroidRuntime(7): Integer dignissim massa ante, euismod aliquet metus sollicitudin sit amet',
-      expectedType: LogLineType.debug,
+      expectedLevel: LogLineLevel.debug,
       expectedDate: new Date(`1900-01-01 08:00:08:123`),
       expectedTag: 'AndroidRuntime',
       expectedMessage: 'Integer dignissim massa ante, euismod aliquet metus sollicitudin sit amet'
@@ -179,7 +179,7 @@ describe('LogLine', () => {
     {
       method: 'deserializeUnknown',
       rawLogLine: 'Lorem ipsum dolor sit amet',
-      expectedType: null,
+      expectedLevel: null,
       expectedDate: null,
       expectedTag: null,
       expectedMessage: 'Lorem ipsum dolor sit amet'
@@ -190,10 +190,10 @@ describe('LogLine', () => {
         logLine = new LogLine();
       });
 
-      it(`updates line with proper type, date, tag, message`, () => {
+      it(`updates line with proper level, date, tag, message`, () => {
         logLine[specConfig.method](specConfig.rawLogLine);
 
-        expect(logLine.type).toBe(specConfig.expectedType);
+        expect(logLine.level).toBe(specConfig.expectedLevel);
         expect(logLine.date).toEqual(specConfig.expectedDate);
         expect(logLine.tag).toBe(specConfig.expectedTag);
         expect(logLine.message).toBe(specConfig.expectedMessage);

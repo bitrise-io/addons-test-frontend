@@ -2,7 +2,7 @@ import { Injectable } from '@angular/core';
 import { Deserializable } from './deserializable.model';
 import { Platform, IOS_LOG_LINE_REGEXP, ANDROID_LOG_LINE_REGEXP } from './platform.model';
 
-export enum LogLineType {
+export enum LogLineLevel {
   assert = 0,
   error = 1,
   warning = 2,
@@ -16,35 +16,35 @@ export type RawLogLine = string;
 @Injectable()
 export class LogLine implements Deserializable {
   date: Date;
-  type: LogLineType;
+  level: LogLineLevel;
   tag: string;
   message: string;
   isExpanded: false;
 
-  public static typeCssClass(type: LogLineType): string {
-    const typeCssClasses = {
-      [LogLineType.assert]: 'assert',
-      [LogLineType.error]: 'error',
-      [LogLineType.warning]: 'warning',
-      [LogLineType.info]: 'info',
-      [LogLineType.debug]: 'debug',
-      [LogLineType.verbose]: 'verbose'
+  public static levelCssClass(level: LogLineLevel): string {
+    const levelCssClasses = {
+      [LogLineLevel.assert]: 'assert',
+      [LogLineLevel.error]: 'error',
+      [LogLineLevel.warning]: 'warning',
+      [LogLineLevel.info]: 'info',
+      [LogLineLevel.debug]: 'debug',
+      [LogLineLevel.verbose]: 'verbose'
     };
 
-    return typeCssClasses[type];
+    return levelCssClasses[level];
   }
 
-  public static typeIconUrl(type: LogLineType): string {
-    const typeCssClasses = {
-      [LogLineType.assert]: '/assets/images/sign-cross.svg',
-      [LogLineType.error]: '/assets/images/sign-cross.svg',
-      [LogLineType.warning]: '/assets/images/sign-exclamationmark.svg',
-      [LogLineType.info]: '/assets/images/sign-info.svg',
-      [LogLineType.debug]: '/assets/images/bug.svg',
-      [LogLineType.verbose]: '/assets/images/bug.svg'
+  public static levelIconUrl(level: LogLineLevel): string {
+    const levelCssClasses = {
+      [LogLineLevel.assert]: '/assets/images/sign-cross.svg',
+      [LogLineLevel.error]: '/assets/images/sign-cross.svg',
+      [LogLineLevel.warning]: '/assets/images/sign-exclamationmark.svg',
+      [LogLineLevel.info]: '/assets/images/sign-info.svg',
+      [LogLineLevel.debug]: '/assets/images/bug.svg',
+      [LogLineLevel.verbose]: '/assets/images/bug.svg'
     };
 
-    return typeCssClasses[type];
+    return levelCssClasses[level];
   }
 
   public static detectPlatform(rawLogLine: RawLogLine): Platform {
@@ -58,12 +58,12 @@ export class LogLine implements Deserializable {
     return Platform.unknown;
   }
 
-  get typeCssClass() {
-    return LogLine.typeCssClass(this.type);
+  get levelCssClass() {
+    return LogLine.levelCssClass(this.level);
   }
 
-  get typeIconUrl() {
-    return LogLine.typeIconUrl(this.type);
+  get levelIconUrl() {
+    return LogLine.levelIconUrl(this.level);
   }
 
   deserialize(rawLogLine: RawLogLine) {
@@ -82,7 +82,7 @@ export class LogLine implements Deserializable {
   }
 
   deserializeIos(rawLogLine: RawLogLine) {
-    const [_, monthAbbreviation, day, hour, minute, second, tag, iosLogType, message] = IOS_LOG_LINE_REGEXP.exec(
+    const [_, monthAbbreviation, day, hour, minute, second, tag, iosLogLevel, message] = IOS_LOG_LINE_REGEXP.exec(
       rawLogLine
     );
 
@@ -91,17 +91,17 @@ export class LogLine implements Deserializable {
     );
     this.date = new Date(null, month, Number(day), Number(hour), Number(minute), Number(second));
 
-    switch (iosLogType) {
+    switch (iosLogLevel) {
       case 'Notice':
-        this.type = LogLineType.info;
+        this.level = LogLineLevel.info;
 
         break;
       case 'Error':
-        this.type = LogLineType.error;
+        this.level = LogLineLevel.error;
 
         break;
       default:
-        throw new Error(`Unknown type: ${iosLogType}.`);
+        throw new Error(`Unknown level: ${iosLogLevel}.`);
     }
 
     this.tag = tag;
@@ -119,7 +119,7 @@ export class LogLine implements Deserializable {
       minute,
       second,
       millisecond,
-      androidLogType,
+      androidLogLevel,
       tag,
       message
     ] = ANDROID_LOG_LINE_REGEXP.exec(rawLogLine);
@@ -134,9 +134,9 @@ export class LogLine implements Deserializable {
       Number(millisecond)
     );
 
-    this.type = ['A', 'E', 'W', 'I', 'D', 'V'].findIndex((typeCharacter) => typeCharacter === androidLogType);
-    if (this.type === -1) {
-      throw Error(`Unknown type: ${androidLogType}.`);
+    this.level = ['A', 'E', 'W', 'I', 'D', 'V'].findIndex((levelCharacter) => levelCharacter === androidLogLevel);
+    if (this.level === -1) {
+      throw Error(`Unknown level: ${androidLogLevel}.`);
     }
 
     this.tag = tag;
@@ -146,7 +146,7 @@ export class LogLine implements Deserializable {
   }
 
   deserializeUnknown(rawLogLine: RawLogLine) {
-    this.type = null;
+    this.level = null;
     this.date = null;
     this.tag = null;
     this.message = rawLogLine;

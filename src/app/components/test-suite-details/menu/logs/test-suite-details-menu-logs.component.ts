@@ -2,7 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { Observable } from 'rxjs';
 import { Store } from '@ngrx/store';
 import { Log } from 'src/app/models/log.model';
-import { LogLine, LogLineType } from 'src/app/models/log-line.model';
+import { LogLine, LogLineLevel } from 'src/app/models/log-line.model';
 import { FetchLog } from 'src/app/store/log/actions';
 
 const INITIAL_MAXIMUM_NUMBER_OF_VISIBLE_LINES = 20;
@@ -15,21 +15,21 @@ const INITIAL_MAXIMUM_NUMBER_OF_VISIBLE_LINES = 20;
 export class TestSuiteDetailsMenuLogsComponent implements OnInit {
   downloadLogURL: string;
 
-  typeFilterItems = [
+  levelFilterItems = [
     {
       name: 'All Logs',
-      acceptedTypes: null
+      acceptedLevels: null
     },
     {
       name: 'Errors',
-      acceptedTypes: [LogLineType.assert, LogLineType.error]
+      acceptedLevels: [LogLineLevel.assert, LogLineLevel.error]
     },
     {
       name: 'Warnings',
-      acceptedTypes: [LogLineType.warning]
+      acceptedLevels: [LogLineLevel.warning]
     }
   ];
-  selectedTypeFilterItem = this.typeFilterItems[0];
+  selectedLevelFilterItem = this.levelFilterItems[0];
   maximumNumberOfVisibleLines: Number;
   INITIAL_MAXIMUM_NUMBER_OF_VISIBLE_LINES = INITIAL_MAXIMUM_NUMBER_OF_VISIBLE_LINES;
 
@@ -48,7 +48,7 @@ export class TestSuiteDetailsMenuLogsComponent implements OnInit {
     this.log$ = store.select('log');
   }
 
-  selectedTypeFilterItemChanged() {
+  selectedLevelFilterItemChanged() {
     this.updateFilteredLogLines();
     this.resetMaximumNumberOfVisibleLines();
   }
@@ -68,7 +68,7 @@ export class TestSuiteDetailsMenuLogsComponent implements OnInit {
   updateFilteredLogLines() {
     this.filteredLogLines = this.log.lines.filter(
       (logLine: LogLine) =>
-        !this.selectedTypeFilterItem.acceptedTypes || this.selectedTypeFilterItem.acceptedTypes.includes(logLine.type)
+        !this.selectedLevelFilterItem.acceptedLevels || this.selectedLevelFilterItem.acceptedLevels.includes(logLine.level)
     );
   }
 

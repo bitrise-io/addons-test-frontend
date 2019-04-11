@@ -5,18 +5,18 @@
     <span>Download Log</span>
   </a>
 </div>
-<select class="type-filter-select" [(ngModel)]="selectedTypeFilterItem" (change)="selectedTypeFilterItemChanged()">
-  <option *ngFor="let typeFilterItem of typeFilterItems" [ngValue]="typeFilterItem">{{ typeFilterItem.name }}</option>
+<select class="level-filter-select" [(ngModel)]="selectedLevelFilterItem" (change)="selectedLevelFilterItemChanged()">
+  <option *ngFor="let levelFilterItem of levelFilterItems" [ngValue]="levelFilterItem">{{ levelFilterItem.name }}</option>
 </select>
 <div class="log-box" *ngIf="log">
   <div
     class="line"
     *ngFor="let logLine of (filteredLogLines | slice: 0:maximumNumberOfVisibleLines)"
-    [class]="logLine.typeCssClass"
+    [class]="logLine.levelCssClass"
     [ngClass]="{ expanded: logLine.isExpanded }"
     (click)="logLine.isExpanded = !logLine.isExpanded"
   >
-    <div class="type-icon" [inlineSVG]="logLine.typeIconUrl"></div>
+    <div class="level-icon" [inlineSVG]="logLine.levelIconUrl"></div>
     <div class="date">{{ logLine.date | date: 'HH:mm:ss:SSS' }}</div>
     <div class="tag" title="{{ logLine.tag }}">{{ logLine.tag }}</div>
     <div class="message" title="{{ logLine.message }}">{{ logLine.message }}</div>
