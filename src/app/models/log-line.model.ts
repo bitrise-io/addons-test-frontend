@@ -1,6 +1,12 @@
 import { Injectable } from '@angular/core';
 import { Deserializable } from './deserializable.model';
-import { Platform, IOS_LOG_LINE_REGEXP, ANDROID_LOG_LINE_REGEXP } from './platform.model';
+import {
+  Platform,
+  IOS_LOG_LINE_REGEXP,
+  ANDROID_LOG_LINE_REGEXP,
+  AndroidLogLineLevelLookup,
+  IosLogLineLevelLookup
+} from './platform.model';
 
 export enum LogLineLevel {
   assert = 0,
@@ -91,17 +97,9 @@ export class LogLine implements Deserializable {
     );
     this.date = new Date(null, month, Number(day), Number(hour), Number(minute), Number(second));
 
-    switch (iosLogLevel) {
-      case 'Notice':
-        this.level = LogLineLevel.info;
-
-        break;
-      case 'Error':
-        this.level = LogLineLevel.error;
-
-        break;
-      default:
-        throw new Error(`Unknown level: ${iosLogLevel}.`);
+    this.level = IosLogLineLevelLookup[iosLogLevel];
+    if (this.level === undefined) {
+      throw Error(`Unknown level: ${iosLogLevel}.`);
     }
 
     this.tag = tag;
@@ -134,8 +132,8 @@ export class LogLine implements Deserializable {
       Number(millisecond)
     );
 
-    this.level = ['A', 'E', 'W', 'I', 'D', 'V'].findIndex((levelCharacter) => levelCharacter === androidLogLevel);
-    if (this.level === -1) {
+    this.level = AndroidLogLineLevelLookup[androidLogLevel];
+    if (this.level === undefined) {
       throw Error(`Unknown level: ${androidLogLevel}.`);
     }
 
