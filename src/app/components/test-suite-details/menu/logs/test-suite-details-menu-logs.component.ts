@@ -57,7 +57,6 @@ export class TestSuiteDetailsMenuLogsComponent implements OnInit {
     this.store.dispatch(new FetchLog());
 
     this.log$.subscribe((logData: any) => {
-      console.log(logData);
       this.log = logData.log;
       this.downloadLogURL = logData.downloadURL;
 
