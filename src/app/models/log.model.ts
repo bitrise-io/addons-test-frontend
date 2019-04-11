@@ -1,43 +1,43 @@
 import { Injectable } from '@angular/core';
 import { Deserializable } from './deserializable.model';
 import { Platform } from './platform.model';
-import { LogLine, LogLineResponse } from './log-line.model';
+import { LogLine, RawLogLine } from './log-line.model';
 
-export type LogResponse = string;
+export type RawLog = string;
 
 @Injectable()
 export class Log implements Deserializable {
   lines: LogLine[];
 
-  public static detectPlatform(logLineResponses: LogLineResponse[]): Platform {
+  public static detectPlatform(rawLogLines: RawLogLine[]): Platform {
     const detectedPlatform = [Platform.ios, Platform.android].find(
       (platform: Platform) =>
-        logLineResponses.find(
-          (logLineResponse: LogLineResponse) => LogLine.detectPlatform(logLineResponse) === platform
+        rawLogLines.find(
+          (rawLogLine: RawLogLine) => LogLine.detectPlatform(rawLogLine) === platform
         ) !== undefined
     );
 
     return detectedPlatform !== undefined ? detectedPlatform : Platform.unknown;
   }
 
-  deserialize(logResponse: LogResponse) {
-    const logLineResponses = logResponse.split('\n');
-    const detectedPlatform = Log.detectPlatform(logLineResponses);
+  deserialize(rawLog: RawLog) {
+    const rawLogLines = rawLog.split('\n');
+    const detectedPlatform = Log.detectPlatform(rawLogLines);
 
     this.lines = [];
-    logLineResponses.forEach((logLineResponse: LogLineResponse) => {
+    rawLogLines.forEach((rawLogLine: RawLogLine) => {
       const logLine = new LogLine();
 
-      if (LogLine.detectPlatform(logLineResponse) === detectedPlatform) {
-        logLine.deserialize(logLineResponse);
+      if (LogLine.detectPlatform(rawLogLine) === detectedPlatform) {
+        logLine.deserialize(rawLogLine);
       } else {
         if (this.lines.length > 0) {
-          this.lines[this.lines.length - 1].message += '\n' + logLineResponse;
+          this.lines[this.lines.length - 1].message += '\n' + rawLogLine;
 
           return;
         }
 
-        logLine.deserializeUnknown(logLineResponse);
+        logLine.deserializeUnknown(rawLogLine);
       }
 
       this.lines.push(logLine);

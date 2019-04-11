@@ -8,7 +8,7 @@ describe('Log', () => {
   describe('class method detectPlatform', () => {
     [{ platformName: 'iOS', platform: Platform.ios }, { platformName: 'Android', platform: Platform.android }].forEach(
       (specConfig) => {
-        describe(`when all log line responses matches platform ${specConfig.platformName}`, () => {
+        describe(`when all raw log lines matches platform ${specConfig.platformName}`, () => {
           beforeEach(() => {
             spyOn(LogLine, 'detectPlatform').and.returnValue(Platform.ios);
           });
@@ -18,10 +18,10 @@ describe('Log', () => {
           });
         });
 
-        describe(`when some log line responses matches platform ${specConfig.platformName}`, () => {
+        describe(`when some raw log lines matches platform ${specConfig.platformName}`, () => {
           beforeEach(() => {
-            spyOn(LogLine, 'detectPlatform').and.callFake((logLineResponse) =>
-              logLineResponse === 'matching log line' ? Platform.ios : Platform.unknown
+            spyOn(LogLine, 'detectPlatform').and.callFake((rawLogLine) =>
+              rawLogLine === 'matching log line' ? Platform.ios : Platform.unknown
             );
           });
 
@@ -32,7 +32,7 @@ describe('Log', () => {
       }
     );
 
-    describe('when no log line responses match any platform', () => {
+    describe('when no raw log lines match any platform', () => {
       beforeEach(() => {
         spyOn(LogLine, 'detectPlatform').and.returnValue(Platform.unknown);
       });
@@ -44,30 +44,30 @@ describe('Log', () => {
   });
 
   describe('deserialize', () => {
-    let logResponse;
+    let rawLog;
 
     beforeEach(() => {
       log = new Log();
       spyOn(Log, 'detectPlatform').and.returnValue(Platform.android);
-      spyOn(LogLine, 'detectPlatform').and.callFake(function(logLineResponse) {
-        return logLineResponse === 'matching log line' ? Platform.android : Platform.unknown;
+      spyOn(LogLine, 'detectPlatform').and.callFake(function(rawLogLine) {
+        return rawLogLine === 'matching log line' ? Platform.android : Platform.unknown;
       });
-      spyOn(LogLine.prototype, 'deserialize').and.callFake(function(logLineResponse) {
+      spyOn(LogLine.prototype, 'deserialize').and.callFake(function(rawLogLine) {
         this.message =
-          logLineResponse === 'matching log line' ? `android: ${logLineResponse}` : `unknown: ${logLineResponse}`;
+          rawLogLine === 'matching log line' ? `android: ${rawLogLine}` : `unknown: ${rawLogLine}`;
       });
-      spyOn(LogLine.prototype, 'deserializeUnknown').and.callFake(function(logLineResponse) {
-        this.message = `unknown: ${logLineResponse}`;
+      spyOn(LogLine.prototype, 'deserializeUnknown').and.callFake(function(rawLogLine) {
+        this.message = `unknown: ${rawLogLine}`;
       });
     });
 
-    describe('when all log line responses match detected platform', () => {
+    describe('when all raw log lines match detected platform', () => {
       beforeEach(() => {
-        logResponse = 'matching log line\nmatching log line\nmatching log line';
+        rawLog = 'matching log line\nmatching log line\nmatching log line';
       });
 
       it('creates as many lines, each with matching platform deserialization', () => {
-        log.deserialize(logResponse);
+        log.deserialize(rawLog);
         expect(log.lines.length).toBe(3);
         expect(log.lines[0].message).toBe('android: matching log line');
         expect(log.lines[1].message).toBe('android: matching log line');
@@ -75,13 +75,13 @@ describe('Log', () => {
       });
     });
 
-    describe('when first log line response does not match detected platform', () => {
+    describe('when first raw log line does not match detected platform', () => {
       beforeEach(() => {
-        logResponse = 'not matching log line\nmatching log line\nmatching log line';
+        rawLog = 'not matching log line\nmatching log line\nmatching log line';
       });
 
       it('creates as many lines, first line with unknown platform deserialization', () => {
-        log.deserialize(logResponse);
+        log.deserialize(rawLog);
         expect(log.lines.length).toBe(3);
         expect(log.lines[0].message).toBe('unknown: not matching log line');
         expect(log.lines[1].message).toBe('android: matching log line');
@@ -89,14 +89,14 @@ describe('Log', () => {
       });
     });
 
-    describe('when a later log line response does not match detected platform', () => {
+    describe('when a later raw log line does not match detected platform', () => {
       describe('and that log line is not the first line', () => {
         beforeEach(() => {
-          logResponse = 'matching log line\nnot matching log line\nmatching log line';
+          rawLog = 'matching log line\nnot matching log line\nmatching log line';
         });
 
         it('merges that line with the previous line', () => {
-          log.deserialize(logResponse);
+          log.deserialize(rawLog);
           expect(log.lines.length).toBe(2);
           expect(log.lines[0].message).toBe('android: matching log line\nnot matching log line');
           expect(log.lines[1].message).toBe('android: matching log line');

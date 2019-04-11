@@ -11,7 +11,7 @@ export enum LogLineType {
   verbose = 5
 }
 
-export type LogLineResponse = string;
+export type RawLogLine = string;
 
 @Injectable()
 export class LogLine implements Deserializable {
@@ -47,11 +47,11 @@ export class LogLine implements Deserializable {
     return typeCssClasses[type];
   }
 
-  public static detectPlatform(logLineResponse: LogLineResponse): Platform {
-    if (IOS_LOG_LINE_REGEXP.test(logLineResponse)) {
+  public static detectPlatform(rawLogLine: RawLogLine): Platform {
+    if (IOS_LOG_LINE_REGEXP.test(rawLogLine)) {
       return Platform.ios;
     }
-    if (ANDROID_LOG_LINE_REGEXP.test(logLineResponse)) {
+    if (ANDROID_LOG_LINE_REGEXP.test(rawLogLine)) {
       return Platform.android;
     }
 
@@ -66,24 +66,24 @@ export class LogLine implements Deserializable {
     return LogLine.typeIconUrl(this.type);
   }
 
-  deserialize(logLineResponse: LogLineResponse) {
+  deserialize(rawLogLine: RawLogLine) {
     try {
-      if (LogLine.detectPlatform(logLineResponse) === Platform.ios) {
-        return this.deserializeIos(logLineResponse);
+      if (LogLine.detectPlatform(rawLogLine) === Platform.ios) {
+        return this.deserializeIos(rawLogLine);
       }
-      if (LogLine.detectPlatform(logLineResponse) === Platform.android) {
-        return this.deserializeAndroid(logLineResponse);
+      if (LogLine.detectPlatform(rawLogLine) === Platform.android) {
+        return this.deserializeAndroid(rawLogLine);
       } else {
-        throw new Error(`Unknown platform for log line: ${logLineResponse}`);
+        throw new Error(`Unknown platform for log line: ${rawLogLine}`);
       }
     } catch (error) {
-      return this.deserializeUnknown(logLineResponse);
+      return this.deserializeUnknown(rawLogLine);
     }
   }
 
-  deserializeIos(logLineResponse: LogLineResponse) {
+  deserializeIos(rawLogLine: RawLogLine) {
     const [_, monthAbbreviation, day, hour, minute, second, tag, iosLogType, message] = IOS_LOG_LINE_REGEXP.exec(
-      logLineResponse
+      rawLogLine
     );
 
     const month = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'].indexOf(
@@ -110,7 +110,7 @@ export class LogLine implements Deserializable {
     return this;
   }
 
-  deserializeAndroid(logLineResponse: LogLineResponse) {
+  deserializeAndroid(rawLogLine: RawLogLine) {
     const [
       _,
       month,
@@ -122,7 +122,7 @@ export class LogLine implements Deserializable {
       androidLogType,
       tag,
       message
-    ] = ANDROID_LOG_LINE_REGEXP.exec(logLineResponse);
+    ] = ANDROID_LOG_LINE_REGEXP.exec(rawLogLine);
 
     this.date = new Date(
       null,
@@ -145,11 +145,11 @@ export class LogLine implements Deserializable {
     return this;
   }
 
-  deserializeUnknown(logLineResponse: LogLineResponse) {
+  deserializeUnknown(rawLogLine: RawLogLine) {
     this.type = null;
     this.date = null;
     this.tag = null;
-    this.message = logLineResponse;
+    this.message = rawLogLine;
 
     return this;
   }

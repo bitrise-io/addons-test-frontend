@@ -69,19 +69,19 @@ describe('LogLine', () => {
     [
       {
         platformName: 'iOS',
-        logLineResponse:
+        rawLogLine:
           'Jan  5 08:00:01 iPhone lockdownd[71] <Notice>: Lorem ipsum dolor sit amet, consectetur adipiscing elit',
         expectedPlatform: Platform.ios
       },
       {
         platformName: 'Android',
-        logLineResponse: '01-01 08:00:06.123: D/AndroidRuntime(5): Integer interdum condimentum nisi sed tempor',
+        rawLogLine: '01-01 08:00:06.123: D/AndroidRuntime(5): Integer interdum condimentum nisi sed tempor',
         expectedPlatform: Platform.android
       }
     ].forEach((specConfig: any) => {
       describe(`when line is of platform ${specConfig.platformName}`, () => {
         it(`returns platform ${specConfig.expectedPlatform}`, () => {
-          expect(LogLine.detectPlatform(specConfig.logLineResponse)).toBe(specConfig.expectedPlatform);
+          expect(LogLine.detectPlatform(specConfig.rawLogLine)).toBe(specConfig.expectedPlatform);
         });
       });
     });
@@ -161,7 +161,7 @@ describe('LogLine', () => {
   [
     {
       method: 'deserializeIos',
-      logLineResponse: 'Jan  5 08:00:02 iPhone lockdownd[71] <Notice>: Praesent mollis risus ac orci cursus feugiat',
+      rawLogLine: 'Jan  5 08:00:02 iPhone lockdownd[71] <Notice>: Praesent mollis risus ac orci cursus feugiat',
       expectedType: LogLineType.info,
       expectedDate: new Date(`1900-01-05 08:00:02`),
       expectedTag: 'iPhone lockdownd',
@@ -169,7 +169,7 @@ describe('LogLine', () => {
     },
     {
       method: 'deserializeAndroid',
-      logLineResponse:
+      rawLogLine:
         '01-01 08:00:08.123: D/AndroidRuntime(7): Integer dignissim massa ante, euismod aliquet metus sollicitudin sit amet',
       expectedType: LogLineType.debug,
       expectedDate: new Date(`1900-01-01 08:00:08:123`),
@@ -178,7 +178,7 @@ describe('LogLine', () => {
     },
     {
       method: 'deserializeUnknown',
-      logLineResponse: 'Lorem ipsum dolor sit amet',
+      rawLogLine: 'Lorem ipsum dolor sit amet',
       expectedType: null,
       expectedDate: null,
       expectedTag: null,
@@ -191,7 +191,7 @@ describe('LogLine', () => {
       });
 
       it(`updates line with proper type, date, tag, message`, () => {
-        logLine[specConfig.method](specConfig.logLineResponse);
+        logLine[specConfig.method](specConfig.rawLogLine);
 
         expect(logLine.type).toBe(specConfig.expectedType);
         expect(logLine.date).toEqual(specConfig.expectedDate);
