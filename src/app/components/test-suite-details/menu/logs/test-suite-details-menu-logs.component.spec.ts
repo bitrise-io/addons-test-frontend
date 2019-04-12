@@ -9,7 +9,8 @@ import { InlineSVGModule } from 'ng-inline-svg';
 import { TestSuiteDetailsMenuLogsComponent } from './test-suite-details-menu-logs.component';
 import { Log } from '../../../../models/log.model';
 import logReducer from 'src/app/store/log/reducer';
-import { LogLine, LogLineLevel } from 'src/app/models/log-line.model';
+import { LogLine } from 'src/app/models/log-line.model';
+import { LogLineLevel } from 'src/app/models/log-line-level.model';
 
 describe('TestSuiteDetailsMenuLogsComponent', () => {
   let fixture: ComponentFixture<TestSuiteDetailsMenuLogsComponent>;

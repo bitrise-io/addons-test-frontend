@@ -1,5 +1,6 @@
 import { Injectable } from '@angular/core';
 import { Deserializable } from './deserializable.model';
+import { LogLineLevel } from './log-line-level.model';
 import {
   Platform,
   IOS_LOG_LINE_REGEXP,
@@ -7,15 +8,6 @@ import {
   AndroidLogLineLevelLookup,
   IosLogLineLevelLookup
 } from './platform.model';
-
-export enum LogLineLevel {
-  assert = 0,
-  error = 1,
-  warning = 2,
-  info = 3,
-  debug = 4,
-  verbose = 5
-}
 
 export type RawLogLine = string;
 

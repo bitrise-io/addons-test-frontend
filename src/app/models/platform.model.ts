@@ -1,4 +1,4 @@
-import { LogLineLevel } from './log-line.model';
+import { LogLineLevel } from './log-line-level.model';
 
 export enum Platform {
   ios = 0,

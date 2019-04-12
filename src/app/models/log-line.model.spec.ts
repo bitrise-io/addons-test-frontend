@@ -1,4 +1,5 @@
-import { LogLine, LogLineLevel } from './log-line.model';
+import { LogLine } from './log-line.model';
+import { LogLineLevel } from './log-line-level.model';
 import { Platform } from './platform.model';
 
 describe('LogLine', () => {

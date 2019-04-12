@@ -2,7 +2,8 @@ import { Component, OnInit } from '@angular/core';
 import { Observable } from 'rxjs';
 import { Store } from '@ngrx/store';
 import { Log } from 'src/app/models/log.model';
-import { LogLine, LogLineLevel } from 'src/app/models/log-line.model';
+import { LogLine } from 'src/app/models/log-line.model';
+import { LogLineLevel } from 'src/app/models/log-line-level.model';
 import { FetchLog } from 'src/app/store/log/actions';
 
 const INITIAL_MAXIMUM_NUMBER_OF_VISIBLE_LINES = 20;
