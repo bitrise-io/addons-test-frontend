@@ -4,32 +4,32 @@ import { TestSuiteStatus } from 'src/app/models/test-suite.model';
 import { TestReportsResult } from 'src/app/services/backend/backend.model';
 
 export enum ReportActionTypes {
-  Fetch = '[Reports] Fetch',
-  Receive = '[Reports] Receive',
-  Filter = '[Reports] Filter',
-  ReceiveFiltered = '[Reports] ReceiveFiltered'
+  FetchList = '[Reports] FetchList',
+  ReceiveList = '[Reports] ReceiveList',
+  FilterList = '[Reports] FilterList',
+  ReceiveFilteredList = '[Reports] ReceiveFilteredList'
 }
 
-export class FetchReports implements Action {
-  readonly type = ReportActionTypes.Fetch;
+export class FetchReportList implements Action {
+  readonly type = ReportActionTypes.FetchList;
 }
 
-export class ReceiveReports implements Action {
-  readonly type = ReportActionTypes.Receive;
+export class ReceiveReportList implements Action {
+  readonly type = ReportActionTypes.ReceiveList;
 
   constructor(public payload: TestReportsResult) {}
 }
 
-export class ReceiveFilteredReports implements Action {
-  readonly type = ReportActionTypes.ReceiveFiltered;
+export class ReceiveFilteredReportList implements Action {
+  readonly type = ReportActionTypes.ReceiveFilteredList;
 
   constructor(public payload: TestReportsResult) {}
 }
 
-export class FilterReports implements Action {
-  readonly type = ReportActionTypes.Filter;
+export class FilterReportList implements Action {
+  readonly type = ReportActionTypes.FilterList;
 
   constructor(public payload: { filter: TestSuiteStatus }) {}
 }
 
-export type ReportActions = FetchReports | ReceiveReports | FilterReports | ReceiveFilteredReports;
+export type ReportActions = FetchReportList | ReceiveReportList | FilterReportList | ReceiveFilteredReportList;

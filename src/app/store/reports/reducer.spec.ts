@@ -1,5 +1,5 @@
 import reportsReducer, { TestReportState } from 'src/app/store/reports/reducer';
-import { ReceiveReports, ReceiveFilteredReports, FilterReports, ReportActions } from './actions';
+import { ReceiveReportList, ReceiveFilteredReportList, FilterReportList, ReportActions } from './actions';
 import { TestSuiteStatus } from 'src/app/models/test-suite.model';
 import { TestReport } from 'src/app/models/test-report.model';
 
@@ -13,7 +13,7 @@ describe('Reports reducer', () => {
   it('updates the state with reports received', () => {
     const newState = reportsReducer(
       initialState,
-      new ReceiveReports({ testReports: [new TestReport().deserialize({ id: 1, name: 'whatever', testSuites: [] })] })
+      new ReceiveReportList({ testReports: [new TestReport().deserialize({ id: 1, name: 'whatever', testSuites: [] })] })
     );
 
     expect(newState.testReports.length).toBe(1);
@@ -25,7 +25,7 @@ describe('Reports reducer', () => {
   it('updates the state with filtered reports', () => {
     const newState = reportsReducer(
       initialState,
-      new ReceiveFilteredReports({ testReports: [new TestReport().deserialize({ id: 1, name: 'whatever', testSuites: [] })] })
+      new ReceiveFilteredReportList({ testReports: [new TestReport().deserialize({ id: 1, name: 'whatever', testSuites: [] })] })
     );
 
     expect(newState.filteredReports.length).toBe(1);
@@ -35,7 +35,7 @@ describe('Reports reducer', () => {
   });
 
   it('updates the state with filter', () => {
-    const newState = reportsReducer(initialState, new FilterReports({ filter: TestSuiteStatus.passed }));
+    const newState = reportsReducer(initialState, new FilterReportList({ filter: TestSuiteStatus.passed }));
 
     expect(newState.filter).toBe(TestSuiteStatus.passed);
 
