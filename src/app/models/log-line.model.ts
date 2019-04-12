@@ -73,35 +73,22 @@ export class LogLine implements Deserializable {
   }
 
   deserialize(rawLogLine: RawLogLine) {
-    try {
-      if (LogLine.detectPlatform(rawLogLine) === Platform.ios) {
-        return this.deserializeIos(rawLogLine);
-      }
-      if (LogLine.detectPlatform(rawLogLine) === Platform.android) {
-        return this.deserializeAndroid(rawLogLine);
-      } else {
-        throw new Error(`Unknown platform for log line: ${rawLogLine}`);
-      }
-    } catch (error) {
+    const detectedPlatform = LogLine.detectPlatform(rawLogLine);
+    if (detectedPlatform === Platform.ios) {
+      return this.deserializeIos(rawLogLine);
+    } else if (detectedPlatform === Platform.android) {
+      return this.deserializeAndroid(rawLogLine);
+    } else {
       return this.deserializeUnknown(rawLogLine);
     }
   }
 
   deserializeIos(rawLogLine: RawLogLine) {
-    const [_, monthAbbreviation, day, hour, minute, second, tag, iosLogLevel, message] = IOS_LOG_LINE_REGEXP.exec(
+    const [_, month, day, hour, minute, second, tag, iosLogLevel, message] = IOS_LOG_LINE_REGEXP.exec(
       rawLogLine
     );
-
-    const month = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'].indexOf(
-      monthAbbreviation
-    );
-    this.date = new Date(null, month, Number(day), Number(hour), Number(minute), Number(second));
-
+    this.date = new Date(`2000 ${month} ${day} ${hour}:${minute}:${second}`);
     this.level = IosLogLineLevelLookup[iosLogLevel];
-    if (this.level === undefined) {
-      throw Error(`Unknown level: ${iosLogLevel}.`);
-    }
-
     this.tag = tag;
     this.message = message;
 
@@ -122,21 +109,8 @@ export class LogLine implements Deserializable {
       message
     ] = ANDROID_LOG_LINE_REGEXP.exec(rawLogLine);
 
-    this.date = new Date(
-      null,
-      Number(month) - 1,
-      Number(day),
-      Number(hour),
-      Number(minute),
-      Number(second),
-      Number(millisecond)
-    );
-
+    this.date = new Date(`2000-${month}-${day} ${hour}:${minute}:${second}:${millisecond}`);
     this.level = AndroidLogLineLevelLookup[androidLogLevel];
-    if (this.level === undefined) {
-      throw Error(`Unknown level: ${androidLogLevel}.`);
-    }
-
     this.tag = tag;
     this.message = message;
 

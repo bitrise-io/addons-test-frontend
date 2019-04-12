@@ -109,38 +109,15 @@ describe('LogLine', () => {
       describe(`when line is detected as platform ${specConfig.platformName}`, () => {
         beforeEach(() => {
           spyOn(LogLine, 'detectPlatform').and.returnValue(specConfig.detectPlatformResult);
+          logLine[specConfig.expectedDeserializerMethod] = jasmine
+            .createSpy(specConfig.expectedDeserializerMethod)
+            .and.callFake(() => {});
         });
 
-        describe('and platform deserializer passes successfully', () => {
-          beforeEach(() => {
-            logLine[specConfig.expectedDeserializerMethod] = jasmine
-              .createSpy(specConfig.expectedDeserializerMethod)
-              .and.callFake(() => {});
-          });
+        it(`calls ${specConfig.expectedDeserializerMethod}`, () => {
+          logLine.deserialize('Lorem ipsum dolor sit amet');
 
-          it(`calls ${specConfig.expectedDeserializerMethod}`, () => {
-            logLine.deserialize('Lorem ipsum dolor sit amet');
-
-            expect(logLine[specConfig.expectedDeserializerMethod]).toHaveBeenCalledWith('Lorem ipsum dolor sit amet');
-          });
-        });
-
-        describe('and platform deserializer throws error', () => {
-          beforeEach(() => {
-            logLine[specConfig.expectedDeserializerMethod] = jasmine
-              .createSpy(specConfig.expectedDeserializerMethod)
-              .and.callFake(() => {
-                throw new Error('Error during deserialize.');
-              });
-          });
-
-          it('calls deserializeUnknown', () => {
-            spyOn(logLine, 'deserializeUnknown').and.returnValue(null);
-
-            logLine.deserialize('Lorem ipsum dolor sit amet');
-
-            expect(logLine.deserializeUnknown).toHaveBeenCalledWith('Lorem ipsum dolor sit amet');
-          });
+          expect(logLine[specConfig.expectedDeserializerMethod]).toHaveBeenCalledWith('Lorem ipsum dolor sit amet');
         });
       });
     });
@@ -163,7 +140,7 @@ describe('LogLine', () => {
       method: 'deserializeIos',
       rawLogLine: 'Jan  5 08:00:02 iPhone lockdownd[71] <Notice>: Praesent mollis risus ac orci cursus feugiat',
       expectedLevel: LogLineLevel.info,
-      expectedDate: new Date(`1900-01-05 08:00:02`),
+      expectedDate: new Date(`2000-01-05 08:00:02`),
       expectedTag: 'iPhone lockdownd',
       expectedMessage: 'Praesent mollis risus ac orci cursus feugiat'
     },
@@ -172,7 +149,7 @@ describe('LogLine', () => {
       rawLogLine:
         '01-01 08:00:08.123: D/AndroidRuntime(7): Integer dignissim massa ante, euismod aliquet metus sollicitudin sit amet',
       expectedLevel: LogLineLevel.debug,
-      expectedDate: new Date(`1900-01-01 08:00:08:123`),
+      expectedDate: new Date(`2000-01-01 08:00:08:123`),
       expectedTag: 'AndroidRuntime',
       expectedMessage: 'Integer dignissim massa ante, euismod aliquet metus sollicitudin sit amet'
     },
