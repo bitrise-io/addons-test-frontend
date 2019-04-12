@@ -5,7 +5,7 @@ import { ActivatedRoute } from '@angular/router';
 import { map } from 'rxjs/operators';
 
 import { TestReport } from 'src/app/models/test-report.model';
-import { StartPollingReports } from 'src/app/store/reports/actions';
+import { FetchReports } from 'src/app/store/reports/actions';
 import { TestSuite, TestSuiteScreenshot } from 'src/app/models/test-suite.model';
 import { TestReportState } from 'src/app/store/reports/reducer';
 
@@ -36,7 +36,7 @@ export class TestSuiteDetailsMenuScreenshotsComponent implements OnInit, OnDestr
   }
 
   ngOnInit() {
-    this.store.dispatch(new StartPollingReports());
+    this.store.dispatch(new FetchReports());
 
     const routeParams = combineLatest(this.activatedRoute.pathFromRoot.map((t) => t.params)).pipe(
       map((paramObjects) => Object.assign({}, ...paramObjects))
