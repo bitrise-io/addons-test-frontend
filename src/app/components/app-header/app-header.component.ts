@@ -53,7 +53,7 @@ export class AppHeaderComponent implements OnInit {
 
     this.testReports$.subscribe(testReports => {
       const failedTestCountsOfTestReports = testReports.map(
-        testReport => testReport.testsWithStatus(TestSuiteStatus.failed).length
+        testReport => testReport.testSuitesWithStatus(TestSuiteStatus.failed).length
       );
 
       this.tabmenuItems = [

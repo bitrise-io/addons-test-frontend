@@ -12,7 +12,6 @@ import { AppHeaderComponent } from './app-header.component';
 import { TestReport } from '../../models/test-report.model';
 import reportsReducer, { TestReportState } from 'src/app/store/reports/reducer';
 import { TestSuite } from '../../models/test-suite.model';
-import { TestCase } from '../../models/test-case.model';
 import { MockStore, provideMockStore } from 'src/app/mock-store/testing';
 
 @Component({
@@ -93,36 +92,22 @@ describe('AppHeaderComponent', () => {
             { id: 1, name: 'UI Test A', failedTestSuiteCount: 2 },
             { id: 2, name: 'UI Test B', failedTestSuiteCount: 0 },
             { id: 3, name: 'UI Test C', failedTestSuiteCount: 1 },
-            { id: 4, name: 'Unit Test X', failedTestCaseCount: 3 },
-            { id: 5, name: 'Unit Test Y', failedTestCaseCount: 6 }
+            { id: 4, name: 'Unit Test X', failedTestSuiteCount: 3 },
+            { id: 5, name: 'Unit Test Y', failedTestSuiteCount: 6 }
           ].map((specConfig) => {
             const testReport = new TestReport();
             testReport.id = specConfig.id;
             testReport.name = specConfig.name;
+            testReport.testSuites = Array(specConfig.failedTestSuiteCount)
+              .fill(null)
+              .map(() => {
+                const testSuite = new TestSuite();
+                testSuite.status = 2;
 
-            if (specConfig.failedTestSuiteCount !== undefined) {
-              testReport.testSuites = Array(specConfig.failedTestSuiteCount)
-                .fill(null)
-                .map(() => {
-                  const testSuite = new TestSuite();
-                  testSuite.status = 2;
+                return testSuite;
+              });
 
-                  return testSuite;
-                });
-
-              return testReport;
-            } else {
-              testReport.testCases = Array(specConfig.failedTestCaseCount)
-                .fill(null)
-                .map(() => {
-                  const testCase = new TestCase();
-                  testCase.status = 2;
-
-                  return testCase;
-                });
-
-              return testReport;
-            }
+            return testReport;
           })
         }
       });

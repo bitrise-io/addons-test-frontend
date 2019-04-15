@@ -54,7 +54,7 @@ export class TestSummaryHeaderComponent implements OnInit {
         (sumByStatus, status: TestSuiteStatus) => ({
           ...sumByStatus,
           [status]: testReports.reduce(
-            (sum, testReport: TestReport) => sum + testReport.testsWithStatus(status).length,
+            (sum, testReport: TestReport) => sum + testReport.testSuitesWithStatus(status).length,
             0
           )
         }),

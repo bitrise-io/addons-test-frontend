@@ -19,7 +19,8 @@
   }
 }
 
-:host:not(:first-of-type) .test-suite .test-suite-inner .detail-wrapper:before {
+:host:not(:first-of-type) .test-suite.ui-test .test-suite-inner .detail-wrapper:before,
+:host:not(:first-of-type) .test-suite.unit-test .test-suite-inner .detail-wrapper:before {
   content: normal;
 }
 
@@ -37,7 +38,7 @@
     border-left: $colored-border-left-width solid;
     @include border-left-radius(8px);
 
-    .detail-wrapper.status-device .detail .status-icon {
+    .detail-wrapper.status-title .detail .status-icon {
       @include size($status-icon-size);
     }
 
@@ -60,11 +61,11 @@
 
         border-left-color: $color;
 
-        .detail-wrapper.status-device .detail .status-icon:not(.#{ $status-class }) {
+        .detail-wrapper.status-title .detail .status-icon:not(.#{ $status-class }) {
           display: none;
         }
 
-        .detail-wrapper.status-device .detail .status-icon ::ng-deep svg {
+        .detail-wrapper.status-title .detail .status-icon ::ng-deep svg {
           fill: $color;
         }
       }
@@ -75,16 +76,11 @@
     @include test-suite-with-status-class(skipped);
     @include test-suite-with-status-class(inconclusive);
 
-    .detail-wrapper.status-device .detail .device {
+    .detail-wrapper.status-title .detail .title {
       color: $dark-blue-grey;
 
       .name {
         @include ui-element-body;
-        @include ellipsis-oneliner;
-      }
-
-      .operating-system {
-        @include ui-element-description;
         @include ellipsis-oneliner;
       }
     }
@@ -140,21 +136,6 @@
       background-color: $warm-grey;
     }
 
-    .detail-wrapper.orientation .detail {
-      &.landscape ::ng-deep svg {
-        transform: rotate(-90deg);
-      }
-
-      ::ng-deep svg {
-        fill: $dark-blue-grey;
-      }
-    }
-
-    .detail-wrapper.locale .detail {
-      @include ui-element-body;
-      color: $dark-blue-grey;
-    }
-
     .test-cases-button {
       @include ui-element-button-secondary;
       @include ui-modifier-button-secondary-small;
@@ -172,6 +153,30 @@
           display: block;
         }
       }
+    }
+  }
+
+  &.ui-test .test-suite-inner {
+    .detail-wrapper.status-title .detail .title {
+      .operating-system {
+        @include ui-element-description;
+        @include ellipsis-oneliner;
+      }
+    }
+
+    .detail-wrapper.orientation .detail {
+      &.landscape ::ng-deep svg {
+        transform: rotate(-90deg);
+      }
+
+      ::ng-deep svg {
+        fill: $dark-blue-grey;
+      }
+    }
+
+    .detail-wrapper.locale .detail {
+      @include ui-element-body;
+      color: $dark-blue-grey;
     }
   }
 }
@@ -192,14 +197,13 @@
         height: 100%;
       }
 
-      .detail-wrapper.status-device {
+      .detail-wrapper.status-title {
         flex-grow: 3;
         width: 256px;
         min-width: 128px;
         padding-right: 4px;
 
         &:before {
-          content: 'devices';
           margin-left: 7 * $grid-size;
         }
 
@@ -211,7 +215,7 @@
             @include margin-x(16px);
           }
 
-          .device {
+          .title {
             overflow: hidden;
           }
         }
@@ -237,6 +241,17 @@
         &:before {
           content: 'test results';
         }
+      }
+
+      .test-cases-button {
+        min-width: 120px;
+        margin-right: 16px;
+      }
+    }
+
+    &.ui-test .test-suite-inner {
+      .detail-wrapper.status-title:before {
+        content: 'devices';
       }
 
       .detail-wrapper.orientation {
@@ -268,10 +283,15 @@
           @include ellipsis-oneliner;
         }
       }
+    }
 
-      .test-cases-button {
-        min-width: 120px;
-        margin-right: 16px;
+    &.unit-test .test-suite-inner {
+      .detail-wrapper.status-title:before {
+        content: 'name';
+      }
+
+      .detail-wrapper.test-results {
+        margin-right: 2 * $grid-size;
       }
     }
   }
@@ -289,14 +309,14 @@
       flex-wrap: wrap;
       padding: 16px;
 
-      .detail-wrapper.status-device {
+      .detail-wrapper.status-title {
         width: 100%;
 
         .detail {
           display: flex;
           align-items: center;
 
-          .device {
+          .title {
             margin-left: 16px;
             overflow: hidden;
           }
@@ -315,6 +335,14 @@
         @include margin-y(8px);
       }
 
+      .test-cases-button {
+        order: 5;
+        width: 100%;
+        margin-top: 8px;
+      }
+    }
+
+    &.ui-test .test-suite-inner {
       .detail-wrapper.orientation {
         order: 3;
         margin: 8px 16px;
@@ -323,12 +351,6 @@
       .detail-wrapper.locale {
         order: 4;
         @include margin-y(8px);
-      }
-
-      .test-cases-button {
-        order: 5;
-        width: 100%;
-        margin-top: 8px;
       }
     }
   }

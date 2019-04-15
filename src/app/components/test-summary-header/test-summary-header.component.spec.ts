@@ -8,7 +8,6 @@ import { TestSummaryHeaderComponent } from './test-summary-header.component';
 import { TestReport } from '../../models/test-report.model';
 import reportsReducer, { TestReportState } from 'src/app/store/reports/reducer';
 import { TestSuite, TestSuiteStatus } from '../../models/test-suite.model';
-import { TestCase, TestCaseStatus } from '../../models/test-case.model';
 import { MockStore, provideMockStore } from 'src/app/mock-store/testing';
 
 describe('TestSummaryHeaderComponent', () => {
@@ -20,51 +19,32 @@ describe('TestSummaryHeaderComponent', () => {
     const testReport = new TestReport();
     testReport.id = specConfig.id;
     testReport.name = specConfig.name;
-    if (specConfig.passedTestSuiteCount !== undefined) {
-      const testSuiteStatuses = [
-        TestSuiteStatus.inconclusive,
-        TestSuiteStatus.passed,
-        TestSuiteStatus.failed,
-        TestSuiteStatus.skipped
-      ];
+    const testSuiteStatuses = [
+      TestSuiteStatus.inconclusive,
+      TestSuiteStatus.passed,
+      TestSuiteStatus.failed,
+      TestSuiteStatus.skipped
+    ];
 
-      testReport.testSuites = [
-        specConfig.inconclusiveTestSuiteCount,
-        specConfig.passedTestSuiteCount,
-        specConfig.failedTestSuiteCount,
-        specConfig.skippedTestSuiteCount
-      ].reduce(
-        (testSuites, testSuiteCount, index) =>
-          testSuites.concat(
-            Array(testSuiteCount)
-              .fill(null)
-              .map(() => {
-                const testSuite = new TestSuite();
-                testSuite.status = testSuiteStatuses[index];
+    testReport.testSuites = [
+      specConfig.inconclusiveTestSuiteCount,
+      specConfig.passedTestSuiteCount,
+      specConfig.failedTestSuiteCount,
+      specConfig.skippedTestSuiteCount
+    ].reduce(
+      (testSuites, testSuiteCount, index) =>
+        testSuites.concat(
+          Array(testSuiteCount)
+            .fill(null)
+            .map(() => {
+              const testSuite = new TestSuite();
+              testSuite.status = testSuiteStatuses[index];
 
-                return testSuite;
-              })
-          ),
-        []
-      );
-    } else {
-      const testCaseStatuses = [TestCaseStatus.passed, TestCaseStatus.failed];
-
-      testReport.testCases = [specConfig.passedTestCaseCount, specConfig.failedTestCaseCount].reduce(
-        (testCases, testCaseCount, index) =>
-          testCases.concat(
-            Array(testCaseCount)
-              .fill(null)
-              .map(() => {
-                const testCase = new TestCase();
-                testCase.status = testCaseStatuses[index];
-
-                return testCase;
-              })
-          ),
-        []
-      );
-    }
+              return testSuite;
+            })
+        ),
+      []
+    );
 
     return testReport;
   };
@@ -135,14 +115,18 @@ describe('TestSummaryHeaderComponent', () => {
             {
               id: 4,
               name: 'Unit Test X',
-              passedTestCaseCount: 2,
-              failedTestCaseCount: 3
+              inconclusiveTestSuiteCount: 0,
+              passedTestSuiteCount: 2,
+              failedTestSuiteCount: 3,
+              skippedTestSuiteCount: 0
             },
             {
               id: 5,
               name: 'Unit Test Y',
-              passedTestCaseCount: 0,
-              failedTestCaseCount: 1
+              inconclusiveTestSuiteCount: 0,
+              passedTestSuiteCount: 0,
+              failedTestSuiteCount: 1,
+              skippedTestSuiteCount: 0
             }
           ].map(testReportsFromSpecConfig)
         }

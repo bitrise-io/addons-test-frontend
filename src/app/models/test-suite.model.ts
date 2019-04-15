@@ -18,6 +18,7 @@ export type TestSuiteResponse = {
   id: number;
   status: TestSuiteStatus;
   deviceName: string;
+  suiteName: string;
   deviceOperatingSystem: string;
   durationInMilliseconds: number;
   orientation: TestSuiteOrientation;
@@ -37,6 +38,7 @@ export class TestSuite implements Deserializable {
   id: number;
   status: TestSuiteStatus;
   deviceName: string;
+  suiteName: string;
   deviceOperatingSystem: string;
   durationInMilliseconds: number;
   orientation: TestSuiteOrientation;
@@ -92,6 +94,7 @@ export class TestSuite implements Deserializable {
     this.id = testSuiteResponse.id;
     this.status = testSuiteResponse.status;
     this.deviceName = testSuiteResponse.deviceName;
+    this.suiteName = testSuiteResponse.suiteName;
     this.deviceOperatingSystem = testSuiteResponse.deviceOperatingSystem;
     this.durationInMilliseconds = testSuiteResponse.durationInMilliseconds;
     this.testCases = testSuiteResponse.testCases
