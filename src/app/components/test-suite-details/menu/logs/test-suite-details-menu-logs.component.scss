@@ -1,0 +1,137 @@
+@import '../../../../../sass/constants';
+@import '../../../../../sass/mixins';
+
+.name {
+  @include ui-element-header-5;
+  @include ui-modifier-header-5-underlined-purple-bold;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+
+  .download-log {
+    @include ui-element-button-secondary;
+    @include ui-modifier-button-shadow;
+    display: flex;
+    margin-left: $grid-size;
+
+    &:hover {
+      @include ui-modifier-button-secondary-hover;
+    }
+
+    .arrow {
+      margin-right: $grid-size;
+
+      ::ng-deep svg {
+        display: block;
+      }
+    }
+  }
+}
+
+.level-filter-select {
+  @include ui-element-select;
+  @include ui-modifier-button-shadow;
+  display: block;
+  width: 28 * $grid-size;
+  margin-top: 2 * $grid-size;
+
+  @include width-max-screen-small {
+    width: 100%;
+  }
+}
+
+.log-box {
+  @include ui-element-code-block;
+  @include ui-modifier-code-block-multiliner;
+  @include ui-modifier-code-block-dark;
+  margin-top: 2 * $grid-size;
+
+  .line {
+    display: flex;
+    align-items: center;
+    @include padding-y($grid-size);
+    cursor: pointer;
+
+    &:hover {
+      background-color: rgba(white, 0.1);
+    }
+
+    .level-icon {
+      flex-shrink: 0;
+      width: 3 * $grid-size;
+      margin-right: 2 * $grid-size;
+
+      ::ng-deep svg {
+        display: block;
+      }
+    }
+
+    .date {
+      flex-shrink: 0;
+      width: 15 * $grid-size;
+      margin-right: 2 * $grid-size;
+      @include ellipsis-oneliner;
+    }
+
+    .tag {
+      flex-shrink: 0;
+      width: 25 * $grid-size;
+      margin-right: 2 * $grid-size;
+      @include ellipsis-oneliner;
+    }
+
+    .message {
+      flex-grow: 1;
+      white-space: pre-wrap;
+    }
+
+    &:not(.expanded) .message {
+      @include ellipsis-oneliner;
+    }
+
+    &.expanded .message {
+      word-break: break-all;
+    }
+
+    @mixin style_for_level($level, $color) {
+      &.#{ $level } ::ng-deep svg {
+        fill: $color;
+      }
+    }
+
+    @include style_for_level('verbose', $sky-blue);
+    @include style_for_level('debug', $sky-blue);
+    @include style_for_level('info', $water-blue-two);
+    @include style_for_level('warning', $marigold);
+    @include style_for_level('error', $vivid-pink);
+    @include style_for_level('assert', $vivid-pink);
+
+    @include width-max(1200px) {
+      .date {
+        width: 13 * $grid-size;
+      }
+
+      .tag {
+        width: 15 * $grid-size;
+      }
+    }
+
+    @include width-max-screen-medium {
+      flex-direction: column;
+      align-items: flex-start;
+
+      .date,
+      .tag,
+      .message {
+        width: 100%;
+      }
+    }
+  }
+}
+
+.load-more-logs {
+  @include ui-element-button-secondary;
+  @include ui-modifier-button-shadow;
+  width: 100%;
+  margin-top: 2 * $grid-size;
+}

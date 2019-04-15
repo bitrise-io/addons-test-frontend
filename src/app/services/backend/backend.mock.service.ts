@@ -1,10 +1,11 @@
 import { Injectable } from '@angular/core';
 import { Observable, of } from 'rxjs';
 
-import { BackendService, TestArtifactsResult, TestReportsResult } from './backend.model';
+import { BackendService, TestArtifactsResult, TestReportsResult, LogResult } from './backend.model';
 import { Performance } from 'src/app/models/performance.model';
 import { TestArtifact, TestArtifactResponse } from 'src/app/models/test-artifact.model';
 import { TestReportResponse, TestReport } from 'src/app/models/test-report.model';
+import { Log, RawLog } from 'src/app/models/log.model';
 
 import * as MOCKED_DATA from './mock-data.json';
 
@@ -38,5 +39,18 @@ export class MockBackendService implements BackendService {
     );
 
     return of({ testReports });
+  }
+
+  getLog(): Observable<LogResult> {
+    const {
+      log: { fullLogIos, downloadURL }
+    }: any = MOCKED_DATA;
+
+    const log = new Log().deserialize(<RawLog>fullLogIos);
+
+    return of({
+      log,
+      downloadURL
+    });
   }
 }

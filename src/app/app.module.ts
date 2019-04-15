@@ -27,9 +27,11 @@ import { TestSuiteDetailsMenuModule } from './components/test-suite-details/menu
 import artifactsReducer from 'src/app/store/artifacts/reducer';
 import reportsReducer from 'src/app/store/reports/reducer';
 import performanceReducer from 'src/app/store/performance/reducer';
+import logReducer from 'src/app/store/log/reducer';
 import { ReportEffects } from 'src/app/store/reports/effects';
 import { ArtifactEffects } from 'src/app/store/artifacts/effects';
 import { PerformanceEffects } from 'src/app/store/performance/effects';
+import { LogEffects } from 'src/app/store/log/effects';
 
 @NgModule({
   declarations: [
@@ -53,9 +55,10 @@ import { PerformanceEffects } from 'src/app/store/performance/effects';
     StoreModule.forRoot({
       testReport: reportsReducer,
       testArtifact: artifactsReducer,
-      performance: performanceReducer
+      performance: performanceReducer,
+      log: logReducer,
     }),
-    EffectsModule.forRoot([ReportEffects, ArtifactEffects, PerformanceEffects]),
+    EffectsModule.forRoot([ReportEffects, ArtifactEffects, PerformanceEffects, LogEffects]),
     InlineSVGModule.forRoot(),
     environment.ServicesModule,
     TestSuiteDetailsMenuModule
