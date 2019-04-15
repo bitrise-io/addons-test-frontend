@@ -2,342 +2,354 @@
   "test_reports": [
     {
       "id": 1,
-      "name": "Unit Test A",
-      "testSuites": [
-        {
-          "id": 3,
-          "status": 1,
-          "suiteName": "Test Group #1",
-          "durationInMilliseconds": 12000,
-          "testCases": [
-            {
-              "name": "testCaseExample1",
-              "status": 2,
-              "durationInMilliseconds": 3000,
-              "context": "ios_simple:dsfhkjshUITESTX",
-              "summary": "Nulla vitae elit libero, a pharetra augue. Sed posuere consectetur est at lobortis.\n\nNullam id dolor id nibh ultricies vehicula ut id elit. Praesent commodo cursus magna, vel scelerisque nisl consectetur et.\n\nInteger posuere erat a ante venenatis dapibus posuere velit aliquet. Donec id elit non mi porta gravida at eget metus."
-            },
-            {
-              "name": "testCaseExample2",
-              "status": 1,
-              "durationInMilliseconds": 5000,
-              "context": "ios_complicated:abcdefgh",
-              "summary": "Lorem ipsum"
-            }
-          ]
-        }
-      ]
+      "name": "Unit Test A"
     },
     {
       "id": 2,
-      "name": "UI Test A",
-      "testSuites": [
-        {
-          "id": 5,
-          "status": 1,
-          "deviceName": "iPhone 7",
-          "deviceOperatingSystem": "iOS 11.2",
-          "durationInMilliseconds": 20000,
-          "testCases": [
-            {
-              "name": "testCaseExample",
-              "status": 1,
-              "durationInMilliseconds": 5000,
-              "context": "ios_simple:abcdefgh",
-              "summary": "Lorem ipsum"
-            },
-            {
-              "name": "testCaseExample",
-              "status": 1,
-              "durationInMilliseconds": 5000,
-              "context": "ios_simple:abcdefgh",
-              "summary": "Lorem ipsum"
-            },
-            {
-              "name": "testCaseExample",
-              "status": 1,
-              "durationInMilliseconds": 5000,
-              "context": "ios_simple:abcdefgh",
-              "summary": "Lorem ipsum"
-            }
-          ],
-          "orientation": "portrait",
-          "locale": "English",
-          "downloadAllScreenshotsURL": "http://some-url-to.download-screen.shots",
-          "screenshots": [
-            {
-              "url": "https://loremflickr.com/425/667",
-              "filename": "screenshot-whatever-1.portrait.png"
-            },
-            {
-              "url": "https://loremflickr.com/425/667?1",
-              "filename": "screenshot-whatever-2.portrait.png"
-            },
-            {
-              "url": "https://loremflickr.com/425/667?2",
-              "filename": "screenshot-whatever-3.portrait.png"
-            },
-            {
-              "url": "https://loremflickr.com/425/667?3",
-              "filename": "screenshot-whatever-4.portrait.png"
-            },
-            {
-              "url": "https://loremflickr.com/425/667?4",
-              "filename": "screenshot-whatever-5.portrait.png"
-            },
-            {
-              "url": "https://loremflickr.com/425/667?5",
-              "filename": "screenshot-whatever-6.portrait.png"
-            },
-            {
-              "url": "https://loremflickr.com/425/667?6",
-              "filename": "screenshot-whatever-7.portrait.png"
-            }
-          ]
-        },
-        {
-          "id": 10,
-          "status": 2,
-          "deviceName": "iPad Mini 2016",
-          "deviceOperatingSystem": "iOS 11.2",
-          "durationInMilliseconds": 160000,
-          "testCases": [
-            {
-              "name": "testCaseExample",
-              "status": 1,
-              "durationInMilliseconds": 5000,
-              "context": "ios_simple:abcdefgh",
-              "summary": "Lorem ipsum"
-            },
-            {
-              "name": "testCaseExample",
-              "status": 1,
-              "durationInMilliseconds": 5000,
-              "context": "ios_simple:abcdefgh",
-              "summary": "Lorem ipsum"
-            },
-            {
-              "name": "testCaseExample",
-              "status": 2,
-              "durationInMilliseconds": 5000,
-              "context": "ios_simple:abcdefgh",
-              "summary": "Lorem ipsum"
-            }
-          ],
-          "orientation": "portrait",
-          "locale": "Japanese",
-          "downloadAllScreenshotsURL": "http://some-url-to.download-screen.shots",
-          "screenshots": [
-            {
-              "url": "https://loremflickr.com/384/512",
-              "filename": "screenshot-whatever-1.portrait.png"
-            },
-            {
-              "url": "https://loremflickr.com/384/512?1",
-              "filename": "screenshot-whatever-2.portrait.png"
-            }
-          ]
-        },
-        {
-          "id": 20,
-          "status": 0,
-          "deviceName": "Nexus7 clone, DVD 16:9 aspect ratio",
-          "deviceOperatingSystem": "Android Oreo",
-          "durationInMilliseconds": 3700000,
-          "orientation": "landscape",
-          "locale": "Traditional chinese",
-          "downloadAllScreenshotsURL": "http://some-url-to.download-screen.shots",
-          "screenshots": [
-            {
-              "url": "https://loremflickr.com/640/400",
-              "filename": "screenshot-whatever-1.landscape.png"
-            },
-            {
-              "url": "https://loremflickr.com/640/400?1",
-              "filename": "screenshot-whatever-2.landscape.png"
-            },
-            {
-              "url": "https://loremflickr.com/640/400?2",
-              "filename": "screenshot-whatever-3.landscape.png"
-            },
-            {
-              "url": "https://loremflickr.com/640/400?3",
-              "filename": "screenshot-whatever-4.landscape.png"
-            }
-          ]
-        },
-        {
-          "id": 30,
-          "status": 3,
-          "deviceName": "iPhone 7",
-          "deviceOperatingSystem": "iOS 11.2",
-          "durationInMilliseconds": 7200000,
-          "orientation": "landscape",
-          "locale": "Japanese",
-          "downloadAllScreenshotsURL": "http://some-url-to.download-screen.shots",
-          "screenshots": [
-            {
-              "url": "https://loremflickr.com/667/425",
-              "filename": "screenshot-whatever-1.landscape.png"
-            },
-            {
-              "url": "https://loremflickr.com/667/425?1",
-              "filename": "screenshot-whatever-2.landscape.png"
-            },
-            {
-              "url": "https://loremflickr.com/667/425?2",
-              "filename": "screenshot-whatever-3.landscape.png"
-            },
-            {
-              "url": "https://loremflickr.com/667/425?3",
-              "filename": "screenshot-whatever-4.landscape.png"
-            }
-          ]
-        }
-      ]
+      "name": "UI Test A"
     },
     {
       "id": 3,
-      "name": "UI Test B",
-      "testSuites": [
-        {
-          "id": 40,
-          "status": 1,
-          "deviceName": "Galaxy S4 mini",
-          "deviceOperatingSystem": "Android Ice Cream Sandwich",
-          "durationInMilliseconds": 10,
-          "testCases": [
-            {
-              "name": "testCaseExample",
-              "status": 1,
-              "durationInMilliseconds": 5000,
-              "context": "ios_simple:abcdefgh",
-              "summary": "Lorem ipsum"
-            },
-            {
-              "name": "testCaseExample",
-              "status": 1,
-              "durationInMilliseconds": 5000,
-              "context": "ios_simple:abcdefgh",
-              "summary": "Lorem ipsum"
-            },
-            {
-              "name": "testCaseExample",
-              "status": 1,
-              "durationInMilliseconds": 5000,
-              "context": "ios_simple:abcdefgh",
-              "summary": "Lorem ipsum"
-            }
-          ],
-          "orientation": "portrait",
-          "locale": "Japanese",
-          "downloadAllScreenshotsURL": "http://some-url-to.download-screen.shots",
-          "screenshots": [
-            {
-              "url": "https://loremflickr.com/270/480",
-              "filename": "screenshot-whatever-1.portrait.png"
-            },
-            {
-              "url": "https://loremflickr.com/270/480?1",
-              "filename": "screenshot-whatever-2.portrait.png"
-            }
-          ]
-        },
-        {
-          "id": 50,
-          "status": 2,
-          "deviceName": "iPhone 7",
-          "deviceOperatingSystem": "iOS 11.2",
-          "durationInMilliseconds": 2050,
-          "testCases": [
-            {
-              "name": "testCaseExample",
-              "status": 1,
-              "durationInMilliseconds": 5000,
-              "context": "ios_simple:abcdefgh",
-              "summary": "Lorem ipsum"
-            },
-            {
-              "name": "testCaseExample",
-              "status": 2,
-              "durationInMilliseconds": 5000,
-              "context": "ios_simple:abcdefgh",
-              "summary": "Lorem ipsum"
-            },
-            {
-              "name": "testCaseExample",
-              "status": 2,
-              "durationInMilliseconds": 5000,
-              "context": "ios_simple:abcdefgh",
-              "summary": "Lorem ipsum"
-            },
-            {
-              "name": "testCaseExample",
-              "status": 1,
-              "durationInMilliseconds": 5000,
-              "context": "ios_simple:abcdefgh",
-              "summary": "Lorem ipsum"
-            },
-            {
-              "name": "testCaseExample",
-              "status": 2,
-              "durationInMilliseconds": 5000,
-              "context": "ios_simple:abcdefgh",
-              "summary": "Lorem ipsum"
-            },
-            {
-              "name": "testCaseExample",
-              "status": 2,
-              "durationInMilliseconds": 5000,
-              "context": "ios_simple:abcdefgh",
-              "summary": "Lorem ipsum"
-            }
-          ],
-          "orientation": "portrait",
-          "locale": "English",
-          "downloadAllScreenshotsURL": "http://some-url-to.download-screen.shots",
-          "screenshots": [
-            {
-              "url": "https://loremflickr.com/425/667",
-              "filename": "screenshot-whatever-1.portrait.png"
-            },
-            {
-              "url": "https://loremflickr.com/425/667?1",
-              "filename": "screenshot-whatever-2.portrait.png"
-            },
-            {
-              "url": "https://loremflickr.com/425/667?2",
-              "filename": "screenshot-whatever-3.portrait.png"
-            }
-          ]
-        },
-        {
-          "id": 60,
-          "status": 0,
-          "deviceName": "iPhone 7",
-          "deviceOperatingSystem": "iOS 11.2",
-          "durationInMilliseconds": 20000,
-          "orientation": "landscape",
-          "locale": "English",
-          "downloadAllScreenshotsURL": "http://some-url-to.download-screen.shots",
-          "screenshots": [
-            {
-              "url": "https://loremflickr.com/667/425",
-              "filename": "screenshot-whatever-1.landscape.png"
-            },
-            {
-              "url": "https://loremflickr.com/667/425?1",
-              "filename": "screenshot-whatever-2.landscape.png"
-            },
-            {
-              "url": "https://loremflickr.com/667/425?2",
-              "filename": "screenshot-whatever-3.landscape.png"
-            }
-          ]
-        }
-      ]
+      "name": "UI Test B"
     }
   ],
+  "test_report/1": {
+    "id": 1,
+    "name": "Unit Test A",
+    "testSuites": [
+      {
+        "id": 3,
+        "status": 1,
+        "suiteName": "Test Group #1",
+        "durationInMilliseconds": 12000,
+        "testCases": [
+          {
+            "name": "testCaseExample1",
+            "status": 2,
+            "durationInMilliseconds": 3000,
+            "context": "ios_simple:dsfhkjshUITESTX",
+            "summary": "Nulla vitae elit libero, a pharetra augue. Sed posuere consectetur est at lobortis.\n\nNullam id dolor id nibh ultricies vehicula ut id elit. Praesent commodo cursus magna, vel scelerisque nisl consectetur et.\n\nInteger posuere erat a ante venenatis dapibus posuere velit aliquet. Donec id elit non mi porta gravida at eget metus."
+          },
+          {
+            "name": "testCaseExample2",
+            "status": 1,
+            "durationInMilliseconds": 5000,
+            "context": "ios_complicated:abcdefgh",
+            "summary": "Lorem ipsum"
+          }
+        ]
+      }
+    ]
+  },
+  "test_report/2": {
+    "id": 2,
+    "name": "UI Test A",
+    "testSuites": [
+      {
+        "id": 5,
+        "status": 1,
+        "deviceName": "iPhone 7",
+        "deviceOperatingSystem": "iOS 11.2",
+        "durationInMilliseconds": 20000,
+        "testCases": [
+          {
+            "name": "testCaseExample",
+            "status": 1,
+            "durationInMilliseconds": 5000,
+            "context": "ios_simple:abcdefgh",
+            "summary": "Lorem ipsum"
+          },
+          {
+            "name": "testCaseExample",
+            "status": 1,
+            "durationInMilliseconds": 5000,
+            "context": "ios_simple:abcdefgh",
+            "summary": "Lorem ipsum"
+          },
+          {
+            "name": "testCaseExample",
+            "status": 1,
+            "durationInMilliseconds": 5000,
+            "context": "ios_simple:abcdefgh",
+            "summary": "Lorem ipsum"
+          }
+        ],
+        "orientation": "portrait",
+        "locale": "English",
+        "downloadAllScreenshotsURL": "http://some-url-to.download-screen.shots",
+        "screenshots": [
+          {
+            "url": "https://loremflickr.com/425/667",
+            "filename": "screenshot-whatever-1.portrait.png"
+          },
+          {
+            "url": "https://loremflickr.com/425/667?1",
+            "filename": "screenshot-whatever-2.portrait.png"
+          },
+          {
+            "url": "https://loremflickr.com/425/667?2",
+            "filename": "screenshot-whatever-3.portrait.png"
+          },
+          {
+            "url": "https://loremflickr.com/425/667?3",
+            "filename": "screenshot-whatever-4.portrait.png"
+          },
+          {
+            "url": "https://loremflickr.com/425/667?4",
+            "filename": "screenshot-whatever-5.portrait.png"
+          },
+          {
+            "url": "https://loremflickr.com/425/667?5",
+            "filename": "screenshot-whatever-6.portrait.png"
+          },
+          {
+            "url": "https://loremflickr.com/425/667?6",
+            "filename": "screenshot-whatever-7.portrait.png"
+          }
+        ]
+      },
+      {
+        "id": 10,
+        "status": 2,
+        "deviceName": "iPad Mini 2016",
+        "deviceOperatingSystem": "iOS 11.2",
+        "durationInMilliseconds": 160000,
+        "testCases": [
+          {
+            "name": "testCaseExample",
+            "status": 1,
+            "durationInMilliseconds": 5000,
+            "context": "ios_simple:abcdefgh",
+            "summary": "Lorem ipsum"
+          },
+          {
+            "name": "testCaseExample",
+            "status": 1,
+            "durationInMilliseconds": 5000,
+            "context": "ios_simple:abcdefgh",
+            "summary": "Lorem ipsum"
+          },
+          {
+            "name": "testCaseExample",
+            "status": 2,
+            "durationInMilliseconds": 5000,
+            "context": "ios_simple:abcdefgh",
+            "summary": "Lorem ipsum"
+          }
+        ],
+        "orientation": "portrait",
+        "locale": "Japanese",
+        "downloadAllScreenshotsURL": "http://some-url-to.download-screen.shots",
+        "screenshots": [
+          {
+            "url": "https://loremflickr.com/384/512",
+            "filename": "screenshot-whatever-1.portrait.png"
+          },
+          {
+            "url": "https://loremflickr.com/384/512?1",
+            "filename": "screenshot-whatever-2.portrait.png"
+          }
+        ]
+      },
+      {
+        "id": 20,
+        "status": 0,
+        "deviceName": "Nexus7 clone, DVD 16:9 aspect ratio",
+        "deviceOperatingSystem": "Android Oreo",
+        "durationInMilliseconds": 3700000,
+        "orientation": "landscape",
+        "locale": "Traditional chinese",
+        "downloadAllScreenshotsURL": "http://some-url-to.download-screen.shots",
+        "screenshots": [
+          {
+            "url": "https://loremflickr.com/640/400",
+            "filename": "screenshot-whatever-1.landscape.png"
+          },
+          {
+            "url": "https://loremflickr.com/640/400?1",
+            "filename": "screenshot-whatever-2.landscape.png"
+          },
+          {
+            "url": "https://loremflickr.com/640/400?2",
+            "filename": "screenshot-whatever-3.landscape.png"
+          },
+          {
+            "url": "https://loremflickr.com/640/400?3",
+            "filename": "screenshot-whatever-4.landscape.png"
+          }
+        ]
+      },
+      {
+        "id": 30,
+        "status": 3,
+        "deviceName": "iPhone 7",
+        "deviceOperatingSystem": "iOS 11.2",
+        "durationInMilliseconds": 7200000,
+        "orientation": "landscape",
+        "locale": "Japanese",
+        "downloadAllScreenshotsURL": "http://some-url-to.download-screen.shots",
+        "screenshots": [
+          {
+            "url": "https://loremflickr.com/667/425",
+            "filename": "screenshot-whatever-1.landscape.png"
+          },
+          {
+            "url": "https://loremflickr.com/667/425?1",
+            "filename": "screenshot-whatever-2.landscape.png"
+          },
+          {
+            "url": "https://loremflickr.com/667/425?2",
+            "filename": "screenshot-whatever-3.landscape.png"
+          },
+          {
+            "url": "https://loremflickr.com/667/425?3",
+            "filename": "screenshot-whatever-4.landscape.png"
+          }
+        ]
+      }
+    ]
+  },
+  "test_report/3": {
+    "id": 3,
+    "name": "UI Test B",
+    "testSuites": [
+      {
+        "id": 40,
+        "status": 1,
+        "deviceName": "Galaxy S4 mini",
+        "deviceOperatingSystem": "Android Ice Cream Sandwich",
+        "durationInMilliseconds": 10,
+        "testCases": [
+          {
+            "name": "testCaseExample",
+            "status": 1,
+            "durationInMilliseconds": 5000,
+            "context": "ios_simple:abcdefgh",
+            "summary": "Lorem ipsum"
+          },
+          {
+            "name": "testCaseExample",
+            "status": 1,
+            "durationInMilliseconds": 5000,
+            "context": "ios_simple:abcdefgh",
+            "summary": "Lorem ipsum"
+          },
+          {
+            "name": "testCaseExample",
+            "status": 1,
+            "durationInMilliseconds": 5000,
+            "context": "ios_simple:abcdefgh",
+            "summary": "Lorem ipsum"
+          }
+        ],
+        "orientation": "portrait",
+        "locale": "Japanese",
+        "downloadAllScreenshotsURL": "http://some-url-to.download-screen.shots",
+        "screenshots": [
+          {
+            "url": "https://loremflickr.com/270/480",
+            "filename": "screenshot-whatever-1.portrait.png"
+          },
+          {
+            "url": "https://loremflickr.com/270/480?1",
+            "filename": "screenshot-whatever-2.portrait.png"
+          }
+        ]
+      },
+      {
+        "id": 50,
+        "status": 2,
+        "deviceName": "iPhone 7",
+        "deviceOperatingSystem": "iOS 11.2",
+        "durationInMilliseconds": 2050,
+        "testCases": [
+          {
+            "name": "testCaseExample",
+            "status": 1,
+            "durationInMilliseconds": 5000,
+            "context": "ios_simple:abcdefgh",
+            "summary": "Lorem ipsum"
+          },
+          {
+            "name": "testCaseExample",
+            "status": 2,
+            "durationInMilliseconds": 5000,
+            "context": "ios_simple:abcdefgh",
+            "summary": "Lorem ipsum"
+          },
+          {
+            "name": "testCaseExample",
+            "status": 2,
+            "durationInMilliseconds": 5000,
+            "context": "ios_simple:abcdefgh",
+            "summary": "Lorem ipsum"
+          },
+          {
+            "name": "testCaseExample",
+            "status": 1,
+            "durationInMilliseconds": 5000,
+            "context": "ios_simple:abcdefgh",
+            "summary": "Lorem ipsum"
+          },
+          {
+            "name": "testCaseExample",
+            "status": 2,
+            "durationInMilliseconds": 5000,
+            "context": "ios_simple:abcdefgh",
+            "summary": "Lorem ipsum"
+          },
+          {
+            "name": "testCaseExample",
+            "status": 2,
+            "durationInMilliseconds": 5000,
+            "context": "ios_simple:abcdefgh",
+            "summary": "Lorem ipsum"
+          }
+        ],
+        "orientation": "portrait",
+        "locale": "English",
+        "downloadAllScreenshotsURL": "http://some-url-to.download-screen.shots",
+        "screenshots": [
+          {
+            "url": "https://loremflickr.com/425/667",
+            "filename": "screenshot-whatever-1.portrait.png"
+          },
+          {
+            "url": "https://loremflickr.com/425/667?1",
+            "filename": "screenshot-whatever-2.portrait.png"
+          },
+          {
+            "url": "https://loremflickr.com/425/667?2",
+            "filename": "screenshot-whatever-3.portrait.png"
+          }
+        ]
+      },
+      {
+        "id": 60,
+        "status": 0,
+        "deviceName": "iPhone 7",
+        "deviceOperatingSystem": "iOS 11.2",
+        "durationInMilliseconds": 20000,
+        "orientation": "landscape",
+        "locale": "English",
+        "downloadAllScreenshotsURL": "http://some-url-to.download-screen.shots",
+        "screenshots": [
+          {
+            "url": "https://loremflickr.com/667/425",
+            "filename": "screenshot-whatever-1.landscape.png"
+          },
+          {
+            "url": "https://loremflickr.com/667/425?1",
+            "filename": "screenshot-whatever-2.landscape.png"
+          },
+          {
+            "url": "https://loremflickr.com/667/425?2",
+            "filename": "screenshot-whatever-3.landscape.png"
+          }
+        ]
+      }
+    ]
+  },
   "performance": {
     "metrics": {
       "cpu": {

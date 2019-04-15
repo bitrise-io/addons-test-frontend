@@ -1,8 +1,16 @@
 import { TestBed, fakeAsync } from '@angular/core/testing';
 
-import { BackendService, BACKEND_SERVICE, TestArtifactsResult, TestReportsResult, LogResult } from './backend.model';
+import {
+  BackendService,
+  BACKEND_SERVICE,
+  TestArtifactsResult,
+  TestReportsResult,
+  LogResult,
+  TestReportResult
+} from './backend.model';
 import { MockServicesModule } from '../services.mock.module';
 
+import { TestReport } from 'src/app/models/test-report.model';
 import { Performance } from 'src/app/models/performance.model';
 
 describe('BackendService', () => {
@@ -58,8 +66,21 @@ describe('BackendService', () => {
         keys = Object.keys(result.testReports[0]);
         expect(keys).toContain('id');
         expect(keys).toContain('name');
+        expect(keys).not.toContain('testSuites');
+      });
+    });
 
-        keys = Object.keys(result.testReports[1]);
+    it('should load report details', () => {
+      const testReport = new TestReport();
+      testReport.id = 1;
+
+      service.getReportDetails(testReport).subscribe((result: TestReportResult) => {
+        let keys = Object.keys(result);
+        expect(keys).toContain('testReport');
+
+        keys = Object.keys(result.testReport);
+        expect(keys).toContain('id');
+        expect(keys).toContain('name');
         expect(keys).toContain('testSuites');
       });
     });

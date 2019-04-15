@@ -43,6 +43,11 @@ export class TestReport implements Deserializable {
   deserialize(testReportResponse: TestReportResponse) {
     this.id = testReportResponse.id;
     this.name = testReportResponse.name;
+
+    if (testReportResponse.testSuites === undefined) {
+      return this;
+    }
+
     this.testSuites = testReportResponse.testSuites.map((testSuiteResponse: TestSuiteResponse) =>
       new TestSuite().deserialize(testSuiteResponse)
     );

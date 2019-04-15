@@ -16,6 +16,10 @@ export interface TestReportsResult {
   testReports: TestReport[];
 }
 
+export interface TestReportResult {
+  testReport: TestReport;
+}
+
 export interface LogResult {
   log: Log;
   downloadURL: string;
@@ -25,5 +29,6 @@ export interface BackendService {
   getPerformance(): Observable<Performance>;
   getArtifacts(): Observable<TestArtifactsResult>;
   getReports(): Observable<TestReportsResult>;
+  getReportDetails(testReport: TestReport): Observable<TestReportResult>;
   getLog(): Observable<LogResult>;
 }

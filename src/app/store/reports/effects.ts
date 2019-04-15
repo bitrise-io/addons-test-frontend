@@ -1,15 +1,24 @@
 import { Injectable, Inject } from '@angular/core';
 import { Actions, Effect, ofType } from '@ngrx/effects';
 import { Store } from '@ngrx/store';
-import { Observable, of } from 'rxjs';
-import { switchMap, map, withLatestFrom, merge } from 'rxjs/operators';
+import { Observable, of, forkJoin } from 'rxjs';
+import { switchMap, map, withLatestFrom, merge, mergeMap } from 'rxjs/operators';
 
-import { ReportActionTypes, ReceiveReportList, ReportActions, FilterReportList, ReceiveFilteredReportList } from './actions';
-import { BackendService, BACKEND_SERVICE, TestReportsResult } from 'src/app/services/backend/backend.model';
+import {
+  ReportActionTypes,
+  ReceiveReportList,
+  ReportActions,
+  FilterReportList,
+  ReceiveFilteredReportList
+} from './actions';
+import {
+  BackendService,
+  BACKEND_SERVICE,
+  TestReportsResult,
+  TestReportResult
+} from 'src/app/services/backend/backend.model';
 import { TestReportState } from './reducer';
 import filterReports from './filter-reports';
-
-const UPDATE_INTERVAL_MS = 5000;
 
 @Injectable()
 export class ReportEffects {
@@ -21,7 +30,13 @@ export class ReportEffects {
       const { testReport: { filter } } = testReportState; // prettier-ignore
 
       return this.backendService.getReports().pipe(
-        map((result: TestReportsResult) => new ReceiveReportList(result)),
+        mergeMap((result: TestReportsResult) =>
+          forkJoin(...result.testReports.map((testReport) => this.backendService.getReportDetails(testReport)))
+        ),
+        map(
+          (results: TestReportResult[]) =>
+            new ReceiveReportList({ testReports: results.map((result: TestReportResult) => result.testReport) })
+        ),
         merge(of(new FilterReportList({ filter })))
       );
     })

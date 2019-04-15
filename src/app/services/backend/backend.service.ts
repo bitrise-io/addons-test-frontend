@@ -2,7 +2,7 @@ import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { Observable, of } from 'rxjs';
 
-import { BackendService, TestArtifactsResult, TestReportsResult, LogResult } from './backend.model';
+import { BackendService, TestArtifactsResult, TestReportsResult, LogResult, TestReportResult } from './backend.model';
 import { Performance } from 'src/app/models/performance.model';
 import { TestArtifact, TestArtifactResponse } from 'src/app/models/test-artifact.model';
 import { TestReportResponse, TestReport } from 'src/app/models/test-report.model';
@@ -42,6 +42,13 @@ export class RealBackendService implements BackendService {
     );
 
     return of({ testReports });
+  }
+
+  getReportDetails(testReport: TestReport): Observable<TestReportResult> {
+    const testReportResponse = MOCKED_DATA[`test_report/${testReport.id}`];
+    testReport.deserialize(testReportResponse);
+
+    return of({ testReport });
   }
 
   getLog(): Observable<LogResult> {
