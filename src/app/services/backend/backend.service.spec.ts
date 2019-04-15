@@ -58,7 +58,6 @@ describe('BackendService', () => {
         keys = Object.keys(result.testReports[0]);
         expect(keys).toContain('id');
         expect(keys).toContain('name');
-        expect(keys).toContain('testCases');
 
         keys = Object.keys(result.testReports[1]);
         expect(keys).toContain('testSuites');

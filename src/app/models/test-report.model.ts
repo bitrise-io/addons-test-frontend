@@ -36,8 +36,8 @@ export class TestReport implements Deserializable {
     return typeCssClasses[this.type];
   }
 
-  testsWithStatus(status: TestSuiteStatus) {
-    return this.testSuites.filter((testSuite: TestSuite) => Number(testSuite.status) === status);
+  testSuitesWithStatus(status: TestSuiteStatus) {
+    return this.testSuites.filter((testSuite: TestSuite) => testSuite.status === status);
   }
 
   deserialize(testReportResponse: TestReportResponse) {

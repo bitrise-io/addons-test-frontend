@@ -32,7 +32,8 @@ describe('TestSuiteComponent', () => {
     fixture = TestBed.createComponent(TestSuiteComponent);
     testSuiteComponent = fixture.debugElement.componentInstance;
     testSuiteComponent.testReport = new TestReport();
-    testSuiteComponent.testSuite = new TestSuite();
+    testSuiteComponent.testReport.testSuites = [new TestSuite()];
+    testSuiteComponent.testSuite = testSuiteComponent.testReport.testSuites[0];
   });
 
   it('creates the test suite component', () => {
