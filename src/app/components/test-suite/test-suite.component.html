@@ -1,14 +1,17 @@
-<div class="test-suite">
+<div class="test-suite" [ngClass]="testReport.typeCssClass">
   <div class="test-suite-inner" [ngClass]="testSuite.statusCssClass">
-    <div class="detail-wrapper status-device">
+    <div class="detail-wrapper status-title">
       <div class="detail">
         <div class="status-icon failed" inlineSVG="/assets/images/sign-cross.svg"></div>
         <div class="status-icon passed" inlineSVG="/assets/images/sign-check.svg"></div>
         <div class="status-icon skipped" inlineSVG="/assets/images/sign-arrowheads.svg"></div>
         <div class="status-icon inconclusive" inlineSVG="/assets/images/sign-questionmark.svg"></div>
-        <div class="device">
+        <div class="title" *ngIf="testReport.type == TestReportType.uiTest">
           <div class="name">{{ testSuite.deviceName }}</div>
           <div class="operating-system">{{ testSuite.deviceOperatingSystem }}</div>
+        </div>
+        <div class="title" *ngIf="testReport.type == TestReportType.unitTest">
+          <div class="name">{{ testSuite.suiteName }}</div>
         </div>
       </div>
     </div>
@@ -38,12 +41,12 @@
         </div>
       </div>
     </div>
-    <div class="detail-wrapper orientation">
+    <div class="detail-wrapper orientation" *ngIf="testReport.type == TestReportType.uiTest">
       <div class="detail" [ngClass]="testSuite.orientationCssClass">
         <div inlineSVG="/assets/images/mobile.svg"></div>
       </div>
     </div>
-    <div class="detail-wrapper locale">
+    <div class="detail-wrapper locale" *ngIf="testReport.type == TestReportType.uiTest">
       <div class="detail">{{ testSuite.locale }}</div>
     </div>
     <a class="test-cases-button" [routerLink]="['/testreport', testReport.id, 'testsuite', testSuite.id]">

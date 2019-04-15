@@ -5,11 +5,8 @@ export default function filterReports(reports: TestReport[], status: TestSuiteSt
   if (status || status === 0) {
     return reports.map(report => {
       const newReport = Object.assign(new TestReport(), report);
-      if (report.testCases) {
-        newReport.testCases = report.testCases.filter(x => Number(x.status) === status);
-      } else if (report.testSuites) {
-        newReport.testSuites = report.testSuites.filter(x => Number(x.status) === status);
-      }
+      newReport.testSuites = report.testSuites.filter(x => Number(x.status) === status);
+
       return newReport;
     });
   } else {

@@ -3,20 +3,28 @@
     {
       "id": 1,
       "name": "Unit Test A",
-      "testCases": [
+      "testSuites": [
         {
-          "name": "testCaseExample1",
-          "status": 2,
-          "durationInMilliseconds": 3000,
-          "context": "ios_simple:dsfhkjshUITESTX",
-          "summary": "Nulla vitae elit libero, a pharetra augue. Sed posuere consectetur est at lobortis.\n\nNullam id dolor id nibh ultricies vehicula ut id elit. Praesent commodo cursus magna, vel scelerisque nisl consectetur et.\n\nInteger posuere erat a ante venenatis dapibus posuere velit aliquet. Donec id elit non mi porta gravida at eget metus."
-        },
-        {
-          "name": "testCaseExample2",
+          "id": 3,
           "status": 1,
-          "durationInMilliseconds": 5000,
-          "context": "ios_complicated:abcdefgh",
-          "summary": "Lorem ipsum"
+          "suiteName": "Test Group #1",
+          "durationInMilliseconds": 12000,
+          "testCases": [
+            {
+              "name": "testCaseExample1",
+              "status": 2,
+              "durationInMilliseconds": 3000,
+              "context": "ios_simple:dsfhkjshUITESTX",
+              "summary": "Nulla vitae elit libero, a pharetra augue. Sed posuere consectetur est at lobortis.\n\nNullam id dolor id nibh ultricies vehicula ut id elit. Praesent commodo cursus magna, vel scelerisque nisl consectetur et.\n\nInteger posuere erat a ante venenatis dapibus posuere velit aliquet. Donec id elit non mi porta gravida at eget metus."
+            },
+            {
+              "name": "testCaseExample2",
+              "status": 1,
+              "durationInMilliseconds": 5000,
+              "context": "ios_complicated:abcdefgh",
+              "summary": "Lorem ipsum"
+            }
+          ]
         }
       ]
     },

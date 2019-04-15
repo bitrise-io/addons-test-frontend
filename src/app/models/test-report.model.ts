@@ -1,7 +1,6 @@
 import { Injectable } from '@angular/core';
 import { Deserializable } from './deserializable.model';
 import { TestSuite, TestSuiteStatus, TestSuiteResponse } from './test-suite.model';
-import { TestCase, TestCaseResponse, TestCaseStatus } from './test-case.model';
 
 export enum TestReportType {
   uiTest = 'uiTest',
@@ -11,8 +10,7 @@ export enum TestReportType {
 export type TestReportResponse = {
   id: number;
   name: string;
-  testSuites?: TestSuiteResponse[];
-  testCases?: TestCaseResponse[];
+  testSuites: TestSuiteResponse[];
 };
 
 @Injectable()
@@ -20,39 +18,34 @@ export class TestReport implements Deserializable {
   id: number;
   name: string;
   testSuites: TestSuite[];
-  testCases: TestCase[];
 
   get type(): TestReportType {
-    if (this.testSuites !== undefined) {
+    if (this.testSuites.find((testSuite) => testSuite.deviceName !== undefined)) {
       return TestReportType.uiTest;
     }
-    if (this.testCases !== undefined) {
-      return TestReportType.unitTest;
-    }
+
+    return TestReportType.unitTest;
   }
 
-  testsWithStatus(status: TestSuiteStatus | TestCaseStatus) {
-    switch (this.type) {
-      case TestReportType.uiTest:
-        return this.testSuites.filter((testSuite: TestSuite) => Number(testSuite.status) === status);
-      case TestReportType.unitTest:
-        return this.testCases.filter((testCase: TestCase) => Number(testCase.status) === status);
-    }
+  get typeCssClass(): string {
+    const typeCssClasses = {
+      [TestReportType.uiTest]: 'ui-test',
+      [TestReportType.unitTest]: 'unit-test'
+    };
+
+    return typeCssClasses[this.type];
+  }
+
+  testsWithStatus(status: TestSuiteStatus) {
+    return this.testSuites.filter((testSuite: TestSuite) => Number(testSuite.status) === status);
   }
 
   deserialize(testReportResponse: TestReportResponse) {
     this.id = testReportResponse.id;
     this.name = testReportResponse.name;
-
-    if (testReportResponse.testSuites) {
-      this.testSuites = testReportResponse.testSuites.map((testSuiteResponse: TestSuiteResponse) =>
-        new TestSuite().deserialize(testSuiteResponse)
-      );
-    } else if (testReportResponse.testCases) {
-      this.testCases = testReportResponse.testCases.map((testCaseResponse: TestCaseResponse) =>
-        new TestCase().deserialize(testCaseResponse)
-      );
-    }
+    this.testSuites = testReportResponse.testSuites.map((testSuiteResponse: TestSuiteResponse) =>
+      new TestSuite().deserialize(testSuiteResponse)
+    );
 
     return this;
   }

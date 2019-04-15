@@ -1,5 +1,5 @@
 import { Component, Input } from '@angular/core';
-import { TestReport, TestReportType } from '../../models/test-report.model';
+import { TestReport } from '../../models/test-report.model';
 
 @Component({
   selector: 'bitrise-test-report',
@@ -8,6 +8,4 @@ import { TestReport, TestReportType } from '../../models/test-report.model';
 })
 export class TestReportComponent {
   @Input() testReport: TestReport;
-
-  TestReportType = TestReportType;
 }

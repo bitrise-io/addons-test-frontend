@@ -1,5 +1,5 @@
 import { Component, Input, OnInit } from '@angular/core';
-import { TestReport } from 'src/app/models/test-report.model';
+import { TestReport, TestReportType } from 'src/app/models/test-report.model';
 import { TestSuite, TestSuiteStatus } from '../../models/test-suite.model';
 import { TestCase, TestCaseStatus } from '../../models/test-case.model';
 
@@ -12,6 +12,7 @@ export class TestSuiteComponent implements OnInit {
   @Input() testReport: TestReport;
   @Input() testSuite: TestSuite;
 
+  TestReportType = TestReportType;
   TestSuiteStatus = TestSuiteStatus;
 
   passedTestCaseCount: number;
