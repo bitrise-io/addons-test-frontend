@@ -30,5 +30,5 @@ export interface BackendService {
   getArtifacts(): Observable<TestArtifactsResult>;
   getReports(): Observable<TestReportsResult>;
   getReportDetails(testReport: TestReport): Observable<TestReportResult>;
-  getLog(): Observable<LogResult>;
+  getLog(testReport: TestReport): Observable<LogResult>;
 }
