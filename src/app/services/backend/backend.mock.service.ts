@@ -44,7 +44,6 @@ export class MockBackendService implements BackendService {
 
   getReportDetails(testReport: TestReport): Observable<TestReportResult> {
     const testReportResponse = MOCKED_DATA[`test_report/${testReport.id}`];
-    console.log(testReportResponse);
     testReport.deserialize(testReportResponse);
 
     return of({ testReport });

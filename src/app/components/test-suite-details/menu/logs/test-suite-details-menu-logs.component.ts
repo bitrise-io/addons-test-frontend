@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, OnDestroy } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { Observable, combineLatest, Subscription } from 'rxjs';
 import { map } from 'rxjs/operators';
@@ -19,10 +19,10 @@ const INITIAL_MAXIMUM_NUMBER_OF_VISIBLE_LINES = 20;
   templateUrl: './test-suite-details-menu-logs.component.html',
   styleUrls: ['./test-suite-details-menu-logs.component.scss']
 })
-export class TestSuiteDetailsMenuLogsComponent implements OnInit {
+export class TestSuiteDetailsMenuLogsComponent implements OnInit, OnDestroy {
   testReports$: Observable<TestReport[]>;
   downloadLogURL: string;
-  subscription: Subscription;
+  subscription = new Subscription();
 
   levelFilterItems = [
     {
@@ -73,27 +73,35 @@ export class TestSuiteDetailsMenuLogsComponent implements OnInit {
     );
     let testSuite: TestSuite;
 
-    this.subscription = combineLatest(routeParams, this.testReports$)
-      .pipe(
-        map(([params, testReports]) => {
-          const testReportId = Number(params.testReportId);
-          const testSuiteId = Number(params.testSuiteId);
+    this.subscription.add(
+      combineLatest(routeParams, this.testReports$)
+        .pipe(
+          map(([params, testReports]) => {
+            const testReportId = Number(params.testReportId);
+            const testSuiteId = Number(params.testSuiteId);
 
-          const testReport = testReports.find(({ id }: TestReport) => id === testReportId);
-          if (testReport) {
-            testSuite = testReport.testSuites.find(({ id }: TestSuite) => id === testSuiteId);
+            const testReport = testReports.find(({ id }: TestReport) => id === testReportId);
+            if (testReport) {
+              testSuite = testReport.testSuites.find(({ id }: TestSuite) => id === testSuiteId);
+            }
+          })
+        )
+        .subscribe(() => {
+          if (testSuite) {
+            this.store.dispatch(new FetchLog(testSuite));
           }
         })
-      )
-      .subscribe(() => this.store.dispatch(new FetchLog(testSuite)));
+    );
 
-    this.log$.subscribe((logData: any) => {
-      this.log = logData.log;
-      this.downloadLogURL = logData.downloadURL;
+    this.subscription.add(
+      this.log$.subscribe((logData: any) => {
+        this.log = logData.log;
+        this.downloadLogURL = logData.downloadURL;
 
-      this.updateFilteredLogLines();
-      this.resetMaximumNumberOfVisibleLines();
-    });
+        this.updateFilteredLogLines();
+        this.resetMaximumNumberOfVisibleLines();
+      })
+    );
   }
 
   updateFilteredLogLines() {

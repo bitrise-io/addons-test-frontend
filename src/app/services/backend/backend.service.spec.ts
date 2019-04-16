@@ -11,6 +11,7 @@ import {
 import { MockServicesModule } from '../services.mock.module';
 
 import { TestReport } from 'src/app/models/test-report.model';
+import { TestSuite } from 'src/app/models/test-suite.model';
 import { Performance } from 'src/app/models/performance.model';
 
 describe('BackendService', () => {
@@ -86,9 +87,10 @@ describe('BackendService', () => {
     });
 
     it('should load log data', () => {
-      const testReport = new TestReport();
+      const testSuite = new TestSuite();
+      testSuite.logUrl = 'log1';
 
-      service.getLog(testReport).subscribe((logResult: LogResult) => {
+      service.getLog(testSuite).subscribe((logResult: LogResult) => {
         const keys = Object.keys(logResult);
         expect(keys).toContain('log');
         expect(keys).toContain('downloadURL');

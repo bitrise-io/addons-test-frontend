@@ -53,7 +53,6 @@ export class RealBackendService implements BackendService {
   }
 
   getLog(testSuite: TestSuite): Observable<LogResult> {
-    console.log(testSuite);
     const { fullLog, downloadURL }: any = MOCKED_DATA[testSuite.logUrl];
 
     const log = new Log().deserialize(<RawLog>fullLog);
