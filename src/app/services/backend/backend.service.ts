@@ -6,6 +6,7 @@ import { BackendService, TestArtifactsResult, TestReportsResult, LogResult, Test
 import { Performance } from 'src/app/models/performance.model';
 import { TestArtifact, TestArtifactResponse } from 'src/app/models/test-artifact.model';
 import { TestReportResponse, TestReport } from 'src/app/models/test-report.model';
+import { TestSuite } from 'src/app/models/test-suite.model';
 import { Log, RawLog } from 'src/app/models/log.model';
 
 import * as MOCKED_DATA from './mock-data.json';
@@ -51,8 +52,9 @@ export class RealBackendService implements BackendService {
     return of({ testReport });
   }
 
-  getLog(testReport: TestReport): Observable<LogResult> {
-    const { fullLog, downloadURL }: any = MOCKED_DATA[testReport.logUrl];
+  getLog(testSuite: TestSuite): Observable<LogResult> {
+    console.log(testSuite);
+    const { fullLog, downloadURL }: any = MOCKED_DATA[testSuite.logUrl];
 
     const log = new Log().deserialize(<RawLog>fullLog);
 

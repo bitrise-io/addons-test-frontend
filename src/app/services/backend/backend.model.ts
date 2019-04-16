@@ -4,6 +4,7 @@ import { Performance } from 'src/app/models/performance.model';
 import { TestArtifact } from 'src/app/models/test-artifact.model';
 import { TestReport } from 'src/app/models/test-report.model';
 import { Log } from 'src/app/models/log.model';
+import { TestSuite } from 'src/app/models/test-suite.model';
 
 export const BACKEND_SERVICE = 'BACKEND_SERVICE';
 
@@ -30,5 +31,5 @@ export interface BackendService {
   getArtifacts(): Observable<TestArtifactsResult>;
   getReports(): Observable<TestReportsResult>;
   getReportDetails(testReport: TestReport): Observable<TestReportResult>;
-  getLog(testReport: TestReport): Observable<LogResult>;
+  getLog(testSuite: TestSuite): Observable<LogResult>;
 }

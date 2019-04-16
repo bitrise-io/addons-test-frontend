@@ -10,6 +10,7 @@ import { FetchLog } from 'src/app/store/log/actions';
 import { TestReport } from 'src/app/models/test-report.model';
 import { TestReportState } from 'src/app/store/reports/reducer';
 import { FetchReports } from 'src/app/store/reports/actions';
+import { TestSuite } from 'src/app/models/test-suite.model';
 
 const INITIAL_MAXIMUM_NUMBER_OF_VISIBLE_LINES = 20;
 
@@ -70,16 +71,21 @@ export class TestSuiteDetailsMenuLogsComponent implements OnInit {
     const routeParams = combineLatest(this.activatedRoute.pathFromRoot.map((t) => t.params)).pipe(
       map((paramObjects) => Object.assign({}, ...paramObjects))
     );
-    let testReport: TestReport;
+    let testSuite: TestSuite;
 
     this.subscription = combineLatest(routeParams, this.testReports$)
       .pipe(
         map(([params, testReports]) => {
           const testReportId = Number(params.testReportId);
-          testReport = testReports.find(({ id }: TestReport) => id === testReportId);
+          const testSuiteId = Number(params.testSuiteId);
+
+          const testReport = testReports.find(({ id }: TestReport) => id === testReportId);
+          if (testReport) {
+            testSuite = testReport.testSuites.find(({ id }: TestSuite) => id === testSuiteId);
+          }
         })
       )
-      .subscribe(() => this.store.dispatch(new FetchLog(testReport)));
+      .subscribe(() => this.store.dispatch(new FetchLog(testSuite)));
 
     this.log$.subscribe((logData: any) => {
       this.log = logData.log;

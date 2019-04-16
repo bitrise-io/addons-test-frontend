@@ -44,9 +44,6 @@
   "test_report/2": {
     "id": 2,
     "name": "UI Test A",
-    "outputUrls": {
-      "log": ["log1"]
-    },
     "testSuites": [
       {
         "id": 5,
@@ -109,7 +106,10 @@
             "url": "https://loremflickr.com/425/667?6",
             "filename": "screenshot-whatever-7.portrait.png"
           }
-        ]
+        ],
+        "outputUrls": {
+          "log": ["log1"]
+        }
       },
       {
         "id": 10,
@@ -152,7 +152,10 @@
             "url": "https://loremflickr.com/384/512?1",
             "filename": "screenshot-whatever-2.portrait.png"
           }
-        ]
+        ],
+        "outputUrls": {
+          "log": ["log1"]
+        }
       },
       {
         "id": 20,
@@ -180,7 +183,10 @@
             "url": "https://loremflickr.com/640/400?3",
             "filename": "screenshot-whatever-4.landscape.png"
           }
-        ]
+        ],
+        "outputUrls": {
+          "log": ["log2"]
+        }
       },
       {
         "id": 30,
@@ -208,7 +214,10 @@
             "url": "https://loremflickr.com/667/425?3",
             "filename": "screenshot-whatever-4.landscape.png"
           }
-        ]
+        ],
+        "outputUrls": {
+          "log": ["log1"]
+        }
       }
     ]
   },
@@ -260,7 +269,10 @@
             "url": "https://loremflickr.com/270/480?1",
             "filename": "screenshot-whatever-2.portrait.png"
           }
-        ]
+        ],
+        "outputUrls": {
+          "log": ["log2"]
+        }
       },
       {
         "id": 50,
@@ -328,7 +340,10 @@
             "url": "https://loremflickr.com/425/667?2",
             "filename": "screenshot-whatever-3.portrait.png"
           }
-        ]
+        ],
+        "outputUrls": {
+          "log": ["log1"]
+        }
       },
       {
         "id": 60,
@@ -352,7 +367,10 @@
             "url": "https://loremflickr.com/667/425?2",
             "filename": "screenshot-whatever-3.landscape.png"
           }
-        ]
+        ],
+        "outputUrls": {
+          "log": ["log1"]
+        }
       }
     ]
   },
