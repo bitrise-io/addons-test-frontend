@@ -1,6 +1,6 @@
 import { TestReport } from 'src/app/models/test-report.model';
 import { TestSuiteStatus } from 'src/app/models/test-suite.model';
-import { ReportActionTypes, FilterReportList, ReportActions, ReceiveReportList, ReceiveFilteredReportList } from './actions';
+import { ReportActionTypes, FilterReports, ReportActions, ReceiveReports, ReceiveFilteredReports } from './actions';
 
 export interface TestReportState {
   testReports: TestReport[];
@@ -16,30 +16,30 @@ const initialState: TestReportState = {
 
 export default (state = initialState, action: ReportActions) => {
   switch (action.type) {
-    case ReportActionTypes.ReceiveList: {
+    case ReportActionTypes.Receive: {
       const {
         payload: { testReports }
-      } = <ReceiveReportList>action;
+      } = <ReceiveReports>action;
 
       return {
         ...state,
         testReports
       };
     }
-    case ReportActionTypes.FilterList: {
+    case ReportActionTypes.Filter: {
       const {
         payload: { filter }
-      } = <FilterReportList>action;
+      } = <FilterReports>action;
 
       return {
         ...state,
         filter
       };
     }
-    case ReportActionTypes.ReceiveFilteredList: {
+    case ReportActionTypes.ReceiveFiltered: {
       const {
         payload: { testReports }
-      } = <ReceiveFilteredReportList>action;
+      } = <ReceiveFilteredReports>action;
 
       return {
         ...state,

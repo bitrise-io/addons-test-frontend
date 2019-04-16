@@ -6,10 +6,10 @@ import { switchMap, map, withLatestFrom, merge, mergeMap } from 'rxjs/operators'
 
 import {
   ReportActionTypes,
-  ReceiveReportList,
+  ReceiveReports,
   ReportActions,
-  FilterReportList,
-  ReceiveFilteredReportList
+  FilterReports,
+  ReceiveFilteredReports
 } from './actions';
 import {
   BackendService,
@@ -24,7 +24,7 @@ import filterReports from './filter-reports';
 export class ReportEffects {
   @Effect()
   $fetchReports: Observable<ReportActions> = this.actions$.pipe(
-    ofType(ReportActionTypes.FetchList),
+    ofType(ReportActionTypes.Fetch),
     withLatestFrom(this.store$),
     switchMap(([_, testReportState]: [any, { testReport: TestReportState }]) => {
       const { testReport: { filter } } = testReportState; // prettier-ignore
@@ -35,22 +35,22 @@ export class ReportEffects {
         ),
         map(
           (results: TestReportResult[]) =>
-            new ReceiveReportList({ testReports: results.map((result: TestReportResult) => result.testReport) })
+            new ReceiveReports({ testReports: results.map((result: TestReportResult) => result.testReport) })
         ),
-        merge(of(new FilterReportList({ filter })))
+        merge(of(new FilterReports({ filter })))
       );
     })
   );
 
   @Effect()
   $filterReports: Observable<ReportActions> = this.actions$.pipe(
-    ofType(ReportActionTypes.FilterList),
+    ofType(ReportActionTypes.Filter),
     withLatestFrom(this.store$),
-    map(([filterReportsActions, testReportState]: [FilterReportList, { testReport: TestReportState }]) => {
+    map(([filterReportsActions, testReportState]: [FilterReports, { testReport: TestReportState }]) => {
       const { payload: { filter } } = filterReportsActions; // prettier-ignore
       const { testReport: { testReports } } = testReportState; // prettier-ignore
 
-      return new ReceiveFilteredReportList({ testReports: filterReports(testReports, filter) });
+      return new ReceiveFilteredReports({ testReports: filterReports(testReports, filter) });
     })
   );
 

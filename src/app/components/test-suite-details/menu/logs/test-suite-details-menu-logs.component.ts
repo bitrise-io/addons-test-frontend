@@ -9,7 +9,7 @@ import { LogLineLevel } from 'src/app/models/log-line-level.model';
 import { FetchLog } from 'src/app/store/log/actions';
 import { TestReport } from 'src/app/models/test-report.model';
 import { TestReportState } from 'src/app/store/reports/reducer';
-import { FetchReportList } from 'src/app/store/reports/actions';
+import { FetchReports } from 'src/app/store/reports/actions';
 
 const INITIAL_MAXIMUM_NUMBER_OF_VISIBLE_LINES = 20;
 
@@ -65,7 +65,7 @@ export class TestSuiteDetailsMenuLogsComponent implements OnInit {
   }
 
   ngOnInit() {
-    this.store.dispatch(new FetchReportList());
+    this.store.dispatch(new FetchReports());
 
     const routeParams = combineLatest(this.activatedRoute.pathFromRoot.map((t) => t.params)).pipe(
       map((paramObjects) => Object.assign({}, ...paramObjects))

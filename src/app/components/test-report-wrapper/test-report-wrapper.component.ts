@@ -7,7 +7,7 @@ import { Store } from '@ngrx/store';
 
 import { TestReport } from '../../models/test-report.model';
 import { TestReportState } from 'src/app/store/reports/reducer';
-import { FetchReportList } from 'src/app/store/reports/actions';
+import { FetchReports } from 'src/app/store/reports/actions';
 
 @Component({
   selector: 'bitrise-test-report-wrapper',
@@ -25,7 +25,7 @@ export class TestReportWrapperComponent implements OnInit, OnDestroy {
   }
 
   ngOnInit() {
-    this.store.dispatch(new FetchReportList());
+    this.store.dispatch(new FetchReports());
 
     this.combinedSubscription = combineLatest(this.activatedRoute.params, this.testReports$)
       .pipe(

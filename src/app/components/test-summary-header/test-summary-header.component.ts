@@ -5,7 +5,7 @@ import { Store } from '@ngrx/store';
 import { TestReport } from '../../models/test-report.model';
 import { TestSuite, TestSuiteStatus } from '../../models/test-suite.model';
 import { TestReportState } from 'src/app/store/reports/reducer';
-import { FetchReportList } from 'src/app/store/reports/actions';
+import { FetchReports } from 'src/app/store/reports/actions';
 
 @Component({
   selector: 'bitrise-test-summary-header',
@@ -44,7 +44,7 @@ export class TestSummaryHeaderComponent implements OnInit {
   }
 
   ngOnInit() {
-    this.store.dispatch(new FetchReportList());
+    this.store.dispatch(new FetchReports());
 
     this.testFilter$.subscribe(filter => {
       this.selectedStatus = filter;

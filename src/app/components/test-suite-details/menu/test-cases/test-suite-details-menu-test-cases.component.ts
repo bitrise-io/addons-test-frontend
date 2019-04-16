@@ -6,7 +6,7 @@ import { Store } from '@ngrx/store';
 
 import { TestReport } from 'src/app/models/test-report.model';
 import { TestReportState } from 'src/app/store/reports/reducer';
-import { FetchReportList } from 'src/app/store/reports/actions';
+import { FetchReports } from 'src/app/store/reports/actions';
 import { TestSuite } from 'src/app/models/test-suite.model';
 
 @Component({
@@ -25,7 +25,7 @@ export class TestSuiteDetailsMenuTestCasesComponent implements OnInit, OnDestroy
   }
 
   ngOnInit() {
-    this.store.dispatch(new FetchReportList());
+    this.store.dispatch(new FetchReports());
 
     const routeParams = combineLatest(this.activatedRoute.pathFromRoot.map(t => t.params)).pipe(
       map(paramObjects => Object.assign({}, ...paramObjects))
