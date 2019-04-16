@@ -1,4 +1,4 @@
-import { TestBed, fakeAsync } from '@angular/core/testing';
+import { TestBed } from '@angular/core/testing';
 
 import {
   BackendService,
@@ -87,13 +87,22 @@ describe('BackendService', () => {
     });
 
     it('should load log data', () => {
+      const testReport = new TestReport();
+      testReport.id = 1;
+
       const testSuite = new TestSuite();
+      testSuite.id = 2;
       testSuite.logUrl = 'log1';
 
-      service.getLog(testSuite).subscribe((logResult: LogResult) => {
+      testReport.testSuites = [testSuite];
+
+      service.getLog(testReport, testSuite).subscribe((logResult: LogResult) => {
         const keys = Object.keys(logResult);
-        expect(keys).toContain('log');
-        expect(keys).toContain('downloadURL');
+        expect(keys).toContain('logs');
+        expect(Object.keys(logResult.logs)).toContain('1');
+        expect(Object.keys(logResult.logs['1'])).toContain('2');
+        expect(Object.keys(logResult.logs['1']['2'])).toContain('log');
+        expect(Object.keys(logResult.logs['1']['2'])).toContain('downloadURL');
       });
     });
   });

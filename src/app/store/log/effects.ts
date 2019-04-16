@@ -11,7 +11,11 @@ export class LogEffects {
   @Effect()
   $fetchReports: Observable<LogActions> = this.actions$.pipe(
     ofType(LogActionTypes.Fetch),
-    switchMap((action: FetchLog) => this.backendService.getLog(action.payload).pipe(map(result => new ReceiveLog(result))))
+    switchMap((action: FetchLog) =>
+      this.backendService
+        .getLog(action.payload.testReport, action.payload.testSuite)
+        .pipe(map((result) => new ReceiveLog(result)))
+    )
   );
 
   constructor(private actions$: Actions, @Inject(BACKEND_SERVICE) private backendService: BackendService) {}

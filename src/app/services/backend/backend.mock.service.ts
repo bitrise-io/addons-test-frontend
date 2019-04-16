@@ -49,14 +49,20 @@ export class MockBackendService implements BackendService {
     return of({ testReport });
   }
 
-  getLog(testSuite: TestSuite): Observable<LogResult> {
+  getLog(testReport: TestReport, testSuite: TestSuite): Observable<LogResult> {
     const { fullLog, downloadURL }: any = MOCKED_DATA[testSuite.logUrl];
 
     const log = new Log().deserialize(<RawLog>fullLog);
 
     return of({
-      log,
-      downloadURL
+      logs: {
+        [testReport.id]: {
+          [testSuite.id]: {
+            log: log,
+            downloadURL: downloadURL
+          }
+        }
+      }
     });
   }
 }

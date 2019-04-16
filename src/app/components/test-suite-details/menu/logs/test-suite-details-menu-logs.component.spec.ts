@@ -1,6 +1,5 @@
 import { TestBed, ComponentFixture, inject } from '@angular/core/testing';
 import { By } from '@angular/platform-browser';
-import { RouterTestingModule } from '@angular/router/testing';
 import { HttpClientTestingModule } from '@angular/common/http/testing';
 import { Store, StoreModule } from '@ngrx/store';
 import { MockStore, provideMockStore } from 'src/app/mock-store/testing';
@@ -14,6 +13,8 @@ import { LogLine } from 'src/app/models/log-line.model';
 import { LogLineLevel } from 'src/app/models/log-line-level.model';
 import { TestReport } from 'src/app/models/test-report.model';
 import { TestSuite } from 'src/app/models/test-suite.model';
+import { ActivatedRoute } from '@angular/router';
+import { of } from 'rxjs';
 
 describe('TestSuiteDetailsMenuLogsComponent', () => {
   let fixture: ComponentFixture<TestSuiteDetailsMenuLogsComponent>;
@@ -23,22 +24,42 @@ describe('TestSuiteDetailsMenuLogsComponent', () => {
       testReports: TestReport[];
     };
     log: {
-      log: Log;
-      downloadURL: string;
+      logs: {
+        [testReportId: string]: {
+          [testSuiteId: string]: {
+            log: Log;
+            downloadURL: string;
+          };
+        };
+      };
     };
   }>;
 
   beforeEach(() => {
     TestBed.configureTestingModule({
       imports: [
-        RouterTestingModule.withRoutes([]),
         HttpClientTestingModule,
         FormsModule,
         StoreModule.forRoot({ log: logReducer }),
         InlineSVGModule.forRoot()
       ],
       declarations: [TestSuiteDetailsMenuLogsComponent],
-      providers: [provideMockStore({})]
+      providers: [
+        provideMockStore({}),
+        {
+          provide: ActivatedRoute,
+          useValue: {
+            pathFromRoot: [
+              {
+                params: of({
+                  testReportId: 1,
+                  testSuiteId: 2
+                })
+              }
+            ]
+          }
+        }
+      ]
     }).compileComponents();
 
     fixture = TestBed.createComponent(TestSuiteDetailsMenuLogsComponent);
@@ -47,7 +68,21 @@ describe('TestSuiteDetailsMenuLogsComponent', () => {
 
   beforeEach(inject(
     [Store],
-    (mockStore: MockStore<{ testReport: { testReports: TestReport[] }; log: { log: Log; downloadURL: string } }>) => {
+    (
+      mockStore: MockStore<{
+        testReport: { testReports: TestReport[] };
+        log: {
+          logs: {
+            [testReportId: string]: {
+              [testSuiteId: string]: {
+                log: Log;
+                downloadURL: string;
+              };
+            };
+          };
+        };
+      }>
+    ) => {
       store = mockStore;
       store.setState({
         testReport: undefined,
@@ -63,7 +98,11 @@ describe('TestSuiteDetailsMenuLogsComponent', () => {
   describe('when there is short log', () => {
     beforeEach(() => {
       const testReport = new TestReport();
-      testReport.testSuites = [new TestSuite()];
+      testReport.id = 1;
+      const testSuite = new TestSuite();
+      testSuite.id = 2;
+      testSuite.logUrl = 'https://bitrise.io/log-url';
+      testReport.testSuites = [testSuite];
 
       const log = new Log();
       log.lines = Array(3)
@@ -75,8 +114,14 @@ describe('TestSuiteDetailsMenuLogsComponent', () => {
           testReports: [testReport]
         },
         log: {
-          log: log,
-          downloadURL: 'https://bitrise.io/download-log'
+          logs: {
+            1: {
+              2: {
+                log: log,
+                downloadURL: 'https://bitrise.io/download-log'
+              }
+            }
+          }
         }
       });
 
@@ -97,7 +142,11 @@ describe('TestSuiteDetailsMenuLogsComponent', () => {
   describe('when there is long log', () => {
     beforeEach(() => {
       const testReport = new TestReport();
-      testReport.testSuites = [new TestSuite()];
+      testReport.id = 1;
+      const testSuite = new TestSuite();
+      testSuite.id = 2;
+      testSuite.logUrl = 'https://bitrise.io/log-url';
+      testReport.testSuites = [testSuite];
 
       const log = new Log();
       log.lines = Array(22)
@@ -108,8 +157,14 @@ describe('TestSuiteDetailsMenuLogsComponent', () => {
           testReports: [testReport]
         },
         log: {
-          log: log,
-          downloadURL: 'https://bitrise.io/download-log'
+          logs: {
+            1: {
+              2: {
+                log: log,
+                downloadURL: 'https://bitrise.io/download-log'
+              }
+            }
+          }
         }
       });
 
@@ -126,7 +181,11 @@ describe('TestSuiteDetailsMenuLogsComponent', () => {
 
     beforeEach(() => {
       const testReport = new TestReport();
-      testReport.testSuites = [new TestSuite()];
+      testReport.id = 1;
+      const testSuite = new TestSuite();
+      testSuite.id = 2;
+      testSuite.logUrl = 'https://bitrise.io/log-url';
+      testReport.testSuites = [testSuite];
 
       const log = new Log();
       log.lines = Array(7)
@@ -144,8 +203,14 @@ describe('TestSuiteDetailsMenuLogsComponent', () => {
           testReports: [testReport]
         },
         log: {
-          log: log,
-          downloadURL: 'https://bitrise.io/download-log'
+          logs: {
+            1: {
+              2: {
+                log: log,
+                downloadURL: 'https://bitrise.io/download-log'
+              }
+            }
+          }
         }
       });
 

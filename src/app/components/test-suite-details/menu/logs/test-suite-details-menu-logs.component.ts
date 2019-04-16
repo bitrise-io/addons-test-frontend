@@ -11,6 +11,8 @@ import { TestReport } from 'src/app/models/test-report.model';
 import { TestReportState } from 'src/app/store/reports/reducer';
 import { FetchReports } from 'src/app/store/reports/actions';
 import { TestSuite } from 'src/app/models/test-suite.model';
+import { LogResult } from 'src/app/services/backend/backend.model';
+import { LogStoreState } from 'src/app/store/log/reducer';
 
 const INITIAL_MAXIMUM_NUMBER_OF_VISIBLE_LINES = 20;
 
@@ -48,10 +50,7 @@ export class TestSuiteDetailsMenuLogsComponent implements OnInit, OnDestroy {
 
   constructor(
     private store: Store<{
-      log: {
-        log: Log;
-        downloadURL: string;
-      };
+      log: LogStoreState;
       testReport: TestReportState;
     }>,
     private activatedRoute: ActivatedRoute
@@ -71,6 +70,7 @@ export class TestSuiteDetailsMenuLogsComponent implements OnInit, OnDestroy {
     const routeParams = combineLatest(this.activatedRoute.pathFromRoot.map((t) => t.params)).pipe(
       map((paramObjects) => Object.assign({}, ...paramObjects))
     );
+    let testReport: TestReport;
     let testSuite: TestSuite;
 
     this.subscription.add(
@@ -80,26 +80,29 @@ export class TestSuiteDetailsMenuLogsComponent implements OnInit, OnDestroy {
             const testReportId = Number(params.testReportId);
             const testSuiteId = Number(params.testSuiteId);
 
-            const testReport = testReports.find(({ id }: TestReport) => id === testReportId);
+            testReport = testReports.find(({ id }: TestReport) => id === testReportId);
             if (testReport) {
               testSuite = testReport.testSuites.find(({ id }: TestSuite) => id === testSuiteId);
             }
           })
         )
         .subscribe(() => {
-          if (testSuite && testSuite.logUrl) {
-            this.store.dispatch(new FetchLog(testSuite));
+          if (testReport && testSuite && testSuite) {
+            this.store.dispatch(new FetchLog({ testReport: testReport, testSuite: testSuite }));
           }
         })
     );
 
     this.subscription.add(
-      this.log$.subscribe((logData: any) => {
-        this.log = logData.log;
-        this.downloadLogURL = logData.downloadURL;
+      this.log$.subscribe((logResult: LogResult) => {
+        const logData = logResult.logs[testReport.id][testSuite.id];
+        this.log = logData ? logData.log : null;
+        this.downloadLogURL = logData ? logData.downloadURL : null;
 
-        this.updateFilteredLogLines();
-        this.resetMaximumNumberOfVisibleLines();
+        if (this.log) {
+          this.updateFilteredLogLines();
+          this.resetMaximumNumberOfVisibleLines();
+        }
       })
     );
   }

@@ -25,10 +25,10 @@ export type TestSuiteResponse = {
   locale: string;
   testCases?: TestCaseResponse[];
   screenshots?: TestSuiteScreenshot[];
-  downloadAllScreenshotsURL?: string,
+  downloadAllScreenshotsURL?: string;
   outputUrls: {
-    log: string[]
-  },
+    log: string[];
+  };
 };
 
 export type TestSuiteScreenshot = {
@@ -111,10 +111,13 @@ export class TestSuite implements Deserializable {
     this.screenshots = testSuiteResponse.screenshots;
     this.downloadAllScreenshotsURL = testSuiteResponse.downloadAllScreenshotsURL;
 
-    if (testSuiteResponse.outputUrls && testSuiteResponse.outputUrls.log && testSuiteResponse.outputUrls.log.length > 0) {
+    if (
+      testSuiteResponse.outputUrls &&
+      testSuiteResponse.outputUrls.log &&
+      testSuiteResponse.outputUrls.log.length > 0
+    ) {
       this.logUrl = testSuiteResponse.outputUrls.log[0];
-    }
-    else {
+    } else {
       this.logUrl = null;
     }
 
