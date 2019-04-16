@@ -87,7 +87,7 @@ export class TestSuiteDetailsMenuLogsComponent implements OnInit, OnDestroy {
           })
         )
         .subscribe(() => {
-          if (testSuite) {
+          if (testSuite && testSuite.logUrl) {
             this.store.dispatch(new FetchLog(testSuite));
           }
         })
