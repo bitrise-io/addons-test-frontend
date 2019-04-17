@@ -8,7 +8,7 @@
 <select class="level-filter-select" [(ngModel)]="selectedLevelFilterItem" (change)="selectedLevelFilterItemChanged()">
   <option *ngFor="let levelFilterItem of levelFilterItems" [ngValue]="levelFilterItem">{{ levelFilterItem.name }}</option>
 </select>
-<div class="log-box">
+<div class="log-box" *ngIf="log">
   <div
     class="line"
     *ngFor="let logLine of (filteredLogLines | slice: 0:maximumNumberOfVisibleLines)"
