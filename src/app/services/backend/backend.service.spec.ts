@@ -13,6 +13,7 @@ import { MockServicesModule } from '../services.mock.module';
 import { TestReport } from 'src/app/models/test-report.model';
 import { TestSuite } from 'src/app/models/test-suite.model';
 import { Performance } from 'src/app/models/performance.model';
+import { TestArtifact } from 'src/app/models/test-artifact.model';
 
 describe('BackendService', () => {
   let service: BackendService;
@@ -48,7 +49,13 @@ describe('BackendService', () => {
     });
 
     it('should load artifact data', () => {
-      service.getArtifacts().subscribe((result: TestArtifactsResult) => {
+      const testReport = new TestReport();
+      testReport.id = 2;
+
+      const testSuite = new TestSuite();
+      testSuite.id = 5;
+
+      service.getArtifacts(testReport, testSuite).subscribe((result: TestArtifactsResult) => {
         let keys = Object.keys(result);
         expect(keys).toContain('testArtifacts');
         expect(keys).toContain('downloadAllURL');

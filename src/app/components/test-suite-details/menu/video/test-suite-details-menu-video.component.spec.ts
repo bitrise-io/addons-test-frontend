@@ -1,16 +1,40 @@
-import { Directive } from '@angular/core';
+import { Directive, inject } from '@angular/core';
+import { ActivatedRoute } from '@angular/router';
 import { TestBed, ComponentFixture } from '@angular/core/testing';
+import { of } from 'rxjs';
 import { TestSuiteDetailsMenuVideoComponent } from './test-suite-details-menu-video.component';
 import { PlaybackTimePipe } from 'src/app/pipes/playback-time.pipe';
+import { TestReport } from 'src/app/models/test-report.model';
+import { TestSuite } from 'src/app/models/test-suite.model';
 
 describe('TestSuiteDetailsMenuVideoComponent', () => {
   let fixture: ComponentFixture<TestSuiteDetailsMenuVideoComponent>;
   let testVideoComponent: TestSuiteDetailsMenuVideoComponent;
+  let testReport: TestReport;
+  let testSuite: TestSuite;
+
   beforeEach(() => {
+    testReport = new TestReport();
+    testSuite = new TestSuite();
+    testReport.testSuites = [testSuite];
+    testReport.id = 1;
+    testSuite.id = 2;
+    testSuite.videoUrl = 'http://commondatastorage.googleapis.com/gtv-videos-bucket/sample/BigBuckBunny.mp4';
+
     TestBed.configureTestingModule({
       imports: [],
       declarations: [TestSuiteDetailsMenuVideoComponent, PlaybackTimePipe],
-      providers: [Directive({ selector: '[inlineSVG]', inputs: ['inlineSVG'] })(class {})]
+      providers: [
+        Directive({ selector: '[inlineSVG]', inputs: ['inlineSVG'] })(class {}),
+        {
+          provide: ActivatedRoute,
+          useValue: {
+            parent: {
+              data: of({ testSuite: { selectedTestReport: testReport, selectedTestSuite: testSuite } })
+            }
+          }
+        }
+      ]
     }).compileComponents();
 
     fixture = TestBed.createComponent(TestSuiteDetailsMenuVideoComponent);

@@ -4,7 +4,6 @@ import { Observable } from 'rxjs';
 import { first, map } from 'rxjs/operators';
 import { Store } from '@ngrx/store';
 import { TestReport } from '../models/test-report.model';
-import { TestReportState } from '../store/reports/reducer';
 import { FetchReports } from '../store/reports/actions';
 import { TestSuite } from '../models/test-suite.model';
 
@@ -20,9 +19,7 @@ export class TestSuiteResolve
   testReports$: Observable<TestReport[]>;
 
   constructor(
-    private store: Store<{
-      testReport: TestReportState;
-    }>
+    private store: Store<any>
   ) {
     this.testReports$ = store.select('testReport', 'testReports');
   }
@@ -30,8 +27,8 @@ export class TestSuiteResolve
   resolve(route: ActivatedRouteSnapshot) {
     this.store.dispatch(new FetchReports());
 
-    let testReportId = route.params.testReportId;
-    let testSuiteId = route.params.testSuiteId;
+    const testReportId = route.params.testReportId;
+    const testSuiteId = route.params.testSuiteId;
 
     return this.testReports$.pipe(
       first(),

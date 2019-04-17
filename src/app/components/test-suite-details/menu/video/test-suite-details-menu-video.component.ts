@@ -1,4 +1,4 @@
-import { Component, ViewChild, ElementRef, NgZone } from '@angular/core';
+import { Component, ViewChild, ElementRef, NgZone, OnInit, OnDestroy } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { Subscription } from 'rxjs';
 import { TestReport } from 'src/app/models/test-report.model';
@@ -9,7 +9,7 @@ import { TestSuite } from 'src/app/models/test-suite.model';
   templateUrl: './test-suite-details-menu-video.component.html',
   styleUrls: ['./test-suite-details-menu-video.component.scss']
 })
-export class TestSuiteDetailsMenuVideoComponent {
+export class TestSuiteDetailsMenuVideoComponent implements OnInit, OnDestroy {
   subscription = new Subscription();
   loadProgress = {
     message: '',
