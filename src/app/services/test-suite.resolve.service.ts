@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { Router, Resolve, ActivatedRouteSnapshot } from '@angular/router';
+import { Resolve, ActivatedRouteSnapshot } from '@angular/router';
 import { Observable } from 'rxjs';
 import { first, map } from 'rxjs/operators';
 import { Store } from '@ngrx/store';
@@ -9,11 +9,17 @@ import { FetchReports } from '../store/reports/actions';
 import { TestSuite } from '../models/test-suite.model';
 
 @Injectable()
-export class TestSuiteResolve implements Resolve {
+export class TestSuiteResolve
+  implements
+    Resolve<
+      Observable<{
+        selectedTestReport: TestReport;
+        selectedTestSuite: TestSuite;
+      }>
+    > {
   testReports$: Observable<TestReport[]>;
 
   constructor(
-    private router: Router,
     private store: Store<{
       testReport: TestReportState;
     }>
@@ -21,12 +27,7 @@ export class TestSuiteResolve implements Resolve {
     this.testReports$ = store.select('testReport', 'testReports');
   }
 
-  resolve(
-    route: ActivatedRouteSnapshot
-  ): Observable<{
-    selectedTestReport: TestReport;
-    selectedTestSuite: TestSuite;
-  }> {
+  resolve(route: ActivatedRouteSnapshot) {
     this.store.dispatch(new FetchReports());
 
     let testReportId = route.params.testReportId;
