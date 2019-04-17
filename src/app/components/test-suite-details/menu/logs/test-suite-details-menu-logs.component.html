@@ -5,29 +5,27 @@
     <span>Download Log</span>
   </a>
 </div>
-<div  *ngIf="log">
-  <select class="level-filter-select" [(ngModel)]="selectedLevelFilterItem" (change)="selectedLevelFilterItemChanged()">
-    <option *ngFor="let levelFilterItem of levelFilterItems" [ngValue]="levelFilterItem">{{ levelFilterItem.name }}</option>
-  </select>
-  <div class="log-box">
-    <div
-      class="line"
-      *ngFor="let logLine of (filteredLogLines | slice: 0:maximumNumberOfVisibleLines)"
-      [class]="logLine.levelCssClass"
-      [ngClass]="{ expanded: logLine.isExpanded }"
-      (click)="logLine.isExpanded = !logLine.isExpanded"
-    >
-      <div class="level-icon" [inlineSVG]="logLine.levelIconUrl"></div>
-      <div class="date">{{ logLine.date | date: 'HH:mm:ss:SSS' }}</div>
-      <div class="tag" title="{{ logLine.tag }}">{{ logLine.tag }}</div>
-      <div class="message" title="{{ logLine.message }}">{{ logLine.message }}</div>
-    </div>
-  </div>
-  <button
-    class="load-more-logs"
-    (click)="maximumNumberOfVisibleLines = maximumNumberOfVisibleLines + INITIAL_MAXIMUM_NUMBER_OF_VISIBLE_LINES"
-    *ngIf="maximumNumberOfVisibleLines < filteredLogLines.length"
+<select class="level-filter-select" [(ngModel)]="selectedLevelFilterItem" (change)="selectedLevelFilterItemChanged()">
+  <option *ngFor="let levelFilterItem of levelFilterItems" [ngValue]="levelFilterItem">{{ levelFilterItem.name }}</option>
+</select>
+<div class="log-box">
+  <div
+    class="line"
+    *ngFor="let logLine of (filteredLogLines | slice: 0:maximumNumberOfVisibleLines)"
+    [class]="logLine.levelCssClass"
+    [ngClass]="{ expanded: logLine.isExpanded }"
+    (click)="logLine.isExpanded = !logLine.isExpanded"
   >
-    Load more
-  </button>
+    <div class="level-icon" [inlineSVG]="logLine.levelIconUrl"></div>
+    <div class="date">{{ logLine.date | date: 'HH:mm:ss:SSS' }}</div>
+    <div class="tag" title="{{ logLine.tag }}">{{ logLine.tag }}</div>
+    <div class="message" title="{{ logLine.message }}">{{ logLine.message }}</div>
+  </div>
 </div>
+<button
+  class="load-more-logs"
+  (click)="maximumNumberOfVisibleLines = maximumNumberOfVisibleLines + INITIAL_MAXIMUM_NUMBER_OF_VISIBLE_LINES"
+  *ngIf="maximumNumberOfVisibleLines < filteredLogLines.length"
+>
+  Load more
+</button>

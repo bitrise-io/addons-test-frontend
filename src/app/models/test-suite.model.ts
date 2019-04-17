@@ -118,9 +118,6 @@ export class TestSuite implements Deserializable {
       if (testSuiteResponse.outputUrls.log && testSuiteResponse.outputUrls.log.length > 0) {
         this.logUrl = testSuiteResponse.outputUrls.log[0];
       }
-    } else {
-      this.videoUrl = null;
-      this.logUrl = null;
     }
 
     return this;
