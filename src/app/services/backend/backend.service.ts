@@ -38,8 +38,8 @@ export class RealBackendService implements BackendService {
       });
     }
 
-    const testArtifacts: TestArtifact[] = testSuiteDataForArtifact.testArtifacts.list.map((testArtifactResponse: TestArtifactResponse) =>
-      new TestArtifact().deserialize(testArtifactResponse)
+    const testArtifacts: TestArtifact[] = testSuiteDataForArtifact.testArtifacts.list.map(
+      (testArtifactResponse: TestArtifactResponse) => new TestArtifact().deserialize(testArtifactResponse)
     );
 
     const downloadAllURL = testSuiteDataForArtifact.testArtifacts.downloadAllURL;
@@ -68,19 +68,15 @@ export class RealBackendService implements BackendService {
   }
 
   getLog(testReport: TestReport, testSuite: TestSuite): Observable<LogResult> {
-    let log: Log;
-    let logDownloadURL: string;
-
     const { fullLog, downloadURL }: any = MOCKED_DATA[testSuite.logUrl];
-    log = new Log().deserialize(<RawLog>fullLog);
-    logDownloadURL = downloadURL;
+    const log = new Log().deserialize(<RawLog>fullLog);
 
     return of({
       logs: {
         [testReport.id]: {
           [testSuite.id]: {
             log: log,
-            downloadURL: logDownloadURL
+            downloadURL: downloadURL
           }
         }
       }

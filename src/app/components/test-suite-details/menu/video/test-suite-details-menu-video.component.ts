@@ -89,18 +89,11 @@ export class TestSuiteDetailsMenuVideoComponent implements OnInit, OnDestroy {
   }
 
   ngOnInit() {
-    let testReport: TestReport;
-    let testSuite: TestSuite;
-
     this.subscription.add(
       this.activatedRoute.parent.data.subscribe(
         (data: { testSuite: { selectedTestReport: TestReport; selectedTestSuite: TestSuite } }) => {
-          testReport = data.testSuite.selectedTestReport;
-          testSuite = data.testSuite.selectedTestSuite;
-
-          if (testReport && testSuite) {
-            this.videoURL = testSuite.videoUrl;
-          }
+          const testSuite = data.testSuite.selectedTestSuite;
+          this.videoURL = testSuite.videoUrl;
         }
       )
     );

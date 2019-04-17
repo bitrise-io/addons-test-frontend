@@ -27,8 +27,12 @@ export class TestSuiteResolve
   resolve(route: ActivatedRouteSnapshot) {
     this.store.dispatch(new FetchReports());
 
-    const testReportId = route.params.testReportId;
-    const testSuiteId = route.params.testSuiteId;
+    const {
+      params: {
+        testReportId,
+        testSuiteId
+      }
+    } = route;
 
     return this.testReports$.pipe(
       first(),

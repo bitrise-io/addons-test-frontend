@@ -31,18 +31,13 @@ export class TestSuiteDetailsMenuTestArtifactsComponent implements OnInit, OnDes
   }
 
   ngOnInit() {
-    let testReport: TestReport;
-    let testSuite: TestSuite;
-
     this.subscription.add(
       this.activatedRoute.parent.data.subscribe(
         (data: { testSuite: { selectedTestReport: TestReport; selectedTestSuite: TestSuite } }) => {
-          testReport = data.testSuite.selectedTestReport;
-          testSuite = data.testSuite.selectedTestSuite;
+          const testReport = data.testSuite.selectedTestReport;
+          const testSuite = data.testSuite.selectedTestSuite;
 
-          if (testReport && testSuite) {
-            this.store.dispatch(new FetchArtifact({ testReport: testReport, testSuite: testSuite }));
-          }
+          this.store.dispatch(new FetchArtifact({ testReport, testSuite }));
         }
       )
     );
