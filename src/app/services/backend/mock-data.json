@@ -142,6 +142,7 @@
           "downloadAllURL": "https://www.bitrise.io/assets/svg/logo-bitrise.svg"
         },
         "outputUrls": {
+          "video": "http://commondatastorage.googleapis.com/gtv-videos-bucket/sample/BigBuckBunny.mp4",
           "log": ["log1"]
         }
       },
@@ -205,6 +206,7 @@
           "downloadAllURL": "https://www.bitrise.io/assets/svg/logo-bitrise.svg"
         },
         "outputUrls": {
+          "video": "http://commondatastorage.googleapis.com/gtv-videos-bucket/sample/BigBuckBunny.mp4",
           "log": ["log1"]
         }
       },
@@ -253,6 +255,7 @@
           "downloadAllURL": "https://www.bitrise.io/assets/svg/logo-bitrise.svg"
         },
         "outputUrls": {
+          "video": "http://commondatastorage.googleapis.com/gtv-videos-bucket/sample/BigBuckBunny.mp4",
           "log": ["log2"]
         }
       },
@@ -301,6 +304,7 @@
           "downloadAllURL": "https://www.bitrise.io/assets/svg/logo-bitrise.svg"
         },
         "outputUrls": {
+          "video": "http://commondatastorage.googleapis.com/gtv-videos-bucket/sample/BigBuckBunny.mp4",
           "log": ["log1"]
         }
       }
@@ -309,9 +313,6 @@
   "test_report/3": {
     "id": 3,
     "name": "UI Test B",
-    "outputUrls": {
-      "log": ["log2"]
-    },
     "testSuites": [
       {
         "id": 40,
@@ -373,6 +374,7 @@
           "downloadAllURL": "https://www.bitrise.io/assets/svg/logo-bitrise.svg"
         },
         "outputUrls": {
+          "video": "http://commondatastorage.googleapis.com/gtv-videos-bucket/sample/BigBuckBunny.mp4",
           "log": ["log2"]
         }
       },
@@ -461,6 +463,7 @@
           "downloadAllURL": "https://www.bitrise.io/assets/svg/logo-bitrise.svg"
         },
         "outputUrls": {
+          "video": "http://commondatastorage.googleapis.com/gtv-videos-bucket/sample/BigBuckBunny.mp4",
           "log": ["log1"]
         }
       },
@@ -505,6 +508,7 @@
           "downloadAllURL": "https://www.bitrise.io/assets/svg/logo-bitrise.svg"
         },
         "outputUrls": {
+          "video": "http://commondatastorage.googleapis.com/gtv-videos-bucket/sample/BigBuckBunny.mp4",
           "log": ["log1"]
         }
       }

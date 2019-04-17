@@ -6,7 +6,7 @@
     <span class="icon error" inlineSVG="/assets/images/sign-cross.svg"></span>
     <p class="content">{{ loadProgress.message }}</p>
   </div>
-  <section class="video">
+  <section class="video" *ngIf="videoURL">
     <div class="content">
       <video [class.expanded]="isExpandMode" #player>
         <source [attr.src]="videoURL" type="video/mp4" />

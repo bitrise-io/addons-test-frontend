@@ -1,4 +1,8 @@
 import { Component, ViewChild, ElementRef, NgZone } from '@angular/core';
+import { ActivatedRoute } from '@angular/router';
+import { Subscription } from 'rxjs';
+import { TestReport } from 'src/app/models/test-report.model';
+import { TestSuite } from 'src/app/models/test-suite.model';
 
 @Component({
   selector: 'bitrise-test-suite-details-menu-video',
@@ -6,6 +10,7 @@ import { Component, ViewChild, ElementRef, NgZone } from '@angular/core';
   styleUrls: ['./test-suite-details-menu-video.component.scss']
 })
 export class TestSuiteDetailsMenuVideoComponent {
+  subscription = new Subscription();
   loadProgress = {
     message: '',
     cssClass: '',
@@ -19,9 +24,13 @@ export class TestSuiteDetailsMenuVideoComponent {
   duration: number;
   isExpandMode = false;
 
-  videoURL = 'http://commondatastorage.googleapis.com/gtv-videos-bucket/sample/BigBuckBunny.mp4';
+  videoURL: string;
 
   set isPlaying(play: boolean) {
+    if (!this.video) {
+      return;
+    }
+
     if (play) {
       this.video.play();
       this.playerUpdate();
@@ -31,11 +40,16 @@ export class TestSuiteDetailsMenuVideoComponent {
   }
 
   get isPlaying() {
+    if (!this.video) {
+      return false;
+    }
+
     return !this.video.paused;
   }
+
   video: HTMLVideoElement;
 
-  constructor(private zone: NgZone) {}
+  constructor(private zone: NgZone, private activatedRoute: ActivatedRoute) {}
 
   playerUpdate() {
     this.playedDuration = this.video.currentTime;
@@ -72,5 +86,27 @@ export class TestSuiteDetailsMenuVideoComponent {
     const width = button.getBoundingClientRect().width;
     this.video.currentTime = this.duration * ($event.offsetX / width);
     this.playerUpdate();
+  }
+
+  ngOnInit() {
+    let testReport: TestReport;
+    let testSuite: TestSuite;
+
+    this.subscription.add(
+      this.activatedRoute.parent.data.subscribe(
+        (data: { testSuite: { selectedTestReport: TestReport; selectedTestSuite: TestSuite } }) => {
+          testReport = data.testSuite.selectedTestReport;
+          testSuite = data.testSuite.selectedTestSuite;
+
+          if (testReport && testSuite) {
+            this.videoURL = testSuite.videoUrl;
+          }
+        }
+      )
+    );
+  }
+
+  ngOnDestroy() {
+    this.subscription.unsubscribe();
   }
 }

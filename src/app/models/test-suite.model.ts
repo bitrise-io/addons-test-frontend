@@ -27,6 +27,7 @@ export type TestSuiteResponse = {
   screenshots?: TestSuiteScreenshot[];
   downloadAllScreenshotsURL?: string;
   outputUrls: {
+    video: string;
     log: string[];
   };
 };
@@ -49,6 +50,7 @@ export class TestSuite implements Deserializable {
   testCases: TestCase[];
   screenshots?: TestSuiteScreenshot[];
   downloadAllScreenshotsURL?: string;
+  videoUrl: string;
   logUrl: string;
 
   public static statusName(status: TestSuiteStatus): string {
@@ -111,13 +113,13 @@ export class TestSuite implements Deserializable {
     this.screenshots = testSuiteResponse.screenshots;
     this.downloadAllScreenshotsURL = testSuiteResponse.downloadAllScreenshotsURL;
 
-    if (
-      testSuiteResponse.outputUrls &&
-      testSuiteResponse.outputUrls.log &&
-      testSuiteResponse.outputUrls.log.length > 0
-    ) {
-      this.logUrl = testSuiteResponse.outputUrls.log[0];
+    if (testSuiteResponse.outputUrls) {
+      this.videoUrl = testSuiteResponse.outputUrls.video;
+      if (testSuiteResponse.outputUrls.log && testSuiteResponse.outputUrls.log.length > 0) {
+        this.logUrl = testSuiteResponse.outputUrls.log[0];
+      }
     } else {
+      this.videoUrl = null;
       this.logUrl = null;
     }
 
