@@ -1,15 +1,12 @@
 import { Component, OnInit, OnDestroy } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
-import { Observable, combineLatest, Subscription } from 'rxjs';
-import { map } from 'rxjs/operators';
+import { Observable, Subscription } from 'rxjs';
 import { Store } from '@ngrx/store';
 import { Log } from 'src/app/models/log.model';
 import { LogLine } from 'src/app/models/log-line.model';
 import { LogLineLevel } from 'src/app/models/log-line-level.model';
 import { FetchLog } from 'src/app/store/log/actions';
 import { TestReport } from 'src/app/models/test-report.model';
-import { TestReportState } from 'src/app/store/reports/reducer';
-import { FetchReports } from 'src/app/store/reports/actions';
 import { TestSuite } from 'src/app/models/test-suite.model';
 import { LogResult } from 'src/app/services/backend/backend.model';
 import { LogStoreState } from 'src/app/store/log/reducer';
@@ -71,9 +68,7 @@ export class TestSuiteDetailsMenuLogsComponent implements OnInit, OnDestroy {
           testReport = data.testSuite.selectedTestReport;
           testSuite = data.testSuite.selectedTestSuite;
 
-          if (testReport && testSuite) {
-            this.store.dispatch(new FetchLog({ testReport: testReport, testSuite: testSuite }));
-          }
+          this.store.dispatch(new FetchLog({ testReport: testReport, testSuite: testSuite }));
         }
       )
     );
@@ -81,13 +76,11 @@ export class TestSuiteDetailsMenuLogsComponent implements OnInit, OnDestroy {
     this.subscription.add(
       this.log$.subscribe((logResult: LogResult) => {
         const logData = logResult.logs[testReport.id][testSuite.id];
-        this.log = logData ? logData.log : null;
-        this.downloadLogURL = logData ? logData.downloadURL : null;
+        this.log = logData.log;
+        this.downloadLogURL = logData.downloadURL;
 
-        if (this.log) {
-          this.updateFilteredLogLines();
-          this.resetMaximumNumberOfVisibleLines();
-        }
+        this.updateFilteredLogLines();
+        this.resetMaximumNumberOfVisibleLines();
       })
     );
   }

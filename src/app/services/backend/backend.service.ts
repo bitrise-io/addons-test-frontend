@@ -71,14 +71,9 @@ export class RealBackendService implements BackendService {
     let log: Log;
     let logDownloadURL: string;
 
-    if (MOCKED_DATA[testSuite.logUrl]) {
-      const { fullLog, downloadURL }: any = MOCKED_DATA[testSuite.logUrl];
-      log = new Log().deserialize(<RawLog>fullLog);
-      logDownloadURL = downloadURL;
-    } else {
-      log = null;
-      logDownloadURL = null;
-    }
+    const { fullLog, downloadURL }: any = MOCKED_DATA[testSuite.logUrl];
+    log = new Log().deserialize(<RawLog>fullLog);
+    logDownloadURL = downloadURL;
 
     return of({
       logs: {
