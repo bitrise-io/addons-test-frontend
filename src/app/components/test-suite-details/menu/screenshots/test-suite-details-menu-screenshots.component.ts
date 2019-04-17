@@ -15,9 +15,8 @@ import { TestReportState } from 'src/app/store/reports/reducer';
   styleUrls: ['./test-suite-details-menu-screenshots.component.scss']
 })
 export class TestSuiteDetailsMenuScreenshotsComponent implements OnInit, OnDestroy {
+  subscription = new Subscription();
   screenshots: TestSuiteScreenshot[];
-  testReports$: Observable<TestReport[]>;
-  subscription: Subscription;
   downloadAllScreenshotsURL: string;
   orientation: 'landscape' | 'portrait';
 
@@ -31,35 +30,23 @@ export class TestSuiteDetailsMenuScreenshotsComponent implements OnInit, OnDestr
     return cssClass;
   }
 
-  constructor(private store: Store<{ testReport: TestReportState }>, private activatedRoute: ActivatedRoute) {
-    this.testReports$ = store.select('testReport', 'testReports');
-  }
+  constructor(private activatedRoute: ActivatedRoute) {}
 
   ngOnInit() {
-    this.store.dispatch(new FetchReports());
+    this.subscription.add(
+      this.activatedRoute.parent.data.subscribe(
+        (data: { testSuite: { selectedTestReport: TestReport; selectedTestSuite: TestSuite } }) => {
+          const testReport = data.testSuite.selectedTestReport;
+          const testSuite = data.testSuite.selectedTestSuite;
 
-    const routeParams = combineLatest(this.activatedRoute.pathFromRoot.map((t) => t.params)).pipe(
-      map((paramObjects) => Object.assign({}, ...paramObjects))
-    );
-
-    this.subscription = combineLatest(routeParams, this.testReports$)
-      .pipe(
-        map(([params, testReports]) => {
-          const testReportId = Number(params.testReportId);
-          const testSuiteId = Number(params.testSuiteId);
-
-          const testReport: TestReport = testReports.find(({ id }: TestReport) => id === testReportId);
-          if (testReport) {
-            const testSuite = testReport.testSuites.find(({ id }: TestSuite) => id === testSuiteId);
-            if (testSuite) {
-              this.screenshots = testSuite.screenshots;
-              this.downloadAllScreenshotsURL = testSuite.downloadAllScreenshotsURL;
-              this.orientation = testSuite.orientation;
-            }
+          if (testReport && testSuite) {
+            this.screenshots = testSuite.screenshots;
+            this.downloadAllScreenshotsURL = testSuite.downloadAllScreenshotsURL;
+            this.orientation = testSuite.orientation;
           }
-        })
+        }
       )
-      .subscribe();
+    );
   }
 
   ngOnDestroy() {
