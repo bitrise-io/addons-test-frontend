@@ -22,9 +22,8 @@ const INITIAL_MAXIMUM_NUMBER_OF_VISIBLE_LINES = 20;
   styleUrls: ['./test-suite-details-menu-logs.component.scss']
 })
 export class TestSuiteDetailsMenuLogsComponent implements OnInit, OnDestroy {
-  testReports$: Observable<TestReport[]>;
-  downloadLogURL: string;
   subscription = new Subscription();
+  downloadLogURL: string;
 
   levelFilterItems = [
     {
@@ -51,11 +50,9 @@ export class TestSuiteDetailsMenuLogsComponent implements OnInit, OnDestroy {
   constructor(
     private store: Store<{
       log: LogStoreState;
-      testReport: TestReportState;
     }>,
     private activatedRoute: ActivatedRoute
   ) {
-    this.testReports$ = store.select('testReport', 'testReports');
     this.log$ = store.select('log');
   }
 
@@ -65,32 +62,20 @@ export class TestSuiteDetailsMenuLogsComponent implements OnInit, OnDestroy {
   }
 
   ngOnInit() {
-    this.store.dispatch(new FetchReports());
-
-    const routeParams = combineLatest(this.activatedRoute.pathFromRoot.map((t) => t.params)).pipe(
-      map((paramObjects) => Object.assign({}, ...paramObjects))
-    );
     let testReport: TestReport;
     let testSuite: TestSuite;
 
     this.subscription.add(
-      combineLatest(routeParams, this.testReports$)
-        .pipe(
-          map(([params, testReports]) => {
-            const testReportId = Number(params.testReportId);
-            const testSuiteId = Number(params.testSuiteId);
+      this.activatedRoute.parent.data.subscribe(
+        (data: { testSuite: { selectedTestReport: TestReport; selectedTestSuite: TestSuite } }) => {
+          testReport = data.testSuite.selectedTestReport;
+          testSuite = data.testSuite.selectedTestSuite;
 
-            testReport = testReports.find(({ id }: TestReport) => id === testReportId);
-            if (testReport) {
-              testSuite = testReport.testSuites.find(({ id }: TestSuite) => id === testSuiteId);
-            }
-          })
-        )
-        .subscribe(() => {
           if (testReport && testSuite) {
             this.store.dispatch(new FetchLog({ testReport: testReport, testSuite: testSuite }));
           }
-        })
+        }
+      )
     );
 
     this.subscription.add(
