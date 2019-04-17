@@ -1,5 +1,7 @@
 import { Action } from '@ngrx/store';
 
+import { TestReport } from 'src/app/models/test-report.model';
+import { TestSuite } from 'src/app/models/test-suite.model';
 import { TestArtifactsResult } from 'src/app/services/backend/backend.model';
 
 export enum ArtifactActionTypes {
@@ -9,6 +11,8 @@ export enum ArtifactActionTypes {
 
 export class FetchArtifact implements Action {
   readonly type = ArtifactActionTypes.Fetch;
+
+  constructor(public payload: { testReport: TestReport, testSuite: TestSuite}) {}
 }
 
 export class ReceiveArtifact implements Action {

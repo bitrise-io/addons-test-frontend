@@ -17,14 +17,29 @@ export class MockBackendService implements BackendService {
     return of(performance);
   }
 
-  getArtifacts(): Observable<TestArtifactsResult> {
-    const {
-      test_artifacts: { list, downloadAllURL }
-    }: any = MOCKED_DATA;
+  getArtifacts(testReport: TestReport, testSuite: TestSuite): Observable<TestArtifactsResult> {
+    if (!MOCKED_DATA[`test_report/${testReport.id}`]) {
+      return of({
+        testArtifacts: null,
+        downloadAllURL: null
+      });
+    }
 
-    const testArtifacts: TestArtifact[] = list.map((testArtifactResponse: TestArtifactResponse) =>
+    const testSuiteDataForArtifact = MOCKED_DATA[`test_report/${testReport.id}`].testSuites.find(
+      (testSuiteData: any) => testSuiteData.id === testSuite.id
+    );
+    if (!testSuiteDataForArtifact) {
+      return of({
+        testArtifacts: null,
+        downloadAllURL: null
+      });
+    }
+
+    const testArtifacts: TestArtifact[] = testSuiteDataForArtifact.testArtifacts.list.map((testArtifactResponse: TestArtifactResponse) =>
       new TestArtifact().deserialize(testArtifactResponse)
     );
+
+    const downloadAllURL = testSuiteDataForArtifact.testArtifacts.downloadAllURL;
 
     return of({
       testArtifacts,
