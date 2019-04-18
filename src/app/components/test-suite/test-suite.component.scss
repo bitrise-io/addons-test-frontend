@@ -7,7 +7,6 @@
 
 :host:first-of-type .test-suite {
   position: relative;
-  margin-top: 7 * $grid-size;
 
   .test-suite-inner .detail-wrapper:before {
     @include ui-element-subtitle;
@@ -182,6 +181,10 @@
 }
 
 @include width-above(800px) {
+  :host:first-of-type .test-suite {
+    margin-top: 7 * $grid-size;
+  }
+
   .test-suite {
     height: 8 * $grid-size;
 
