@@ -72,8 +72,8 @@ export class MockBackendService implements BackendService {
       logs: {
         [testReport.id]: {
           [testSuite.id]: {
-            log: log,
-            downloadURL: downloadURL
+            log,
+            downloadURL
           }
         }
       }

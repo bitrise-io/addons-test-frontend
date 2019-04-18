@@ -75,8 +75,8 @@ export class RealBackendService implements BackendService {
       logs: {
         [testReport.id]: {
           [testSuite.id]: {
-            log: log,
-            downloadURL: downloadURL
+            log,
+            downloadURL
           }
         }
       }
