@@ -3,9 +3,8 @@
 .test-report {
   margin-top: 4 * $grid-size;
 
-  .name {
-    @include ui-element-header-5;
-    @include ui-modifier-header-5-underlined-purple-bold;
-    margin-bottom: 7 * $grid-size;
+  .no-test-suites {
+    @include ui-element-body;
+    color: $warm-grey;
   }
 }

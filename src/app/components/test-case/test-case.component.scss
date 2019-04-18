@@ -7,7 +7,7 @@
 
 :host:first-of-type .test-case {
   position: relative;
-  margin-top: 32px;
+  margin-top: 7 * $grid-size;
 
   .test-case-inner .heading .detail-wrapper:before {
     @include ui-element-subtitle;
