@@ -112,53 +112,6 @@
   white-space: nowrap;
   text-overflow: ellipsis;
 }
-@mixin position($position: null, $top: null, $right: null, $bottom: null, $left: null) {
-  @if ($position) {
-    position: $position;
-  }
-
-  @if ($top) {
-    top: $top;
-  }
-
-  @if ($right) {
-    right: $right;
-  }
-
-  @if ($bottom) {
-    bottom: $bottom;
-  }
-
-  @if ($left) {
-    left: $left;
-  }
-}
-@mixin no-default-focus-styling {
-  -webkit-tap-highlight-color: rgba(0, 0, 0, 0);
-  -webkit-focus-ring-color: rgba(0, 0, 0, 0);
-  outline: none;
-}
-@mixin transition($values...) {
-  @each $value in $values {
-    $transform_index: str-index('#{ $value }', 'transform');
-    $contains_transform: $transform_index != null;
-
-    @if $contains_transform {
-      $additional_parameters: unquote(str-slice('#{ $value }', $transform_index + str-length('transform') + 1));
-      transition: -webkit-transform $additional_parameters;
-    }
-
-    $flex-shrink_index: str-index('#{ $value }', 'flex-shrink');
-    $contains_flex-shrink: $flex-shrink_index != null;
-
-    @if $contains_flex-shrink {
-      $additional_parameters: unquote(str-slice('#{ $value }', $flex-shrink_index + str-length('flex-shrink') + 1));
-      transition: -webkit-flex-shrink $additional_parameters;
-    }
-  }
-
-  transition: $values;
-}
 
 @mixin svg-color($color) {
   ::ng-deep svg {

@@ -11,14 +11,6 @@ import { TestSuite } from 'src/app/models/test-suite.model';
 })
 export class TestSuiteDetailsMenuVideoComponent implements OnInit, OnDestroy {
   subscription = new Subscription();
-  loadProgress = {
-    message: '',
-    cssClass: '',
-    isInProgress: false,
-    isError: false,
-    isSuccess: true
-  };
-
   playedDuration = 0;
   hoveredPoint: number;
   duration: number;
