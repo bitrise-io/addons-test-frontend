@@ -5,4 +5,5 @@
     [testReport]="testReport"
     [testSuite]="testSuite"
   ></bitrise-test-suite>
+  <div class="no-test-suites" *ngIf="testReport.testSuites.length == 0">No items</div>
 </section>
