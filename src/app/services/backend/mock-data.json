@@ -2,342 +2,518 @@
   "test_reports": [
     {
       "id": 1,
-      "name": "Unit Test A",
-      "testSuites": [
-        {
-          "id": 3,
-          "status": 1,
-          "suiteName": "Test Group #1",
-          "durationInMilliseconds": 12000,
-          "testCases": [
-            {
-              "name": "testCaseExample1",
-              "status": 2,
-              "durationInMilliseconds": 3000,
-              "context": "ios_simple:dsfhkjshUITESTX",
-              "summary": "Nulla vitae elit libero, a pharetra augue. Sed posuere consectetur est at lobortis.\n\nNullam id dolor id nibh ultricies vehicula ut id elit. Praesent commodo cursus magna, vel scelerisque nisl consectetur et.\n\nInteger posuere erat a ante venenatis dapibus posuere velit aliquet. Donec id elit non mi porta gravida at eget metus."
-            },
-            {
-              "name": "testCaseExample2",
-              "status": 1,
-              "durationInMilliseconds": 5000,
-              "context": "ios_complicated:abcdefgh",
-              "summary": "Lorem ipsum"
-            }
-          ]
-        }
-      ]
+      "name": "Unit Test A"
     },
     {
       "id": 2,
-      "name": "UI Test A",
-      "testSuites": [
-        {
-          "id": 5,
-          "status": 1,
-          "deviceName": "iPhone 7",
-          "deviceOperatingSystem": "iOS 11.2",
-          "durationInMilliseconds": 20000,
-          "testCases": [
-            {
-              "name": "testCaseExample",
-              "status": 1,
-              "durationInMilliseconds": 5000,
-              "context": "ios_simple:abcdefgh",
-              "summary": "Lorem ipsum"
-            },
-            {
-              "name": "testCaseExample",
-              "status": 1,
-              "durationInMilliseconds": 5000,
-              "context": "ios_simple:abcdefgh",
-              "summary": "Lorem ipsum"
-            },
-            {
-              "name": "testCaseExample",
-              "status": 1,
-              "durationInMilliseconds": 5000,
-              "context": "ios_simple:abcdefgh",
-              "summary": "Lorem ipsum"
-            }
-          ],
-          "orientation": "portrait",
-          "locale": "English",
-          "downloadAllScreenshotsURL": "http://some-url-to.download-screen.shots",
-          "screenshots": [
-            {
-              "url": "https://loremflickr.com/425/667",
-              "filename": "screenshot-whatever-1.portrait.png"
-            },
-            {
-              "url": "https://loremflickr.com/425/667?1",
-              "filename": "screenshot-whatever-2.portrait.png"
-            },
-            {
-              "url": "https://loremflickr.com/425/667?2",
-              "filename": "screenshot-whatever-3.portrait.png"
-            },
-            {
-              "url": "https://loremflickr.com/425/667?3",
-              "filename": "screenshot-whatever-4.portrait.png"
-            },
-            {
-              "url": "https://loremflickr.com/425/667?4",
-              "filename": "screenshot-whatever-5.portrait.png"
-            },
-            {
-              "url": "https://loremflickr.com/425/667?5",
-              "filename": "screenshot-whatever-6.portrait.png"
-            },
-            {
-              "url": "https://loremflickr.com/425/667?6",
-              "filename": "screenshot-whatever-7.portrait.png"
-            }
-          ]
-        },
-        {
-          "id": 10,
-          "status": 2,
-          "deviceName": "iPad Mini 2016",
-          "deviceOperatingSystem": "iOS 11.2",
-          "durationInMilliseconds": 160000,
-          "testCases": [
-            {
-              "name": "testCaseExample",
-              "status": 1,
-              "durationInMilliseconds": 5000,
-              "context": "ios_simple:abcdefgh",
-              "summary": "Lorem ipsum"
-            },
-            {
-              "name": "testCaseExample",
-              "status": 1,
-              "durationInMilliseconds": 5000,
-              "context": "ios_simple:abcdefgh",
-              "summary": "Lorem ipsum"
-            },
-            {
-              "name": "testCaseExample",
-              "status": 2,
-              "durationInMilliseconds": 5000,
-              "context": "ios_simple:abcdefgh",
-              "summary": "Lorem ipsum"
-            }
-          ],
-          "orientation": "portrait",
-          "locale": "Japanese",
-          "downloadAllScreenshotsURL": "http://some-url-to.download-screen.shots",
-          "screenshots": [
-            {
-              "url": "https://loremflickr.com/384/512",
-              "filename": "screenshot-whatever-1.portrait.png"
-            },
-            {
-              "url": "https://loremflickr.com/384/512?1",
-              "filename": "screenshot-whatever-2.portrait.png"
-            }
-          ]
-        },
-        {
-          "id": 20,
-          "status": 0,
-          "deviceName": "Nexus7 clone, DVD 16:9 aspect ratio",
-          "deviceOperatingSystem": "Android Oreo",
-          "durationInMilliseconds": 3700000,
-          "orientation": "landscape",
-          "locale": "Traditional chinese",
-          "downloadAllScreenshotsURL": "http://some-url-to.download-screen.shots",
-          "screenshots": [
-            {
-              "url": "https://loremflickr.com/640/400",
-              "filename": "screenshot-whatever-1.landscape.png"
-            },
-            {
-              "url": "https://loremflickr.com/640/400?1",
-              "filename": "screenshot-whatever-2.landscape.png"
-            },
-            {
-              "url": "https://loremflickr.com/640/400?2",
-              "filename": "screenshot-whatever-3.landscape.png"
-            },
-            {
-              "url": "https://loremflickr.com/640/400?3",
-              "filename": "screenshot-whatever-4.landscape.png"
-            }
-          ]
-        },
-        {
-          "id": 30,
-          "status": 3,
-          "deviceName": "iPhone 7",
-          "deviceOperatingSystem": "iOS 11.2",
-          "durationInMilliseconds": 7200000,
-          "orientation": "landscape",
-          "locale": "Japanese",
-          "downloadAllScreenshotsURL": "http://some-url-to.download-screen.shots",
-          "screenshots": [
-            {
-              "url": "https://loremflickr.com/667/425",
-              "filename": "screenshot-whatever-1.landscape.png"
-            },
-            {
-              "url": "https://loremflickr.com/667/425?1",
-              "filename": "screenshot-whatever-2.landscape.png"
-            },
-            {
-              "url": "https://loremflickr.com/667/425?2",
-              "filename": "screenshot-whatever-3.landscape.png"
-            },
-            {
-              "url": "https://loremflickr.com/667/425?3",
-              "filename": "screenshot-whatever-4.landscape.png"
-            }
-          ]
-        }
-      ]
+      "name": "UI Test A"
     },
     {
       "id": 3,
-      "name": "UI Test B",
-      "testSuites": [
-        {
-          "id": 40,
-          "status": 1,
-          "deviceName": "Galaxy S4 mini",
-          "deviceOperatingSystem": "Android Ice Cream Sandwich",
-          "durationInMilliseconds": 10,
-          "testCases": [
-            {
-              "name": "testCaseExample",
-              "status": 1,
-              "durationInMilliseconds": 5000,
-              "context": "ios_simple:abcdefgh",
-              "summary": "Lorem ipsum"
-            },
-            {
-              "name": "testCaseExample",
-              "status": 1,
-              "durationInMilliseconds": 5000,
-              "context": "ios_simple:abcdefgh",
-              "summary": "Lorem ipsum"
-            },
-            {
-              "name": "testCaseExample",
-              "status": 1,
-              "durationInMilliseconds": 5000,
-              "context": "ios_simple:abcdefgh",
-              "summary": "Lorem ipsum"
-            }
-          ],
-          "orientation": "portrait",
-          "locale": "Japanese",
-          "downloadAllScreenshotsURL": "http://some-url-to.download-screen.shots",
-          "screenshots": [
-            {
-              "url": "https://loremflickr.com/270/480",
-              "filename": "screenshot-whatever-1.portrait.png"
-            },
-            {
-              "url": "https://loremflickr.com/270/480?1",
-              "filename": "screenshot-whatever-2.portrait.png"
-            }
-          ]
-        },
-        {
-          "id": 50,
-          "status": 2,
-          "deviceName": "iPhone 7",
-          "deviceOperatingSystem": "iOS 11.2",
-          "durationInMilliseconds": 2050,
-          "testCases": [
-            {
-              "name": "testCaseExample",
-              "status": 1,
-              "durationInMilliseconds": 5000,
-              "context": "ios_simple:abcdefgh",
-              "summary": "Lorem ipsum"
-            },
-            {
-              "name": "testCaseExample",
-              "status": 2,
-              "durationInMilliseconds": 5000,
-              "context": "ios_simple:abcdefgh",
-              "summary": "Lorem ipsum"
-            },
-            {
-              "name": "testCaseExample",
-              "status": 2,
-              "durationInMilliseconds": 5000,
-              "context": "ios_simple:abcdefgh",
-              "summary": "Lorem ipsum"
-            },
-            {
-              "name": "testCaseExample",
-              "status": 1,
-              "durationInMilliseconds": 5000,
-              "context": "ios_simple:abcdefgh",
-              "summary": "Lorem ipsum"
-            },
-            {
-              "name": "testCaseExample",
-              "status": 2,
-              "durationInMilliseconds": 5000,
-              "context": "ios_simple:abcdefgh",
-              "summary": "Lorem ipsum"
-            },
-            {
-              "name": "testCaseExample",
-              "status": 2,
-              "durationInMilliseconds": 5000,
-              "context": "ios_simple:abcdefgh",
-              "summary": "Lorem ipsum"
-            }
-          ],
-          "orientation": "portrait",
-          "locale": "English",
-          "downloadAllScreenshotsURL": "http://some-url-to.download-screen.shots",
-          "screenshots": [
-            {
-              "url": "https://loremflickr.com/425/667",
-              "filename": "screenshot-whatever-1.portrait.png"
-            },
-            {
-              "url": "https://loremflickr.com/425/667?1",
-              "filename": "screenshot-whatever-2.portrait.png"
-            },
-            {
-              "url": "https://loremflickr.com/425/667?2",
-              "filename": "screenshot-whatever-3.portrait.png"
-            }
-          ]
-        },
-        {
-          "id": 60,
-          "status": 0,
-          "deviceName": "iPhone 7",
-          "deviceOperatingSystem": "iOS 11.2",
-          "durationInMilliseconds": 20000,
-          "orientation": "landscape",
-          "locale": "English",
-          "downloadAllScreenshotsURL": "http://some-url-to.download-screen.shots",
-          "screenshots": [
-            {
-              "url": "https://loremflickr.com/667/425",
-              "filename": "screenshot-whatever-1.landscape.png"
-            },
-            {
-              "url": "https://loremflickr.com/667/425?1",
-              "filename": "screenshot-whatever-2.landscape.png"
-            },
-            {
-              "url": "https://loremflickr.com/667/425?2",
-              "filename": "screenshot-whatever-3.landscape.png"
-            }
-          ]
-        }
-      ]
+      "name": "UI Test B"
     }
   ],
+  "test_report/1": {
+    "id": 1,
+    "name": "Unit Test A",
+    "testSuites": [
+      {
+        "id": 3,
+        "status": 1,
+        "suiteName": "Test Group #1",
+        "durationInMilliseconds": 12000,
+        "testCases": [
+          {
+            "name": "testCaseExample1",
+            "status": 2,
+            "durationInMilliseconds": 3000,
+            "context": "ios_simple:dsfhkjshUITESTX",
+            "summary": "Nulla vitae elit libero, a pharetra augue. Sed posuere consectetur est at lobortis.\n\nNullam id dolor id nibh ultricies vehicula ut id elit. Praesent commodo cursus magna, vel scelerisque nisl consectetur et.\n\nInteger posuere erat a ante venenatis dapibus posuere velit aliquet. Donec id elit non mi porta gravida at eget metus."
+          },
+          {
+            "name": "testCaseExample2",
+            "status": 1,
+            "durationInMilliseconds": 5000,
+            "context": "ios_complicated:abcdefgh",
+            "summary": "Lorem ipsum"
+          }
+        ],
+        "testArtifacts": {
+          "list": [
+            {
+              "filename": "file.txt",
+              "downloadURL": "https://www.bitrise.io/assets/svg/logo-bitrise.svg"
+            },
+            {
+              "filename": "file.apk",
+              "downloadURL": "https://www.bitrise.io/assets/svg/logo-bitrise.svg"
+            },
+            {
+              "filename": "file.png",
+              "downloadURL": "https://www.bitrise.io/assets/svg/logo-bitrise.svg"
+            }
+          ],
+          "downloadAllURL": "https://www.bitrise.io/assets/svg/logo-bitrise.svg"
+        }
+      }
+    ]
+  },
+  "test_report/2": {
+    "id": 2,
+    "name": "UI Test A",
+    "testSuites": [
+      {
+        "id": 5,
+        "status": 1,
+        "deviceName": "iPhone 7",
+        "deviceOperatingSystem": "iOS 11.2",
+        "durationInMilliseconds": 20000,
+        "testCases": [
+          {
+            "name": "testCaseExample",
+            "status": 1,
+            "durationInMilliseconds": 5000,
+            "context": "ios_simple:abcdefgh",
+            "summary": "Lorem ipsum"
+          },
+          {
+            "name": "testCaseExample",
+            "status": 1,
+            "durationInMilliseconds": 5000,
+            "context": "ios_simple:abcdefgh",
+            "summary": "Lorem ipsum"
+          },
+          {
+            "name": "testCaseExample",
+            "status": 1,
+            "durationInMilliseconds": 5000,
+            "context": "ios_simple:abcdefgh",
+            "summary": "Lorem ipsum"
+          }
+        ],
+        "orientation": "portrait",
+        "locale": "English",
+        "downloadAllScreenshotsURL": "http://some-url-to.download-screen.shots",
+        "screenshots": [
+          {
+            "url": "https://loremflickr.com/425/667",
+            "filename": "screenshot-whatever-1.portrait.png"
+          },
+          {
+            "url": "https://loremflickr.com/425/667?1",
+            "filename": "screenshot-whatever-2.portrait.png"
+          },
+          {
+            "url": "https://loremflickr.com/425/667?2",
+            "filename": "screenshot-whatever-3.portrait.png"
+          },
+          {
+            "url": "https://loremflickr.com/425/667?3",
+            "filename": "screenshot-whatever-4.portrait.png"
+          },
+          {
+            "url": "https://loremflickr.com/425/667?4",
+            "filename": "screenshot-whatever-5.portrait.png"
+          },
+          {
+            "url": "https://loremflickr.com/425/667?5",
+            "filename": "screenshot-whatever-6.portrait.png"
+          },
+          {
+            "url": "https://loremflickr.com/425/667?6",
+            "filename": "screenshot-whatever-7.portrait.png"
+          }
+        ],
+        "testArtifacts": {
+          "list": [
+            {
+              "filename": "file.txt",
+              "downloadURL": "https://www.bitrise.io/assets/svg/logo-bitrise.svg"
+            },
+            {
+              "filename": "file.apk",
+              "downloadURL": "https://www.bitrise.io/assets/svg/logo-bitrise.svg"
+            },
+            {
+              "filename": "file.png",
+              "downloadURL": "https://www.bitrise.io/assets/svg/logo-bitrise.svg"
+            }
+          ],
+          "downloadAllURL": "https://www.bitrise.io/assets/svg/logo-bitrise.svg"
+        },
+        "outputUrls": {
+          "video": "http://commondatastorage.googleapis.com/gtv-videos-bucket/sample/BigBuckBunny.mp4",
+          "log": ["log1"]
+        }
+      },
+      {
+        "id": 10,
+        "status": 2,
+        "deviceName": "iPad Mini 2016",
+        "deviceOperatingSystem": "iOS 11.2",
+        "durationInMilliseconds": 160000,
+        "testCases": [
+          {
+            "name": "testCaseExample",
+            "status": 1,
+            "durationInMilliseconds": 5000,
+            "context": "ios_simple:abcdefgh",
+            "summary": "Lorem ipsum"
+          },
+          {
+            "name": "testCaseExample",
+            "status": 1,
+            "durationInMilliseconds": 5000,
+            "context": "ios_simple:abcdefgh",
+            "summary": "Lorem ipsum"
+          },
+          {
+            "name": "testCaseExample",
+            "status": 2,
+            "durationInMilliseconds": 5000,
+            "context": "ios_simple:abcdefgh",
+            "summary": "Lorem ipsum"
+          }
+        ],
+        "orientation": "portrait",
+        "locale": "Japanese",
+        "downloadAllScreenshotsURL": "http://some-url-to.download-screen.shots",
+        "screenshots": [
+          {
+            "url": "https://loremflickr.com/384/512",
+            "filename": "screenshot-whatever-1.portrait.png"
+          },
+          {
+            "url": "https://loremflickr.com/384/512?1",
+            "filename": "screenshot-whatever-2.portrait.png"
+          }
+        ],
+        "testArtifacts": {
+          "list": [
+            {
+              "filename": "file.txt",
+              "downloadURL": "https://www.bitrise.io/assets/svg/logo-bitrise.svg"
+            },
+            {
+              "filename": "file.apk",
+              "downloadURL": "https://www.bitrise.io/assets/svg/logo-bitrise.svg"
+            },
+            {
+              "filename": "file.png",
+              "downloadURL": "https://www.bitrise.io/assets/svg/logo-bitrise.svg"
+            }
+          ],
+          "downloadAllURL": "https://www.bitrise.io/assets/svg/logo-bitrise.svg"
+        },
+        "outputUrls": {
+          "video": "http://commondatastorage.googleapis.com/gtv-videos-bucket/sample/BigBuckBunny.mp4",
+          "log": ["log1"]
+        }
+      },
+      {
+        "id": 20,
+        "status": 0,
+        "deviceName": "Nexus7 clone, DVD 16:9 aspect ratio",
+        "deviceOperatingSystem": "Android Oreo",
+        "durationInMilliseconds": 3700000,
+        "orientation": "landscape",
+        "locale": "Traditional chinese",
+        "downloadAllScreenshotsURL": "http://some-url-to.download-screen.shots",
+        "screenshots": [
+          {
+            "url": "https://loremflickr.com/640/400",
+            "filename": "screenshot-whatever-1.landscape.png"
+          },
+          {
+            "url": "https://loremflickr.com/640/400?1",
+            "filename": "screenshot-whatever-2.landscape.png"
+          },
+          {
+            "url": "https://loremflickr.com/640/400?2",
+            "filename": "screenshot-whatever-3.landscape.png"
+          },
+          {
+            "url": "https://loremflickr.com/640/400?3",
+            "filename": "screenshot-whatever-4.landscape.png"
+          }
+        ],
+        "testArtifacts": {
+          "list": [
+            {
+              "filename": "file.txt",
+              "downloadURL": "https://www.bitrise.io/assets/svg/logo-bitrise.svg"
+            },
+            {
+              "filename": "file.apk",
+              "downloadURL": "https://www.bitrise.io/assets/svg/logo-bitrise.svg"
+            },
+            {
+              "filename": "file.png",
+              "downloadURL": "https://www.bitrise.io/assets/svg/logo-bitrise.svg"
+            }
+          ],
+          "downloadAllURL": "https://www.bitrise.io/assets/svg/logo-bitrise.svg"
+        },
+        "outputUrls": {
+          "video": "http://commondatastorage.googleapis.com/gtv-videos-bucket/sample/BigBuckBunny.mp4",
+          "log": ["log2"]
+        }
+      },
+      {
+        "id": 30,
+        "status": 3,
+        "deviceName": "iPhone 7",
+        "deviceOperatingSystem": "iOS 11.2",
+        "durationInMilliseconds": 7200000,
+        "orientation": "landscape",
+        "locale": "Japanese",
+        "downloadAllScreenshotsURL": "http://some-url-to.download-screen.shots",
+        "screenshots": [
+          {
+            "url": "https://loremflickr.com/667/425",
+            "filename": "screenshot-whatever-1.landscape.png"
+          },
+          {
+            "url": "https://loremflickr.com/667/425?1",
+            "filename": "screenshot-whatever-2.landscape.png"
+          },
+          {
+            "url": "https://loremflickr.com/667/425?2",
+            "filename": "screenshot-whatever-3.landscape.png"
+          },
+          {
+            "url": "https://loremflickr.com/667/425?3",
+            "filename": "screenshot-whatever-4.landscape.png"
+          }
+        ],
+        "testArtifacts": {
+          "list": [
+            {
+              "filename": "file.txt",
+              "downloadURL": "https://www.bitrise.io/assets/svg/logo-bitrise.svg"
+            },
+            {
+              "filename": "file.apk",
+              "downloadURL": "https://www.bitrise.io/assets/svg/logo-bitrise.svg"
+            },
+            {
+              "filename": "file.png",
+              "downloadURL": "https://www.bitrise.io/assets/svg/logo-bitrise.svg"
+            }
+          ],
+          "downloadAllURL": "https://www.bitrise.io/assets/svg/logo-bitrise.svg"
+        },
+        "outputUrls": {
+          "video": "http://commondatastorage.googleapis.com/gtv-videos-bucket/sample/BigBuckBunny.mp4",
+          "log": ["log1"]
+        }
+      }
+    ]
+  },
+  "test_report/3": {
+    "id": 3,
+    "name": "UI Test B",
+    "testSuites": [
+      {
+        "id": 40,
+        "status": 1,
+        "deviceName": "Galaxy S4 mini",
+        "deviceOperatingSystem": "Android Ice Cream Sandwich",
+        "durationInMilliseconds": 10,
+        "testCases": [
+          {
+            "name": "testCaseExample",
+            "status": 1,
+            "durationInMilliseconds": 5000,
+            "context": "ios_simple:abcdefgh",
+            "summary": "Lorem ipsum"
+          },
+          {
+            "name": "testCaseExample",
+            "status": 1,
+            "durationInMilliseconds": 5000,
+            "context": "ios_simple:abcdefgh",
+            "summary": "Lorem ipsum"
+          },
+          {
+            "name": "testCaseExample",
+            "status": 1,
+            "durationInMilliseconds": 5000,
+            "context": "ios_simple:abcdefgh",
+            "summary": "Lorem ipsum"
+          }
+        ],
+        "orientation": "portrait",
+        "locale": "Japanese",
+        "downloadAllScreenshotsURL": "http://some-url-to.download-screen.shots",
+        "screenshots": [
+          {
+            "url": "https://loremflickr.com/270/480",
+            "filename": "screenshot-whatever-1.portrait.png"
+          },
+          {
+            "url": "https://loremflickr.com/270/480?1",
+            "filename": "screenshot-whatever-2.portrait.png"
+          }
+        ],
+        "testArtifacts": {
+          "list": [
+            {
+              "filename": "file.txt",
+              "downloadURL": "https://www.bitrise.io/assets/svg/logo-bitrise.svg"
+            },
+            {
+              "filename": "file.apk",
+              "downloadURL": "https://www.bitrise.io/assets/svg/logo-bitrise.svg"
+            },
+            {
+              "filename": "file.png",
+              "downloadURL": "https://www.bitrise.io/assets/svg/logo-bitrise.svg"
+            }
+          ],
+          "downloadAllURL": "https://www.bitrise.io/assets/svg/logo-bitrise.svg"
+        },
+        "outputUrls": {
+          "video": "http://commondatastorage.googleapis.com/gtv-videos-bucket/sample/BigBuckBunny.mp4",
+          "log": ["log2"]
+        }
+      },
+      {
+        "id": 50,
+        "status": 2,
+        "deviceName": "iPhone 7",
+        "deviceOperatingSystem": "iOS 11.2",
+        "durationInMilliseconds": 2050,
+        "testCases": [
+          {
+            "name": "testCaseExample",
+            "status": 1,
+            "durationInMilliseconds": 5000,
+            "context": "ios_simple:abcdefgh",
+            "summary": "Lorem ipsum"
+          },
+          {
+            "name": "testCaseExample",
+            "status": 2,
+            "durationInMilliseconds": 5000,
+            "context": "ios_simple:abcdefgh",
+            "summary": "Lorem ipsum"
+          },
+          {
+            "name": "testCaseExample",
+            "status": 2,
+            "durationInMilliseconds": 5000,
+            "context": "ios_simple:abcdefgh",
+            "summary": "Lorem ipsum"
+          },
+          {
+            "name": "testCaseExample",
+            "status": 1,
+            "durationInMilliseconds": 5000,
+            "context": "ios_simple:abcdefgh",
+            "summary": "Lorem ipsum"
+          },
+          {
+            "name": "testCaseExample",
+            "status": 2,
+            "durationInMilliseconds": 5000,
+            "context": "ios_simple:abcdefgh",
+            "summary": "Lorem ipsum"
+          },
+          {
+            "name": "testCaseExample",
+            "status": 2,
+            "durationInMilliseconds": 5000,
+            "context": "ios_simple:abcdefgh",
+            "summary": "Lorem ipsum"
+          }
+        ],
+        "orientation": "portrait",
+        "locale": "English",
+        "downloadAllScreenshotsURL": "http://some-url-to.download-screen.shots",
+        "screenshots": [
+          {
+            "url": "https://loremflickr.com/425/667",
+            "filename": "screenshot-whatever-1.portrait.png"
+          },
+          {
+            "url": "https://loremflickr.com/425/667?1",
+            "filename": "screenshot-whatever-2.portrait.png"
+          },
+          {
+            "url": "https://loremflickr.com/425/667?2",
+            "filename": "screenshot-whatever-3.portrait.png"
+          }
+        ],
+        "testArtifacts": {
+          "list": [
+            {
+              "filename": "file.txt",
+              "downloadURL": "https://www.bitrise.io/assets/svg/logo-bitrise.svg"
+            },
+            {
+              "filename": "file.apk",
+              "downloadURL": "https://www.bitrise.io/assets/svg/logo-bitrise.svg"
+            },
+            {
+              "filename": "file.png",
+              "downloadURL": "https://www.bitrise.io/assets/svg/logo-bitrise.svg"
+            }
+          ],
+          "downloadAllURL": "https://www.bitrise.io/assets/svg/logo-bitrise.svg"
+        },
+        "outputUrls": {
+          "video": "http://commondatastorage.googleapis.com/gtv-videos-bucket/sample/BigBuckBunny.mp4",
+          "log": ["log1"]
+        }
+      },
+      {
+        "id": 60,
+        "status": 0,
+        "deviceName": "iPhone 7",
+        "deviceOperatingSystem": "iOS 11.2",
+        "durationInMilliseconds": 20000,
+        "orientation": "landscape",
+        "locale": "English",
+        "downloadAllScreenshotsURL": "http://some-url-to.download-screen.shots",
+        "screenshots": [
+          {
+            "url": "https://loremflickr.com/667/425",
+            "filename": "screenshot-whatever-1.landscape.png"
+          },
+          {
+            "url": "https://loremflickr.com/667/425?1",
+            "filename": "screenshot-whatever-2.landscape.png"
+          },
+          {
+            "url": "https://loremflickr.com/667/425?2",
+            "filename": "screenshot-whatever-3.landscape.png"
+          }
+        ],
+        "testArtifacts": {
+          "list": [
+            {
+              "filename": "file.txt",
+              "downloadURL": "https://www.bitrise.io/assets/svg/logo-bitrise.svg"
+            },
+            {
+              "filename": "file.apk",
+              "downloadURL": "https://www.bitrise.io/assets/svg/logo-bitrise.svg"
+            },
+            {
+              "filename": "file.png",
+              "downloadURL": "https://www.bitrise.io/assets/svg/logo-bitrise.svg"
+            }
+          ],
+          "downloadAllURL": "https://www.bitrise.io/assets/svg/logo-bitrise.svg"
+        },
+        "outputUrls": {
+          "video": "http://commondatastorage.googleapis.com/gtv-videos-bucket/sample/BigBuckBunny.mp4",
+          "log": ["log1"]
+        }
+      }
+    ]
+  },
   "performance": {
     "metrics": {
       "cpu": {
@@ -507,26 +683,12 @@
     },
     "durationInMilliseconds": 14000
   },
-  "test_artifacts": {
-    "list": [
-      {
-        "filename": "file.txt",
-        "downloadURL": "https://www.bitrise.io/assets/svg/logo-bitrise.svg"
-      },
-      {
-        "filename": "file.apk",
-        "downloadURL": "https://www.bitrise.io/assets/svg/logo-bitrise.svg"
-      },
-      {
-        "filename": "file.png",
-        "downloadURL": "https://www.bitrise.io/assets/svg/logo-bitrise.svg"
-      }
-    ],
-    "downloadAllURL": "https://www.bitrise.io/assets/svg/logo-bitrise.svg"
+  "log1": {
+    "fullLog": "[connected]\nJan  5 08:00:01 iPhone lockdownd[71] <Notice>: Lorem ipsum dolor sit amet, consectetur adipiscing elit\nJan  5 08:00:02 iPhone lockdownd[71] <Notice>: Praesent mollis risus ac orci cursus feugiat\nJan  5 08:00:03 iPhone lockdownd[71] <Notice>: Pellentesque semper est est, elementum iaculis purus iaculis et\nJan  5 08:00:04 iPhone lockdownd[71] <Notice>: Sed eu luctus ex\nJan  5 08:00:05 iPhone lockdownd[71] <Notice>: Phasellus elementum pellentesque tellus quis finibus\nJan  5 08:00:06 iPhone lockdownd[71] <Notice>: Integer interdum condimentum nisi sed tempor\nJan  5 08:00:07 iPhone lockdownd[71] <Notice>: Aliquam erat volutpat\nJan  5 08:00:08 iPhone lockdownd[71] <Notice>: Integer dignissim massa ante, euismod aliquet metus sollicitudin sit amet\nJan  5 08:00:09 iPhone lockdownd[71] <Notice>: Ut vitae scelerisque purus, tempus condimentum est\nJan  5 08:00:10 iPhone lockdownd[71] <Notice>: Mauris in ligula dolor\nJan  5 08:00:11 iPhone lockdownd[71] <Notice>: Duis nec odio non mauris ullamcorper hendrerit ut eget ligula\nJan  5 08:00:12 iPhone lockdownd[71] <Notice>: Duis justo lectus, lobortis vitae ipsum sit amet, mattis posuere lacus\nJan  5 08:00:13 iPhone lockdownd[71] <Notice>: Donec lobortis orci et ipsum ullamcorper, vitae ultrices turpis cursus\nJan  5 08:00:14 iPhone lockdownd[71] <Notice>: Mauris ut euismod leo\nJan  5 08:00:15 iPhone lockdownd[71] <Notice>: Maecenas pellentesque ligula mattis turpis rhoncus, vitae placerat sem consequat\nJan  5 08:00:16 iPhone lockdownd[71] <Notice>: Pellentesque magna ligula, ultricies in venenatis vitae, sodales in leo\nJan  5 08:00:17 iPhone lockdownd[71] <Notice>: Quisque sed iaculis lectus, maximus auctor magna\nJan  5 08:00:18 iPhone lockdownd[71] <Notice>: Etiam consectetur metus erat, eu tempus purus mollis id\nJan  5 08:00:19 iPhone lockdownd[71] <Notice>: Praesent euismod eleifend nibh, ut facilisis nunc maximus sed\nJan  5 08:00:20 iPhone lockdownd[71] <Notice>: Fusce laoreet laoreet massa, vitae mattis odio commodo vitae\nJan  5 08:00:21 iPhone lockdownd[71] <Notice>: Etiam vitae sollicitudin ante, vitae posuere velit\nJan  5 08:00:22 iPhone lockdownd[71] <Notice>: Nulla consequat, nisl eget scelerisque porttitor, est ex condimentum urna, ac pharetra lectus erat a ante\nJan  5 08:00:23 iPhone lockdownd[71] <Notice>: Curabitur mi mauris, hendrerit eu elementum nec, facilisis quis ex\nJan  5 08:00:24 iPhone lockdownd[71] <Notice>: Phasellus vitae nunc elit\nJan  5 08:00:25 iPhone lockdownd[71] <Notice>: Mauris non tortor vitae leo ornare mollis non vel magna\nJan  5 08:00:26 iPhone lockdownd[71] <Notice>: Praesent bibendum diam et nulla hendrerit posuere non ac ipsum\nJan  5 08:00:27 iPhone lockdownd[71] <Notice>: Ut ut consequat elit\nJan  5 08:00:28 iPhone lockdownd[71] <Notice>: Vestibulum non ultricies nisl, eget fringilla nisl\nJan  5 08:00:29 iPhone lockdownd[71] <Notice>: Integer hendrerit tincidunt ante a pulvinar\nJan  5 08:00:30 iPhone lockdownd[71] <Notice>: Mauris in nisl mi\nFeb  9 08:00:31 iPhone lockdownd[71] <Notice>: In ornare nibh ut hendrerit euismod\nFeb  9 08:00:32 iPhone lockdownd[71] <Notice>: Donec porta purus massa, a ullamcorper turpis dignissim quis\nFeb  9 08:00:33 iPhone lockdownd[71] <Notice>: Fusce facilisis hendrerit leo ut lobortis\nFeb  9 08:00:34 iPhone lockdownd[71] <Notice>: Sed placerat nisi eu aliquet imperdiet\nFeb  9 08:00:35 iPhone lockdownd[71] <Notice>: Cras pulvinar fermentum orci, sed eleifend est facilisis eget\nFeb  9 08:00:36 iPhone lockdownd[71] <Notice>: Proin vitae massa ligula\nFeb  9 08:00:37 iPhone lockdownd[71] <Notice>: Praesent bibendum mauris aliquam mauris semper hendrerit\nFeb  9 08:00:38 iPhone lockdownd[71] <Notice>: Nulla facilisi\nFeb  9 08:00:39 iPhone lockdownd[71] <Notice>: Proin a massa sed est semper consequat ut ac felis\nFeb  9 08:00:40 iPhone lockdownd[71] <Notice>: Sed tempus lorem a lacus imperdiet, sit amet suscipit purus porttitor\nMar  6 08:00:41 iPhone lockdownd[71] <Notice>: Sed cursus sodales augue, non viverra justo luctus a\nMar  6 08:00:42 iPhone lockdownd[71] <Notice>: Aenean faucibus urna enim, at consequat lectus tempus ut\nMar  6 08:00:43 iPhone lockdownd[71] <Notice>: Vestibulum rutrum consequat lectus eu mattis\nMar  6 08:00:44 iPhone lockdownd[71] <Notice>: Integer feugiat felis id mauris cursus, feugiat malesuada orci vehicula\nMar  6 08:00:45 iPhone lockdownd[71] <Notice>: Praesent nec dictum urna\nMar  6 08:00:46 iPhone lockdownd[71] <Notice>: Nulla pellentesque ligula ultrices, porttitor dui ut, venenatis nisl\nMar  6 08:00:47 iPhone lockdownd[71] <Notice>: Aliquam eu lobortis libero\nMar  6 08:00:48 iPhone lockdownd[71] <Notice>: Sed ultrices cursus magna, id volutpat lorem dapibus rhoncus\nMar  6 08:00:49 iPhone lockdownd[71] <Notice>: Nulla dui est, sagittis at sagittis eu, molestie non purus\nMar  6 08:00:50 iPhone lockdownd[71] <Notice>: Sed viverra ex et neque ornare, a commodo diam cursus\nMar  6 08:00:51 iPhone lockdownd[71] <Notice>: Nulla ultrices id nisi a fringilla\nMar  6 08:00:52 iPhone lockdownd[71] <Notice>: Ut eleifend condimentum mauris a volutpat\nMar  6 08:00:53 iPhone lockdownd[71] <Notice>: Cras tincidunt orci non lorem porta euismod\nMar  6 08:00:54 iPhone lockdownd[71] <Notice>: Nunc porta vulputate aliquet\nMar  6 08:00:55 iPhone lockdownd[71] <Notice>: Suspendisse sit amet congue elit\nMar  6 08:00:56 iPhone lockdownd[71] <Notice>: Duis vel urna sodales, rhoncus lorem ac, tristique tellus\nMar  6 08:00:57 iPhone lockdownd[71] <Notice>: Curabitur placerat, ante vitae iaculis facilisis, erat ipsum convallis lorem, vitae vestibulum dolor lacus at lorem.\nMar  6 08:00:58 iPhone lockdownd[71] <Notice>: Cras tincidunt orci non lorem porta euismod\nMar  6 08:00:59 iPhone lockdownd[71] <Notice>: Cras tincidunt orci non lorem porta euismod\nMar  6 08:01:00 iPhone lockdownd[71] <Notice>: Cras tincidunt orci non lorem porta euismod\nMar  6 08:01:01 iPhone lockdownd[71] <Notice>: Lorem ipsum dolor sit amet, consectetur adipiscing elit\nMar  6 08:01:02 iPhone lockdownd[71] <Notice>: Praesent mollis risus ac orci cursus feugiat\nMar  6 08:01:03 iPhone lockdownd[71] <Notice>: Pellentesque semper est est, elementum iaculis purus iaculis et\nMar  6 08:01:04 iPhone lockdownd[71] <Notice>: Sed eu luctus ex\nMar  6 08:01:05 iPhone lockdownd[71] <Notice>: Phasellus elementum pellentesque tellus quis finibus\nMar  6 08:01:06 iPhone lockdownd[71] <Notice>: Integer interdum condimentum nisi sed tempor\nMar  6 08:01:07 iPhone lockdownd[71] <Notice>: Aliquam erat volutpat\nMar  6 08:01:08 iPhone lockdownd[71] <Notice>: Integer dignissim massa ante, euismod aliquet metus sollicitudin sit amet\nMar  6 08:01:09 iPhone lockdownd[71] <Notice>: Ut vitae scelerisque purus, tempus condimentum est\nMar  6 08:01:10 iPhone trustd(libsystem_network.dylib)[169] <Error>: Mauris in ligula dolor\nMar  6 08:01:11 iPhone trustd(libsystem_network.dylib)[169] <Error>: Duis nec odio non mauris ullamcorper hendrerit ut eget ligula\nMar  6 08:01:12 iPhone trustd(libsystem_network.dylib)[169] <Error>: Duis justo lectus, lobortis vitae ipsum sit amet, mattis posuere lacus\nMar  6 08:01:13 iPhone trustd(libsystem_network.dylib)[169] <Error>: Donec lobortis orci et ipsum ullamcorper, vitae ultrices turpis cursus {\n  follow-up line #0\n  follow-up line #1\n  follow-up line #2\n  follow-up line #3\n  follow-up line #4\n  follow-up line #5\n  follow-up line #6\n  follow-up line #7\n}\nMar  6 08:01:14 iPhone trustd(libsystem_network.dylib)[169] <Error>: Mauris ut euismod leo\nMar  6 08:01:15 iPhone trustd(libsystem_network.dylib)[169] <Error>: Maecenas pellentesque ligula mattis turpis rhoncus, vitae placerat sem consequat\nMar  6 08:01:16 iPhone trustd(libsystem_network.dylib)[169] <Error>: Pellentesque magna ligula, ultricies in venenatis vitae, sodales in leo\nMar  6 08:01:17 iPhone trustd(libsystem_network.dylib)[169] <Error>: Quisque sed iaculis lectus, maximus auctor magna\nMar  6 08:01:18 iPhone trustd(libsystem_network.dylib)[169] <Error>: Etiam consectetur metus erat, eu tempus purus mollis id\nMar  6 08:01:19 iPhone trustd(libsystem_network.dylib)[169] <Error>: Praesent euismod eleifend nibh, ut facilisis nunc maximus sed\nMar  6 08:01:20 iPhone trustd(libsystem_network.dylib)[169] <Error>: Fusce laoreet laoreet massa, vitae mattis odio commodo vitae\nMar  6 08:01:21 iPhone trustd(libsystem_network.dylib)[169] <Error>: Etiam vitae sollicitudin ante, vitae posuere velit\nMar  6 08:01:22 iPhone trustd(libsystem_network.dylib)[169] <Error>: Nulla consequat, nisl eget scelerisque porttitor, est ex condimentum urna, ac pharetra lectus erat a ante\nMar  6 08:01:23 iPhone trustd(libsystem_network.dylib)[169] <Error>: Curabitur mi mauris, hendrerit eu elementum nec, facilisis quis ex\nMar  6 08:01:24 iPhone trustd(libsystem_network.dylib)[169] <Error>: Phasellus vitae nunc elit\nMar  6 08:01:25 iPhone trustd(libsystem_network.dylib)[169] <Error>: Mauris non tortor vitae leo ornare mollis non vel magna\nMar  6 08:01:26 iPhone trustd(libsystem_network.dylib)[169] <Error>: Praesent bibendum diam et nulla hendrerit posuere non ac ipsum\nMar  6 08:01:27 iPhone trustd(libsystem_network.dylib)[169] <Error>: Ut ut consequat elit\nMar  6 08:01:28 iPhone trustd(libsystem_network.dylib)[169] <Error>: Vestibulum non ultricies nisl, eget fringilla nisl\nMar  6 08:01:29 iPhone trustd(libsystem_network.dylib)[169] <Error>: Integer hendrerit tincidunt ante a pulvinar\nMar  6 08:01:30 iPhone trustd(libsystem_network.dylib)[169] <Error>: Mauris in nisl mi\nMar  6 08:01:31 iPhone trustd(libsystem_network.dylib)[169] <Error>: In ornare nibh ut hendrerit euismod\nMar  6 08:01:32 iPhone trustd(libsystem_network.dylib)[169] <Error>: Donec porta purus massa, a ullamcorper turpis dignissim quis\nMar  6 08:01:33 iPhone trustd(libsystem_network.dylib)[169] <Error>: Fusce facilisis hendrerit leo ut lobortis\nMar  6 08:01:34 iPhone trustd(libsystem_network.dylib)[169] <Error>: Sed placerat nisi eu aliquet imperdiet\nMar  6 08:01:35 iPhone trustd(libsystem_network.dylib)[169] <Error>: Cras pulvinar fermentum orci, sed eleifend est facilisis eget\nMar  6 08:01:36 iPhone trustd(libsystem_network.dylib)[169] <Error>: Proin vitae massa ligula\nMar  6 08:01:37 iPhone trustd(libsystem_network.dylib)[169] <Error>: Praesent bibendum mauris aliquam mauris semper hendrerit\nMar  6 08:01:38 iPhone trustd(libsystem_network.dylib)[169] <Error>: Nulla facilisi\nMar  6 08:01:39 iPhone trustd(libsystem_network.dylib)[169] <Error>: Proin a massa sed est semper consequat ut ac felis\nMar  6 08:01:40 iPhone lockdownd[71] <Notice>: Sed tempus lorem a lacus imperdiet, sit amet suscipit purus porttitor\nMar  6 08:01:41 iPhone lockdownd[71] <Notice>: Sed cursus sodales augue, non viverra justo luctus a\nMar  6 08:01:42 iPhone lockdownd[71] <Notice>: Aenean faucibus urna enim, at consequat lectus tempus ut\nMar  6 08:01:43 iPhone lockdownd[71] <Notice>: Vestibulum rutrum consequat lectus eu mattis\nMar  6 08:01:44 iPhone lockdownd[71] <Notice>: Integer feugiat felis id mauris cursus, feugiat malesuada orci vehicula\nMar  6 08:01:45 iPhone lockdownd[71] <Notice>: Praesent nec dictum urna\nMar  6 08:01:46 iPhone lockdownd[71] <Notice>: Nulla pellentesque ligula ultrices, porttitor dui ut, venenatis nisl\nMar  6 08:01:47 iPhone lockdownd[71] <Notice>: Aliquam eu lobortis libero\nMar  6 08:01:48 iPhone lockdownd[71] <Notice>: Sed ultrices cursus magna, id volutpat lorem dapibus rhoncus\nMar  6 08:01:49 iPhone lockdownd[71] <Notice>: Nulla dui est, sagittis at sagittis eu, molestie non purus\nMar  6 08:01:50 iPhone lockdownd[71] <Notice>: Sed viverra ex et neque ornare, a commodo diam cursus\nMar  6 08:01:51 iPhone lockdownd[71] <Notice>: Nulla ultrices id nisi a fringilla\nMar  6 08:01:52 iPhone lockdownd[71] <Notice>: Ut eleifend condimentum mauris a volutpat\nMar  6 08:01:53 iPhone lockdownd[71] <Notice>: Cras tincidunt orci non lorem porta euismod\nMar  6 08:01:54 iPhone lockdownd[71] <Notice>: Nunc porta vulputate aliquet\nMar  6 08:01:55 iPhone lockdownd[71] <Notice>: Suspendisse sit amet congue elit\nMar  6 08:01:56 iPhone lockdownd[71] <Notice>: Duis vel urna sodales, rhoncus lorem ac, tristique tellus\nMar  6 08:01:57 iPhone lockdownd[71] <Notice>: Curabitur placerat, ante vitae iaculis facilisis, erat ipsum convallis lorem, vitae vestibulum dolor lacus at lorem.\nMar  6 08:01:58 iPhone lockdownd[71] <Notice>: Cras tincidunt orci non lorem porta euismod\nMar  6 08:01:59 iPhone lockdownd[71] <Notice>: Cras tincidunt orci non lorem porta euismod\nMar  6 08:02:00 iPhone lockdownd[71] <Notice>: Cras tincidunt orci non lorem porta euismod",
+    "downloadURL": "https://www.bitrise.io/assets/svg/logo-bitrise.svg"
   },
-  "log": {
-    "fullLogIos": "[connected]\nJan  5 08:00:01 iPhone lockdownd[71] <Notice>: Lorem ipsum dolor sit amet, consectetur adipiscing elit\nJan  5 08:00:02 iPhone lockdownd[71] <Notice>: Praesent mollis risus ac orci cursus feugiat\nJan  5 08:00:03 iPhone lockdownd[71] <Notice>: Pellentesque semper est est, elementum iaculis purus iaculis et\nJan  5 08:00:04 iPhone lockdownd[71] <Notice>: Sed eu luctus ex\nJan  5 08:00:05 iPhone lockdownd[71] <Notice>: Phasellus elementum pellentesque tellus quis finibus\nJan  5 08:00:06 iPhone lockdownd[71] <Notice>: Integer interdum condimentum nisi sed tempor\nJan  5 08:00:07 iPhone lockdownd[71] <Notice>: Aliquam erat volutpat\nJan  5 08:00:08 iPhone lockdownd[71] <Notice>: Integer dignissim massa ante, euismod aliquet metus sollicitudin sit amet\nJan  5 08:00:09 iPhone lockdownd[71] <Notice>: Ut vitae scelerisque purus, tempus condimentum est\nJan  5 08:00:10 iPhone lockdownd[71] <Notice>: Mauris in ligula dolor\nJan  5 08:00:11 iPhone lockdownd[71] <Notice>: Duis nec odio non mauris ullamcorper hendrerit ut eget ligula\nJan  5 08:00:12 iPhone lockdownd[71] <Notice>: Duis justo lectus, lobortis vitae ipsum sit amet, mattis posuere lacus\nJan  5 08:00:13 iPhone lockdownd[71] <Notice>: Donec lobortis orci et ipsum ullamcorper, vitae ultrices turpis cursus\nJan  5 08:00:14 iPhone lockdownd[71] <Notice>: Mauris ut euismod leo\nJan  5 08:00:15 iPhone lockdownd[71] <Notice>: Maecenas pellentesque ligula mattis turpis rhoncus, vitae placerat sem consequat\nJan  5 08:00:16 iPhone lockdownd[71] <Notice>: Pellentesque magna ligula, ultricies in venenatis vitae, sodales in leo\nJan  5 08:00:17 iPhone lockdownd[71] <Notice>: Quisque sed iaculis lectus, maximus auctor magna\nJan  5 08:00:18 iPhone lockdownd[71] <Notice>: Etiam consectetur metus erat, eu tempus purus mollis id\nJan  5 08:00:19 iPhone lockdownd[71] <Notice>: Praesent euismod eleifend nibh, ut facilisis nunc maximus sed\nJan  5 08:00:20 iPhone lockdownd[71] <Notice>: Fusce laoreet laoreet massa, vitae mattis odio commodo vitae\nJan  5 08:00:21 iPhone lockdownd[71] <Notice>: Etiam vitae sollicitudin ante, vitae posuere velit\nJan  5 08:00:22 iPhone lockdownd[71] <Notice>: Nulla consequat, nisl eget scelerisque porttitor, est ex condimentum urna, ac pharetra lectus erat a ante\nJan  5 08:00:23 iPhone lockdownd[71] <Notice>: Curabitur mi mauris, hendrerit eu elementum nec, facilisis quis ex\nJan  5 08:00:24 iPhone lockdownd[71] <Notice>: Phasellus vitae nunc elit\nJan  5 08:00:25 iPhone lockdownd[71] <Notice>: Mauris non tortor vitae leo ornare mollis non vel magna\nJan  5 08:00:26 iPhone lockdownd[71] <Notice>: Praesent bibendum diam et nulla hendrerit posuere non ac ipsum\nJan  5 08:00:27 iPhone lockdownd[71] <Notice>: Ut ut consequat elit\nJan  5 08:00:28 iPhone lockdownd[71] <Notice>: Vestibulum non ultricies nisl, eget fringilla nisl\nJan  5 08:00:29 iPhone lockdownd[71] <Notice>: Integer hendrerit tincidunt ante a pulvinar\nJan  5 08:00:30 iPhone lockdownd[71] <Notice>: Mauris in nisl mi\nFeb  9 08:00:31 iPhone lockdownd[71] <Notice>: In ornare nibh ut hendrerit euismod\nFeb  9 08:00:32 iPhone lockdownd[71] <Notice>: Donec porta purus massa, a ullamcorper turpis dignissim quis\nFeb  9 08:00:33 iPhone lockdownd[71] <Notice>: Fusce facilisis hendrerit leo ut lobortis\nFeb  9 08:00:34 iPhone lockdownd[71] <Notice>: Sed placerat nisi eu aliquet imperdiet\nFeb  9 08:00:35 iPhone lockdownd[71] <Notice>: Cras pulvinar fermentum orci, sed eleifend est facilisis eget\nFeb  9 08:00:36 iPhone lockdownd[71] <Notice>: Proin vitae massa ligula\nFeb  9 08:00:37 iPhone lockdownd[71] <Notice>: Praesent bibendum mauris aliquam mauris semper hendrerit\nFeb  9 08:00:38 iPhone lockdownd[71] <Notice>: Nulla facilisi\nFeb  9 08:00:39 iPhone lockdownd[71] <Notice>: Proin a massa sed est semper consequat ut ac felis\nFeb  9 08:00:40 iPhone lockdownd[71] <Notice>: Sed tempus lorem a lacus imperdiet, sit amet suscipit purus porttitor\nMar  6 08:00:41 iPhone lockdownd[71] <Notice>: Sed cursus sodales augue, non viverra justo luctus a\nMar  6 08:00:42 iPhone lockdownd[71] <Notice>: Aenean faucibus urna enim, at consequat lectus tempus ut\nMar  6 08:00:43 iPhone lockdownd[71] <Notice>: Vestibulum rutrum consequat lectus eu mattis\nMar  6 08:00:44 iPhone lockdownd[71] <Notice>: Integer feugiat felis id mauris cursus, feugiat malesuada orci vehicula\nMar  6 08:00:45 iPhone lockdownd[71] <Notice>: Praesent nec dictum urna\nMar  6 08:00:46 iPhone lockdownd[71] <Notice>: Nulla pellentesque ligula ultrices, porttitor dui ut, venenatis nisl\nMar  6 08:00:47 iPhone lockdownd[71] <Notice>: Aliquam eu lobortis libero\nMar  6 08:00:48 iPhone lockdownd[71] <Notice>: Sed ultrices cursus magna, id volutpat lorem dapibus rhoncus\nMar  6 08:00:49 iPhone lockdownd[71] <Notice>: Nulla dui est, sagittis at sagittis eu, molestie non purus\nMar  6 08:00:50 iPhone lockdownd[71] <Notice>: Sed viverra ex et neque ornare, a commodo diam cursus\nMar  6 08:00:51 iPhone lockdownd[71] <Notice>: Nulla ultrices id nisi a fringilla\nMar  6 08:00:52 iPhone lockdownd[71] <Notice>: Ut eleifend condimentum mauris a volutpat\nMar  6 08:00:53 iPhone lockdownd[71] <Notice>: Cras tincidunt orci non lorem porta euismod\nMar  6 08:00:54 iPhone lockdownd[71] <Notice>: Nunc porta vulputate aliquet\nMar  6 08:00:55 iPhone lockdownd[71] <Notice>: Suspendisse sit amet congue elit\nMar  6 08:00:56 iPhone lockdownd[71] <Notice>: Duis vel urna sodales, rhoncus lorem ac, tristique tellus\nMar  6 08:00:57 iPhone lockdownd[71] <Notice>: Curabitur placerat, ante vitae iaculis facilisis, erat ipsum convallis lorem, vitae vestibulum dolor lacus at lorem.\nMar  6 08:00:58 iPhone lockdownd[71] <Notice>: Cras tincidunt orci non lorem porta euismod\nMar  6 08:00:59 iPhone lockdownd[71] <Notice>: Cras tincidunt orci non lorem porta euismod\nMar  6 08:01:00 iPhone lockdownd[71] <Notice>: Cras tincidunt orci non lorem porta euismod\nMar  6 08:01:01 iPhone lockdownd[71] <Notice>: Lorem ipsum dolor sit amet, consectetur adipiscing elit\nMar  6 08:01:02 iPhone lockdownd[71] <Notice>: Praesent mollis risus ac orci cursus feugiat\nMar  6 08:01:03 iPhone lockdownd[71] <Notice>: Pellentesque semper est est, elementum iaculis purus iaculis et\nMar  6 08:01:04 iPhone lockdownd[71] <Notice>: Sed eu luctus ex\nMar  6 08:01:05 iPhone lockdownd[71] <Notice>: Phasellus elementum pellentesque tellus quis finibus\nMar  6 08:01:06 iPhone lockdownd[71] <Notice>: Integer interdum condimentum nisi sed tempor\nMar  6 08:01:07 iPhone lockdownd[71] <Notice>: Aliquam erat volutpat\nMar  6 08:01:08 iPhone lockdownd[71] <Notice>: Integer dignissim massa ante, euismod aliquet metus sollicitudin sit amet\nMar  6 08:01:09 iPhone lockdownd[71] <Notice>: Ut vitae scelerisque purus, tempus condimentum est\nMar  6 08:01:10 iPhone trustd(libsystem_network.dylib)[169] <Error>: Mauris in ligula dolor\nMar  6 08:01:11 iPhone trustd(libsystem_network.dylib)[169] <Error>: Duis nec odio non mauris ullamcorper hendrerit ut eget ligula\nMar  6 08:01:12 iPhone trustd(libsystem_network.dylib)[169] <Error>: Duis justo lectus, lobortis vitae ipsum sit amet, mattis posuere lacus\nMar  6 08:01:13 iPhone trustd(libsystem_network.dylib)[169] <Error>: Donec lobortis orci et ipsum ullamcorper, vitae ultrices turpis cursus {\n  follow-up line #0\n  follow-up line #1\n  follow-up line #2\n  follow-up line #3\n  follow-up line #4\n  follow-up line #5\n  follow-up line #6\n  follow-up line #7\n}\nMar  6 08:01:14 iPhone trustd(libsystem_network.dylib)[169] <Error>: Mauris ut euismod leo\nMar  6 08:01:15 iPhone trustd(libsystem_network.dylib)[169] <Error>: Maecenas pellentesque ligula mattis turpis rhoncus, vitae placerat sem consequat\nMar  6 08:01:16 iPhone trustd(libsystem_network.dylib)[169] <Error>: Pellentesque magna ligula, ultricies in venenatis vitae, sodales in leo\nMar  6 08:01:17 iPhone trustd(libsystem_network.dylib)[169] <Error>: Quisque sed iaculis lectus, maximus auctor magna\nMar  6 08:01:18 iPhone trustd(libsystem_network.dylib)[169] <Error>: Etiam consectetur metus erat, eu tempus purus mollis id\nMar  6 08:01:19 iPhone trustd(libsystem_network.dylib)[169] <Error>: Praesent euismod eleifend nibh, ut facilisis nunc maximus sed\nMar  6 08:01:20 iPhone trustd(libsystem_network.dylib)[169] <Error>: Fusce laoreet laoreet massa, vitae mattis odio commodo vitae\nMar  6 08:01:21 iPhone trustd(libsystem_network.dylib)[169] <Error>: Etiam vitae sollicitudin ante, vitae posuere velit\nMar  6 08:01:22 iPhone trustd(libsystem_network.dylib)[169] <Error>: Nulla consequat, nisl eget scelerisque porttitor, est ex condimentum urna, ac pharetra lectus erat a ante\nMar  6 08:01:23 iPhone trustd(libsystem_network.dylib)[169] <Error>: Curabitur mi mauris, hendrerit eu elementum nec, facilisis quis ex\nMar  6 08:01:24 iPhone trustd(libsystem_network.dylib)[169] <Error>: Phasellus vitae nunc elit\nMar  6 08:01:25 iPhone trustd(libsystem_network.dylib)[169] <Error>: Mauris non tortor vitae leo ornare mollis non vel magna\nMar  6 08:01:26 iPhone trustd(libsystem_network.dylib)[169] <Error>: Praesent bibendum diam et nulla hendrerit posuere non ac ipsum\nMar  6 08:01:27 iPhone trustd(libsystem_network.dylib)[169] <Error>: Ut ut consequat elit\nMar  6 08:01:28 iPhone trustd(libsystem_network.dylib)[169] <Error>: Vestibulum non ultricies nisl, eget fringilla nisl\nMar  6 08:01:29 iPhone trustd(libsystem_network.dylib)[169] <Error>: Integer hendrerit tincidunt ante a pulvinar\nMar  6 08:01:30 iPhone trustd(libsystem_network.dylib)[169] <Error>: Mauris in nisl mi\nMar  6 08:01:31 iPhone trustd(libsystem_network.dylib)[169] <Error>: In ornare nibh ut hendrerit euismod\nMar  6 08:01:32 iPhone trustd(libsystem_network.dylib)[169] <Error>: Donec porta purus massa, a ullamcorper turpis dignissim quis\nMar  6 08:01:33 iPhone trustd(libsystem_network.dylib)[169] <Error>: Fusce facilisis hendrerit leo ut lobortis\nMar  6 08:01:34 iPhone trustd(libsystem_network.dylib)[169] <Error>: Sed placerat nisi eu aliquet imperdiet\nMar  6 08:01:35 iPhone trustd(libsystem_network.dylib)[169] <Error>: Cras pulvinar fermentum orci, sed eleifend est facilisis eget\nMar  6 08:01:36 iPhone trustd(libsystem_network.dylib)[169] <Error>: Proin vitae massa ligula\nMar  6 08:01:37 iPhone trustd(libsystem_network.dylib)[169] <Error>: Praesent bibendum mauris aliquam mauris semper hendrerit\nMar  6 08:01:38 iPhone trustd(libsystem_network.dylib)[169] <Error>: Nulla facilisi\nMar  6 08:01:39 iPhone trustd(libsystem_network.dylib)[169] <Error>: Proin a massa sed est semper consequat ut ac felis\nMar  6 08:01:40 iPhone lockdownd[71] <Notice>: Sed tempus lorem a lacus imperdiet, sit amet suscipit purus porttitor\nMar  6 08:01:41 iPhone lockdownd[71] <Notice>: Sed cursus sodales augue, non viverra justo luctus a\nMar  6 08:01:42 iPhone lockdownd[71] <Notice>: Aenean faucibus urna enim, at consequat lectus tempus ut\nMar  6 08:01:43 iPhone lockdownd[71] <Notice>: Vestibulum rutrum consequat lectus eu mattis\nMar  6 08:01:44 iPhone lockdownd[71] <Notice>: Integer feugiat felis id mauris cursus, feugiat malesuada orci vehicula\nMar  6 08:01:45 iPhone lockdownd[71] <Notice>: Praesent nec dictum urna\nMar  6 08:01:46 iPhone lockdownd[71] <Notice>: Nulla pellentesque ligula ultrices, porttitor dui ut, venenatis nisl\nMar  6 08:01:47 iPhone lockdownd[71] <Notice>: Aliquam eu lobortis libero\nMar  6 08:01:48 iPhone lockdownd[71] <Notice>: Sed ultrices cursus magna, id volutpat lorem dapibus rhoncus\nMar  6 08:01:49 iPhone lockdownd[71] <Notice>: Nulla dui est, sagittis at sagittis eu, molestie non purus\nMar  6 08:01:50 iPhone lockdownd[71] <Notice>: Sed viverra ex et neque ornare, a commodo diam cursus\nMar  6 08:01:51 iPhone lockdownd[71] <Notice>: Nulla ultrices id nisi a fringilla\nMar  6 08:01:52 iPhone lockdownd[71] <Notice>: Ut eleifend condimentum mauris a volutpat\nMar  6 08:01:53 iPhone lockdownd[71] <Notice>: Cras tincidunt orci non lorem porta euismod\nMar  6 08:01:54 iPhone lockdownd[71] <Notice>: Nunc porta vulputate aliquet\nMar  6 08:01:55 iPhone lockdownd[71] <Notice>: Suspendisse sit amet congue elit\nMar  6 08:01:56 iPhone lockdownd[71] <Notice>: Duis vel urna sodales, rhoncus lorem ac, tristique tellus\nMar  6 08:01:57 iPhone lockdownd[71] <Notice>: Curabitur placerat, ante vitae iaculis facilisis, erat ipsum convallis lorem, vitae vestibulum dolor lacus at lorem.\nMar  6 08:01:58 iPhone lockdownd[71] <Notice>: Cras tincidunt orci non lorem porta euismod\nMar  6 08:01:59 iPhone lockdownd[71] <Notice>: Cras tincidunt orci non lorem porta euismod\nMar  6 08:02:00 iPhone lockdownd[71] <Notice>: Cras tincidunt orci non lorem porta euismod",
-    "fullLogAndroid": "01-01 08:00:01.123: I/Remoter(0): Lorem ipsum dolor sit amet, consectetur adipiscing elit\n01-01 08:00:02.123: I/Remoter(1): Praesent mollis risus ac orci cursus feugiat\n01-01 08:00:03.123: I/Remoter(2): Pellentesque semper est est, elementum iaculis purus iaculis et\n01-01 08:00:04.123: I/Remoter(3): Sed eu luctus ex\n01-01 08:00:05.123: I/Remoter(4): Phasellus elementum pellentesque tellus quis finibus\n01-01 08:00:06.123: D/AndroidRuntime(5): Integer interdum condimentum nisi sed tempor\n01-01 08:00:07.123: D/AndroidRuntime(6): Aliquam erat volutpat\n01-01 08:00:08.123: D/AndroidRuntime(7): Integer dignissim massa ante, euismod aliquet metus sollicitudin sit amet\n01-01 08:00:09.123: D/AndroidRuntime(8): Ut vitae scelerisque purus, tempus condimentum est\n01-01 08:00:10.123: D/AndroidRuntime(9): Mauris in ligula dolor\n01-01 08:00:11.123: D/AndroidRuntime(10): Duis nec odio non mauris ullamcorper hendrerit ut eget ligula\n01-01 08:00:12.123: D/AndroidRuntime(11): Duis justo lectus, lobortis vitae ipsum sit amet, mattis posuere lacus\n01-01 08:00:13.123: D/AndroidRuntime(12): Donec lobortis orci et ipsum ullamcorper, vitae ultrices turpis cursus\n01-01 08:00:14.123: D/AndroidRuntime(13): Mauris ut euismod leo\n01-01 08:00:15.123: D/AndroidRuntime(14): Maecenas pellentesque ligula mattis turpis rhoncus, vitae placerat sem consequat\n01-01 08:00:16.123: D/AndroidRuntime(15): Pellentesque magna ligula, ultricies in venenatis vitae, sodales in leo\n01-01 08:00:17.123: D/AndroidRuntime(16): Quisque sed iaculis lectus, maximus auctor magna\n01-01 08:00:18.123: D/AndroidRuntime(17): Etiam consectetur metus erat, eu tempus purus mollis id\n01-01 08:00:19.123: D/AndroidRuntime(18): Praesent euismod eleifend nibh, ut facilisis nunc maximus sed\n01-01 08:00:20.123: D/AndroidRuntime(19): Fusce laoreet laoreet massa, vitae mattis odio commodo vitae\n01-01 08:00:21.123: D/AndroidRuntime(20): Etiam vitae sollicitudin ante, vitae posuere velit\n01-01 08:00:22.123: D/AndroidRuntime(21): Nulla consequat, nisl eget scelerisque porttitor, est ex condimentum urna, ac pharetra lectus erat a ante\n01-01 08:00:23.123: D/AndroidRuntime(22): Curabitur mi mauris, hendrerit eu elementum nec, facilisis quis ex\n01-01 08:00:24.123: D/AndroidRuntime(23): Phasellus vitae nunc elit\n01-01 08:00:25.123: D/AndroidRuntime(24): Mauris non tortor vitae leo ornare mollis non vel magna\n01-01 08:00:26.123: D/AndroidRuntime(25): Praesent bibendum diam et nulla hendrerit posuere non ac ipsum\n01-01 08:00:27.123: D/AndroidRuntime(26): Ut ut consequat elit\n01-01 08:00:28.123: D/AndroidRuntime(27): Vestibulum non ultricies nisl, eget fringilla nisl\n01-01 08:00:29.123: D/AndroidRuntime(28): Integer hendrerit tincidunt ante a pulvinar\n01-01 08:00:30.123: D/AndroidRuntime(29): Mauris in nisl mi\n01-01 08:00:31.123: I/Remoter(30): In ornare nibh ut hendrerit euismod\n01-01 08:00:32.123: I/Remoter(31): Donec porta purus massa, a ullamcorper turpis dignissim quis\n01-01 08:00:33.123: I/Remoter(32): Fusce facilisis hendrerit leo ut lobortis\n01-01 08:00:34.123: I/Remoter(33): Sed placerat nisi eu aliquet imperdiet\n01-01 08:00:35.123: I/Remoter(34): Cras pulvinar fermentum orci, sed eleifend est facilisis eget\n01-01 08:00:36.123: I/Remoter(35): Proin vitae massa ligula\n01-01 08:00:37.123: I/Remoter(36): Praesent bibendum mauris aliquam mauris semper hendrerit\n01-01 08:00:38.123: I/Remoter(37): Nulla facilisi\n01-01 08:00:39.123: I/Remoter(38): Proin a massa sed est semper consequat ut ac felis\n01-01 08:00:40.123: I/Remoter(39): Sed tempus lorem a lacus imperdiet, sit amet suscipit purus porttitor\n01-01 08:00:41.123: I/Remoter(40): Sed cursus sodales augue, non viverra justo luctus a\n01-01 08:00:42.123: I/Remoter(41): Aenean faucibus urna enim, at consequat lectus tempus ut\n01-01 08:00:43.123: I/Remoter(42): Vestibulum rutrum consequat lectus eu mattis\n01-01 08:00:44.123: I/Remoter(43): Integer feugiat felis id mauris cursus, feugiat malesuada orci vehicula\n01-01 08:00:45.123: I/Remoter(44): Praesent nec dictum urna\n01-01 08:00:46.123: I/Remoter(45): Nulla pellentesque ligula ultrices, porttitor dui ut, venenatis nisl\n01-01 08:00:47.123: I/Remoter(46): Aliquam eu lobortis libero\n01-01 08:00:48.123: V/BackupManagerService(47): Sed ultrices cursus magna, id volutpat lorem dapibus rhoncus\n01-01 08:00:49.123: V/BackupManagerService(48): Nulla dui est, sagittis at sagittis eu, molestie non purus\n01-01 08:00:50.123: V/BackupManagerService(49): Sed viverra ex et neque ornare, a commodo diam cursus\n01-01 08:00:51.123: V/BackupManagerService(50): Nulla ultrices id nisi a fringilla\n01-01 08:00:52.123: V/BackupManagerService(51): Ut eleifend condimentum mauris a volutpat\n01-01 08:00:53.123: V/BackupManagerService(52): Cras tincidunt orci non lorem porta euismod\n01-01 08:00:54.123: V/BackupManagerService(53): Nunc porta vulputate aliquet\n01-01 08:00:55.123: V/BackupManagerService(54): Suspendisse sit amet congue elit\n01-01 08:00:56.123: V/BackupManagerService(55): Duis vel urna sodales, rhoncus lorem ac, tristique tellus\n01-01 08:00:57.123: V/BackupManagerService(56): Curabitur placerat, ante vitae iaculis facilisis, erat ipsum convallis lorem, vitae vestibulum dolor lacus at lorem.\n01-01 08:00:58.123: V/BackupManagerService(57): Cras tincidunt orci non lorem porta euismod\n01-01 08:00:59.123: I/Remoter(58): Cras tincidunt orci non lorem porta euismod\n01-01 08:01:00.123: I/Remoter(59): Cras tincidunt orci non lorem porta euismod\n01-01 08:01:01.123: I/Remoter(60): Lorem ipsum dolor sit amet, consectetur adipiscing elit\n01-01 08:01:02.123: I/Remoter(61): Praesent mollis risus ac orci cursus feugiat\n01-01 08:01:03.123: I/Remoter(62): Pellentesque semper est est, elementum iaculis purus iaculis et\n01-01 08:01:04.123: I/Remoter(63): Sed eu luctus ex\n01-01 08:01:05.123: I/Remoter(64): Phasellus elementum pellentesque tellus quis finibus\n01-01 08:01:06.123: I/Remoter(65): Integer interdum condimentum nisi sed tempor\n01-01 08:01:07.123: I/Remoter(66): Aliquam erat volutpat\n01-01 08:01:08.123: I/Remoter(67): Integer dignissim massa ante, euismod aliquet metus sollicitudin sit amet\n01-01 08:01:09.123: I/Remoter(68): Ut vitae scelerisque purus, tempus condimentum est\n01-01 08:01:10.123: I/Remoter(69): Mauris in ligula dolor\n01-01 08:01:11.123: I/Remoter(70): Duis nec odio non mauris ullamcorper hendrerit ut eget ligula\n01-01 08:01:12.123: I/Remoter(71): Duis justo lectus, lobortis vitae ipsum sit amet, mattis posuere lacus\n01-01 08:01:13.123: I/Remoter(72): Donec lobortis orci et ipsum ullamcorper, vitae ultrices turpis cursus\n01-01 08:01:14.123: I/Remoter(73): Mauris ut euismod leo\n01-01 08:01:15.123: I/Remoter(74): Maecenas pellentesque ligula mattis turpis rhoncus, vitae placerat sem consequat\n01-01 08:01:16.123: I/Remoter(75): Pellentesque magna ligula, ultricies in venenatis vitae, sodales in leo\n01-01 08:01:17.123: I/Remoter(76): Quisque sed iaculis lectus, maximus auctor magna\n01-01 08:01:18.123: A/dex2oat(77): Etiam consectetur metus erat, eu tempus purus mollis id\n01-01 08:01:19.123: A/dex2oat(78): Praesent euismod eleifend nibh, ut facilisis nunc maximus sed\n01-01 08:01:20.123: A/dex2oat(79): Fusce laoreet laoreet massa, vitae mattis odio commodo vitae\n01-01 08:01:21.123: A/dex2oat(80): Etiam vitae sollicitudin ante, vitae posuere velit\n01-01 08:01:22.123: A/dex2oat(81): Nulla consequat, nisl eget scelerisque porttitor, est ex condimentum urna, ac pharetra lectus erat a ante\n01-01 08:01:23.123: W/System(82): Curabitur mi mauris, hendrerit eu elementum nec, facilisis quis ex\n01-01 08:01:24.123: W/System(83): Phasellus vitae nunc elit\n01-01 08:01:25.123: W/System(84): Mauris non tortor vitae leo ornare mollis non vel magna\n01-01 08:01:26.123: W/System(85): Praesent bibendum diam et nulla hendrerit posuere non ac ipsum\n01-01 08:01:27.123: W/System(86): Ut ut consequat elit\n01-01 08:01:28.123: W/System(87): Vestibulum non ultricies nisl, eget fringilla nisl\n01-01 08:01:29.123: W/System(88): Integer hendrerit tincidunt ante a pulvinar\n01-01 08:01:30.123: W/System(89): Mauris in nisl mi\n01-01 08:01:31.123: W/System(90): In ornare nibh ut hendrerit euismod\n01-01 08:01:32.123: W/System(91): Donec porta purus massa, a ullamcorper turpis dignissim quis\n01-01 08:01:33.123: I/Remoter(92): Fusce facilisis hendrerit leo ut lobortis\n01-01 08:01:34.123: I/Remoter(93): Sed placerat nisi eu aliquet imperdiet\n01-01 08:01:35.123: I/Remoter(94): Cras pulvinar fermentum orci, sed eleifend est facilisis eget\n01-01 08:01:36.123: I/Remoter(95): Proin vitae massa ligula\n01-01 08:01:37.123: I/Remoter(96): Praesent bibendum mauris aliquam mauris semper hendrerit\n01-01 08:01:38.123: E/memtrack(97): Nulla facilisi\n01-01 08:01:39.123: E/memtrack(98): Proin a massa sed est semper consequat ut ac felis\n01-01 08:01:40.123: E/memtrack(99): Sed tempus lorem a lacus imperdiet, sit amet suscipit purus porttitor\n01-01 08:01:41.123: E/memtrack(100): Sed cursus sodales augue, non viverra justo luctus a\n01-01 08:01:42.123: E/memtrack(101): Aenean faucibus urna enim, at consequat lectus tempus ut\n01-01 08:01:43.123: E/memtrack(102): Vestibulum rutrum consequat lectus eu mattis\n01-01 08:01:44.123: E/memtrack(103): Integer feugiat felis id mauris cursus, feugiat malesuada orci vehicula\n01-01 08:01:45.123: E/memtrack(104): Praesent nec dictum urna\n01-01 08:01:46.123: E/memtrack(105): Nulla pellentesque ligula ultrices, porttitor dui ut, venenatis nisl\n01-01 08:01:47.123: E/memtrack(106): Aliquam eu lobortis libero\n01-01 08:01:48.123: E/memtrack(107): Sed ultrices cursus magna, id volutpat lorem dapibus rhoncus\n01-01 08:01:49.123: E/memtrack(108): Nulla dui est, sagittis at sagittis eu, molestie non purus\n01-01 08:01:50.123: E/memtrack(109): Sed viverra ex et neque ornare, a commodo diam cursus\n01-01 08:01:51.123: E/memtrack(110): Nulla ultrices id nisi a fringilla\n01-01 08:01:52.123: E/memtrack(111): Ut eleifend condimentum mauris a volutpat\n01-01 08:01:53.123: E/memtrack(112): Cras tincidunt orci non lorem porta euismod\n01-01 08:01:54.123: E/memtrack(113): Nunc porta vulputate aliquet\n01-01 08:01:55.123: E/memtrack(114): Suspendisse sit amet congue elit\n01-01 08:01:56.123: E/memtrack(115): Duis vel urna sodales, rhoncus lorem ac, tristique tellus\n01-01 08:01:57.123: E/memtrack(116): Curabitur placerat, ante vitae iaculis facilisis, erat ipsum convallis lorem, vitae vestibulum dolor lacus at lorem.\n01-01 08:01:58.123: E/memtrack(117): Cras tincidunt orci non lorem porta euismod\n01-01 08:01:59.123: E/memtrack(118): Cras tincidunt orci non lorem porta euismod\n01-01 08:02:00.123: E/memtrack(119): Cras tincidunt orci non lorem porta euismod",
+  "log2": {
+    "fullLog": "01-01 08:00:01.123: I/Remoter(0): Lorem ipsum dolor sit amet, consectetur adipiscing elit\n01-01 08:00:02.123: I/Remoter(1): Praesent mollis risus ac orci cursus feugiat\n01-01 08:00:03.123: I/Remoter(2): Pellentesque semper est est, elementum iaculis purus iaculis et\n01-01 08:00:04.123: I/Remoter(3): Sed eu luctus ex\n01-01 08:00:05.123: I/Remoter(4): Phasellus elementum pellentesque tellus quis finibus\n01-01 08:00:06.123: D/AndroidRuntime(5): Integer interdum condimentum nisi sed tempor\n01-01 08:00:07.123: D/AndroidRuntime(6): Aliquam erat volutpat\n01-01 08:00:08.123: D/AndroidRuntime(7): Integer dignissim massa ante, euismod aliquet metus sollicitudin sit amet\n01-01 08:00:09.123: D/AndroidRuntime(8): Ut vitae scelerisque purus, tempus condimentum est\n01-01 08:00:10.123: D/AndroidRuntime(9): Mauris in ligula dolor\n01-01 08:00:11.123: D/AndroidRuntime(10): Duis nec odio non mauris ullamcorper hendrerit ut eget ligula\n01-01 08:00:12.123: D/AndroidRuntime(11): Duis justo lectus, lobortis vitae ipsum sit amet, mattis posuere lacus\n01-01 08:00:13.123: D/AndroidRuntime(12): Donec lobortis orci et ipsum ullamcorper, vitae ultrices turpis cursus\n01-01 08:00:14.123: D/AndroidRuntime(13): Mauris ut euismod leo\n01-01 08:00:15.123: D/AndroidRuntime(14): Maecenas pellentesque ligula mattis turpis rhoncus, vitae placerat sem consequat\n01-01 08:00:16.123: D/AndroidRuntime(15): Pellentesque magna ligula, ultricies in venenatis vitae, sodales in leo\n01-01 08:00:17.123: D/AndroidRuntime(16): Quisque sed iaculis lectus, maximus auctor magna\n01-01 08:00:18.123: D/AndroidRuntime(17): Etiam consectetur metus erat, eu tempus purus mollis id\n01-01 08:00:19.123: D/AndroidRuntime(18): Praesent euismod eleifend nibh, ut facilisis nunc maximus sed\n01-01 08:00:20.123: D/AndroidRuntime(19): Fusce laoreet laoreet massa, vitae mattis odio commodo vitae\n01-01 08:00:21.123: D/AndroidRuntime(20): Etiam vitae sollicitudin ante, vitae posuere velit\n01-01 08:00:22.123: D/AndroidRuntime(21): Nulla consequat, nisl eget scelerisque porttitor, est ex condimentum urna, ac pharetra lectus erat a ante\n01-01 08:00:23.123: D/AndroidRuntime(22): Curabitur mi mauris, hendrerit eu elementum nec, facilisis quis ex\n01-01 08:00:24.123: D/AndroidRuntime(23): Phasellus vitae nunc elit\n01-01 08:00:25.123: D/AndroidRuntime(24): Mauris non tortor vitae leo ornare mollis non vel magna\n01-01 08:00:26.123: D/AndroidRuntime(25): Praesent bibendum diam et nulla hendrerit posuere non ac ipsum\n01-01 08:00:27.123: D/AndroidRuntime(26): Ut ut consequat elit\n01-01 08:00:28.123: D/AndroidRuntime(27): Vestibulum non ultricies nisl, eget fringilla nisl\n01-01 08:00:29.123: D/AndroidRuntime(28): Integer hendrerit tincidunt ante a pulvinar\n01-01 08:00:30.123: D/AndroidRuntime(29): Mauris in nisl mi\n01-01 08:00:31.123: I/Remoter(30): In ornare nibh ut hendrerit euismod\n01-01 08:00:32.123: I/Remoter(31): Donec porta purus massa, a ullamcorper turpis dignissim quis\n01-01 08:00:33.123: I/Remoter(32): Fusce facilisis hendrerit leo ut lobortis\n01-01 08:00:34.123: I/Remoter(33): Sed placerat nisi eu aliquet imperdiet\n01-01 08:00:35.123: I/Remoter(34): Cras pulvinar fermentum orci, sed eleifend est facilisis eget\n01-01 08:00:36.123: I/Remoter(35): Proin vitae massa ligula\n01-01 08:00:37.123: I/Remoter(36): Praesent bibendum mauris aliquam mauris semper hendrerit\n01-01 08:00:38.123: I/Remoter(37): Nulla facilisi\n01-01 08:00:39.123: I/Remoter(38): Proin a massa sed est semper consequat ut ac felis\n01-01 08:00:40.123: I/Remoter(39): Sed tempus lorem a lacus imperdiet, sit amet suscipit purus porttitor\n01-01 08:00:41.123: I/Remoter(40): Sed cursus sodales augue, non viverra justo luctus a\n01-01 08:00:42.123: I/Remoter(41): Aenean faucibus urna enim, at consequat lectus tempus ut\n01-01 08:00:43.123: I/Remoter(42): Vestibulum rutrum consequat lectus eu mattis\n01-01 08:00:44.123: I/Remoter(43): Integer feugiat felis id mauris cursus, feugiat malesuada orci vehicula\n01-01 08:00:45.123: I/Remoter(44): Praesent nec dictum urna\n01-01 08:00:46.123: I/Remoter(45): Nulla pellentesque ligula ultrices, porttitor dui ut, venenatis nisl\n01-01 08:00:47.123: I/Remoter(46): Aliquam eu lobortis libero\n01-01 08:00:48.123: V/BackupManagerService(47): Sed ultrices cursus magna, id volutpat lorem dapibus rhoncus\n01-01 08:00:49.123: V/BackupManagerService(48): Nulla dui est, sagittis at sagittis eu, molestie non purus\n01-01 08:00:50.123: V/BackupManagerService(49): Sed viverra ex et neque ornare, a commodo diam cursus\n01-01 08:00:51.123: V/BackupManagerService(50): Nulla ultrices id nisi a fringilla\n01-01 08:00:52.123: V/BackupManagerService(51): Ut eleifend condimentum mauris a volutpat\n01-01 08:00:53.123: V/BackupManagerService(52): Cras tincidunt orci non lorem porta euismod\n01-01 08:00:54.123: V/BackupManagerService(53): Nunc porta vulputate aliquet\n01-01 08:00:55.123: V/BackupManagerService(54): Suspendisse sit amet congue elit\n01-01 08:00:56.123: V/BackupManagerService(55): Duis vel urna sodales, rhoncus lorem ac, tristique tellus\n01-01 08:00:57.123: V/BackupManagerService(56): Curabitur placerat, ante vitae iaculis facilisis, erat ipsum convallis lorem, vitae vestibulum dolor lacus at lorem.\n01-01 08:00:58.123: V/BackupManagerService(57): Cras tincidunt orci non lorem porta euismod\n01-01 08:00:59.123: I/Remoter(58): Cras tincidunt orci non lorem porta euismod\n01-01 08:01:00.123: I/Remoter(59): Cras tincidunt orci non lorem porta euismod\n01-01 08:01:01.123: I/Remoter(60): Lorem ipsum dolor sit amet, consectetur adipiscing elit\n01-01 08:01:02.123: I/Remoter(61): Praesent mollis risus ac orci cursus feugiat\n01-01 08:01:03.123: I/Remoter(62): Pellentesque semper est est, elementum iaculis purus iaculis et\n01-01 08:01:04.123: I/Remoter(63): Sed eu luctus ex\n01-01 08:01:05.123: I/Remoter(64): Phasellus elementum pellentesque tellus quis finibus\n01-01 08:01:06.123: I/Remoter(65): Integer interdum condimentum nisi sed tempor\n01-01 08:01:07.123: I/Remoter(66): Aliquam erat volutpat\n01-01 08:01:08.123: I/Remoter(67): Integer dignissim massa ante, euismod aliquet metus sollicitudin sit amet\n01-01 08:01:09.123: I/Remoter(68): Ut vitae scelerisque purus, tempus condimentum est\n01-01 08:01:10.123: I/Remoter(69): Mauris in ligula dolor\n01-01 08:01:11.123: I/Remoter(70): Duis nec odio non mauris ullamcorper hendrerit ut eget ligula\n01-01 08:01:12.123: I/Remoter(71): Duis justo lectus, lobortis vitae ipsum sit amet, mattis posuere lacus\n01-01 08:01:13.123: I/Remoter(72): Donec lobortis orci et ipsum ullamcorper, vitae ultrices turpis cursus\n01-01 08:01:14.123: I/Remoter(73): Mauris ut euismod leo\n01-01 08:01:15.123: I/Remoter(74): Maecenas pellentesque ligula mattis turpis rhoncus, vitae placerat sem consequat\n01-01 08:01:16.123: I/Remoter(75): Pellentesque magna ligula, ultricies in venenatis vitae, sodales in leo\n01-01 08:01:17.123: I/Remoter(76): Quisque sed iaculis lectus, maximus auctor magna\n01-01 08:01:18.123: A/dex2oat(77): Etiam consectetur metus erat, eu tempus purus mollis id\n01-01 08:01:19.123: A/dex2oat(78): Praesent euismod eleifend nibh, ut facilisis nunc maximus sed\n01-01 08:01:20.123: A/dex2oat(79): Fusce laoreet laoreet massa, vitae mattis odio commodo vitae\n01-01 08:01:21.123: A/dex2oat(80): Etiam vitae sollicitudin ante, vitae posuere velit\n01-01 08:01:22.123: A/dex2oat(81): Nulla consequat, nisl eget scelerisque porttitor, est ex condimentum urna, ac pharetra lectus erat a ante\n01-01 08:01:23.123: W/System(82): Curabitur mi mauris, hendrerit eu elementum nec, facilisis quis ex\n01-01 08:01:24.123: W/System(83): Phasellus vitae nunc elit\n01-01 08:01:25.123: W/System(84): Mauris non tortor vitae leo ornare mollis non vel magna\n01-01 08:01:26.123: W/System(85): Praesent bibendum diam et nulla hendrerit posuere non ac ipsum\n01-01 08:01:27.123: W/System(86): Ut ut consequat elit\n01-01 08:01:28.123: W/System(87): Vestibulum non ultricies nisl, eget fringilla nisl\n01-01 08:01:29.123: W/System(88): Integer hendrerit tincidunt ante a pulvinar\n01-01 08:01:30.123: W/System(89): Mauris in nisl mi\n01-01 08:01:31.123: W/System(90): In ornare nibh ut hendrerit euismod\n01-01 08:01:32.123: W/System(91): Donec porta purus massa, a ullamcorper turpis dignissim quis\n01-01 08:01:33.123: I/Remoter(92): Fusce facilisis hendrerit leo ut lobortis\n01-01 08:01:34.123: I/Remoter(93): Sed placerat nisi eu aliquet imperdiet\n01-01 08:01:35.123: I/Remoter(94): Cras pulvinar fermentum orci, sed eleifend est facilisis eget\n01-01 08:01:36.123: I/Remoter(95): Proin vitae massa ligula\n01-01 08:01:37.123: I/Remoter(96): Praesent bibendum mauris aliquam mauris semper hendrerit\n01-01 08:01:38.123: E/memtrack(97): Nulla facilisi\n01-01 08:01:39.123: E/memtrack(98): Proin a massa sed est semper consequat ut ac felis\n01-01 08:01:40.123: E/memtrack(99): Sed tempus lorem a lacus imperdiet, sit amet suscipit purus porttitor\n01-01 08:01:41.123: E/memtrack(100): Sed cursus sodales augue, non viverra justo luctus a\n01-01 08:01:42.123: E/memtrack(101): Aenean faucibus urna enim, at consequat lectus tempus ut\n01-01 08:01:43.123: E/memtrack(102): Vestibulum rutrum consequat lectus eu mattis\n01-01 08:01:44.123: E/memtrack(103): Integer feugiat felis id mauris cursus, feugiat malesuada orci vehicula\n01-01 08:01:45.123: E/memtrack(104): Praesent nec dictum urna\n01-01 08:01:46.123: E/memtrack(105): Nulla pellentesque ligula ultrices, porttitor dui ut, venenatis nisl\n01-01 08:01:47.123: E/memtrack(106): Aliquam eu lobortis libero\n01-01 08:01:48.123: E/memtrack(107): Sed ultrices cursus magna, id volutpat lorem dapibus rhoncus\n01-01 08:01:49.123: E/memtrack(108): Nulla dui est, sagittis at sagittis eu, molestie non purus\n01-01 08:01:50.123: E/memtrack(109): Sed viverra ex et neque ornare, a commodo diam cursus\n01-01 08:01:51.123: E/memtrack(110): Nulla ultrices id nisi a fringilla\n01-01 08:01:52.123: E/memtrack(111): Ut eleifend condimentum mauris a volutpat\n01-01 08:01:53.123: E/memtrack(112): Cras tincidunt orci non lorem porta euismod\n01-01 08:01:54.123: E/memtrack(113): Nunc porta vulputate aliquet\n01-01 08:01:55.123: E/memtrack(114): Suspendisse sit amet congue elit\n01-01 08:01:56.123: E/memtrack(115): Duis vel urna sodales, rhoncus lorem ac, tristique tellus\n01-01 08:01:57.123: E/memtrack(116): Curabitur placerat, ante vitae iaculis facilisis, erat ipsum convallis lorem, vitae vestibulum dolor lacus at lorem.\n01-01 08:01:58.123: E/memtrack(117): Cras tincidunt orci non lorem porta euismod\n01-01 08:01:59.123: E/memtrack(118): Cras tincidunt orci non lorem porta euismod\n01-01 08:02:00.123: E/memtrack(119): Cras tincidunt orci non lorem porta euismod",
     "downloadURL": "https://www.bitrise.io/assets/svg/logo-bitrise.svg"
   }
 }

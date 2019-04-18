@@ -1,10 +1,15 @@
-import { Component, OnInit } from '@angular/core';
-import { Observable } from 'rxjs';
+import { Component, OnInit, OnDestroy } from '@angular/core';
+import { ActivatedRoute } from '@angular/router';
+import { Observable, Subscription } from 'rxjs';
 import { Store } from '@ngrx/store';
 import { Log } from 'src/app/models/log.model';
 import { LogLine } from 'src/app/models/log-line.model';
 import { LogLineLevel } from 'src/app/models/log-line-level.model';
 import { FetchLog } from 'src/app/store/log/actions';
+import { TestReport } from 'src/app/models/test-report.model';
+import { TestSuite } from 'src/app/models/test-suite.model';
+import { LogResult } from 'src/app/services/backend/backend.model';
+import { LogStoreState } from 'src/app/store/log/reducer';
 
 const INITIAL_MAXIMUM_NUMBER_OF_VISIBLE_LINES = 20;
 
@@ -13,7 +18,8 @@ const INITIAL_MAXIMUM_NUMBER_OF_VISIBLE_LINES = 20;
   templateUrl: './test-suite-details-menu-logs.component.html',
   styleUrls: ['./test-suite-details-menu-logs.component.scss']
 })
-export class TestSuiteDetailsMenuLogsComponent implements OnInit {
+export class TestSuiteDetailsMenuLogsComponent implements OnInit, OnDestroy {
+  subscription = new Subscription();
   downloadLogURL: string;
 
   levelFilterItems = [
@@ -40,11 +46,9 @@ export class TestSuiteDetailsMenuLogsComponent implements OnInit {
 
   constructor(
     private store: Store<{
-      log: {
-        log: Log;
-        downloadURL: string;
-      };
-    }>
+      log: LogStoreState;
+    }>,
+    private activatedRoute: ActivatedRoute
   ) {
     this.log$ = store.select('log');
   }
@@ -55,25 +59,45 @@ export class TestSuiteDetailsMenuLogsComponent implements OnInit {
   }
 
   ngOnInit() {
-    this.store.dispatch(new FetchLog());
+    let testReport: TestReport;
+    let testSuite: TestSuite;
 
-    this.log$.subscribe((logData: any) => {
-      this.log = logData.log;
-      this.downloadLogURL = logData.downloadURL;
+    this.subscription.add(
+      this.activatedRoute.parent.data.subscribe(
+        (data: { testSuite: { selectedTestReport: TestReport; selectedTestSuite: TestSuite } }) => {
+          testReport = data.testSuite.selectedTestReport;
+          testSuite = data.testSuite.selectedTestSuite;
 
-      this.updateFilteredLogLines();
-      this.resetMaximumNumberOfVisibleLines();
-    });
+          this.store.dispatch(new FetchLog({ testReport: testReport, testSuite: testSuite }));
+        }
+      )
+    );
+
+    this.subscription.add(
+      this.log$.subscribe((logResult: LogResult) => {
+        const logData = logResult.logs[testReport.id][testSuite.id];
+        this.log = logData.log;
+        this.downloadLogURL = logData.downloadURL;
+
+        this.updateFilteredLogLines();
+        this.resetMaximumNumberOfVisibleLines();
+      })
+    );
   }
 
   updateFilteredLogLines() {
     this.filteredLogLines = this.log.lines.filter(
       (logLine: LogLine) =>
-        !this.selectedLevelFilterItem.acceptedLevels || this.selectedLevelFilterItem.acceptedLevels.includes(logLine.level)
+        !this.selectedLevelFilterItem.acceptedLevels ||
+        this.selectedLevelFilterItem.acceptedLevels.includes(logLine.level)
     );
   }
 
   resetMaximumNumberOfVisibleLines() {
     this.maximumNumberOfVisibleLines = INITIAL_MAXIMUM_NUMBER_OF_VISIBLE_LINES;
+  }
+
+  ngOnDestroy() {
+    this.subscription.unsubscribe();
   }
 }

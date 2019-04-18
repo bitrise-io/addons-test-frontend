@@ -8,10 +8,10 @@ import { of } from 'rxjs';
 
 import { TestSuiteDetailsMenuScreenshotsComponent } from './test-suite-details-menu-screenshots.component';
 import { MockStore, provideMockStore } from 'src/app/mock-store/testing';
+import { TestReport } from 'src/app/models/test-report.model';
 import { TestReportState } from 'src/app/store/reports/reducer';
 import { TestSuiteDetailsMenuModule } from '../menu.module';
 import { TestSuite } from 'src/app/models/test-suite.model';
-import { TestReport } from 'src/app/models/test-report.model';
 
 describe('TestSuiteDetailsMenuScreenshotsComponent', () => {
   let fixture: ComponentFixture<TestSuiteDetailsMenuScreenshotsComponent>;
@@ -19,6 +19,8 @@ describe('TestSuiteDetailsMenuScreenshotsComponent', () => {
   let store: MockStore<{
     testReport: TestReportState;
   }>;
+  let testReport: TestReport;
+  let testSuite: TestSuite;
 
   const initialtestReportsState = {
     testReports: [],
@@ -27,6 +29,23 @@ describe('TestSuiteDetailsMenuScreenshotsComponent', () => {
   };
 
   beforeEach(() => {
+    testReport = new TestReport();
+    testSuite = new TestSuite();
+    testReport.testSuites = [testSuite];
+    testReport.id = 1;
+    testSuite.id = 2;
+    testSuite.screenshots = [
+      {
+        url: 'https://loremflickr.com/425/667',
+        filename: 'screenshot-whatever-1.portrait.png'
+      },
+      {
+        url: 'https://loremflickr.com/425/667?1',
+        filename: 'screenshot-whatever-2.portrait.png'
+      }
+    ];
+    testSuite.downloadAllScreenshotsURL = 'http://download-all.screen.shots';
+
     TestBed.configureTestingModule({
       imports: [TestSuiteDetailsMenuModule, InlineSVGModule.forRoot(), HttpClientTestingModule],
       providers: [
@@ -34,14 +53,9 @@ describe('TestSuiteDetailsMenuScreenshotsComponent', () => {
         {
           provide: ActivatedRoute,
           useValue: {
-            pathFromRoot: [
-              {
-                params: of({
-                  testReportId: 123,
-                  testSuiteId: 456
-                })
-              }
-            ]
+            parent: {
+              data: of({ testSuite: { selectedTestReport: testReport, selectedTestSuite: testSuite } })
+            }
           }
         }
       ]
@@ -63,23 +77,6 @@ describe('TestSuiteDetailsMenuScreenshotsComponent', () => {
   });
 
   describe('renders UI correctly', () => {
-    const testReport = new TestReport();
-    testReport.id = 123;
-    const testSuite = new TestSuite();
-    testSuite.id = 456;
-    testSuite.screenshots = [
-      {
-        url: 'https://loremflickr.com/425/667',
-        filename: 'screenshot-whatever-1.portrait.png'
-      },
-      {
-        url: 'https://loremflickr.com/425/667?1',
-        filename: 'screenshot-whatever-2.portrait.png'
-      }
-    ];
-    testSuite.downloadAllScreenshotsURL = 'http://download-all.screen.shots';
-    testReport.testSuites = [testSuite];
-
     beforeEach(() => {
       store.setState({
         testReport: {
@@ -91,7 +88,7 @@ describe('TestSuiteDetailsMenuScreenshotsComponent', () => {
       fixture.detectChanges();
     });
 
-    it('has 3 screenshots', () => {
+    it('has 2 screenshots', () => {
       expect(fixture.debugElement.queryAll(By.css('.screenshots__grid__item')).length).toBe(2);
     });
 

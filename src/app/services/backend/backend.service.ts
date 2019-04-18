@@ -2,10 +2,11 @@ import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { Observable, of } from 'rxjs';
 
-import { BackendService, TestArtifactsResult, TestReportsResult, LogResult } from './backend.model';
+import { BackendService, TestArtifactsResult, TestReportsResult, LogResult, TestReportResult } from './backend.model';
 import { Performance } from 'src/app/models/performance.model';
 import { TestArtifact, TestArtifactResponse } from 'src/app/models/test-artifact.model';
 import { TestReportResponse, TestReport } from 'src/app/models/test-report.model';
+import { TestSuite } from 'src/app/models/test-suite.model';
 import { Log, RawLog } from 'src/app/models/log.model';
 
 import * as MOCKED_DATA from './mock-data.json';
@@ -19,14 +20,29 @@ export class RealBackendService implements BackendService {
     return of(performance);
   }
 
-  getArtifacts(): Observable<TestArtifactsResult> {
-    const {
-      test_artifacts: { list, downloadAllURL }
-    }: any = MOCKED_DATA;
+  getArtifacts(testReport: TestReport, testSuite: TestSuite): Observable<TestArtifactsResult> {
+    if (!MOCKED_DATA[`test_report/${testReport.id}`]) {
+      return of({
+        testArtifacts: null,
+        downloadAllURL: null
+      });
+    }
 
-    const testArtifacts: TestArtifact[] = list.map((testArtifactResponse: TestArtifactResponse) =>
-      new TestArtifact().deserialize(testArtifactResponse)
+    const testSuiteDataForArtifact = MOCKED_DATA[`test_report/${testReport.id}`].testSuites.find(
+      (testSuiteData: any) => testSuiteData.id === testSuite.id
     );
+    if (!testSuiteDataForArtifact) {
+      return of({
+        testArtifacts: null,
+        downloadAllURL: null
+      });
+    }
+
+    const testArtifacts: TestArtifact[] = testSuiteDataForArtifact.testArtifacts.list.map(
+      (testArtifactResponse: TestArtifactResponse) => new TestArtifact().deserialize(testArtifactResponse)
+    );
+
+    const downloadAllURL = testSuiteDataForArtifact.testArtifacts.downloadAllURL;
 
     return of({
       testArtifacts,
@@ -44,16 +60,26 @@ export class RealBackendService implements BackendService {
     return of({ testReports });
   }
 
-  getLog(): Observable<LogResult> {
-    const {
-      log: { fullLogIos, downloadURL }
-    }: any = MOCKED_DATA;
+  getReportDetails(testReport: TestReport): Observable<TestReportResult> {
+    const testReportResponse = MOCKED_DATA[`test_report/${testReport.id}`];
+    testReport.deserialize(testReportResponse);
 
-    const log = new Log().deserialize(<RawLog>fullLogIos);
+    return of({ testReport });
+  }
+
+  getLog(testReport: TestReport, testSuite: TestSuite): Observable<LogResult> {
+    const { fullLog, downloadURL }: any = MOCKED_DATA[testSuite.logUrl];
+    const log = new Log().deserialize(<RawLog>fullLog);
 
     return of({
-      log,
-      downloadURL
+      logs: {
+        [testReport.id]: {
+          [testSuite.id]: {
+            log,
+            downloadURL
+          }
+        }
+      }
     });
   }
 }

@@ -32,6 +32,7 @@ import { ReportEffects } from 'src/app/store/reports/effects';
 import { ArtifactEffects } from 'src/app/store/artifacts/effects';
 import { PerformanceEffects } from 'src/app/store/performance/effects';
 import { LogEffects } from 'src/app/store/log/effects';
+import { TestSuiteResolve } from './services/test-suite.resolve.service';
 
 @NgModule({
   declarations: [
@@ -63,7 +64,7 @@ import { LogEffects } from 'src/app/store/log/effects';
     environment.ServicesModule,
     TestSuiteDetailsMenuModule
   ],
-  providers: [],
+  providers: [TestSuiteResolve],
   bootstrap: [AppComponent]
 })
 export class AppModule {}

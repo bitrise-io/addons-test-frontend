@@ -4,6 +4,7 @@ import { Performance } from 'src/app/models/performance.model';
 import { TestArtifact } from 'src/app/models/test-artifact.model';
 import { TestReport } from 'src/app/models/test-report.model';
 import { Log } from 'src/app/models/log.model';
+import { TestSuite } from 'src/app/models/test-suite.model';
 
 export const BACKEND_SERVICE = 'BACKEND_SERVICE';
 
@@ -16,14 +17,25 @@ export interface TestReportsResult {
   testReports: TestReport[];
 }
 
+export interface TestReportResult {
+  testReport: TestReport;
+}
+
 export interface LogResult {
-  log: Log;
-  downloadURL: string;
+  logs: {
+    [testReportId: string]: {
+      [testSuiteId: string]: {
+        log: Log;
+        downloadURL: string;
+      };
+    };
+  };
 }
 
 export interface BackendService {
   getPerformance(): Observable<Performance>;
-  getArtifacts(): Observable<TestArtifactsResult>;
+  getArtifacts(testReport: TestReport, testSuite: TestSuite): Observable<TestArtifactsResult>;
   getReports(): Observable<TestReportsResult>;
-  getLog(): Observable<LogResult>;
+  getReportDetails(testReport: TestReport): Observable<TestReportResult>;
+  getLog(testReport: TestReport, testSuite: TestSuite): Observable<LogResult>;
 }

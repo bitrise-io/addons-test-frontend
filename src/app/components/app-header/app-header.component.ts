@@ -6,7 +6,7 @@ import { Store } from '@ngrx/store';
 
 import { TestReport } from '../../models/test-report.model';
 import { TestSuiteStatus, TestSuite } from '../../models/test-suite.model';
-import { FilterReports, StartPollingReports } from 'src/app/store/reports/actions';
+import { FilterReports, FetchReports } from 'src/app/store/reports/actions';
 import { TestReportState } from 'src/app/store/reports/reducer';
 
 @Component({
@@ -49,7 +49,7 @@ export class AppHeaderComponent implements OnInit {
   }
 
   ngOnInit() {
-    this.store.dispatch(new StartPollingReports());
+    this.store.dispatch(new FetchReports());
 
     this.testReports$.subscribe(testReports => {
       const failedTestCountsOfTestReports = testReports.map(

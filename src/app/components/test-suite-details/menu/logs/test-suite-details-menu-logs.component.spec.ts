@@ -1,28 +1,48 @@
 import { TestBed, ComponentFixture, inject } from '@angular/core/testing';
 import { By } from '@angular/platform-browser';
 import { HttpClientTestingModule } from '@angular/common/http/testing';
+import { ActivatedRoute } from '@angular/router';
 import { Store, StoreModule } from '@ngrx/store';
+import { of } from 'rxjs';
 import { MockStore, provideMockStore } from 'src/app/mock-store/testing';
 import { FormsModule } from '@angular/forms';
 import { DebugElement } from '@angular/core';
 import { InlineSVGModule } from 'ng-inline-svg';
 import { TestSuiteDetailsMenuLogsComponent } from './test-suite-details-menu-logs.component';
-import { Log } from '../../../../models/log.model';
-import logReducer from 'src/app/store/log/reducer';
 import { LogLine } from 'src/app/models/log-line.model';
 import { LogLineLevel } from 'src/app/models/log-line-level.model';
+import { TestReport } from 'src/app/models/test-report.model';
+import { TestReportState } from 'src/app/store/reports/reducer';
+import { TestSuite } from 'src/app/models/test-suite.model';
+import { TestSuiteResolve } from 'src/app/services/test-suite.resolve.service';
+import { Log } from '../../../../models/log.model';
+import logReducer, { LogStoreState } from 'src/app/store/log/reducer';
 
 describe('TestSuiteDetailsMenuLogsComponent', () => {
   let fixture: ComponentFixture<TestSuiteDetailsMenuLogsComponent>;
   let logsComponent: TestSuiteDetailsMenuLogsComponent;
   let store: MockStore<{
-    log: {
-      log: Log;
-      downloadURL: string;
-    };
+    testReport: TestReportState;
+    log: LogStoreState;
   }>;
+  let testReport: TestReport;
+  let testSuite: TestSuite;
+  let log: Log;
+
+  const initialtestReportsState = {
+    testReports: [],
+    filteredReports: [],
+    filter: null
+  };
 
   beforeEach(() => {
+    testReport = new TestReport();
+    testSuite = new TestSuite();
+    testReport.testSuites = [testSuite];
+    testReport.id = 1;
+    testSuite.id = 2;
+    testSuite.logUrl = 'https://bitrise.io/log-url';
+
     TestBed.configureTestingModule({
       imports: [
         HttpClientTestingModule,
@@ -31,16 +51,28 @@ describe('TestSuiteDetailsMenuLogsComponent', () => {
         InlineSVGModule.forRoot()
       ],
       declarations: [TestSuiteDetailsMenuLogsComponent],
-      providers: [provideMockStore({})]
+      providers: [
+        provideMockStore({}),
+        {
+          provide: ActivatedRoute,
+          useValue: {
+            parent: {
+              data: of({ testSuite: { selectedTestReport: testReport, selectedTestSuite: testSuite } })
+            }
+          }
+        },
+        TestSuiteResolve
+      ]
     }).compileComponents();
 
     fixture = TestBed.createComponent(TestSuiteDetailsMenuLogsComponent);
     logsComponent = fixture.debugElement.componentInstance;
   });
 
-  beforeEach(inject([Store], (mockStore: MockStore<{ log: { log: Log; downloadURL: string } }>) => {
+  beforeEach(inject([Store], (mockStore: MockStore<{ testReport: TestReportState; log: LogStoreState }>) => {
     store = mockStore;
     store.setState({
+      testReport: initialtestReportsState,
       log: undefined
     });
   }));
@@ -51,14 +83,25 @@ describe('TestSuiteDetailsMenuLogsComponent', () => {
 
   describe('when there is short log', () => {
     beforeEach(() => {
-      const log = new Log();
+      log = new Log();
       log.lines = Array(3)
         .fill(null)
         .map(() => new LogLine());
+
       store.setState({
+        testReport: {
+          ...initialtestReportsState,
+          testReports: [testReport]
+        },
         log: {
-          log: log,
-          downloadURL: 'https://bitrise.io/download-log'
+          logs: {
+            [testReport.id]: {
+              [testSuite.id]: {
+                log: log,
+                downloadURL: 'https://bitrise.io/download-log'
+              }
+            }
+          }
         }
       });
 
@@ -78,14 +121,24 @@ describe('TestSuiteDetailsMenuLogsComponent', () => {
 
   describe('when there is long log', () => {
     beforeEach(() => {
-      const log = new Log();
+      log = new Log();
       log.lines = Array(22)
         .fill(null)
         .map(() => new LogLine());
       store.setState({
+        testReport: {
+          ...initialtestReportsState,
+          testReports: [testReport]
+        },
         log: {
-          log: log,
-          downloadURL: 'https://bitrise.io/download-log'
+          logs: {
+            [testReport.id]: {
+              [testSuite.id]: {
+                log: log,
+                downloadURL: 'https://bitrise.io/download-log'
+              }
+            }
+          }
         }
       });
 
@@ -101,7 +154,7 @@ describe('TestSuiteDetailsMenuLogsComponent', () => {
     let dropdownElement: DebugElement;
 
     beforeEach(() => {
-      const log = new Log();
+      log = new Log();
       log.lines = Array(7)
         .fill(null)
         .map(() => new LogLine());
@@ -113,9 +166,19 @@ describe('TestSuiteDetailsMenuLogsComponent', () => {
       log.lines[5].level = LogLineLevel.error;
       log.lines[6].level = LogLineLevel.error;
       store.setState({
+        testReport: {
+          ...initialtestReportsState,
+          testReports: [testReport]
+        },
         log: {
-          log: log,
-          downloadURL: 'https://bitrise.io/download-log'
+          logs: {
+            [testReport.id]: {
+              [testSuite.id]: {
+                log: log,
+                downloadURL: 'https://bitrise.io/download-log'
+              }
+            }
+          }
         }
       });
 

@@ -1,22 +1,36 @@
 import { TestBed, ComponentFixture, inject } from '@angular/core/testing';
 import { By } from '@angular/platform-browser';
+import { ActivatedRoute } from '@angular/router';
 import { HttpClientTestingModule } from '@angular/common/http/testing';
+import { of } from 'rxjs';
 import { Store, StoreModule } from '@ngrx/store';
+import { MockStore, provideMockStore } from 'src/app/mock-store/testing';
 import { InlineSVGModule } from 'ng-inline-svg';
 import { TestSuiteDetailsMenuTestArtifactsComponent } from './test-suite-details-menu-test-artifacts.component';
+import { TestReport } from 'src/app/models/test-report.model';
+import { TestReportState } from 'src/app/store/reports/reducer';
+import { TestSuite } from 'src/app/models/test-suite.model';
 import { TestArtifact } from '../../../../models/test-artifact.model';
-import artifactsReducer from 'src/app/store/artifacts/reducer';
-import { MockStore, provideMockStore } from 'src/app/mock-store/testing';
+import artifactsReducer, { ArtifactStoreState } from 'src/app/store/artifacts/reducer';
 
 describe('TestSuiteDetailsMenuTestArtifactsComponent', () => {
   let fixture: ComponentFixture<TestSuiteDetailsMenuTestArtifactsComponent>;
   let testArtifactsComponent: TestSuiteDetailsMenuTestArtifactsComponent;
   let store: MockStore<{
+    testReport: TestReportState;
     testArtifact: {
       testArtifacts: TestArtifact[];
       downloadAllURL: string;
     };
   }>;
+  let testReport: TestReport;
+  let testSuite: TestSuite;
+
+  const initialtestReportsState = {
+    testReports: [],
+    filteredReports: [],
+    filter: null
+  };
 
   beforeEach(() => {
     TestBed.configureTestingModule({
@@ -26,8 +40,24 @@ describe('TestSuiteDetailsMenuTestArtifactsComponent', () => {
         InlineSVGModule.forRoot()
       ],
       declarations: [TestSuiteDetailsMenuTestArtifactsComponent],
-      providers: [provideMockStore({})]
+      providers: [
+        provideMockStore({}),
+        {
+          provide: ActivatedRoute,
+          useValue: {
+            parent: {
+              data: of({ testSuite: { selectedTestReport: testReport, selectedTestSuite: testSuite } })
+            }
+          }
+        }
+      ]
     }).compileComponents();
+
+    testReport = new TestReport();
+    testSuite = new TestSuite();
+    testReport.testSuites = [testSuite];
+    testReport.id = 1;
+    testSuite.id = 2;
 
     fixture = TestBed.createComponent(TestSuiteDetailsMenuTestArtifactsComponent);
     testArtifactsComponent = fixture.debugElement.componentInstance;
@@ -35,9 +65,10 @@ describe('TestSuiteDetailsMenuTestArtifactsComponent', () => {
 
   beforeEach(inject(
     [Store],
-    (mockStore: MockStore<{ testArtifact: { testArtifacts: TestArtifact[]; downloadAllURL: string } }>) => {
+    (mockStore: MockStore<{ testReport: TestReportState; testArtifact: ArtifactStoreState }>) => {
       store = mockStore;
       store.setState({
+        testReport: initialtestReportsState,
         testArtifact: undefined
       });
     }
@@ -50,6 +81,10 @@ describe('TestSuiteDetailsMenuTestArtifactsComponent', () => {
   describe('when there are some test artifacts', () => {
     beforeEach(() => {
       store.setState({
+        testReport: {
+          ...initialtestReportsState,
+          testReports: [testReport]
+        },
         testArtifact: {
           testArtifacts: Array(3)
             .fill(null)
