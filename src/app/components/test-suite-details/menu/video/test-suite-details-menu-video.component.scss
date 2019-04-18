@@ -1,60 +1,56 @@
 @import '../../../../../sass/constants';
 @import '../../../../../sass/mixins';
 
-.name {
-  @include ui-element-header-5;
-  @include ui-modifier-header-5-underlined-purple-bold;
-}
-
-header.test,
-section,
-.notification {
-  margin-bottom: 18px;
-}
-
 section.video {
   .content {
-    background-color: black;
+    background-color: $black;
 
     video {
       display: block;
       max-width: 100%;
-      max-height: 350px;
-      margin-left: auto;
-      margin-right: auto;
+      max-height: 44 * $grid-size;
+      @include margin-x(auto);
       transition: max-height 0.3s;
 
       &.expanded {
-        max-height: 700px;
+        max-height: 88 * $grid-size;
       }
     }
 
     .controller {
       position: relative;
-      background-color: #252525;
+      background-color: $brownish-grey;
 
       button.seek {
         display: block;
-        @include position(absolute, null, null, 100%);
+        position: absolute;
+        bottom: 100%;
         @include size(100%, 3px);
         padding: 0;
         border: none;
-        @include no-default-focus-styling;
-        @include transition(height 0.2s);
-        background-color: #252525;
+        transition: height $default-hovertime;
+        background-color: $brownish-grey;
         cursor: pointer;
 
         span.hovered {
-          @include position(absolute, 0, null, null, 0);
+          position: absolute;
+          top: 0;
+          left: 0;
           height: 100%;
-          background-color: rgba(white, 0.3);
+          background-color: rgba($white, 0.3);
         }
 
         span.played {
           position: relative;
           display: block;
           height: 100%;
-          background-color: #32eab5;
+          background-color: $aqua;
+        }
+
+        &:focus {
+          -webkit-tap-highlight-color: rgba(0, 0, 0, 0);
+          -webkit-focus-ring-color: rgba(0, 0, 0, 0);
+          outline: none;
         }
       }
 
@@ -67,8 +63,7 @@ section.video {
         button.play-pause-toggle,
         a.download,
         button.full-screen-toggle {
-          @include padding-x(25px);
-          @include no-default-focus-styling;
+          @include padding-x(3 * $grid-size);
         }
 
         button.play-pause-toggle {
@@ -84,47 +79,53 @@ section.video {
           }
 
           .svg-wrapper {
-            @include svg-color(white);
+            @include svg-color($white);
           }
 
-          .svg-wrapper svg ::ng-deep {
-            @include transition(fill 0.2s);
-          }
-
-          .svg-wrapper.play svg ::ng-deep {
-            @include size(13px, 14px);
-          }
-
-          .svg-wrapper.pause svg ::ng-deep {
-            @include size(13px, 14px);
+          .svg-wrapper ::ng-deep svg {
+            transition: fill $default-hovertime;
           }
 
           &:hover,
           &:focus {
             .svg-wrapper {
-              @include svg-color($green-teal);
+              @include svg-color($aqua);
             }
+          }
+
+          &:focus {
+            -webkit-tap-highlight-color: rgba(0, 0, 0, 0);
+            -webkit-focus-ring-color: rgba(0, 0, 0, 0);
+            outline: none;
           }
         }
 
         span.current-time {
-          @include position(absolute, 50%, null, null, 50%);
+          @include ui-element-subtitle;
+          position: absolute;
+          top: 50%;
+          left: 50%;
           transform: translate(-50%, -50%);
-          @include default-font;
-          font-size: 12px;
-          color: $warm-grey;
+          color: $white;
         }
 
         a.download,
         button.full-screen-toggle {
-          @include svg-color(white);
-          svg {
-            @include transition(fill 0.2s);
+          @include svg-color($white);
+
+          ::ng-deep svg {
+            transition: fill $default-hovertime;
           }
 
           &:hover,
           &:focus {
-            @include svg-color($green-teal);
+            @include svg-color($aqua);
+          }
+
+          &:focus {
+            -webkit-tap-highlight-color: rgba(0, 0, 0, 0);
+            -webkit-focus-ring-color: rgba(0, 0, 0, 0);
+            outline: none;
           }
         }
 
@@ -141,28 +142,22 @@ section.video {
           border: none;
           background-color: transparent;
           cursor: pointer;
-
-          svg {
-            @include size(15px);
-          }
         }
 
         @include width-max($screen-medium-width) {
           button.play-pause-toggle,
           a.download,
           button.full-screen-toggle {
-            $button-size: 36px;
-
-            height: $button-size;
-            line-height: $button-size;
-            @include padding-x(12px);
+            height: 4 * $grid-size;
+            line-height: 4 * $grid-size;
+            @include padding-x($grid-size);
           }
         }
       }
     }
 
     &:hover .controller button.seek {
-      height: 8px;
+      height: $grid-size;
     }
   }
 }

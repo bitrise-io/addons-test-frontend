@@ -1,47 +1,35 @@
-<div class="name">Video</div>
-
-<div>
-  <div class="notification" *ngIf="loadProgress.isInProgress || loadProgress.isError" [ngClass]="loadProgress.cssClass">
-    <span class="icon in-progress" inlineSVG="/assets/images/refresh.svg"></span>
-    <span class="icon error" inlineSVG="/assets/images/sign-cross.svg"></span>
-    <p class="content">{{ loadProgress.message }}</p>
-  </div>
-  <section class="video" *ngIf="videoURL">
-    <div class="content">
-      <video [class.expanded]="isExpandMode" #player>
-        <source [attr.src]="videoURL" type="video/mp4" />
-      </video>
-      <div class="controller" *ngIf="loadProgress.isSuccess">
-        <button
-          class="seek"
-          #seek
-          (click)="seekTo($event, seek)"
-          tabindex="-1"
-          (mousemove)="updateSeek($event, seek)"
-          (mouseleave)="updateSeek()"
-        >
-          <span class="hovered" *ngIf="hoveredPoint" [style.width.%]="100 * hoveredPoint"></span>
-          <span class="played" [style.width.%]="100 * (playedDuration / duration)"></span>
+<bitrise-heading-text>Video</bitrise-heading-text>
+<section class="video" *ngIf="videoURL">
+  <div class="content">
+    <video [class.expanded]="isExpandMode" #player>
+      <source [attr.src]="videoURL" type="video/mp4" />
+    </video>
+    <div class="controller">
+      <button
+        class="seek"
+        #seek
+        (click)="seekTo($event, seek)"
+        tabindex="-1"
+        (mousemove)="updateSeek($event, seek)"
+        (mouseleave)="updateSeek()"
+      >
+        <span class="hovered" *ngIf="hoveredPoint" [style.width.%]="100 * hoveredPoint"></span>
+        <span class="played" [style.width.%]="100 * (playedDuration / duration)"></span>
+      </button>
+      <div class="menu">
+        <button class="play-pause-toggle" [class.playing]="isPlaying" (click)="isPlaying = !isPlaying">
+          <span class="svg-wrapper play" inlineSVG="/assets/images/play.svg"></span>
+          <span class="svg-wrapper pause" inlineSVG="/assets/images/pause.svg"></span>
         </button>
-        <div class="menu">
-          <button class="play-pause-toggle" [class.playing]="isPlaying" (click)="isPlaying = !isPlaying">
-            <span class="svg-wrapper play" inlineSVG="/assets/images/play.svg"></span>
-            <span class="svg-wrapper pause" inlineSVG="/assets/images/pause.svg"></span>
-          </button>
-          <span class="current-time">{{playedDuration | playbackTime}}</span>
-          <a class="download" [attr.href]="videoURL" download target="_blank">
-            <span class="svg-wrapper" inlineSVG="/assets/images/download.svg"></span>
-          </a>
-          <button class="full-screen-toggle" (click)="isExpandMode = !isExpandMode">
-            <span
-              class="svg-wrapper full-screen"
-              *ngIf="!isExpandMode"
-              inlineSVG="/assets/images/fullscreen.svg"
-            ></span>
-            <span class="svg-wrapper minimize" *ngIf="isExpandMode" inlineSVG="/assets/images/minimize.svg"></span>
-          </button>
-        </div>
+        <span class="current-time">{{ playedDuration | playbackTime }}</span>
+        <a class="download" [attr.href]="videoURL" download target="_blank">
+          <span class="svg-wrapper" inlineSVG="/assets/images/download.svg"></span>
+        </a>
+        <button class="full-screen-toggle" (click)="isExpandMode = !isExpandMode">
+          <span class="svg-wrapper full-screen" *ngIf="!isExpandMode" inlineSVG="/assets/images/fullscreen.svg"></span>
+          <span class="svg-wrapper minimize" *ngIf="isExpandMode" inlineSVG="/assets/images/minimize.svg"></span>
+        </button>
       </div>
     </div>
-  </section>
-</div>
+  </div>
+</section>

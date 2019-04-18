@@ -1,4 +1,4 @@
-import { Directive, inject } from '@angular/core';
+import { Directive, inject, Component } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { TestBed, ComponentFixture } from '@angular/core/testing';
 import { of } from 'rxjs';
@@ -6,6 +6,13 @@ import { TestSuiteDetailsMenuVideoComponent } from './test-suite-details-menu-vi
 import { PlaybackTimePipe } from 'src/app/pipes/playback-time.pipe';
 import { TestReport } from 'src/app/models/test-report.model';
 import { TestSuite } from 'src/app/models/test-suite.model';
+
+@Component({
+  selector: 'bitrise-heading-text',
+  template: ''
+})
+class MockHeadingTextComponent {
+}
 
 describe('TestSuiteDetailsMenuVideoComponent', () => {
   let fixture: ComponentFixture<TestSuiteDetailsMenuVideoComponent>;
@@ -23,7 +30,7 @@ describe('TestSuiteDetailsMenuVideoComponent', () => {
 
     TestBed.configureTestingModule({
       imports: [],
-      declarations: [TestSuiteDetailsMenuVideoComponent, PlaybackTimePipe],
+      declarations: [TestSuiteDetailsMenuVideoComponent, MockHeadingTextComponent, PlaybackTimePipe],
       providers: [
         Directive({ selector: '[inlineSVG]', inputs: ['inlineSVG'] })(class {}),
         {
