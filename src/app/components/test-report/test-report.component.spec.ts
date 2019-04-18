@@ -24,7 +24,7 @@ class MockTestSuiteComponent {
 class MockHeadingTextComponent {
 }
 
-fdescribe('TestReportComponent', () => {
+describe('TestReportComponent', () => {
   let fixture: ComponentFixture<TestReportComponent>;
   let testReportComponent: TestReportComponent;
   let testReport: TestReport;
