@@ -10,22 +10,14 @@ export enum TestReportType {
 export type TestReportResponse = {
   id: number;
   name: string;
-  testSuites: TestSuiteResponse[];
 };
 
 @Injectable()
 export class TestReport implements Deserializable {
   id: number;
   name: string;
+  type: TestReportType;
   testSuites: TestSuite[];
-
-  get type(): TestReportType {
-    if (this.testSuites.find((testSuite) => testSuite.deviceName !== undefined)) {
-      return TestReportType.uiTest;
-    }
-
-    return TestReportType.unitTest;
-  }
 
   get typeCssClass(): string {
     const typeCssClasses = {
@@ -43,14 +35,6 @@ export class TestReport implements Deserializable {
   deserialize(testReportResponse: TestReportResponse) {
     this.id = testReportResponse.id;
     this.name = testReportResponse.name;
-
-    if (testReportResponse.testSuites === undefined) {
-      return this;
-    }
-
-    this.testSuites = testReportResponse.testSuites.map((testSuiteResponse: TestSuiteResponse) =>
-      new TestSuite().deserialize(testSuiteResponse)
-    );
 
     return this;
   }

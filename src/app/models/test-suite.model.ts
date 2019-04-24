@@ -1,6 +1,7 @@
 import { Injectable } from '@angular/core';
 import { Deserializable } from './deserializable.model';
 import { TestCase, TestCaseResponse } from './test-case.model';
+import { TestArtifact } from './test-artifact.model';
 
 export enum TestSuiteStatus {
   inconclusive = 0,
@@ -49,6 +50,7 @@ export class TestSuite implements Deserializable {
   locale: string;
   testCases: TestCase[];
   screenshots?: TestSuiteScreenshot[];
+  artifacts?: TestArtifact[];
   downloadAllScreenshotsURL?: string;
   videoUrl: string;
   logUrl: string;
