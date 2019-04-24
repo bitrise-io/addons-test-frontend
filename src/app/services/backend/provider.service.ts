@@ -54,6 +54,8 @@ export type FirebaseTestlabTestSuiteResponse = {
   step_duration_in_seconds: Number;
 };
 
+export type FirebaseTestlabTestCasesResponse = string;
+
 export type JUnitXMLTestSuiteResponse = {
   name: string;
   package: string;
@@ -130,13 +132,15 @@ export class ProviderService {
     testReport.type = TestReportType.uiTest;
 
     testReport.testSuites = testReportDetailsResponse.map((testSuiteResponse: FirebaseTestlabTestSuiteResponse) =>
-      this.deserializeFirebaseTestlabTestSuite(testSuiteResponse, new TestSuite())
+      this.deserializeFirebaseTestlabTestSuite(testSuiteResponse)
     );
 
     return testReport;
   }
 
-  deserializeFirebaseTestlabTestSuite(testSuiteResponse: FirebaseTestlabTestSuiteResponse, testSuite: TestSuite) {
+  deserializeFirebaseTestlabTestSuite(testSuiteResponse: FirebaseTestlabTestSuiteResponse) {
+    const testSuite = new TestSuite();
+
     switch (testSuiteResponse.status) {
       case 'pending':
       case 'inProgress':
@@ -200,7 +204,7 @@ export class ProviderService {
   ) {
     testReport.type = TestReportType.unitTest;
     testReport.testSuites = testReportDetailsResponse.test_suites.map((testSuiteResponse) => {
-      return this.deserializeJUnitXMLTestSuite(testSuiteResponse, testReportDetailsResponse, new TestSuite());
+      return this.deserializeJUnitXMLTestSuite(testSuiteResponse, testReportDetailsResponse);
     });
 
     return testReport;
@@ -208,9 +212,10 @@ export class ProviderService {
 
   deserializeJUnitXMLTestSuite(
     testSuiteResponse: JUnitXMLTestSuiteResponse,
-    testReportDetailsResponse: JUnitXMLTestReportDetailsResponse,
-    testSuite: TestSuite
+    testReportDetailsResponse: JUnitXMLTestReportDetailsResponse
   ) {
+    const testSuite = new TestSuite();
+
     if (testSuiteResponse.totals.tests == testSuiteResponse.totals.passed) {
       testSuite.status = TestSuiteStatus.passed;
     } else if (testSuiteResponse.totals.skipped > 0) {
@@ -236,18 +241,48 @@ export class ProviderService {
     testSuite.videoUrl = null;
     testSuite.logUrl = null;
     testSuite.testCases = testSuiteResponse.tests.map((testCaseResponse) => {
-      return this.deserializeJUnitXMLTestCase(testCaseResponse, new TestCase());
+      return this.deserializeJUnitXMLTestCase(testCaseResponse);
     });
 
     return testSuite;
   }
 
-  deserializeJUnitXMLTestCase(testCaseResponse: JUnitXMLTestCaseResponse, testCase: TestCase) {
+  deserializeFirebaseTestlabTestCases(testCasesResponse: FirebaseTestlabTestCasesResponse) {
+    const parser = new DOMParser();
+    const htmlCollection = parser
+      .parseFromString(testCasesResponse, 'application/xml')
+      .getElementsByTagName('testsuite');
+
+    return Array.from(htmlCollection[0].children[0].children).map((testCaseItemElement: Element) => {
+      const testCase = new TestCase();
+
+      testCase.name = testCaseItemElement.getElementsByTagName('name')[0].innerHTML;
+      testCase.durationInMilliseconds = null;
+      testCase.context = testCaseItemElement.getElementsByTagName('classname')[0].innerHTML;
+
+      if (testCaseItemElement.getElementsByTagName('failure').length > 0) {
+        testCase.status = TestCaseStatus.failed;
+        testCase.summary = testCaseItemElement.getElementsByTagName('failure')[0].innerHTML;
+      }
+      else {
+        testCase.status = TestCaseStatus.passed;
+        testCase.summary = 'passed';
+      }
+
+      return testCase;
+    });
+  }
+
+  deserializeJUnitXMLTestCase(testCaseResponse: JUnitXMLTestCaseResponse) {
+    const testCase = new TestCase();
+
     testCase.name = testCaseResponse.name;
     testCase.status = testCaseResponse.status === 'passed' ? TestCaseStatus.passed : TestCaseStatus.failed;
     testCase.durationInMilliseconds = Number(testCaseResponse.duration);
     testCase.context = testCaseResponse.classname;
-    testCase.summary = testCaseResponse.error ? `${testCaseResponse.error.message}\n\n${testCaseResponse.error.body}` : testCaseResponse.status;
+    testCase.summary = testCaseResponse.error
+      ? `${testCaseResponse.error.message}\n\n${testCaseResponse.error.body}`
+      : testCaseResponse.status;
 
     return testCase;
   }

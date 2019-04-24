@@ -7,7 +7,8 @@ import {
   Provider,
   FirebaseTestlabTestSuiteResponse,
   JUnitXMLTestSuiteResponse,
-  JUnitXMLTestCaseResponse
+  JUnitXMLTestCaseResponse,
+  FirebaseTestlabTestCasesResponse
 } from './provider.service';
 import { TestReport, TestReportType } from 'src/app/models/test-report.model';
 import { TestSuite, TestSuiteStatus } from 'src/app/models/test-suite.model';
@@ -53,6 +54,10 @@ fdescribe('ProviderService', () => {
     };
   }
 
+  function basicFirebaseTestlabTestCasesResponse(): string {
+    return "<?xml version=\"1.0\" encoding=\"UTF-8\"?>\n<testsuite>\n<testcase type=\"array\">\n<testcase-item>\n<name>name A</name>\n<classname>classname A</classname>\n<failure>The A failed</failure>\n</testcase-item>\n<testcase-item>\n<name>name B</name>\n<classname>classname B</classname>\n</testcase-item>\n</testcase>\n</testsuite>";
+  }
+
   function basicJUnitXMLTestSuiteResponse(): JUnitXMLTestSuiteResponse {
     return {
       name: 'JUnitXmlReporter.constructor',
@@ -64,7 +69,7 @@ fdescribe('ProviderService', () => {
         {
           name: 'should default path to an empty string',
           classname: 'JUnitXmlReporter.constructor',
-          duration: 6000000,
+          duration: 1000,
           status: 'failed',
           error: {
             message: 'test failure',
@@ -78,7 +83,7 @@ fdescribe('ProviderService', () => {
         skipped: 0,
         failed: 1,
         error: 0,
-        duration: 6000000
+        duration: 1000
       }
     };
   }
@@ -87,7 +92,7 @@ fdescribe('ProviderService', () => {
     return {
       name: 'should default path to an empty string',
       classname: 'JUnitXmlReporter.constructor',
-      duration: 6000000,
+      duration: 1000,
       status: 'passed'
     };
   }
@@ -210,11 +215,9 @@ fdescribe('ProviderService', () => {
   });
 
   describe('deserializeFirebaseTestlabTestSuite', () => {
-    let testSuite: TestSuite;
     let testSuiteResponse: FirebaseTestlabTestSuiteResponse;
 
     beforeEach(() => {
-      testSuite = new TestSuite();
       testSuiteResponse = basicFirebaseTestlabTestSuiteResponse();
     });
 
@@ -278,7 +281,7 @@ fdescribe('ProviderService', () => {
         });
 
         it(`sets status to ${specConfig.expectedStatusName}`, () => {
-          service.deserializeFirebaseTestlabTestSuite(testSuiteResponse, testSuite);
+          const testSuite = service.deserializeFirebaseTestlabTestSuite(testSuiteResponse);
 
           expect(testSuite.status).toBe(specConfig.expectedStatus);
         });
@@ -286,11 +289,11 @@ fdescribe('ProviderService', () => {
     });
 
     it('returns test suite', () => {
-      expect(service.deserializeFirebaseTestlabTestSuite(testSuiteResponse, testSuite)).toBe(testSuite);
+      expect(service.deserializeFirebaseTestlabTestSuite(testSuiteResponse) instanceof TestSuite).toBeTruthy();
     });
 
     it('sets screenshots', () => {
-      service.deserializeFirebaseTestlabTestSuite(testSuiteResponse, testSuite);
+      const testSuite = service.deserializeFirebaseTestlabTestSuite(testSuiteResponse);
 
       expect(testSuite.screenshots.length).toBe(2);
       expect(testSuite.screenshots[0].url).toBe('https://www.bitrise.io/assets/svg/logo-bitrise.svg');
@@ -300,7 +303,7 @@ fdescribe('ProviderService', () => {
     });
 
     it('sets artifacts', () => {
-      service.deserializeFirebaseTestlabTestSuite(testSuiteResponse, testSuite);
+      const testSuite = service.deserializeFirebaseTestlabTestSuite(testSuiteResponse);
 
       expect(testSuite.artifacts.length).toBe(2);
       expect(testSuite.artifacts[0].downloadURL).toBe('https://www.bitrise.io/assets/svg/logo-bitrise.svg');
@@ -366,12 +369,10 @@ fdescribe('ProviderService', () => {
   });
 
   describe('deserializeJUnitXMLTestSuite', () => {
-    let testSuite: TestSuite;
     let testSuiteResponse: JUnitXMLTestSuiteResponse;
     let testReportDetailsResponse: JUnitXMLTestReportDetailsResponse;
 
     beforeEach(() => {
-      testSuite = new TestSuite();
       testSuiteResponse = basicJUnitXMLTestSuiteResponse();
       testReportDetailsResponse = {
         id: 'test-report',
@@ -394,10 +395,19 @@ fdescribe('ProviderService', () => {
       });
     });
 
-    it('returns test suite', () => {
-      expect(service.deserializeJUnitXMLTestSuite(testSuiteResponse, testReportDetailsResponse, testSuite)).toBe(
-        testSuite
-      );
+    it('returns test suite with appropriate data', () => {
+      const testSuite = service.deserializeJUnitXMLTestSuite(testSuiteResponse, testReportDetailsResponse);
+
+      expect(testSuite instanceof TestSuite).toBeTruthy();
+      expect(testSuite.deviceName).toBeNull();
+      expect(testSuite.suiteName).toBe('JUnitXmlReporter.constructor');
+      expect(testSuite.deviceOperatingSystem).toBeNull();
+      expect(testSuite.durationInMilliseconds).toBe(1000);
+      expect(testSuite.orientation).toBeNull();
+      expect(testSuite.locale).toBeNull();
+      expect(testSuite.screenshots).toBeNull();
+      expect(testSuite.videoUrl).toBeNull();
+      expect(testSuite.logUrl).toBeNull();
     });
 
     [
@@ -468,35 +478,21 @@ fdescribe('ProviderService', () => {
         });
 
         it(`sets status to ${specConfig.expectedStatusName}`, () => {
-          service.deserializeJUnitXMLTestSuite(testSuiteResponse, testReportDetailsResponse, testSuite);
+          const testSuite = service.deserializeJUnitXMLTestSuite(testSuiteResponse, testReportDetailsResponse);
 
           expect(testSuite.status).toBe(specConfig.expectedStatus);
         });
       });
     });
 
-    it('sets test suite with appropriate data', () => {
-      service.deserializeJUnitXMLTestSuite(testSuiteResponse, testReportDetailsResponse, testSuite);
-
-      expect(testSuite.deviceName).toBeNull();
-      expect(testSuite.suiteName).toBe('JUnitXmlReporter.constructor');
-      expect(testSuite.deviceOperatingSystem).toBeNull();
-      expect(testSuite.durationInMilliseconds).toBe(6000000);
-      expect(testSuite.orientation).toBeNull();
-      expect(testSuite.locale).toBeNull();
-      expect(testSuite.screenshots).toBeNull();
-      expect(testSuite.videoUrl).toBeNull();
-      expect(testSuite.logUrl).toBeNull();
-    });
-
     it('deserializes test cases', () => {
-      service.deserializeJUnitXMLTestSuite(testSuiteResponse, testReportDetailsResponse, testSuite);
+      const testSuite = service.deserializeJUnitXMLTestSuite(testSuiteResponse, testReportDetailsResponse);
 
       expect(testSuite.testCases.length).toBe(1);
     });
 
     it('sets artifacts from test report response', () => {
-      service.deserializeJUnitXMLTestSuite(testSuiteResponse, testReportDetailsResponse, testSuite);
+      const testSuite = service.deserializeJUnitXMLTestSuite(testSuiteResponse, testReportDetailsResponse);
 
       expect(testSuite.artifacts.length).toBe(2);
       expect(testSuite.artifacts[0].downloadURL).toBe('https://www.bitrise.io/assets/svg/logo-bitrise.svg');
@@ -506,24 +502,45 @@ fdescribe('ProviderService', () => {
     });
   });
 
+  describe('deserializeFirebaseTestlabTestCases', () => {
+    let testCasesResponse: FirebaseTestlabTestCasesResponse;
+
+    beforeEach(() => {
+      testCasesResponse = basicFirebaseTestlabTestCasesResponse();
+    });
+
+    it('returns test cases with appropriate data', () => {
+      const testCases = service.deserializeFirebaseTestlabTestCases(testCasesResponse);
+
+      expect(testCases.length).toBe(2);
+
+      expect(testCases[0].name).toBe('name A');
+      expect(testCases[0].status).toBe(TestCaseStatus.failed);
+      expect(testCases[0].context).toBe('classname A');
+      expect(testCases[0].durationInMilliseconds).toBeNull();
+      expect(testCases[0].summary).toBe('The A failed');
+
+      expect(testCases[1].name).toBe('name B');
+      expect(testCases[1].status).toBe(TestCaseStatus.passed);
+      expect(testCases[1].context).toBe('classname B');
+      expect(testCases[1].durationInMilliseconds).toBeNull();
+      expect(testCases[1].summary).toBe('passed');
+    });
+  });
+
   describe('deserializeJUnitXMLTestCase', () => {
-    let testCase: TestCase;
     let testCaseResponse: JUnitXMLTestCaseResponse;
 
     beforeEach(() => {
-      testCase = new TestCase();
       testCaseResponse = basicJUnitXMLTestCaseResponse();
     });
 
-    it('returns test case', () => {
-      expect(service.deserializeJUnitXMLTestCase(testCaseResponse, testCase)).toBe(testCase);
-    });
+    it('returns test case with appropriate data', () => {
+      const testCase = service.deserializeJUnitXMLTestCase(testCaseResponse);
 
-    it('sets test case with appropriate data', () => {
-      service.deserializeJUnitXMLTestCase(testCaseResponse, testCase);
-
+      expect(testCase instanceof TestCase).toBeTruthy();
       expect(testCase.name).toBe('should default path to an empty string');
-      expect(testCase.durationInMilliseconds).toBe(6000000);
+      expect(testCase.durationInMilliseconds).toBe(1000);
       expect(testCase.context).toBe('JUnitXmlReporter.constructor');
     });
 
@@ -559,9 +576,11 @@ fdescribe('ProviderService', () => {
       }
     ].forEach((specConfig: any) => {
       describe(`when response has ${specConfig.statusName} status`, () => {
+        let testCase: TestCase;
+
         beforeEach(() => {
           specConfig.specPreparation();
-          service.deserializeJUnitXMLTestCase(testCaseResponse, testCase);
+          testCase = service.deserializeJUnitXMLTestCase(testCaseResponse);
         });
 
         it(`sets status to ${specConfig.expectedStatusName}`, () => {
