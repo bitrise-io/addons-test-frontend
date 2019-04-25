@@ -154,19 +154,19 @@ export class ProviderService {
 
         break;
       case 'complete':
-        if (testSuiteResponse.outcome == 'inconclusive') {
+        if (testSuiteResponse.outcome === 'inconclusive') {
           testSuite.status = TestSuiteStatus.inconclusive;
 
           break;
         }
 
-        if (testSuiteResponse.outcome == 'skipped') {
+        if (testSuiteResponse.outcome === 'skipped') {
           testSuite.status = TestSuiteStatus.skipped;
 
           break;
         }
 
-        if (testSuiteResponse.outcome == 'failure') {
+        if (testSuiteResponse.outcome === 'failure') {
           testSuite.status = TestSuiteStatus.failed;
 
           break;
@@ -227,7 +227,7 @@ export class ProviderService {
   ) {
     const testSuite = new TestSuite();
 
-    if (testSuiteResponse.totals.tests == testSuiteResponse.totals.passed) {
+    if (testSuiteResponse.totals.tests === testSuiteResponse.totals.passed) {
       testSuite.status = TestSuiteStatus.passed;
     } else if (testSuiteResponse.totals.failed > 0) {
       testSuite.status = TestSuiteStatus.failed;

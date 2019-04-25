@@ -55,7 +55,8 @@ describe('ProviderService', () => {
   }
 
   function basicFirebaseTestlabTestCasesResponse(): string {
-    return "<?xml version=\"1.0\" encoding=\"UTF-8\"?>\n<testsuite>\n<testcase type=\"array\">\n<testcase-item>\n<name>name A</name>\n<classname>classname A</classname>\n<failure>The A failed</failure>\n</testcase-item>\n<testcase-item>\n<name>name B</name>\n<classname>classname B</classname>\n</testcase-item>\n</testcase>\n</testsuite>";
+    // tslint:disable-next-line:max-line-length
+    return '<?xml version="1.0" encoding="UTF-8"?>\n<testsuite>\n<testcase type="array">\n<testcase-item>\n<name>name A</name>\n<classname>classname A</classname>\n<failure>The A failed</failure>\n</testcase-item>\n<testcase-item>\n<name>name B</name>\n<classname>classname B</classname>\n</testcase-item>\n</testcase>\n</testsuite>';
   }
 
   function basicJUnitXMLTestSuiteResponse(): JUnitXMLTestSuiteResponse {
@@ -230,7 +231,7 @@ describe('ProviderService', () => {
     [
       {
         statusName: 'pending',
-        specPreparation: (testSuiteResponse: FirebaseTestlabTestSuiteResponse) => {
+        specPreparation: () => {
           testSuiteResponse.status = 'pending';
         },
         expectedStatusName: 'inconclusive',
@@ -238,7 +239,7 @@ describe('ProviderService', () => {
       },
       {
         statusName: 'in progress',
-        specPreparation: (testSuiteResponse: FirebaseTestlabTestSuiteResponse) => {
+        specPreparation: () => {
           testSuiteResponse.status = 'inProgress';
         },
         expectedStatusName: 'inconclusive',
@@ -246,7 +247,7 @@ describe('ProviderService', () => {
       },
       {
         statusName: 'complete & inconclusive',
-        specPreparation: (testSuiteResponse: FirebaseTestlabTestSuiteResponse) => {
+        specPreparation: () => {
           testSuiteResponse.status = 'complete';
           testSuiteResponse.outcome = 'inconclusive';
         },
@@ -255,7 +256,7 @@ describe('ProviderService', () => {
       },
       {
         statusName: 'complete & passed',
-        specPreparation: (testSuiteResponse: FirebaseTestlabTestSuiteResponse) => {
+        specPreparation: () => {
           testSuiteResponse.status = 'complete';
           testSuiteResponse.outcome = 'success';
         },
@@ -264,7 +265,7 @@ describe('ProviderService', () => {
       },
       {
         statusName: 'complete & failed',
-        specPreparation: (testSuiteResponse: FirebaseTestlabTestSuiteResponse) => {
+        specPreparation: () => {
           testSuiteResponse.status = 'complete';
           testSuiteResponse.outcome = 'failure';
         },
@@ -273,7 +274,7 @@ describe('ProviderService', () => {
       },
       {
         statusName: 'complete & skipped',
-        specPreparation: (testSuiteResponse: FirebaseTestlabTestSuiteResponse) => {
+        specPreparation: () => {
           testSuiteResponse.status = 'complete';
           testSuiteResponse.outcome = 'skipped';
         },
@@ -283,7 +284,7 @@ describe('ProviderService', () => {
     ].forEach((specConfig) => {
       describe(`when response has ${specConfig.statusName} status`, () => {
         beforeEach(() => {
-          specConfig.specPreparation(testSuiteResponse);
+          specConfig.specPreparation();
         });
 
         it(`sets status to ${specConfig.expectedStatusName}`, () => {
@@ -422,7 +423,7 @@ describe('ProviderService', () => {
     [
       {
         statusName: 'all passed',
-        specPreparation: (testSuiteResponse: JUnitXMLTestSuiteResponse) => {
+        specPreparation: () => {
           testSuiteResponse.totals = {
             tests: 3,
             passed: 3,
@@ -437,7 +438,7 @@ describe('ProviderService', () => {
       },
       {
         statusName: 'some passed, some skipped',
-        specPreparation: (testSuiteResponse: JUnitXMLTestSuiteResponse) => {
+        specPreparation: () => {
           testSuiteResponse.totals = {
             tests: 3,
             passed: 2,
@@ -452,7 +453,7 @@ describe('ProviderService', () => {
       },
       {
         statusName: 'some passed, some failed',
-        specPreparation: (testSuiteResponse: JUnitXMLTestSuiteResponse) => {
+        specPreparation: () => {
           testSuiteResponse.totals = {
             tests: 3,
             passed: 2,
@@ -467,7 +468,7 @@ describe('ProviderService', () => {
       },
       {
         statusName: 'some passed, some error',
-        specPreparation: (testSuiteResponse: JUnitXMLTestSuiteResponse) => {
+        specPreparation: () => {
           testSuiteResponse.totals = {
             tests: 3,
             passed: 2,
@@ -482,7 +483,7 @@ describe('ProviderService', () => {
       },
       {
         statusName: 'some failed, some skipped',
-        specPreparation: (testSuiteResponse: JUnitXMLTestSuiteResponse) => {
+        specPreparation: () => {
           testSuiteResponse.totals = {
             tests: 3,
             passed: 0,
@@ -497,7 +498,7 @@ describe('ProviderService', () => {
       },
       {
         statusName: 'some error, some skipped',
-        specPreparation: (testSuiteResponse: JUnitXMLTestSuiteResponse) => {
+        specPreparation: () => {
           testSuiteResponse.totals = {
             tests: 3,
             passed: 0,
@@ -513,7 +514,7 @@ describe('ProviderService', () => {
     ].forEach((specConfig) => {
       describe(`when response has ${specConfig.statusName} status`, () => {
         beforeEach(() => {
-          specConfig.specPreparation(testSuiteResponse);
+          specConfig.specPreparation();
         });
 
         it(`sets status to ${specConfig.expectedStatusName}`, () => {

@@ -17,7 +17,7 @@ import { Log } from 'src/app/models/log.model';
 
 describe('BackendService', () => {
   let service: BackendService;
-  let mockProviderService = new ProviderService();
+  const mockProviderService = new ProviderService();
 
   beforeEach(() => {
     TestBed.configureTestingModule({
@@ -75,7 +75,7 @@ describe('BackendService', () => {
 
       mockProviderService.deserializeTestReportDetails = jasmine
         .createSpy('deserializeTestReportDetails')
-        .and.callFake((_testReportDetailsResponse, testReport) => { testReport.testSuites = []; });
+        .and.callFake(() => { testReport.testSuites = []; });
 
       service.getReportDetails(testReport).subscribe((result: TestReportResult) => {
         let keys = Object.keys(result);
