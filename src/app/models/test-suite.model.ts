@@ -1,5 +1,4 @@
 import { Injectable } from '@angular/core';
-import { Deserializable } from './deserializable.model';
 import { TestCase, TestCaseResponse } from './test-case.model';
 import { TestArtifact } from './test-artifact.model';
 
@@ -39,7 +38,7 @@ export type TestSuiteScreenshot = {
 };
 
 @Injectable()
-export class TestSuite implements Deserializable {
+export class TestSuite {
   id: number;
   status: TestSuiteStatus;
   deviceName: string;
@@ -96,32 +95,5 @@ export class TestSuite implements Deserializable {
 
   get orientationCssClass() {
     return TestSuite.orientationCssClass(this.orientation);
-  }
-
-  deserialize(testSuiteResponse: TestSuiteResponse) {
-    this.id = testSuiteResponse.id;
-    this.status = testSuiteResponse.status;
-    this.deviceName = testSuiteResponse.deviceName;
-    this.suiteName = testSuiteResponse.suiteName;
-    this.deviceOperatingSystem = testSuiteResponse.deviceOperatingSystem;
-    this.durationInMilliseconds = testSuiteResponse.durationInMilliseconds;
-    this.testCases = testSuiteResponse.testCases
-      ? testSuiteResponse.testCases.map((testCaseResponse: TestCaseResponse) =>
-          new TestCase().deserialize(testCaseResponse)
-        )
-      : [];
-    this.orientation = testSuiteResponse.orientation;
-    this.locale = testSuiteResponse.locale;
-    this.screenshots = testSuiteResponse.screenshots;
-    this.downloadAllScreenshotsURL = testSuiteResponse.downloadAllScreenshotsURL;
-
-    if (testSuiteResponse.outputUrls) {
-      this.videoUrl = testSuiteResponse.outputUrls.video;
-      if (testSuiteResponse.outputUrls.log && testSuiteResponse.outputUrls.log.length > 0) {
-        this.logUrl = testSuiteResponse.outputUrls.log[0];
-      }
-    }
-
-    return this;
   }
 }

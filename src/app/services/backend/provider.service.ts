@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { TestReport, TestReportResponse, TestReportType } from 'src/app/models/test-report.model';
+import { TestReport, TestReportType } from 'src/app/models/test-report.model';
 import { TestSuite, TestSuiteStatus, TestSuiteOrientation } from 'src/app/models/test-suite.model';
 import { TestArtifact } from 'src/app/models/test-artifact.model';
 import { TestCase, TestCaseStatus } from 'src/app/models/test-case.model';
@@ -263,8 +263,7 @@ export class ProviderService {
       if (testCaseItemElement.getElementsByTagName('failure').length > 0) {
         testCase.status = TestCaseStatus.failed;
         testCase.summary = testCaseItemElement.getElementsByTagName('failure')[0].innerHTML;
-      }
-      else {
+      } else {
         testCase.status = TestCaseStatus.passed;
         testCase.summary = 'passed';
       }

@@ -14,7 +14,7 @@ import { TestReport, TestReportType } from 'src/app/models/test-report.model';
 import { TestSuite, TestSuiteStatus } from 'src/app/models/test-suite.model';
 import { TestCase, TestCaseStatus } from 'src/app/models/test-case.model';
 
-fdescribe('ProviderService', () => {
+describe('ProviderService', () => {
   let service: ProviderService;
 
   function basicFirebaseTestlabTestSuiteResponse(): FirebaseTestlabTestSuiteResponse {

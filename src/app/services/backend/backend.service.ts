@@ -3,6 +3,7 @@ import { HttpClient } from '@angular/common/http';
 import { Observable, of } from 'rxjs';
 
 import { BackendService, TestArtifactsResult, TestReportsResult, LogResult, TestReportResult } from './backend.model';
+import { ProviderService } from './provider.service';
 import { Performance } from 'src/app/models/performance.model';
 import { TestArtifact, TestArtifactResponse } from 'src/app/models/test-artifact.model';
 import { TestReportResponse, TestReport } from 'src/app/models/test-report.model';
@@ -13,7 +14,7 @@ import * as MOCKED_DATA from './mock-data.json';
 
 @Injectable()
 export class RealBackendService implements BackendService {
-  constructor(private httpClient: HttpClient) {}
+  constructor(private httpClient: HttpClient, private providerService: ProviderService) {}
 
   getPerformance(): Observable<Performance> {
     const { performance }: any = MOCKED_DATA;
@@ -61,8 +62,8 @@ export class RealBackendService implements BackendService {
   }
 
   getReportDetails(testReport: TestReport): Observable<TestReportResult> {
-    const testReportResponse = MOCKED_DATA[`test_report/${testReport.id}`];
-    testReport.deserialize(testReportResponse);
+    const testReportDetailsResponse = MOCKED_DATA[`test_report/${testReport.id}`];
+    this.providerService.deserializeTestReportDetails(testReportDetailsResponse, testReport);
 
     return of({ testReport });
   }
