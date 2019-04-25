@@ -4,14 +4,16 @@ import { ActivatedRoute } from '@angular/router';
 import { HttpClientTestingModule } from '@angular/common/http/testing';
 import { of } from 'rxjs';
 import { Store, StoreModule } from '@ngrx/store';
-import { MockStore, provideMockStore } from 'src/app/mock-store/testing';
 import { InlineSVGModule } from 'ng-inline-svg';
+
+import { MockStore, provideMockStore } from 'src/app/mock-store/testing';
 import { TestSuiteDetailsMenuTestArtifactsComponent } from './test-suite-details-menu-test-artifacts.component';
 import { TestReport } from 'src/app/models/test-report.model';
 import { TestReportState } from 'src/app/store/reports/reducer';
 import { TestSuite } from 'src/app/models/test-suite.model';
 import { TestArtifact } from '../../../../models/test-artifact.model';
 import artifactsReducer, { ArtifactStoreState } from 'src/app/store/artifacts/reducer';
+import { ZipperService } from 'src/app/services/zipper.service';
 
 describe('TestSuiteDetailsMenuTestArtifactsComponent', () => {
   let fixture: ComponentFixture<TestSuiteDetailsMenuTestArtifactsComponent>;
@@ -20,9 +22,9 @@ describe('TestSuiteDetailsMenuTestArtifactsComponent', () => {
     testReport: TestReportState;
     testArtifact: {
       testArtifacts: TestArtifact[];
-      downloadAllURL: string;
     };
   }>;
+  let zipper: ZipperService;
   let testReport: TestReport;
   let testSuite: TestSuite;
 
@@ -49,6 +51,12 @@ describe('TestSuiteDetailsMenuTestArtifactsComponent', () => {
               data: of({ testSuite: { selectedTestReport: testReport, selectedTestSuite: testSuite } })
             }
           }
+        },
+        {
+          provide: ZipperService,
+          useValue: {
+            zipFilesFromUrls: jasmine.createSpy('zipFilesFromUrls')
+          }
         }
       ]
     }).compileComponents();
@@ -58,8 +66,10 @@ describe('TestSuiteDetailsMenuTestArtifactsComponent', () => {
     testReport.testSuites = [testSuite];
     testReport.id = 1;
     testSuite.id = 2;
+    testSuite.suiteName = 'Some Device';
 
     fixture = TestBed.createComponent(TestSuiteDetailsMenuTestArtifactsComponent);
+    zipper = TestBed.get(ZipperService);
     testArtifactsComponent = fixture.debugElement.componentInstance;
   });
 
@@ -88,8 +98,7 @@ describe('TestSuiteDetailsMenuTestArtifactsComponent', () => {
         testArtifact: {
           testArtifacts: Array(3)
             .fill(null)
-            .map(() => new TestArtifact()),
-          downloadAllURL: 'https://bitrise.io/download-all'
+            .map(() => new TestArtifact())
         }
       });
 
@@ -99,11 +108,32 @@ describe('TestSuiteDetailsMenuTestArtifactsComponent', () => {
     it('renders as many test artifact items as there are test artifacts', () => {
       expect(fixture.debugElement.queryAll(By.css('.test-artifact')).length).toBe(3);
     });
+  });
 
-    it('has a button for downloading all the test artifacts, with the appropriate link', () => {
-      expect(
-        fixture.debugElement.query(By.css('.download-all')).nativeElement.attributes.getNamedItem('href').value
-      ).toBe('https://bitrise.io/download-all');
+  describe('downloadAll', () => {
+    const testArtifacts = [
+      new TestArtifact().deserialize({ filename: 'file-1', downloadURL: ' download-url-1' }),
+      new TestArtifact().deserialize({ filename: 'file-2', downloadURL: ' download-url-2' })
+    ];
+    beforeEach(() => {
+      testArtifactsComponent.suiteName = 'whatever';
+      store.setState({
+        testReport: {
+          ...initialtestReportsState,
+          testReports: [testReport]
+        },
+        testArtifact: { testArtifacts }
+      });
+
+      fixture.detectChanges();
+    });
+
+    it('calls zipper with the screenshots', async () => {
+      testArtifactsComponent.suiteName = 'Some Device';
+      const promise = testArtifactsComponent.downloadAll();
+      const expectedFiles = testArtifacts.map(({ filename, downloadURL: url }) => ({ filename, url }));
+      expect(zipper.zipFilesFromUrls).toHaveBeenCalledWith(expectedFiles, 'some-device-test-artifacts');
+      await promise;
     });
   });
 });

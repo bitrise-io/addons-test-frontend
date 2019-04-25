@@ -1,9 +1,9 @@
 <div class="name">
   <span>Test Artifacts</span>
-  <a class="download-all" *ngIf="downloadAllTestArtifactsURL" href="{{ downloadAllTestArtifactsURL }}" target="_blank">
+  <button class="download-all" (click)="downloadAll()">
     <div class="arrow" inlineSVG="/assets/images/download.svg"></div>
     <span>Download All Files</span>
-  </a>
+  </button>
 </div>
 <div class="test-artifacts" *ngIf="testArtifacts">
   <div class="test-artifact" *ngFor="let testArtifact of testArtifacts">
