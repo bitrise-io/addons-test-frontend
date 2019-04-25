@@ -60,8 +60,8 @@
         }
       ],
       "outcome": "success",
-      "orientation": "portrait",
-      "locale": "English",
+      "orientation": "landscape",
+      "locale": "Traditional Chinese",
       "step_id": "ijklmnop123456789",
       "output_urls": {
         "video_url": "http://commondatastorage.googleapis.com/gtv-videos-bucket/sample/BigBuckBunny.mp4",
@@ -71,7 +71,12 @@
           "file.txt": "https://www.bitrise.io/assets/svg/logo-bitrise.svg",
           "file.apk": "https://www.bitrise.io/assets/svg/logo-bitrise.svg",
           "file.png": "https://www.bitrise.io/assets/svg/logo-bitrise.svg"
-        }
+        },
+        "screenshot_urls": [
+          "https://www.bitrise.io/assets/svg/logo-bitrise.svg",
+          "https://www.bitrise.io/assets/svg/logo-bitrise.svg",
+          "https://www.bitrise.io/assets/svg/logo-bitrise.svg"
+        ]
       },
       "test_type": "instrumentation",
       "test_issues": [

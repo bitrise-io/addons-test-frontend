@@ -30,7 +30,7 @@ export class TestReportWrapperComponent implements OnInit, OnDestroy {
     this.combinedSubscription = combineLatest(this.activatedRoute.params, this.testReports$)
       .pipe(
         map(([params, reports]) => {
-          this.testReport = reports.find((testReport: TestReport) => testReport.id === Number(params['testReportId']));
+          this.testReport = reports.find((testReport: TestReport) => testReport.id === params['testReportId']);
         })
       )
       .subscribe();

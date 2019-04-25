@@ -130,9 +130,15 @@ export class ProviderService {
     testReport: TestReport
   ) {
     testReport.type = TestReportType.uiTest;
+    testReport.provider = Provider.firebaseTestlab;
 
-    testReport.testSuites = testReportDetailsResponse.map((testSuiteResponse: FirebaseTestlabTestSuiteResponse) =>
-      this.deserializeFirebaseTestlabTestSuite(testSuiteResponse)
+    testReport.testSuites = testReportDetailsResponse.map(
+      (testSuiteResponse: FirebaseTestlabTestSuiteResponse, index: number) => {
+        const testSuite = this.deserializeFirebaseTestlabTestSuite(testSuiteResponse);
+        testSuite.id = index;
+
+        return testSuite;
+      }
     );
 
     return testReport;
@@ -183,6 +189,7 @@ export class ProviderService {
         filename: filenameRegExp.test(screenshotURL) ? filenameRegExp.exec(screenshotURL)[1] : null
       };
     });
+    testSuite.testCasesURL = testSuiteResponse.output_urls.test_suite_xml_url;
     testSuite.artifacts = Object.entries(testSuiteResponse.output_urls.asset_urls).map(
       ([artifactFilename, artifactURL]) => {
         const testArtifact = new TestArtifact();
@@ -203,8 +210,12 @@ export class ProviderService {
     testReport: TestReport
   ) {
     testReport.type = TestReportType.unitTest;
-    testReport.testSuites = testReportDetailsResponse.test_suites.map((testSuiteResponse) => {
-      return this.deserializeJUnitXMLTestSuite(testSuiteResponse, testReportDetailsResponse);
+    testReport.provider = Provider.jUnitXML;
+    testReport.testSuites = testReportDetailsResponse.test_suites.map((testSuiteResponse, index: number) => {
+      const testSuite = this.deserializeJUnitXMLTestSuite(testSuiteResponse, testReportDetailsResponse);
+      testSuite.id = index;
+
+      return testSuite;
     });
 
     return testReport;
@@ -218,10 +229,12 @@ export class ProviderService {
 
     if (testSuiteResponse.totals.tests == testSuiteResponse.totals.passed) {
       testSuite.status = TestSuiteStatus.passed;
-    } else if (testSuiteResponse.totals.skipped > 0) {
-      testSuite.status = TestSuiteStatus.skipped;
-    } else {
+    } else if (testSuiteResponse.totals.failed > 0) {
       testSuite.status = TestSuiteStatus.failed;
+    } else if (testSuiteResponse.totals.error > 0) {
+      testSuite.status = TestSuiteStatus.failed;
+    } else {
+      testSuite.status = TestSuiteStatus.skipped;
     }
 
     testSuite.deviceName = null;
@@ -240,9 +253,9 @@ export class ProviderService {
     });
     testSuite.videoUrl = null;
     testSuite.logUrl = null;
-    testSuite.testCases = testSuiteResponse.tests.map((testCaseResponse) => {
-      return this.deserializeJUnitXMLTestCase(testCaseResponse);
-    });
+    testSuite.testCases = testSuiteResponse.tests.map((testCaseResponse) =>
+      this.deserializeJUnitXMLTestCase(testCaseResponse)
+    );
 
     return testSuite;
   }

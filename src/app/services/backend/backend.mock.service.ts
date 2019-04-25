@@ -2,7 +2,7 @@ import { Injectable } from '@angular/core';
 import { Observable, of } from 'rxjs';
 
 import { BackendService, TestArtifactsResult, TestReportsResult, LogResult, TestReportResult } from './backend.model';
-import { ProviderService } from './provider.service';
+import { ProviderService, Provider } from './provider.service';
 import { Performance } from 'src/app/models/performance.model';
 import { TestArtifact, TestArtifactResponse } from 'src/app/models/test-artifact.model';
 import { TestReportResponse, TestReport } from 'src/app/models/test-report.model';
@@ -20,36 +20,6 @@ export class MockBackendService implements BackendService {
     return of(performance);
   }
 
-  getArtifacts(testReport: TestReport, testSuite: TestSuite): Observable<TestArtifactsResult> {
-    if (!MOCKED_DATA[`test_report/${testReport.id}`]) {
-      return of({
-        testArtifacts: null,
-        downloadAllURL: null
-      });
-    }
-
-    const testSuiteDataForArtifact = MOCKED_DATA[`test_report/${testReport.id}`].testSuites.find(
-      (testSuiteData: any) => testSuiteData.id === testSuite.id
-    );
-    if (!testSuiteDataForArtifact) {
-      return of({
-        testArtifacts: null,
-        downloadAllURL: null
-      });
-    }
-
-    const testArtifacts: TestArtifact[] = testSuiteDataForArtifact.testArtifacts.list.map(
-      (testArtifactResponse: TestArtifactResponse) => new TestArtifact().deserialize(testArtifactResponse)
-    );
-
-    const downloadAllURL = testSuiteDataForArtifact.testArtifacts.downloadAllURL;
-
-    return of({
-      testArtifacts,
-      downloadAllURL
-    });
-  }
-
   getReports(): Observable<TestReportsResult> {
     const { test_reports }: any = MOCKED_DATA;
 
@@ -63,6 +33,13 @@ export class MockBackendService implements BackendService {
   getReportDetails(testReport: TestReport): Observable<TestReportResult> {
     const testReportDetailsResponse = MOCKED_DATA[`test_report/${testReport.id}`];
     this.providerService.deserializeTestReportDetails(testReportDetailsResponse, testReport);
+
+    if (testReport.provider === Provider.firebaseTestlab) {
+      testReport.testSuites.forEach((testSuite: TestSuite) => {
+        const testCasesResponse = MOCKED_DATA[testSuite.testCasesURL];
+        testSuite.testCases = this.providerService.deserializeFirebaseTestlabTestCases(testCasesResponse);
+      });
+    }
 
     return of({ testReport });
   }

@@ -1,6 +1,7 @@
 import { Injectable } from '@angular/core';
 import { Deserializable } from './deserializable.model';
-import { TestSuite, TestSuiteStatus, TestSuiteResponse } from './test-suite.model';
+import { TestSuite, TestSuiteStatus } from './test-suite.model';
+import { Provider } from '../services/backend/provider.service';
 
 export enum TestReportType {
   uiTest = 'uiTest',
@@ -17,6 +18,7 @@ export class TestReport implements Deserializable {
   id: number;
   name: string;
   type: TestReportType;
+  provider: Provider;
   testSuites: TestSuite[];
 
   get typeCssClass(): string {

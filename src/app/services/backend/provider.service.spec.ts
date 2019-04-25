@@ -202,15 +202,21 @@ describe('ProviderService', () => {
       expect(service.deserializeFirebaseTestlabTestReportDetails([], testReport)).toBe(testReport);
     });
 
-    it('sets type to UI test', () => {
+    it('sets type to UI test, provider to Firebase Testlab', () => {
       service.deserializeFirebaseTestlabTestReportDetails([], testReport);
       expect(testReport.type).toBe(TestReportType.uiTest);
+      expect(testReport.provider).toBe(Provider.firebaseTestlab);
     });
 
-    it('deserializes test suites', () => {
-      service.deserializeFirebaseTestlabTestReportDetails([basicFirebaseTestlabTestSuiteResponse()], testReport);
+    it('deserializes test suites, sets indexes as IDs', () => {
+      service.deserializeFirebaseTestlabTestReportDetails(
+        [basicFirebaseTestlabTestSuiteResponse(), basicFirebaseTestlabTestSuiteResponse()],
+        testReport
+      );
 
-      expect(testReport.testSuites.length).toBe(1);
+      expect(testReport.testSuites.length).toBe(2);
+      expect(testReport.testSuites[0].id).toBe(0);
+      expect(testReport.testSuites[1].id).toBe(1);
     });
   });
 
@@ -339,7 +345,7 @@ describe('ProviderService', () => {
       ).toBe(testReport);
     });
 
-    it('sets type to unit test', () => {
+    it('sets type to unit test, provider to JUnit XML', () => {
       service.deserializeJUnitXMLTestReportDetails(
         {
           id: 'test-report',
@@ -351,20 +357,23 @@ describe('ProviderService', () => {
       );
 
       expect(testReport.type).toBe(TestReportType.unitTest);
+      expect(testReport.provider).toBe(Provider.jUnitXML);
     });
 
-    it('deserializes test suites', () => {
+    it('deserializes test suites, sets indexes as IDs', () => {
       service.deserializeJUnitXMLTestReportDetails(
         {
           id: 'test-report',
           name: 'Test Report',
-          test_suites: [basicJUnitXMLTestSuiteResponse()],
+          test_suites: [basicJUnitXMLTestSuiteResponse(), basicJUnitXMLTestSuiteResponse()],
           test_assets: []
         },
         testReport
       );
 
-      expect(testReport.testSuites.length).toBe(1);
+      expect(testReport.testSuites.length).toBe(2);
+      expect(testReport.testSuites[0].id).toBe(0);
+      expect(testReport.testSuites[1].id).toBe(1);
     });
   });
 
@@ -465,6 +474,36 @@ describe('ProviderService', () => {
             skipped: 0,
             failed: 0,
             error: 1,
+            duration: 1000
+          };
+        },
+        expectedStatusName: 'failed',
+        expectedStatus: TestSuiteStatus.failed
+      },
+      {
+        statusName: 'some failed, some skipped',
+        specPreparation: (testSuiteResponse: JUnitXMLTestSuiteResponse) => {
+          testSuiteResponse.totals = {
+            tests: 3,
+            passed: 0,
+            skipped: 1,
+            failed: 2,
+            error: 0,
+            duration: 1000
+          };
+        },
+        expectedStatusName: 'failed',
+        expectedStatus: TestSuiteStatus.failed
+      },
+      {
+        statusName: 'some error, some skipped',
+        specPreparation: (testSuiteResponse: JUnitXMLTestSuiteResponse) => {
+          testSuiteResponse.totals = {
+            tests: 3,
+            passed: 0,
+            skipped: 1,
+            failed: 0,
+            error: 2,
             duration: 1000
           };
         },
