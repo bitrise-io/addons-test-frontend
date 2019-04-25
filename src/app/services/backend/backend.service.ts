@@ -23,8 +23,7 @@ export class RealBackendService implements BackendService {
   getArtifacts(testReport: TestReport, testSuite: TestSuite): Observable<TestArtifactsResult> {
     if (!MOCKED_DATA[`test_report/${testReport.id}`]) {
       return of({
-        testArtifacts: null,
-        downloadAllURL: null
+        testArtifacts: null
       });
     }
 
@@ -33,8 +32,7 @@ export class RealBackendService implements BackendService {
     );
     if (!testSuiteDataForArtifact) {
       return of({
-        testArtifacts: null,
-        downloadAllURL: null
+        testArtifacts: null
       });
     }
 
@@ -42,11 +40,8 @@ export class RealBackendService implements BackendService {
       (testArtifactResponse: TestArtifactResponse) => new TestArtifact().deserialize(testArtifactResponse)
     );
 
-    const downloadAllURL = testSuiteDataForArtifact.testArtifacts.downloadAllURL;
-
     return of({
-      testArtifacts,
-      downloadAllURL
+      testArtifacts
     });
   }
 

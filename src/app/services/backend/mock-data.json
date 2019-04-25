@@ -52,8 +52,7 @@
               "filename": "file.png",
               "downloadURL": "https://www.bitrise.io/assets/svg/logo-bitrise.svg"
             }
-          ],
-          "downloadAllURL": "https://www.bitrise.io/assets/svg/logo-bitrise.svg"
+          ]
         }
       }
     ]
@@ -93,7 +92,6 @@
         ],
         "orientation": "portrait",
         "locale": "English",
-        "downloadAllScreenshotsURL": "http://some-url-to.download-screen.shots",
         "screenshots": [
           {
             "url": "https://loremflickr.com/425/667",
@@ -138,8 +136,7 @@
               "filename": "file.png",
               "downloadURL": "https://www.bitrise.io/assets/svg/logo-bitrise.svg"
             }
-          ],
-          "downloadAllURL": "https://www.bitrise.io/assets/svg/logo-bitrise.svg"
+          ]
         },
         "outputUrls": {
           "video": "http://commondatastorage.googleapis.com/gtv-videos-bucket/sample/BigBuckBunny.mp4",
@@ -177,7 +174,6 @@
         ],
         "orientation": "portrait",
         "locale": "Japanese",
-        "downloadAllScreenshotsURL": "http://some-url-to.download-screen.shots",
         "screenshots": [
           {
             "url": "https://loremflickr.com/384/512",
@@ -202,8 +198,7 @@
               "filename": "file.png",
               "downloadURL": "https://www.bitrise.io/assets/svg/logo-bitrise.svg"
             }
-          ],
-          "downloadAllURL": "https://www.bitrise.io/assets/svg/logo-bitrise.svg"
+          ]
         },
         "outputUrls": {
           "video": "http://commondatastorage.googleapis.com/gtv-videos-bucket/sample/BigBuckBunny.mp4",
@@ -218,7 +213,6 @@
         "durationInMilliseconds": 3700000,
         "orientation": "landscape",
         "locale": "Traditional chinese",
-        "downloadAllScreenshotsURL": "http://some-url-to.download-screen.shots",
         "screenshots": [
           {
             "url": "https://loremflickr.com/640/400",
@@ -251,8 +245,7 @@
               "filename": "file.png",
               "downloadURL": "https://www.bitrise.io/assets/svg/logo-bitrise.svg"
             }
-          ],
-          "downloadAllURL": "https://www.bitrise.io/assets/svg/logo-bitrise.svg"
+          ]
         },
         "outputUrls": {
           "video": "http://commondatastorage.googleapis.com/gtv-videos-bucket/sample/BigBuckBunny.mp4",
@@ -267,7 +260,6 @@
         "durationInMilliseconds": 7200000,
         "orientation": "landscape",
         "locale": "Japanese",
-        "downloadAllScreenshotsURL": "http://some-url-to.download-screen.shots",
         "screenshots": [
           {
             "url": "https://loremflickr.com/667/425",
@@ -300,8 +292,7 @@
               "filename": "file.png",
               "downloadURL": "https://www.bitrise.io/assets/svg/logo-bitrise.svg"
             }
-          ],
-          "downloadAllURL": "https://www.bitrise.io/assets/svg/logo-bitrise.svg"
+          ]
         },
         "outputUrls": {
           "video": "http://commondatastorage.googleapis.com/gtv-videos-bucket/sample/BigBuckBunny.mp4",
@@ -345,7 +336,6 @@
         ],
         "orientation": "portrait",
         "locale": "Japanese",
-        "downloadAllScreenshotsURL": "http://some-url-to.download-screen.shots",
         "screenshots": [
           {
             "url": "https://loremflickr.com/270/480",
@@ -370,8 +360,7 @@
               "filename": "file.png",
               "downloadURL": "https://www.bitrise.io/assets/svg/logo-bitrise.svg"
             }
-          ],
-          "downloadAllURL": "https://www.bitrise.io/assets/svg/logo-bitrise.svg"
+          ]
         },
         "outputUrls": {
           "video": "http://commondatastorage.googleapis.com/gtv-videos-bucket/sample/BigBuckBunny.mp4",
@@ -430,7 +419,6 @@
         ],
         "orientation": "portrait",
         "locale": "English",
-        "downloadAllScreenshotsURL": "http://some-url-to.download-screen.shots",
         "screenshots": [
           {
             "url": "https://loremflickr.com/425/667",
@@ -459,8 +447,7 @@
               "filename": "file.png",
               "downloadURL": "https://www.bitrise.io/assets/svg/logo-bitrise.svg"
             }
-          ],
-          "downloadAllURL": "https://www.bitrise.io/assets/svg/logo-bitrise.svg"
+          ]
         },
         "outputUrls": {
           "video": "http://commondatastorage.googleapis.com/gtv-videos-bucket/sample/BigBuckBunny.mp4",
@@ -475,7 +462,6 @@
         "durationInMilliseconds": 20000,
         "orientation": "landscape",
         "locale": "English",
-        "downloadAllScreenshotsURL": "http://some-url-to.download-screen.shots",
         "screenshots": [
           {
             "url": "https://loremflickr.com/667/425",
@@ -504,8 +490,7 @@
               "filename": "file.png",
               "downloadURL": "https://www.bitrise.io/assets/svg/logo-bitrise.svg"
             }
-          ],
-          "downloadAllURL": "https://www.bitrise.io/assets/svg/logo-bitrise.svg"
+          ]
         },
         "outputUrls": {
           "video": "http://commondatastorage.googleapis.com/gtv-videos-bucket/sample/BigBuckBunny.mp4",

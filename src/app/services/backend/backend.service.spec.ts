@@ -58,7 +58,6 @@ describe('BackendService', () => {
       service.getArtifacts(testReport, testSuite).subscribe((result: TestArtifactsResult) => {
         let keys = Object.keys(result);
         expect(keys).toContain('testArtifacts');
-        expect(keys).toContain('downloadAllURL');
 
         keys = Object.keys(result.testArtifacts[0]);
         expect(keys).toContain('filename');
