@@ -12,6 +12,7 @@ import { TestReport } from 'src/app/models/test-report.model';
 import { TestReportState } from 'src/app/store/reports/reducer';
 import { TestSuiteDetailsMenuModule } from '../menu.module';
 import { TestSuite } from 'src/app/models/test-suite.model';
+import { ZipperService } from 'src/app/services/zipper.service';
 
 describe('TestSuiteDetailsMenuScreenshotsComponent', () => {
   let fixture: ComponentFixture<TestSuiteDetailsMenuScreenshotsComponent>;
@@ -19,6 +20,7 @@ describe('TestSuiteDetailsMenuScreenshotsComponent', () => {
   let store: MockStore<{
     testReport: TestReportState;
   }>;
+  let zipper: ZipperService;
   let testReport: TestReport;
   let testSuite: TestSuite;
 
@@ -34,6 +36,7 @@ describe('TestSuiteDetailsMenuScreenshotsComponent', () => {
     testReport.testSuites = [testSuite];
     testReport.id = 1;
     testSuite.id = 2;
+    testSuite.suiteName = 'Some Device';
     testSuite.screenshots = [
       {
         url: 'https://loremflickr.com/425/667',
@@ -44,7 +47,6 @@ describe('TestSuiteDetailsMenuScreenshotsComponent', () => {
         filename: 'screenshot-whatever-2.portrait.png'
       }
     ];
-    testSuite.downloadAllScreenshotsURL = 'http://download-all.screen.shots';
 
     TestBed.configureTestingModule({
       imports: [TestSuiteDetailsMenuModule, InlineSVGModule.forRoot(), HttpClientTestingModule],
@@ -57,6 +59,12 @@ describe('TestSuiteDetailsMenuScreenshotsComponent', () => {
               data: of({ testSuite: { selectedTestReport: testReport, selectedTestSuite: testSuite } })
             }
           }
+        },
+        {
+          provide: ZipperService,
+          useValue: {
+            zipFilesFromUrls: jasmine.createSpy('zipFilesFromUrls')
+          }
         }
       ]
     }).compileComponents();
@@ -64,6 +72,7 @@ describe('TestSuiteDetailsMenuScreenshotsComponent', () => {
 
   beforeEach(inject([Store], (mockStore: MockStore<{ testReport: TestReportState }>) => {
     fixture = TestBed.createComponent(TestSuiteDetailsMenuScreenshotsComponent);
+    zipper = TestBed.get(ZipperService);
     component = fixture.componentInstance;
     store = mockStore;
     store.setState({
@@ -94,6 +103,14 @@ describe('TestSuiteDetailsMenuScreenshotsComponent', () => {
 
     it('has a download button for all the screenshots', () => {
       expect(fixture.debugElement.query(By.css('.screenshots__download-all'))).not.toBeNull();
+    });
+  });
+
+  describe('downloadAll', () => {
+    it('calls zipper with the screenshots', async () => {
+      const promise = component.downloadAll();
+      expect(zipper.zipFilesFromUrls).toHaveBeenCalledWith(component.screenshots, 'some-device-screenshots');
+      await promise;
     });
   });
 });

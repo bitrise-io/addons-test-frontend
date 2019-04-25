@@ -1,15 +1,10 @@
 <div class="screenshots">
   <bitrise-heading-text>
     <span>Screenshots</span>
-    <a
-      class="screenshots__download-all"
-      *ngIf="downloadAllScreenshotsURL"
-      [href]="downloadAllScreenshotsURL"
-      target="_blank"
-    >
+    <button class="screenshots__download-all" (click)="downloadAll()">
       <div class="arrow" inlineSVG="/assets/images/download.svg"></div>
       <span>Download All Screenshots</span>
-    </a>
+    </button>
   </bitrise-heading-text>
   <div [ngClass]="gridCssClass" *ngIf="screenshots">
     <div class="screenshots__grid__item" *ngFor="let screenshot of screenshots">

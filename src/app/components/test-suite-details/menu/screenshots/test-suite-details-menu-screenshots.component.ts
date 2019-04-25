@@ -1,9 +1,11 @@
 import { Component, OnInit, OnDestroy } from '@angular/core';
 import { Subscription } from 'rxjs';
 import { ActivatedRoute } from '@angular/router';
+import * as kebabCase from 'lodash.kebabcase';
 
 import { TestReport } from 'src/app/models/test-report.model';
 import { TestSuite, TestSuiteScreenshot } from 'src/app/models/test-suite.model';
+import { ZipperService, RemoteFile } from 'src/app/services/zipper.service';
 
 @Component({
   selector: 'bitrise-test-suite-details-menu-screenshots',
@@ -13,8 +15,9 @@ import { TestSuite, TestSuiteScreenshot } from 'src/app/models/test-suite.model'
 export class TestSuiteDetailsMenuScreenshotsComponent implements OnInit, OnDestroy {
   subscription = new Subscription();
   screenshots: TestSuiteScreenshot[];
-  downloadAllScreenshotsURL: string;
   orientation: 'landscape' | 'portrait';
+  suiteName: string;
+  generatingZip = false;
 
   get gridCssClass() {
     let cssClass = 'screenshots__grid';
@@ -26,7 +29,7 @@ export class TestSuiteDetailsMenuScreenshotsComponent implements OnInit, OnDestr
     return cssClass;
   }
 
-  constructor(private activatedRoute: ActivatedRoute) {}
+  constructor(private activatedRoute: ActivatedRoute, private zipper: ZipperService) {}
 
   ngOnInit() {
     this.subscription.add(
@@ -35,14 +38,28 @@ export class TestSuiteDetailsMenuScreenshotsComponent implements OnInit, OnDestr
           const testSuite = data.testSuite.selectedTestSuite;
 
           if (testSuite) {
-            this.screenshots = testSuite.screenshots;
-            this.downloadAllScreenshotsURL = testSuite.downloadAllScreenshotsURL;
-            this.orientation = testSuite.orientation;
-          }
+            const { screenshots, orientation, suiteName, deviceName, deviceOperatingSystem, locale } = testSuite;
 
+            this.screenshots = screenshots;
+            this.orientation = orientation;
+
+            this.suiteName = suiteName || `${deviceName} ${deviceOperatingSystem} ${locale} ${orientation}`;
+          }
         }
       )
     );
+  }
+
+  async downloadAll() {
+    if (this.generatingZip) {
+      return;
+    }
+
+    this.generatingZip = true;
+
+    const zipName = `${kebabCase(this.suiteName)}-screenshots`;
+    await this.zipper.zipFilesFromUrls(<RemoteFile[]>this.screenshots, zipName);
+    this.generatingZip = false;
   }
 
   ngOnDestroy() {
