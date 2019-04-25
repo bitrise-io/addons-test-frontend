@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { Deserializable } from './deserializable.model';
 import { TestSuite, TestSuiteStatus } from './test-suite.model';
-import { Provider } from '../services/backend/provider.service';
+import { Provider } from '../services/provider/provider.service';
 
 export enum TestReportType {
   uiTest = 'uiTest',

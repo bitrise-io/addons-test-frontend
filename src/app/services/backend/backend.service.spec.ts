@@ -12,7 +12,7 @@ import { MockServicesModule } from '../services.mock.module';
 import { TestReport } from 'src/app/models/test-report.model';
 import { TestSuite } from 'src/app/models/test-suite.model';
 import { Performance } from 'src/app/models/performance.model';
-import { ProviderService } from './provider.service';
+import { ProviderService } from 'src/app/services/provider/provider.service';
 import { Log } from 'src/app/models/log.model';
 
 describe('BackendService', () => {

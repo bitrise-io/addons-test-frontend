@@ -2,11 +2,10 @@ import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { Observable, of } from 'rxjs';
 
-import { BackendService, TestArtifactsResult, TestReportsResult, LogResult, TestReportResult } from './backend.model';
-import { ProviderService, Provider } from './provider.service';
+import { BackendService, TestReportsResult, LogResult, TestReportResult } from './backend.model';
+import { ProviderService, Provider } from 'src/app/services/provider/provider.service';
 import { Performance } from 'src/app/models/performance.model';
-import { TestArtifact, TestArtifactResponse } from 'src/app/models/test-artifact.model';
-import { TestReportResponse, TestReport, TestReportType } from 'src/app/models/test-report.model';
+import { TestReportResponse, TestReport } from 'src/app/models/test-report.model';
 import { TestSuite } from 'src/app/models/test-suite.model';
 import { Log, RawLog } from 'src/app/models/log.model';
 
