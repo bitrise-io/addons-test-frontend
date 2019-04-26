@@ -15,15 +15,27 @@ export class TestSuiteDetailsMenuPerformanceComponent implements OnInit {
   metrics = [
     {
       id: 'cpu',
-      cssClass: 'cpu'
+      name: 'CPU performance',
+      cssClass: 'cpu',
+      currentTimeInMilliseconds: undefined,
+      sampleGroups: [{ id: 'cpu_samples', samples: undefined }]
     },
     {
       id: 'memory',
-      cssClass: 'memory'
+      name: 'Memory usage (KB)',
+      cssClass: 'memory',
+      currentTimeInMilliseconds: undefined,
+      sampleGroups: [{ id: 'ram_samples', samples: undefined }]
     },
     {
       id: 'network',
-      cssClass: 'network'
+      name: 'Network (KB/S)',
+      cssClass: 'network',
+      currentTimeInMilliseconds: undefined,
+      sampleGroups: [
+        { id: 'nwu_samples', name: 'upload', samples: undefined },
+        { id: 'nwd_samples', name: 'download', samples: undefined }
+      ]
     }
   ];
   durationInMilliseconds: number;
@@ -39,28 +51,36 @@ export class TestSuiteDetailsMenuPerformanceComponent implements OnInit {
   ngOnInit() {
     this.store.dispatch(new FetchPerformance());
 
-    this.performance$.subscribe(performance => {
+    this.performance$.subscribe((performance) => {
       this.hasLoaded = true;
       this.parsePerformanceData(performance);
     });
   }
 
   parsePerformanceData = function(performanceData: Performance) {
-    this.durationInMilliseconds = performanceData.durationInMilliseconds;
+    this.metrics.forEach((metric) => {
+      metric.sampleGroups.forEach((sampleGroup) => {
+        sampleGroup.samples = Object.keys(performanceData[sampleGroup.id]).map((time) => {
+          return {
+            time: Number(time),
+            value: performanceData[sampleGroup.id][time]
+          };
+        });
 
-    Object.keys(performanceData.metrics).forEach((typeId: string) => {
-      const metricData = performanceData.metrics[typeId];
-      const metricWithType = this.metrics.find(metric => metric.id === typeId);
-      metricWithType.name = metricData.name;
-      metricWithType.currentTimeInMilliseconds = metricData.currentTimeInMilliseconds;
-      metricWithType.sampleGroups = metricData.sampleGroups;
+        this.durationInMilliseconds = Math.max(
+          Number(Object.keys(performanceData[sampleGroup.id])[Object.keys(performanceData[sampleGroup.id]).length - 1]),
+          this.durationInMilliseconds | 0
+        );
+      });
     });
 
     this.metrics.forEach((metric: any) => {
+      metric.currentTimeInMilliseconds = this.durationInMilliseconds / 2;
+
       let valueGridTop: number;
 
       metric.sampleGroups.forEach((sampleGroup: { title?: string; samples: [] }) => {
-        valueGridTop = this.highestValueFromSamples(sampleGroup.samples);
+        valueGridTop = Math.max(this.highestValueFromSamples(sampleGroup.samples), valueGridTop | 0);
       });
 
       if (valueGridTop === 0) {
@@ -74,7 +94,7 @@ export class TestSuiteDetailsMenuPerformanceComponent implements OnInit {
         });
 
       metric.sampleCurves = metric.sampleGroups.map((sampleGroup: { title?: string; samples: [] }) => {
-        return this.pathCurveFromSamples(sampleGroup.samples);
+        return this.pathCurveFromSamples(sampleGroup.samples, valueGridTop);
       });
     });
 
@@ -121,12 +141,12 @@ export class TestSuiteDetailsMenuPerformanceComponent implements OnInit {
       value: number;
     }[]
   ) {
-    return (100 * this.sampleValueAtCurrentTime(metric, samples)) / this.highestValueFromSamples(samples);
+    return (100 * this.sampleValueAtCurrentTime(metric, samples)) / metric.valueGrid[0];
   };
 
   printableSampleValuesAtCurrentTime = function(metric) {
     return metric.sampleGroups
-      .map(sampleGroup => {
+      .map((sampleGroup) => {
         return this.printableValueForMetric(this.sampleValueAtCurrentTime(metric, sampleGroup.samples), metric);
       })
       .join(', ');
@@ -154,7 +174,7 @@ export class TestSuiteDetailsMenuPerformanceComponent implements OnInit {
     samples: {
       time: number;
       value: number;
-    }[]
+    }[], valueGridTop: number
   ) {
     let pathCurve = 'M-100 200';
 
@@ -174,7 +194,7 @@ export class TestSuiteDetailsMenuPerformanceComponent implements OnInit {
         const positionY =
           100 -
           (100 * sample.value) /
-            (this.highestValueFromSamples(samples) > 0 ? this.highestValueFromSamples(samples) : 1);
+            (valueGridTop > 0 ? valueGridTop : 1);
 
         if (index === 0) {
           pathCurve += ' L-100 ' + positionY;
