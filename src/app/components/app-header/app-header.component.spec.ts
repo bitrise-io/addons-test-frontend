@@ -89,11 +89,11 @@ describe('AppHeaderComponent', () => {
           filteredReports: [],
           filter: null,
           testReports: [
-            { id: 1, name: 'UI Test A', failedTestSuiteCount: 2 },
-            { id: 2, name: 'UI Test B', failedTestSuiteCount: 0 },
-            { id: 3, name: 'UI Test C', failedTestSuiteCount: 1 },
-            { id: 4, name: 'Unit Test X', failedTestSuiteCount: 3 },
-            { id: 5, name: 'Unit Test Y', failedTestSuiteCount: 6 }
+            { id: '1', name: 'UI Test A', failedTestSuiteCount: 2 },
+            { id: '2', name: 'UI Test B', failedTestSuiteCount: 0 },
+            { id: '3', name: 'UI Test C', failedTestSuiteCount: 1 },
+            { id: '4', name: 'Unit Test X', failedTestSuiteCount: 3 },
+            { id: '5', name: 'Unit Test Y', failedTestSuiteCount: 6 }
           ].map((specConfig) => {
             const testReport = new TestReport();
             testReport.id = specConfig.id;

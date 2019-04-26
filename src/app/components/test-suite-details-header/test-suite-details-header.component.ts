@@ -1,4 +1,5 @@
 import { Component, Input, OnInit } from '@angular/core';
+import { TestReport, TestReportType } from 'src/app/models/test-report.model';
 import { TestSuite } from 'src/app/models/test-suite.model';
 import { TestCase, TestCaseStatus } from 'src/app/models/test-case.model';
 
@@ -8,10 +9,12 @@ import { TestCase, TestCaseStatus } from 'src/app/models/test-case.model';
   styleUrls: ['test-suite-details-header.component.scss']
 })
 export class TestSuiteDetailsHeaderComponent implements OnInit {
+  @Input() testReport: TestReport;
   @Input() testSuite: TestSuite;
   @Input() previousTestSuite: TestSuite;
   @Input() nextTestSuite: TestSuite;
 
+  TestReportType = TestReportType;
   TestCase = TestCase;
 
   orderedTestCaseStatuses = [TestCaseStatus.failed, TestCaseStatus.passed];

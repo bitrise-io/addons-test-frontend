@@ -39,7 +39,7 @@ describe('TestSuiteDetailsMenuLogsComponent', () => {
     testReport = new TestReport();
     testSuite = new TestSuite();
     testReport.testSuites = [testSuite];
-    testReport.id = 1;
+    testReport.id = '1';
     testSuite.id = 2;
     testSuite.logUrl = 'https://bitrise.io/log-url';
 
