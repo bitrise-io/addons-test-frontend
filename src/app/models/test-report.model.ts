@@ -1,6 +1,7 @@
 import { Injectable } from '@angular/core';
 import { Deserializable } from './deserializable.model';
-import { TestSuite, TestSuiteStatus, TestSuiteResponse } from './test-suite.model';
+import { TestSuite, TestSuiteStatus } from './test-suite.model';
+import { Provider } from '../services/provider/provider.service';
 
 export enum TestReportType {
   uiTest = 'uiTest',
@@ -8,24 +9,17 @@ export enum TestReportType {
 }
 
 export type TestReportResponse = {
-  id: number;
+  id: string;
   name: string;
-  testSuites: TestSuiteResponse[];
 };
 
 @Injectable()
 export class TestReport implements Deserializable {
-  id: number;
+  id: string;
   name: string;
+  type: TestReportType;
+  provider: Provider;
   testSuites: TestSuite[];
-
-  get type(): TestReportType {
-    if (this.testSuites.find((testSuite) => testSuite.deviceName !== undefined)) {
-      return TestReportType.uiTest;
-    }
-
-    return TestReportType.unitTest;
-  }
 
   get typeCssClass(): string {
     const typeCssClasses = {
@@ -43,14 +37,6 @@ export class TestReport implements Deserializable {
   deserialize(testReportResponse: TestReportResponse) {
     this.id = testReportResponse.id;
     this.name = testReportResponse.name;
-
-    if (testReportResponse.testSuites === undefined) {
-      return this;
-    }
-
-    this.testSuites = testReportResponse.testSuites.map((testSuiteResponse: TestSuiteResponse) =>
-      new TestSuite().deserialize(testSuiteResponse)
-    );
 
     return this;
   }

@@ -1,5 +1,4 @@
 import { Injectable } from '@angular/core';
-import { Deserializable } from './deserializable.model';
 
 export enum TestCaseStatus {
   passed = 1,
@@ -15,7 +14,7 @@ export type TestCaseResponse = {
 };
 
 @Injectable()
-export class TestCase implements Deserializable {
+export class TestCase {
   name: string;
   status: TestCaseStatus;
   durationInMilliseconds: number;
@@ -46,15 +45,5 @@ export class TestCase implements Deserializable {
 
   get statusCssClass() {
     return TestCase.statusCssClass(this.status);
-  }
-
-  deserialize(testCaseData: TestCaseResponse) {
-    this.name = testCaseData.name;
-    this.status = testCaseData.status;
-    this.durationInMilliseconds = testCaseData.durationInMilliseconds;
-    this.context = testCaseData.context;
-    this.summary = testCaseData.summary;
-
-    return this;
   }
 }

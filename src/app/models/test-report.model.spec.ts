@@ -47,7 +47,7 @@ describe('TestReport', () => {
     ].forEach((specConfig: any) => {
       describe(`when test report has type ${specConfig.testReportType}`, () => {
         beforeEach(() => {
-          spyOnProperty(TestReport.prototype, 'type').and.returnValue(specConfig.testReportType);
+          testReport.type = specConfig.testReportType;
         });
 
         it(`returns CSS class ${specConfig.expectedCssClass}`, () => {

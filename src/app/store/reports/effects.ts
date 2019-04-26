@@ -4,13 +4,7 @@ import { Store } from '@ngrx/store';
 import { Observable, of, forkJoin } from 'rxjs';
 import { switchMap, map, withLatestFrom, merge, mergeMap } from 'rxjs/operators';
 
-import {
-  ReportActionTypes,
-  ReceiveReports,
-  ReportActions,
-  FilterReports,
-  ReceiveFilteredReports
-} from './actions';
+import { ReportActionTypes, ReceiveReports, ReportActions, FilterReports, ReceiveFilteredReports } from './actions';
 import {
   BackendService,
   BACKEND_SERVICE,

@@ -15,18 +15,21 @@
     <span class="arrow" inlineSVG="/assets/images/arrow-dashed-tail-right.svg"></span>
   </a>
 </section>
-<section class="details">
-  <div class="device">{{ testSuite.deviceName }}</div>
+<section class="details" *ngIf="testReport && testSuite">
+  <div class="name">
+    <span *ngIf="testReport.type == TestReportType.uiTest">{{ testSuite.deviceName }}</span>
+    <span *ngIf="testReport.type == TestReportType.unitTest">{{ testSuite.suiteName }}</span>
+  </div>
   <div class="minor-details">
     <div class="minor-detail duration">
       <span inlineSVG="/assets/images/clock.svg"></span>
       <span class="text">{{ testSuite.durationInMilliseconds | textFromDurationInMilliseconds }}</span>
     </div>
-    <div class="minor-detail orientation" [ngClass]="testSuite.orientationCssClass">
+    <div class="minor-detail orientation" *ngIf="testReport.type == TestReportType.uiTest" [ngClass]="testSuite.orientationCssClass">
       <span inlineSVG="/assets/images/mobile.svg"></span>
       <span class="text">{{ testSuite.orientation | titlecase }}</span>
     </div>
-    <div class="minor-detail locale">
+    <div class="minor-detail locale" *ngIf="testReport.type == TestReportType.uiTest">
       <span inlineSVG="/assets/images/flag.svg"></span>
       <span class="text">{{ testSuite.locale }}</span>
     </div>

@@ -43,7 +43,7 @@ export class TestSuiteResolve
         };
 
         testSuiteData.selectedTestReport = testReports.find(
-          (testReport: TestReport) => testReport.id === Number(testReportId)
+          (testReport: TestReport) => testReport.id === testReportId
         );
 
         if (testSuiteData.selectedTestReport) {

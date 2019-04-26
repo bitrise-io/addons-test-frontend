@@ -3,7 +3,6 @@ import { TestBed } from '@angular/core/testing';
 import {
   BackendService,
   BACKEND_SERVICE,
-  TestArtifactsResult,
   TestReportsResult,
   LogResult,
   TestReportResult
@@ -13,13 +12,22 @@ import { MockServicesModule } from '../services.mock.module';
 import { TestReport } from 'src/app/models/test-report.model';
 import { TestSuite } from 'src/app/models/test-suite.model';
 import { Performance } from 'src/app/models/performance.model';
-import { TestArtifact } from 'src/app/models/test-artifact.model';
+import { ProviderService } from 'src/app/services/provider/provider.service';
+import { Log } from 'src/app/models/log.model';
 
 describe('BackendService', () => {
   let service: BackendService;
+  const mockProviderService = new ProviderService();
+
   beforeEach(() => {
     TestBed.configureTestingModule({
-      imports: [MockServicesModule]
+      imports: [MockServicesModule],
+      providers: [
+        {
+          provide: ProviderService,
+          useValue: mockProviderService
+        }
+      ]
     });
 
     service = TestBed.get(BACKEND_SERVICE);
@@ -48,23 +56,6 @@ describe('BackendService', () => {
       });
     });
 
-    it('should load artifact data', () => {
-      const testReport = new TestReport();
-      testReport.id = 2;
-
-      const testSuite = new TestSuite();
-      testSuite.id = 5;
-
-      service.getArtifacts(testReport, testSuite).subscribe((result: TestArtifactsResult) => {
-        let keys = Object.keys(result);
-        expect(keys).toContain('testArtifacts');
-
-        keys = Object.keys(result.testArtifacts[0]);
-        expect(keys).toContain('filename');
-        expect(keys).toContain('downloadURL');
-      });
-    });
-
     it('should load report data', () => {
       service.getReports().subscribe((result: TestReportsResult) => {
         let keys = Object.keys(result);
@@ -77,9 +68,14 @@ describe('BackendService', () => {
       });
     });
 
-    it('should load report details', () => {
+    it('should load report details, set test report with it', () => {
       const testReport = new TestReport();
-      testReport.id = 1;
+      testReport.id = '1';
+      testReport.name = 'test report';
+
+      mockProviderService.deserializeTestReportDetails = jasmine
+        .createSpy('deserializeTestReportDetails')
+        .and.callFake(() => { testReport.testSuites = []; });
 
       service.getReportDetails(testReport).subscribe((result: TestReportResult) => {
         let keys = Object.keys(result);
@@ -93,8 +89,10 @@ describe('BackendService', () => {
     });
 
     it('should load log data', () => {
+      spyOn(Log.prototype, 'deserialize').and.returnValue(new Log());
+
       const testReport = new TestReport();
-      testReport.id = 1;
+      testReport.id = '1';
 
       const testSuite = new TestSuite();
       testSuite.id = 2;
