@@ -1,17 +1,21 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, OnDestroy } from '@angular/core';
+import { ActivatedRoute } from '@angular/router';
 import { DatePipe } from '@angular/common';
 import { Store } from '@ngrx/store';
-import { Observable } from 'rxjs';
+import { Observable, Subscription } from 'rxjs';
 
 import { Performance } from 'src/app/models/performance.model';
 import { FetchPerformance } from 'src/app/store/performance/actions';
+import { TestReport } from 'src/app/models/test-report.model';
+import { TestSuite } from 'src/app/models/test-suite.model';
 
 @Component({
   selector: 'bitrise-test-suite-details-menu-performance',
   templateUrl: './test-suite-details-menu-performance.component.html',
   styleUrls: ['./test-suite-details-menu-performance.component.scss']
 })
-export class TestSuiteDetailsMenuPerformanceComponent implements OnInit {
+export class TestSuiteDetailsMenuPerformanceComponent implements OnInit, OnDestroy {
+  subscription = new Subscription();
   metrics = [
     {
       id: 'cpu',
@@ -44,17 +48,35 @@ export class TestSuiteDetailsMenuPerformanceComponent implements OnInit {
 
   performance$: Observable<Performance>;
 
-  constructor(private datePipe: DatePipe, private store: Store<{ performance: Performance }>) {
+  constructor(
+    private datePipe: DatePipe,
+    private store: Store<{ performance: Performance }>,
+    private activatedRoute: ActivatedRoute
+  ) {
     this.performance$ = store.select('performance');
   }
 
   ngOnInit() {
-    this.store.dispatch(new FetchPerformance());
+    let testReport: TestReport;
+    let testSuite: TestSuite;
 
-    this.performance$.subscribe((performance) => {
-      this.hasLoaded = true;
-      this.parsePerformanceData(performance);
-    });
+    this.subscription.add(
+      this.activatedRoute.parent.data.subscribe(
+        (data: { testSuite: { selectedTestReport: TestReport; selectedTestSuite: TestSuite } }) => {
+          testReport = data.testSuite.selectedTestReport;
+          testSuite = data.testSuite.selectedTestSuite;
+
+          this.store.dispatch(new FetchPerformance({ testReport: testReport, testSuite: testSuite }));
+        }
+      )
+    );
+
+    this.subscription.add(
+      this.performance$.subscribe((performance) => {
+        this.hasLoaded = true;
+        this.parsePerformanceData(performance);
+      })
+    );
   }
 
   parsePerformanceData = function(performanceData: Performance) {
@@ -256,4 +278,8 @@ export class TestSuiteDetailsMenuPerformanceComponent implements OnInit {
 
     metric.currentTimeInMilliseconds = (this.durationInMilliseconds * positionX) / fullScaleWidth;
   };
+
+  ngOnDestroy() {
+    this.subscription.unsubscribe();
+  }
 }

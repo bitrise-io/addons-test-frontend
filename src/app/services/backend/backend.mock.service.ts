@@ -14,7 +14,7 @@ import * as MOCKED_DATA from './mock-data.json';
 export class MockBackendService implements BackendService {
   constructor(private providerService: ProviderService) {}
 
-  getPerformance(): Observable<Performance> {
+  getPerformance(testReport: TestReport, testSuite: TestSuite): Observable<Performance> {
     const { performance }: any = MOCKED_DATA;
     return of(performance);
   }
