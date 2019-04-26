@@ -33,6 +33,7 @@ import { ArtifactEffects } from 'src/app/store/artifacts/effects';
 import { PerformanceEffects } from 'src/app/store/performance/effects';
 import { LogEffects } from 'src/app/store/log/effects';
 import { TestSuiteResolve } from './services/test-suite.resolve.service';
+import { ZipperService } from './services/zipper.service';
 
 @NgModule({
   declarations: [
@@ -57,14 +58,14 @@ import { TestSuiteResolve } from './services/test-suite.resolve.service';
       testReport: reportsReducer,
       testArtifact: artifactsReducer,
       performance: performanceReducer,
-      log: logReducer,
+      log: logReducer
     }),
     EffectsModule.forRoot([ReportEffects, ArtifactEffects, PerformanceEffects, LogEffects]),
     InlineSVGModule.forRoot(),
     environment.ServicesModule,
     TestSuiteDetailsMenuModule
   ],
-  providers: [TestSuiteResolve],
+  providers: [TestSuiteResolve, ZipperService],
   bootstrap: [AppComponent]
 })
 export class AppModule {}

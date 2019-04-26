@@ -10,7 +10,6 @@ export const BACKEND_SERVICE = 'BACKEND_SERVICE';
 
 export interface TestArtifactsResult {
   testArtifacts: TestArtifact[];
-  downloadAllURL?: string;
 }
 
 export interface TestReportsResult {

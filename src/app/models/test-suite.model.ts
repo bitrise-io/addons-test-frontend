@@ -25,7 +25,6 @@ export type TestSuiteResponse = {
   locale: string;
   testCases?: TestCaseResponse[];
   screenshots?: TestSuiteScreenshot[];
-  downloadAllScreenshotsURL?: string;
   outputUrls: {
     video: string;
     log: string[];
@@ -51,7 +50,6 @@ export class TestSuite {
   testCases: TestCase[];
   screenshots?: TestSuiteScreenshot[];
   artifacts?: TestArtifact[];
-  downloadAllScreenshotsURL?: string;
   videoUrl: string;
   logUrl: string;
 
