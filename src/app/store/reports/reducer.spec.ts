@@ -13,7 +13,7 @@ describe('Reports reducer', () => {
   it('updates the state with reports received', () => {
     const newState = reportsReducer(
       initialState,
-      new ReceiveReports({ testReports: [new TestReport().deserialize({ id: 1, name: 'whatever' })] })
+      new ReceiveReports({ testReports: [new TestReport().deserialize({ id: '1', name: 'whatever' })] })
     );
 
     expect(newState.testReports.length).toBe(1);
@@ -25,7 +25,7 @@ describe('Reports reducer', () => {
   it('updates the state with filtered reports', () => {
     const newState = reportsReducer(
       initialState,
-      new ReceiveFilteredReports({ testReports: [new TestReport().deserialize({ id: 1, name: 'whatever' })] })
+      new ReceiveFilteredReports({ testReports: [new TestReport().deserialize({ id: '1', name: 'whatever' })] })
     );
 
     expect(newState.filteredReports.length).toBe(1);

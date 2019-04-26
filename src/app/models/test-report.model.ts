@@ -9,13 +9,13 @@ export enum TestReportType {
 }
 
 export type TestReportResponse = {
-  id: number;
+  id: string;
   name: string;
 };
 
 @Injectable()
 export class TestReport implements Deserializable {
-  id: number;
+  id: string;
   name: string;
   type: TestReportType;
   provider: Provider;

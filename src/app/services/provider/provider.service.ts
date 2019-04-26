@@ -227,11 +227,17 @@ export class ProviderService {
   ) {
     const testSuite = new TestSuite();
 
-    if (testSuiteResponse.totals.tests === testSuiteResponse.totals.passed) {
+    const {
+      tests: totalCount,
+      passed: passedCount,
+      failed: failedCount,
+      error: errorCount,
+      duration
+    } = testSuiteResponse.totals;
+
+    if (totalCount === passedCount) {
       testSuite.status = TestSuiteStatus.passed;
-    } else if (testSuiteResponse.totals.failed > 0) {
-      testSuite.status = TestSuiteStatus.failed;
-    } else if (testSuiteResponse.totals.error > 0) {
+    } else if (failedCount > 0 || errorCount > 0) {
       testSuite.status = TestSuiteStatus.failed;
     } else {
       testSuite.status = TestSuiteStatus.skipped;
@@ -240,7 +246,7 @@ export class ProviderService {
     testSuite.deviceName = null;
     testSuite.suiteName = testSuiteResponse.name;
     testSuite.deviceOperatingSystem = null;
-    testSuite.durationInMilliseconds = Number(testSuiteResponse.totals.duration);
+    testSuite.durationInMilliseconds = Number(duration);
     testSuite.orientation = null;
     testSuite.locale = null;
     testSuite.screenshots = null;
@@ -262,20 +268,20 @@ export class ProviderService {
 
   deserializeFirebaseTestlabTestCases(testCasesResponse: FirebaseTestlabTestCasesResponse) {
     const parser = new DOMParser();
-    const htmlCollection = parser
+    const testSuiteElement = parser
       .parseFromString(testCasesResponse, 'application/xml')
-      .getElementsByTagName('testsuite');
+      .querySelector('testsuite');
 
-    return Array.from(htmlCollection[0].children[0].children).map((testCaseItemElement: Element) => {
+    return Array.from(testSuiteElement.children[0].children).map((testCaseItemElement: Element) => {
       const testCase = new TestCase();
 
-      testCase.name = testCaseItemElement.getElementsByTagName('name')[0].innerHTML;
+      testCase.name = testCaseItemElement.querySelector('name').innerHTML;
       testCase.durationInMilliseconds = null;
-      testCase.context = testCaseItemElement.getElementsByTagName('classname')[0].innerHTML;
+      testCase.context = testCaseItemElement.querySelector('classname').innerHTML;
 
-      if (testCaseItemElement.getElementsByTagName('failure').length > 0) {
+      if (testCaseItemElement.querySelector('failure')) {
         testCase.status = TestCaseStatus.failed;
-        testCase.summary = testCaseItemElement.getElementsByTagName('failure')[0].innerHTML;
+        testCase.summary = testCaseItemElement.querySelector('failure').innerHTML;
       } else {
         testCase.status = TestCaseStatus.passed;
         testCase.summary = 'passed';

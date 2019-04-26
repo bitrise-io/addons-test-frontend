@@ -34,7 +34,7 @@ describe('TestSuiteDetailsMenuTestCasesComponent', () => {
     testReport = new TestReport();
     testSuite = new TestSuite();
     testReport.testSuites = [testSuite];
-    testReport.id = 1;
+    testReport.id = '1';
     testSuite.id = 2;
     testSuite.testCases = Array(3)
       .fill(null)

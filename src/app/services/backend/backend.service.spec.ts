@@ -70,7 +70,7 @@ describe('BackendService', () => {
 
     it('should load report details, set test report with it', () => {
       const testReport = new TestReport();
-      testReport.id = 1;
+      testReport.id = '1';
       testReport.name = 'test report';
 
       mockProviderService.deserializeTestReportDetails = jasmine
@@ -92,7 +92,7 @@ describe('BackendService', () => {
       spyOn(Log.prototype, 'deserialize').and.returnValue(new Log());
 
       const testReport = new TestReport();
-      testReport.id = 1;
+      testReport.id = '1';
 
       const testSuite = new TestSuite();
       testSuite.id = 2;

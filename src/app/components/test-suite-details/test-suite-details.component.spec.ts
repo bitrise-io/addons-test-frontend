@@ -59,12 +59,12 @@ xdescribe('TestSuiteDetailsComponent', () => {
   });
 
   beforeEach(inject([Store], (mockStore: MockStore<{ testReport: TestReportState }>) => {
-    const testReportIds = [1, 2, 3];
+    const testReportIds = ['1', '2', '3'];
 
     store = mockStore;
     store.setState({
       testReport: {
-        testReports: testReportIds.map((testReportId: number) => {
+        testReports: testReportIds.map((testReportId: string) => {
           const testReport = new TestReport();
           testReport.id = testReportId;
 

@@ -66,14 +66,14 @@ xdescribe('TestReportWrapperComponent', () => {
   });
 
   describe('when there are some test reports', () => {
-    const testReportIds = [1, 2, 3];
+    const testReportIds = ['1', '2', '3'];
 
     beforeEach(() => {
       store.setState({
         testReport: {
           filteredReports: [],
           filter: null,
-          testReports: testReportIds.map((testReportId: number) => {
+          testReports: testReportIds.map((testReportId: string) => {
             const testReport = new TestReport();
             testReport.id = testReportId;
 
@@ -85,7 +85,7 @@ xdescribe('TestReportWrapperComponent', () => {
       fixture.detectChanges();
     });
 
-    testReportIds.forEach((testReportId: number) => {
+    testReportIds.forEach((testReportId: string) => {
       describe(`and test report ${testReportId} is in URL`, () => {
         beforeEach(fakeAsync(() => {
           fixture.ngZone.run(() => router.navigate(['testreport/' + testReportId]));
