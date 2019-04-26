@@ -43,7 +43,7 @@ describe('BackendService', () => {
       const testSuite = new TestSuite();
 
       service.getPerformance(testReport, testSuite).subscribe((performance: Performance) => {
-        let keys = Object.keys(performance);
+        const keys = Object.keys(performance);
         expect(keys).toContain('cpu_samples');
         expect(keys).toContain('ram_samples');
         expect(keys).toContain('nwu_samples');

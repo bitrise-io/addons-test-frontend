@@ -11,7 +11,11 @@ export class PerformanceEffects {
   @Effect()
   $fetchReports: Observable<PerformanceActions> = this.actions$.pipe(
     ofType(PerformanceActionTypes.Fetch),
-    switchMap((action: FetchPerformance) => this.backendService.getPerformance(action.payload.testReport, action.payload.testSuite).pipe(map(performace => new ReceivePerformance(performace))))
+    switchMap((action: FetchPerformance) =>
+      this.backendService
+        .getPerformance(action.payload.testReport, action.payload.testSuite)
+        .pipe(map((performace) => new ReceivePerformance(performace)))
+    )
   );
 
   constructor(private actions$: Actions, @Inject(BACKEND_SERVICE) private backendService: BackendService) {}
