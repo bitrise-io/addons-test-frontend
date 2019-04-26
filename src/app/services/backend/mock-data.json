@@ -214,173 +214,46 @@
     ]
   },
   "performance": {
-    "metrics": {
-      "cpu": {
-        "name": "CPU performance",
-        "currentTimeInMilliseconds": 3000,
-        "sampleGroups": [
-          {
-            "samples": [
-              {
-                "time": 0,
-                "value": 30
-              },
-              {
-                "time": 2000,
-                "value": 5
-              },
-              {
-                "time": 4000,
-                "value": 45
-              },
-              {
-                "time": 6000,
-                "value": 20
-              },
-              {
-                "time": 8000,
-                "value": 92
-              },
-              {
-                "time": 10000,
-                "value": 60
-              },
-              {
-                "time": 12000,
-                "value": 80
-              },
-              {
-                "time": 14000,
-                "value": 12
-              }
-            ]
-          }
-        ]
-      },
-      "memory": {
-        "name": "Memory usage (KB)",
-        "currentTimeInMilliseconds": 8000,
-        "sampleGroups": [
-          {
-            "samples": [
-              {
-                "time": 0,
-                "value": 100
-              },
-              {
-                "time": 2000,
-                "value": 5
-              },
-              {
-                "time": 4000,
-                "value": 453
-              },
-              {
-                "time": 6000,
-                "value": 20
-              },
-              {
-                "time": 8000,
-                "value": 32
-              },
-              {
-                "time": 10000,
-                "value": 515
-              },
-              {
-                "time": 12000,
-                "value": 321
-              },
-              {
-                "time": 14000,
-                "value": 120
-              }
-            ]
-          }
-        ]
-      },
-      "network": {
-        "name": "Network (KB/S)",
-        "currentTimeInMilliseconds": 4000,
-        "sampleGroups": [
-          {
-            "name": "upload",
-            "samples": [
-              {
-                "time": 0,
-                "value": 100
-              },
-              {
-                "time": 2000,
-                "value": 5
-              },
-              {
-                "time": 4000,
-                "value": 453
-              },
-              {
-                "time": 6000,
-                "value": 20
-              },
-              {
-                "time": 8000,
-                "value": 32
-              },
-              {
-                "time": 10000,
-                "value": 515
-              },
-              {
-                "time": 12000,
-                "value": 321
-              },
-              {
-                "time": 14000,
-                "value": 120
-              }
-            ]
-          },
-          {
-            "name": "download",
-            "samples": [
-              {
-                "time": 0,
-                "value": 3
-              },
-              {
-                "time": 2000,
-                "value": 19
-              },
-              {
-                "time": 4000,
-                "value": 215
-              },
-              {
-                "time": 6000,
-                "value": 501
-              },
-              {
-                "time": 8000,
-                "value": 409
-              },
-              {
-                "time": 10000,
-                "value": 60
-              },
-              {
-                "time": 12000,
-                "value": 29
-              },
-              {
-                "time": 14000,
-                "value": 660
-              }
-            ]
-          }
-        ]
-      }
+    "cpu_samples": {
+      "0": 30,
+      "2000": 5,
+      "4000": 45,
+      "6000": 20,
+      "8000": 92,
+      "10000": 60,
+      "12000": 80,
+      "14000": 12
     },
-    "durationInMilliseconds": 14000
+    "ram_samples": {
+      "0": 100,
+      "2000": 5,
+      "4000": 453,
+      "6000": 20,
+      "8000": 32,
+      "10000": 515,
+      "12000": 321,
+      "14000": 120
+    },
+    "nwu_samples": {
+      "0": 100,
+      "2000": 5,
+      "4000": 453,
+      "6000": 20,
+      "8000": 32,
+      "10000": 515,
+      "12000": 321,
+      "14000": 120
+    },
+    "nwd_samples": {
+      "0": 3,
+      "2000": 19,
+      "4000": 215,
+      "6000": 501,
+      "8000": 409,
+      "10000": 60,
+      "12000": 29,
+      "14000": 660
+    }
   },
   "ftl_testsuite/1": "<?xml version=\"1.0\" encoding=\"UTF-8\"?>\n<testsuite>\n<testcase type=\"array\">\n<testcase-item>\n<name>name A</name>\n<classname>classname A</classname>\n<failure>The A failed</failure>\n</testcase-item>\n<testcase-item>\n<name>name B</name>\n<classname>classname B</classname>\n</testcase-item>\n</testcase>\n</testsuite>",
   "ftl_testsuite/2": "<?xml version=\"1.0\" encoding=\"UTF-8\"?>\n<testsuite>\n<testcase type=\"array\">\n<testcase-item>\n<name>name C</name>\n<classname>classname C</classname>\n</testcase-item>\n<testcase-item>\n<name>name D</name>\n<classname>classname D</classname>\n</testcase-item>\n</testcase>\n</testsuite>",
