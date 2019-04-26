@@ -17,7 +17,6 @@ import { RemoteFile, ZipperService } from 'src/app/services/zipper.service';
 })
 export class TestSuiteDetailsMenuTestArtifactsComponent implements OnInit, OnDestroy {
   subscription = new Subscription();
-  downloadAllTestArtifactsURL: string;
   testArtifacts: TestArtifact[];
   testArtifacts$: Observable<any>;
   generatingZip = false;
