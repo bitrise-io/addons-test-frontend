@@ -14,22 +14,8 @@
       align-items: center;
 
       .icon {
-        ::ng-deep .stop-start {
-          stop-color: #135ea7;
-          stop-opacity: 0.855;
-        }
-
-        ::ng-deep .stop-end {
-          stop-color: #1e568f;
-        }
-
-        ::ng-deep .frame-wrapper {
-          fill: url(#app_header-icon-stop);
-          fill-rule: evenodd;
-        }
-
-        ::ng-deep .frame {
-          mix-blend-mode: multiply;
+        ::ng-deep svg {
+          @include size(58px, 64px);
         }
       }
 
