@@ -159,17 +159,24 @@ $zindex-metric_seek_value: 100;
   background-color: $white-three;
 }
 
+$ui-element-select-horizontal-padding-default: 16px;
+$ui-element-select-horizontal-padding-arrow: 10px;
+$ui-element-select-background-image-arrow: url('/assets/images/select-arrows.svg');
+$ui-element-select-background-position-arrow: right 8px center;
+$ui-element-select-background-image-gradient: linear-gradient(to top, #f8f8f8, $white);
+$ui-element-select-background-position-gradient: center;
+
 @mixin ui-element-select {
   @include default-font;
   font-size: 16px;
   appearance: none;
   border: 1px solid $white-darken;
   border-radius: 4px;
-  padding: 10px 36px 10px 16px;
+  padding: 10px $ui-element-select-horizontal-padding-default + $ui-element-select-horizontal-padding-arrow 10px $ui-element-select-horizontal-padding-default;
   color: $dark-blue-grey;
-  background-image: url('/assets/images/select-arrows.svg'), linear-gradient(to top, #f8f8f8, $white);
+  background-image: $ui-element-select-background-image-arrow, $ui-element-select-background-image-gradient;
   background-repeat: no-repeat;
-  background-position: right 8px center, center;
+  background-position: $ui-element-select-background-position-arrow, $ui-element-select-background-position-gradient;
 }
 
 @mixin ui-element-notification-bubble {
