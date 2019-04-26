@@ -1,29 +1,45 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, OnDestroy } from '@angular/core';
+import { ActivatedRoute } from '@angular/router';
 import { DatePipe } from '@angular/common';
 import { Store } from '@ngrx/store';
-import { Observable } from 'rxjs';
+import { Observable, Subscription } from 'rxjs';
 
 import { Performance } from 'src/app/models/performance.model';
 import { FetchPerformance } from 'src/app/store/performance/actions';
+import { TestReport } from 'src/app/models/test-report.model';
+import { TestSuite } from 'src/app/models/test-suite.model';
 
 @Component({
   selector: 'bitrise-test-suite-details-menu-performance',
   templateUrl: './test-suite-details-menu-performance.component.html',
   styleUrls: ['./test-suite-details-menu-performance.component.scss']
 })
-export class TestSuiteDetailsMenuPerformanceComponent implements OnInit {
+export class TestSuiteDetailsMenuPerformanceComponent implements OnInit, OnDestroy {
+  subscription = new Subscription();
   metrics = [
     {
       id: 'cpu',
-      cssClass: 'cpu'
+      name: 'CPU performance',
+      cssClass: 'cpu',
+      currentTimeInMilliseconds: undefined,
+      sampleGroups: [{ id: 'cpu_samples', samples: undefined }]
     },
     {
       id: 'memory',
-      cssClass: 'memory'
+      name: 'Memory usage (KB)',
+      cssClass: 'memory',
+      currentTimeInMilliseconds: undefined,
+      sampleGroups: [{ id: 'ram_samples', samples: undefined }]
     },
     {
       id: 'network',
-      cssClass: 'network'
+      name: 'Network (KB/S)',
+      cssClass: 'network',
+      currentTimeInMilliseconds: undefined,
+      sampleGroups: [
+        { id: 'nwu_samples', name: 'upload', samples: undefined },
+        { id: 'nwd_samples', name: 'download', samples: undefined }
+      ]
     }
   ];
   durationInMilliseconds: number;
@@ -32,35 +48,58 @@ export class TestSuiteDetailsMenuPerformanceComponent implements OnInit {
 
   performance$: Observable<Performance>;
 
-  constructor(private datePipe: DatePipe, private store: Store<{ performance: Performance }>) {
+  constructor(
+    private datePipe: DatePipe,
+    private store: Store<{ performance: Performance }>,
+    private activatedRoute: ActivatedRoute
+  ) {
     this.performance$ = store.select('performance');
   }
 
   ngOnInit() {
-    this.store.dispatch(new FetchPerformance());
+    let testReport: TestReport;
+    let testSuite: TestSuite;
 
-    this.performance$.subscribe(performance => {
-      this.hasLoaded = true;
-      this.parsePerformanceData(performance);
-    });
+    this.subscription.add(
+      this.activatedRoute.parent.data.subscribe(
+        (data: { testSuite: { selectedTestReport: TestReport; selectedTestSuite: TestSuite } }) => {
+          testReport = data.testSuite.selectedTestReport;
+          testSuite = data.testSuite.selectedTestSuite;
+
+          this.store.dispatch(new FetchPerformance({ testReport: testReport, testSuite: testSuite }));
+        }
+      )
+    );
+
+    this.subscription.add(
+      this.performance$.subscribe((performance) => {
+        this.hasLoaded = true;
+        this.parsePerformanceData(performance);
+      })
+    );
   }
 
   parsePerformanceData = function(performanceData: Performance) {
-    this.durationInMilliseconds = performanceData.durationInMilliseconds;
+    this.metrics.forEach((metric) => {
+      metric.sampleGroups.forEach((sampleGroup) => {
+        sampleGroup.samples = Object.entries(performanceData[sampleGroup.id]).map(([key, value]) => ({
+          time: Number(key),
+          value
+        }));
 
-    Object.keys(performanceData.metrics).forEach((typeId: string) => {
-      const metricData = performanceData.metrics[typeId];
-      const metricWithType = this.metrics.find(metric => metric.id === typeId);
-      metricWithType.name = metricData.name;
-      metricWithType.currentTimeInMilliseconds = metricData.currentTimeInMilliseconds;
-      metricWithType.sampleGroups = metricData.sampleGroups;
+        const sampleTimes = Object.keys(performanceData[sampleGroup.id]);
+
+        this.durationInMilliseconds = Math.max(Number(sampleTimes[sampleTimes.length - 1]), this.durationInMilliseconds || 0);
+      });
     });
 
     this.metrics.forEach((metric: any) => {
+      metric.currentTimeInMilliseconds = this.durationInMilliseconds / 2;
+
       let valueGridTop: number;
 
       metric.sampleGroups.forEach((sampleGroup: { title?: string; samples: [] }) => {
-        valueGridTop = this.highestValueFromSamples(sampleGroup.samples);
+        valueGridTop = Math.max(this.highestValueFromSamples(sampleGroup.samples), valueGridTop || 0);
       });
 
       if (valueGridTop === 0) {
@@ -74,7 +113,7 @@ export class TestSuiteDetailsMenuPerformanceComponent implements OnInit {
         });
 
       metric.sampleCurves = metric.sampleGroups.map((sampleGroup: { title?: string; samples: [] }) => {
-        return this.pathCurveFromSamples(sampleGroup.samples);
+        return this.pathCurveFromSamples(sampleGroup.samples, valueGridTop);
       });
     });
 
@@ -121,12 +160,12 @@ export class TestSuiteDetailsMenuPerformanceComponent implements OnInit {
       value: number;
     }[]
   ) {
-    return (100 * this.sampleValueAtCurrentTime(metric, samples)) / this.highestValueFromSamples(samples);
+    return (100 * this.sampleValueAtCurrentTime(metric, samples)) / metric.valueGrid[0];
   };
 
   printableSampleValuesAtCurrentTime = function(metric) {
     return metric.sampleGroups
-      .map(sampleGroup => {
+      .map((sampleGroup) => {
         return this.printableValueForMetric(this.sampleValueAtCurrentTime(metric, sampleGroup.samples), metric);
       })
       .join(', ');
@@ -154,7 +193,8 @@ export class TestSuiteDetailsMenuPerformanceComponent implements OnInit {
     samples: {
       time: number;
       value: number;
-    }[]
+    }[],
+    valueGridTop: number
   ) {
     let pathCurve = 'M-100 200';
 
@@ -171,10 +211,7 @@ export class TestSuiteDetailsMenuPerformanceComponent implements OnInit {
         }[]
       ) => {
         const positionX = (100 * sample.time) / this.durationInMilliseconds;
-        const positionY =
-          100 -
-          (100 * sample.value) /
-            (this.highestValueFromSamples(samples) > 0 ? this.highestValueFromSamples(samples) : 1);
+        const positionY = 100 - (100 * sample.value) / (valueGridTop > 0 ? valueGridTop : 1);
 
         if (index === 0) {
           pathCurve += ' L-100 ' + positionY;
@@ -236,4 +273,8 @@ export class TestSuiteDetailsMenuPerformanceComponent implements OnInit {
 
     metric.currentTimeInMilliseconds = (this.durationInMilliseconds * positionX) / fullScaleWidth;
   };
+
+  ngOnDestroy() {
+    this.subscription.unsubscribe();
+  }
 }

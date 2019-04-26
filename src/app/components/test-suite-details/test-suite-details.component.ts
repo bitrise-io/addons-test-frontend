@@ -7,6 +7,7 @@ import { TestReport, TestReportType } from 'src/app/models/test-report.model';
 import { TestReportState } from 'src/app/store/reports/reducer';
 import { FetchReports } from 'src/app/store/reports/actions';
 import { TestSuite } from 'src/app/models/test-suite.model';
+import { Provider } from 'src/app/services/provider/provider.service';
 
 @Component({
   selector: 'bitrise-test-suite-details',
@@ -27,27 +28,33 @@ export class TestSuiteDetailsComponent implements OnInit, OnDestroy {
   testSuiteDetailsMenuItems = [
     {
       name: 'Test Cases',
-      subpath: 'testcases'
+      subpath: 'testcases',
+      availableProviders: [Provider.firebaseTestlab, Provider.jUnitXML]
     },
     {
       name: 'Performance',
-      subpath: 'performance'
+      subpath: 'performance',
+      availableProviders: [Provider.firebaseTestlab]
     },
     {
       name: 'Video',
-      subpath: 'video'
+      subpath: 'video',
+      availableProviders: [Provider.firebaseTestlab]
     },
     {
       name: 'Screenshots',
-      subpath: 'screenshots'
+      subpath: 'screenshots',
+      availableProviders: [Provider.firebaseTestlab]
     },
     {
       name: 'Test Artifacts',
-      subpath: 'testartifacts'
+      subpath: 'testartifacts',
+      availableProviders: [Provider.firebaseTestlab, Provider.jUnitXML]
     },
     {
       name: 'Logs',
-      subpath: 'logs'
+      subpath: 'logs',
+      availableProviders: [Provider.firebaseTestlab]
     }
   ];
   selectedTestSuiteDetailsMenuItem: {

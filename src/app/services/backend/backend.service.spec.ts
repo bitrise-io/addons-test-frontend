@@ -39,20 +39,15 @@ describe('BackendService', () => {
 
   describe('mock data shape', () => {
     it('should load performance data', () => {
-      service.getPerformance().subscribe((performance: Performance) => {
-        let keys = Object.keys(performance);
-        expect(keys).toContain('metrics');
-        expect(keys).toContain('durationInMilliseconds');
+      const testReport = new TestReport();
+      const testSuite = new TestSuite();
 
-        keys = Object.keys(performance.metrics);
-        expect(keys).toContain('cpu');
-        expect(keys).toContain('memory');
-        expect(keys).toContain('network');
-
-        keys = Object.keys(performance.metrics.cpu);
-        expect(keys).toContain('name');
-        expect(keys).toContain('currentTimeInMilliseconds');
-        expect(keys).toContain('sampleGroups');
+      service.getPerformance(testReport, testSuite).subscribe((performance: Performance) => {
+        const keys = Object.keys(performance);
+        expect(keys).toContain('cpu_samples');
+        expect(keys).toContain('ram_samples');
+        expect(keys).toContain('nwu_samples');
+        expect(keys).toContain('nwd_samples');
       });
     });
 
