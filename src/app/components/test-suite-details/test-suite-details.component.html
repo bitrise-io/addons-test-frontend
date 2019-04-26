@@ -8,7 +8,7 @@
   ></bitrise-test-suite-details-header>
   <section class="test-suite-details-body-wrapper">
     <ul class="menu">
-      <li *ngFor="let testSuiteDetailsMenuItem of testSuiteDetailsMenuItems" [hidden]="testSuiteDetailsMenuItem.availableProviders.indexOf(testReport.provider) == -1" class="menu-item">
+      <li *ngFor="let testSuiteDetailsMenuItem of testSuiteDetailsMenuItems" [hidden]="!testSuiteDetailsMenuItem.availableProviders.includes(testReport.provider)" class="menu-item">
         <a [routerLink]="[testSuiteDetailsMenuItem.subpath]" routerLinkActive="active" class="link">{{
           testSuiteDetailsMenuItem.name
         }}</a>

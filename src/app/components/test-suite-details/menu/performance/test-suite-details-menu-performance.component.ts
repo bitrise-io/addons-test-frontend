@@ -82,17 +82,14 @@ export class TestSuiteDetailsMenuPerformanceComponent implements OnInit, OnDestr
   parsePerformanceData = function(performanceData: Performance) {
     this.metrics.forEach((metric) => {
       metric.sampleGroups.forEach((sampleGroup) => {
-        sampleGroup.samples = Object.keys(performanceData[sampleGroup.id]).map((time) => {
-          return {
-            time: Number(time),
-            value: performanceData[sampleGroup.id][time]
-          };
-        });
+        sampleGroup.samples = Object.entries(performanceData[sampleGroup.id]).map(([key, value]) => ({
+          time: Number(key),
+          value
+        }));
 
-        this.durationInMilliseconds = Math.max(
-          Number(Object.keys(performanceData[sampleGroup.id])[Object.keys(performanceData[sampleGroup.id]).length - 1]),
-          this.durationInMilliseconds | 0
-        );
+        const sampleTimes = Object.keys(performanceData[sampleGroup.id]);
+
+        this.durationInMilliseconds = Math.max(Number(sampleTimes[sampleTimes.length - 1]), this.durationInMilliseconds || 0);
       });
     });
 
@@ -102,7 +99,7 @@ export class TestSuiteDetailsMenuPerformanceComponent implements OnInit, OnDestr
       let valueGridTop: number;
 
       metric.sampleGroups.forEach((sampleGroup: { title?: string; samples: [] }) => {
-        valueGridTop = Math.max(this.highestValueFromSamples(sampleGroup.samples), valueGridTop | 0);
+        valueGridTop = Math.max(this.highestValueFromSamples(sampleGroup.samples), valueGridTop || 0);
       });
 
       if (valueGridTop === 0) {
@@ -196,7 +193,8 @@ export class TestSuiteDetailsMenuPerformanceComponent implements OnInit, OnDestr
     samples: {
       time: number;
       value: number;
-    }[], valueGridTop: number
+    }[],
+    valueGridTop: number
   ) {
     let pathCurve = 'M-100 200';
 
@@ -213,10 +211,7 @@ export class TestSuiteDetailsMenuPerformanceComponent implements OnInit, OnDestr
         }[]
       ) => {
         const positionX = (100 * sample.time) / this.durationInMilliseconds;
-        const positionY =
-          100 -
-          (100 * sample.value) /
-            (valueGridTop > 0 ? valueGridTop : 1);
+        const positionY = 100 - (100 * sample.value) / (valueGridTop > 0 ? valueGridTop : 1);
 
         if (index === 0) {
           pathCurve += ' L-100 ' + positionY;
