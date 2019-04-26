@@ -52,10 +52,6 @@
         .heading .detail-wrapper.status-name .detail .status-icon:not(.#{ $status-class }) {
           display: none;
         }
-
-        .heading .detail-wrapper.status-name .detail .status-icon ::ng-deep svg {
-          fill: $color;
-        }
       }
     }
 

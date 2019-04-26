@@ -18,7 +18,6 @@
 
         ::ng-deep svg {
           @include size(48px);
-          fill: $dark-blue-grey;
         }
       }
 
@@ -38,30 +37,24 @@
         }
       }
 
-      @mixin count-indicator-with-color($color) {
-        .icon ::ng-deep svg {
-          fill: $color;
-        }
-
-        .name {
-          color: $color;
-        }
+      &.total .icon ::ng-deep svg {
+        fill: $dark-blue-grey;
       }
 
-      &.failed {
-        @include count-indicator-with-color($vivid-pink);
+      &.failed .name {
+        color: $vivid-pink;
       }
 
-      &.passed {
-        @include count-indicator-with-color($green-teal);
+      &.passed .name {
+        color: $green-teal;
       }
 
-      &.skipped {
-        @include count-indicator-with-color($warm-grey);
+      &.skipped .name {
+        color: $warm-grey;
       }
 
-      &.inconclusive {
-        @include count-indicator-with-color($ocean-blue);
+      &.inconclusive .name {
+        color: $ocean-blue;
       }
 
       &.filtered-out {

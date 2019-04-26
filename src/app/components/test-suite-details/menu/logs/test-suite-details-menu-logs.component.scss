@@ -93,19 +93,6 @@
       word-break: break-all;
     }
 
-    @mixin style_for_level($level, $color) {
-      &.#{ $level } ::ng-deep svg {
-        fill: $color;
-      }
-    }
-
-    @include style_for_level('verbose', $sky-blue);
-    @include style_for_level('debug', $sky-blue);
-    @include style_for_level('info', $water-blue-two);
-    @include style_for_level('warning', $marigold);
-    @include style_for_level('error', $vivid-pink);
-    @include style_for_level('assert', $vivid-pink);
-
     @include width-max(1200px) {
       .date {
         width: 13 * $grid-size;

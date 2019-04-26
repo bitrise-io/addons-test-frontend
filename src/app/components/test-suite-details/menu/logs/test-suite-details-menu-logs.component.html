@@ -10,9 +10,8 @@
 </select>
 <div class="log-box" *ngIf="log">
   <div
-    class="line"
+    class="line warning"
     *ngFor="let logLine of (filteredLogLines | slice: 0:maximumNumberOfVisibleLines)"
-    [class]="logLine.levelCssClass"
     [ngClass]="{ expanded: logLine.isExpanded }"
     (click)="logLine.isExpanded = !logLine.isExpanded"
   >

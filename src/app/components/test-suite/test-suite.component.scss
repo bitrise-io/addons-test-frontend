@@ -63,10 +63,6 @@
         .detail-wrapper.status-title .detail .status-icon:not(.#{ $status-class }) {
           display: none;
         }
-
-        .detail-wrapper.status-title .detail .status-icon ::ng-deep svg {
-          fill: $color;
-        }
       }
     }
 
