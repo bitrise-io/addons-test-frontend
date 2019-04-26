@@ -19,19 +19,6 @@ export class LogLine implements Deserializable {
   message: string;
   isExpanded: false;
 
-  public static levelCssClass(level: LogLineLevel): string {
-    const levelCssClasses = {
-      [LogLineLevel.assert]: 'assert',
-      [LogLineLevel.error]: 'error',
-      [LogLineLevel.warning]: 'warning',
-      [LogLineLevel.info]: 'info',
-      [LogLineLevel.debug]: 'debug',
-      [LogLineLevel.verbose]: 'verbose'
-    };
-
-    return levelCssClasses[level];
-  }
-
   public static levelIconUrl(level: LogLineLevel): string {
     const levelCssClasses = {
       [LogLineLevel.assert]: '/assets/images/sign-cross.svg',
@@ -54,10 +41,6 @@ export class LogLine implements Deserializable {
     }
 
     return Platform.unknown;
-  }
-
-  get levelCssClass() {
-    return LogLine.levelCssClass(this.level);
   }
 
   get levelIconUrl() {

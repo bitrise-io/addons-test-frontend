@@ -68,8 +68,6 @@
       .status-select {
         height: 48px;
         flex-grow: 0.5;
-        @include ui-element-select;
-        @include ui-modifier-button-shadow;
         display: block;
       }
     }
@@ -95,6 +93,38 @@
         }
       }
     }
+  }
+}
+
+:host .status-select {
+  @include ui-element-select;
+  @include ui-modifier-button-shadow;
+
+  &.inconclusive,
+  &.passed,
+  &.failed,
+  &.skipped {
+    padding-left: $ui-element-select-horizontal-padding-default + 24px;
+    background-image: $ui-element-select-background-image-arrow, $ui-element-select-background-image-gradient;
+    background-position: 8px 10px, $ui-element-select-background-position-arrow,
+      $ui-element-select-background-position-gradient;
+  }
+
+  &.inconclusive {
+    background-image: url('/assets/images/sign-questionmark.svg'), $ui-element-select-background-image-arrow,
+      $ui-element-select-background-image-gradient;
+  }
+  &.passed {
+    background-image: url('/assets/images/sign-check.svg'), $ui-element-select-background-image-arrow,
+      $ui-element-select-background-image-gradient;
+  }
+  &.failed {
+    background-image: url('/assets/images/sign-cross.svg'), $ui-element-select-background-image-arrow,
+      $ui-element-select-background-image-gradient;
+  }
+  &.skipped {
+    background-image: url('/assets/images/sign-arrowheads.svg'), $ui-element-select-background-image-arrow,
+      $ui-element-select-background-image-gradient;
   }
 }
 
@@ -139,10 +169,12 @@
       }
     }
 
-    .tabmenu-select,
-    .status-select {
+    .tabmenu-select {
       @include ui-element-select;
       @include ui-modifier-button-shadow;
+    }
+
+    .tabmenu-select, .status-select {
       display: block;
       margin-bottom: 16px;
       width: 100%;

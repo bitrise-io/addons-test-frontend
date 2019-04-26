@@ -6,45 +6,20 @@ describe('LogLine', () => {
   let logLine: LogLine;
 
   [
-    { logLineLevel: LogLineLevel.assert, expectedCssClass: 'assert', expectedIconUrl: '/assets/images/sign-cross.svg' },
-    { logLineLevel: LogLineLevel.error, expectedCssClass: 'error', expectedIconUrl: '/assets/images/sign-cross.svg' },
+    { logLineLevel: LogLineLevel.assert, expectedIconUrl: '/assets/images/sign-cross.svg' },
+    { logLineLevel: LogLineLevel.error, expectedIconUrl: '/assets/images/sign-cross.svg' },
     {
       logLineLevel: LogLineLevel.warning,
-      expectedCssClass: 'warning',
       expectedIconUrl: '/assets/images/sign-exclamationmark.svg'
     },
-    { logLineLevel: LogLineLevel.info, expectedCssClass: 'info', expectedIconUrl: '/assets/images/sign-info.svg' },
-    { logLineLevel: LogLineLevel.debug, expectedCssClass: 'debug', expectedIconUrl: '/assets/images/bug.svg' },
-    { logLineLevel: LogLineLevel.verbose, expectedCssClass: 'verbose', expectedIconUrl: '/assets/images/bug.svg' }
+    { logLineLevel: LogLineLevel.info, expectedIconUrl: '/assets/images/sign-info.svg' },
+    { logLineLevel: LogLineLevel.debug, expectedIconUrl: '/assets/images/bug.svg' },
+    { logLineLevel: LogLineLevel.verbose, expectedIconUrl: '/assets/images/bug.svg' }
   ].forEach((specConfig: any) => {
-    describe('class method levelCssClass', () => {
-      describe(`when providing level ${specConfig.logLineLevel}`, () => {
-        it(`returns CSS class ${specConfig.expectedCssClass}`, () => {
-          expect(LogLine.levelCssClass(specConfig.logLineLevel)).toBe(specConfig.expectedCssClass);
-        });
-      });
-    });
-
     describe('class method levelIconUrl', () => {
       describe(`when providing level ${specConfig.logLineLevel}`, () => {
         it(`returns icon URL ${specConfig.expectedIconUrl}`, () => {
           expect(LogLine.levelIconUrl(specConfig.logLineLevel)).toBe(specConfig.expectedIconUrl);
-        });
-      });
-    });
-
-    describe('levelCssClass', () => {
-      beforeEach(() => {
-        logLine = new LogLine();
-      });
-
-      describe(`when test case has level ${specConfig.logLineLevel}`, () => {
-        beforeEach(() => {
-          logLine.level = specConfig.logLineLevel;
-        });
-
-        it(`returns CSS class ${specConfig.expectedCssClass}`, () => {
-          expect(logLine.levelCssClass).toBe(specConfig.expectedCssClass);
         });
       });
     });

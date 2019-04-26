@@ -38,7 +38,7 @@
   <ng-container [ngTemplateOutlet]="statusSelect"></ng-container>
 </section>
 <ng-template #statusSelect>
-  <select class="status-select" [(ngModel)]="selectedStatus">
+  <select class="status-select" [ngClass]="TestSuite.statusCssClass(selectedStatus)" [(ngModel)]="selectedStatus">
     <option *ngFor="let item of statusMenuItems" [ngValue]="item.value">{{ item.name }}</option>
   </select>
 </ng-template>

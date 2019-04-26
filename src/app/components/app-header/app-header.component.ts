@@ -15,6 +15,7 @@ import { TestReportState } from 'src/app/store/reports/reducer';
   styleUrls: ['./app-header.component.scss']
 })
 export class AppHeaderComponent implements OnInit {
+  TestSuite = TestSuite;
   testReports$: Observable<TestReport[]>;
   tabmenuItems: any[];
   selectedSmallTabmenuItem: any;
