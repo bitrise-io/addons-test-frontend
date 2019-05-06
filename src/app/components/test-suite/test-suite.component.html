@@ -49,7 +49,7 @@
     <div class="detail-wrapper locale" *ngIf="testReport.type == TestReportType.uiTest">
       <div class="detail">{{ testSuite.locale }}</div>
     </div>
-    <a class="test-cases-button" [routerLink]="['/testreport', testReport.id, 'testsuite', testSuite.id]">
+    <a class="test-cases-button" [routerLink]="['/testreport', testReport.id, 'testsuite', testSuite.id]" *ngIf="testSuite.status == TestSuiteStatus.passed || testSuite.status == TestSuiteStatus.failed">
       <span>Test Cases</span> <span class="arrow" inlineSVG="/assets/images/arrow-dashed-tail-right.svg"></span>
     </a>
   </div>
