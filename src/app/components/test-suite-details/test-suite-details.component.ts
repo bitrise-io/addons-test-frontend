@@ -85,7 +85,7 @@ export class TestSuiteDetailsComponent implements OnInit, OnDestroy {
       this.configureFromUrlParams(params);
     });
 
-    this.router.events.pipe(filter(event => event instanceof NavigationEnd)).subscribe((event: NavigationEnd) => {
+    this.router.events.pipe(filter((event) => event instanceof NavigationEnd)).subscribe((event: NavigationEnd) => {
       this.updateSelectedTestSuiteDetailsMenuItem();
     });
   }
@@ -96,9 +96,7 @@ export class TestSuiteDetailsComponent implements OnInit, OnDestroy {
   }
 
   configureFromUrlParams(params = this.activatedRoute.snapshot.params) {
-    this.testReport = this.testReports.find(
-      (testReport: TestReport) => testReport.id === params['testReportId']
-    );
+    this.testReport = this.testReports.find((testReport: TestReport) => testReport.id === params['testReportId']);
 
     if (!this.testReport) {
       // TODO 404?
@@ -109,16 +107,17 @@ export class TestSuiteDetailsComponent implements OnInit, OnDestroy {
       (testSuite: TestSuite) => testSuite.id === Number(params['testSuiteId'])
     );
 
-    const testSuiteIndex = this.testReport.testSuites.findIndex(testSuite => testSuite === this.testSuite);
+    const testSuiteIndex = this.testReport.testSuites.findIndex((testSuite) => testSuite === this.testSuite);
     this.previousTestSuite = testSuiteIndex > 0 ? this.testReport.testSuites[testSuiteIndex - 1] : null;
     this.nextTestSuite =
-      testSuiteIndex < this.testReport.testSuites.length - 1
-        ? this.testReport.testSuites[testSuiteIndex + 1]
-        : null;
+      testSuiteIndex < this.testReport.testSuites.length - 1 ? this.testReport.testSuites[testSuiteIndex + 1] : null;
   }
 
   updateSelectedTestSuiteDetailsMenuItem() {
-    if (this.selectedTestSuiteDetailsMenuItem && this.selectedTestSuiteDetailsMenuItem.subpath == this.activatedRoute.firstChild.snapshot.routeConfig.path) {
+    if (
+      this.selectedTestSuiteDetailsMenuItem &&
+      this.selectedTestSuiteDetailsMenuItem.subpath === this.activatedRoute.firstChild.snapshot.routeConfig.path
+    ) {
       return;
     }
 
