@@ -1,9 +1,10 @@
 import { Component, OnInit, OnDestroy } from '@angular/core';
-import { ActivatedRoute, Params, Router } from '@angular/router';
+import { ActivatedRoute, Params, Router, NavigationEnd } from '@angular/router';
 import { Observable, Subscription } from 'rxjs';
+import { filter } from 'rxjs/operators';
 import { Store } from '@ngrx/store';
 
-import { TestReport, TestReportType } from 'src/app/models/test-report.model';
+import { TestReport } from 'src/app/models/test-report.model';
 import { TestReportState } from 'src/app/store/reports/reducer';
 import { FetchReports } from 'src/app/store/reports/actions';
 import { TestSuite } from 'src/app/models/test-suite.model';
@@ -71,10 +72,7 @@ export class TestSuiteDetailsComponent implements OnInit, OnDestroy {
   }
 
   ngOnInit() {
-    this.selectedTestSuiteDetailsMenuItem = this.testSuiteDetailsMenuItems.find(
-      (testSuiteDetailsMenuItem: any) =>
-        testSuiteDetailsMenuItem.subpath === this.activatedRoute.firstChild.snapshot.routeConfig.path
-    );
+    this.updateSelectedTestSuiteDetailsMenuItem();
 
     this.store.dispatch(new FetchReports());
 
@@ -85,6 +83,10 @@ export class TestSuiteDetailsComponent implements OnInit, OnDestroy {
 
     this.activatedRouteParamsChangeSubscription = this.activatedRoute.params.subscribe((params: Params) => {
       this.configureFromUrlParams(params);
+    });
+
+    this.router.events.pipe(filter(event => event instanceof NavigationEnd)).subscribe((event: NavigationEnd) => {
+      this.updateSelectedTestSuiteDetailsMenuItem();
     });
   }
 
@@ -113,6 +115,17 @@ export class TestSuiteDetailsComponent implements OnInit, OnDestroy {
       testSuiteIndex < this.testReport.testSuites.length - 1
         ? this.testReport.testSuites[testSuiteIndex + 1]
         : null;
+  }
+
+  updateSelectedTestSuiteDetailsMenuItem() {
+    if (this.selectedTestSuiteDetailsMenuItem && this.selectedTestSuiteDetailsMenuItem.subpath == this.activatedRoute.firstChild.snapshot.routeConfig.path) {
+      return;
+    }
+
+    this.selectedTestSuiteDetailsMenuItem = this.testSuiteDetailsMenuItems.find(
+      (testSuiteDetailsMenuItem: any) =>
+        testSuiteDetailsMenuItem.subpath === this.activatedRoute.firstChild.snapshot.routeConfig.path
+    );
   }
 
   selectedTestSuiteDetailsMenuItemChanged() {
