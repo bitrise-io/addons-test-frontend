@@ -82,7 +82,7 @@ export class AppHeaderComponent implements OnInit {
 
   selectSmallTabmenuItemForUrl(url: string) {
     this.selectedSmallTabmenuItem = this.tabmenuItems.find(
-      ({ routerLink: [tabmenuItemUrl] }) => tabmenuItemUrl === url
+      ({ routerLink: [tabmenuItemUrl] }) => url.startsWith(tabmenuItemUrl)
     );
   }
 
