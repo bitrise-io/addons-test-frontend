@@ -19,11 +19,13 @@ export class TestSuiteComponent implements OnInit {
   failedTestCaseCount: number;
 
   ngOnInit() {
-    this.passedTestCaseCount = this.testSuite.testCases.filter(
-      (testCase: TestCase) => testCase.status === TestCaseStatus.passed
-    ).length;
-    this.failedTestCaseCount = this.testSuite.testCases.filter(
-      (testCase: TestCase) => testCase.status === TestCaseStatus.failed
-    ).length;
+    if (this.testSuite.testCases) {
+      this.passedTestCaseCount = this.testSuite.testCases.filter(
+        (testCase: TestCase) => testCase.status === TestCaseStatus.passed
+      ).length;
+      this.failedTestCaseCount = this.testSuite.testCases.filter(
+        (testCase: TestCase) => testCase.status === TestCaseStatus.failed
+      ).length;
+    }
   }
 }

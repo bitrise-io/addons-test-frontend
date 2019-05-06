@@ -64,6 +64,11 @@ describe('TestSuiteComponent', () => {
     it('does not render a bar for failed status', () => {
       expect(fixture.debugElement.query(By.css('.test-case-bar.failed'))).toBeNull();
     });
+
+    it('renders a visible "Test cases" button', () => {
+      expect(fixture.debugElement.query(By.css('.test-cases-button[hidden]'))).toBeNull();
+      expect(fixture.debugElement.query(By.css('.test-cases-button'))).not.toBeNull();
+    });
   });
 
   describe('when test suite only has failed test cases', () => {
@@ -90,6 +95,11 @@ describe('TestSuiteComponent', () => {
     it('does not render a bar for passed status', () => {
       expect(fixture.debugElement.query(By.css('.test-case-bar.passed'))).toBeNull();
     });
+
+    it('renders a visible "Test cases" button', () => {
+      expect(fixture.debugElement.query(By.css('.test-cases-button[hidden]'))).toBeNull();
+      expect(fixture.debugElement.query(By.css('.test-cases-button'))).not.toBeNull();
+    });
   });
 
   describe('when test suite has both passed and failed test cases', () => {
@@ -114,6 +124,11 @@ describe('TestSuiteComponent', () => {
       expect(fixture.debugElement.query(By.css('.test-case-bar.passed')).nativeElement.textContent).toBe('1');
       expect(fixture.debugElement.query(By.css('.test-case-bar.failed')).nativeElement.textContent).toBe('2');
     });
+
+    it('renders a visible "Test cases" button', () => {
+      expect(fixture.debugElement.query(By.css('.test-cases-button[hidden]'))).toBeNull();
+      expect(fixture.debugElement.query(By.css('.test-cases-button'))).not.toBeNull();
+    });
   });
 
   describe('when test suite is not yet finished', () => {
@@ -121,15 +136,19 @@ describe('TestSuiteComponent', () => {
       testSuiteComponent.testSuite.status = TestSuiteStatus.inconclusive;
 
       fixture.detectChanges();
+    });
 
-      it('renders a bar', () => {
-        expect(fixture.debugElement.query(By.css('.test-result-bar'))).not.toBeNull();
-      });
+    it('renders a bar', () => {
+      expect(fixture.debugElement.query(By.css('.test-result-bar'))).not.toBeNull();
+    });
 
-      it('does not render a bar for passed and failed statuses', () => {
-        expect(fixture.debugElement.query(By.css('.test-case-bar.passed'))).toBeNull();
-        expect(fixture.debugElement.query(By.css('.test-case-bar.failed'))).toBeNull();
-      });
+    it('does not render a bar for passed and failed statuses', () => {
+      expect(fixture.debugElement.query(By.css('.test-case-bar.passed'))).toBeNull();
+      expect(fixture.debugElement.query(By.css('.test-case-bar.failed'))).toBeNull();
+    });
+
+    it('renders a "Test cases" button, but hidden', () => {
+      expect(fixture.debugElement.query(By.css('.test-cases-button[hidden]'))).not.toBeNull();
     });
   });
 
@@ -138,15 +157,19 @@ describe('TestSuiteComponent', () => {
       testSuiteComponent.testSuite.status = TestSuiteStatus.skipped;
 
       fixture.detectChanges();
+    });
 
-      it('renders a bar', () => {
-        expect(fixture.debugElement.query(By.css('.test-result-bar'))).not.toBeNull();
-      });
+    it('renders a bar', () => {
+      expect(fixture.debugElement.query(By.css('.test-result-bar'))).not.toBeNull();
+    });
 
-      it('does not render a bar for passed and failed statuses', () => {
-        expect(fixture.debugElement.query(By.css('.test-case-bar.passed'))).toBeNull();
-        expect(fixture.debugElement.query(By.css('.test-case-bar.failed'))).toBeNull();
-      });
+    it('does not render a bar for passed and failed statuses', () => {
+      expect(fixture.debugElement.query(By.css('.test-case-bar.passed'))).toBeNull();
+      expect(fixture.debugElement.query(By.css('.test-case-bar.failed'))).toBeNull();
+    });
+
+    it('renders a "Test cases" button, but hidden', () => {
+      expect(fixture.debugElement.query(By.css('.test-cases-button[hidden]'))).not.toBeNull();
     });
   });
 });
