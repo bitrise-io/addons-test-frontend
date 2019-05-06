@@ -1,9 +1,10 @@
 import { Component, OnInit, OnDestroy } from '@angular/core';
-import { ActivatedRoute, Params, Router } from '@angular/router';
+import { ActivatedRoute, Params, Router, NavigationEnd } from '@angular/router';
 import { Observable, Subscription } from 'rxjs';
+import { filter } from 'rxjs/operators';
 import { Store } from '@ngrx/store';
 
-import { TestReport, TestReportType } from 'src/app/models/test-report.model';
+import { TestReport } from 'src/app/models/test-report.model';
 import { TestReportState } from 'src/app/store/reports/reducer';
 import { FetchReports } from 'src/app/store/reports/actions';
 import { TestSuite } from 'src/app/models/test-suite.model';
@@ -71,10 +72,7 @@ export class TestSuiteDetailsComponent implements OnInit, OnDestroy {
   }
 
   ngOnInit() {
-    this.selectedTestSuiteDetailsMenuItem = this.testSuiteDetailsMenuItems.find(
-      (testSuiteDetailsMenuItem: any) =>
-        testSuiteDetailsMenuItem.subpath === this.activatedRoute.firstChild.snapshot.routeConfig.path
-    );
+    this.updateSelectedTestSuiteDetailsMenuItem();
 
     this.store.dispatch(new FetchReports());
 
@@ -86,6 +84,10 @@ export class TestSuiteDetailsComponent implements OnInit, OnDestroy {
     this.activatedRouteParamsChangeSubscription = this.activatedRoute.params.subscribe((params: Params) => {
       this.configureFromUrlParams(params);
     });
+
+    this.router.events.pipe(filter((event) => event instanceof NavigationEnd)).subscribe((event: NavigationEnd) => {
+      this.updateSelectedTestSuiteDetailsMenuItem();
+    });
   }
 
   ngOnDestroy() {
@@ -94,9 +96,7 @@ export class TestSuiteDetailsComponent implements OnInit, OnDestroy {
   }
 
   configureFromUrlParams(params = this.activatedRoute.snapshot.params) {
-    this.testReport = this.testReports.find(
-      (testReport: TestReport) => testReport.id === params['testReportId']
-    );
+    this.testReport = this.testReports.find((testReport: TestReport) => testReport.id === params['testReportId']);
 
     if (!this.testReport) {
       // TODO 404?
@@ -107,12 +107,24 @@ export class TestSuiteDetailsComponent implements OnInit, OnDestroy {
       (testSuite: TestSuite) => testSuite.id === Number(params['testSuiteId'])
     );
 
-    const testSuiteIndex = this.testReport.testSuites.findIndex(testSuite => testSuite === this.testSuite);
+    const testSuiteIndex = this.testReport.testSuites.findIndex((testSuite) => testSuite === this.testSuite);
     this.previousTestSuite = testSuiteIndex > 0 ? this.testReport.testSuites[testSuiteIndex - 1] : null;
     this.nextTestSuite =
-      testSuiteIndex < this.testReport.testSuites.length - 1
-        ? this.testReport.testSuites[testSuiteIndex + 1]
-        : null;
+      testSuiteIndex < this.testReport.testSuites.length - 1 ? this.testReport.testSuites[testSuiteIndex + 1] : null;
+  }
+
+  updateSelectedTestSuiteDetailsMenuItem() {
+    if (
+      this.selectedTestSuiteDetailsMenuItem &&
+      this.selectedTestSuiteDetailsMenuItem.subpath === this.activatedRoute.firstChild.snapshot.routeConfig.path
+    ) {
+      return;
+    }
+
+    this.selectedTestSuiteDetailsMenuItem = this.testSuiteDetailsMenuItems.find(
+      (testSuiteDetailsMenuItem: any) =>
+        testSuiteDetailsMenuItem.subpath === this.activatedRoute.firstChild.snapshot.routeConfig.path
+    );
   }
 
   selectedTestSuiteDetailsMenuItemChanged() {
