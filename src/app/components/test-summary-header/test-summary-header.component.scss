@@ -35,6 +35,16 @@
         .name {
           @include ui-element-subtitle;
         }
+
+        .note {
+          @include ui-element-tag;
+          color: $brownish-grey;
+
+          &[hidden] {
+            display: block;
+            visibility: hidden;
+          }
+        }
       }
 
       &.total .icon ::ng-deep svg {
@@ -65,7 +75,7 @@
 
   .test-rates {
     @include ui-element-status-rate-indicator;
-    margin-top: 32px;
+    margin-top: 2 * $grid-size;
 
     .status-rate.failed {
       @include ui-modifier-status-rate-with-color($vivid-pink);

@@ -23,14 +23,16 @@ describe('TestSummaryHeaderComponent', () => {
       TestSuiteStatus.inconclusive,
       TestSuiteStatus.passed,
       TestSuiteStatus.failed,
-      TestSuiteStatus.skipped
+      TestSuiteStatus.skipped,
+      TestSuiteStatus.inProgress
     ];
 
     testReport.testSuites = [
       specConfig.inconclusiveTestSuiteCount,
       specConfig.passedTestSuiteCount,
       specConfig.failedTestSuiteCount,
-      specConfig.skippedTestSuiteCount
+      specConfig.skippedTestSuiteCount,
+      specConfig.inProgressTestSuiteCount
     ].reduce(
       (testSuites, testSuiteCount, index) =>
         testSuites.concat(
@@ -94,7 +96,8 @@ describe('TestSummaryHeaderComponent', () => {
               inconclusiveTestSuiteCount: 5,
               passedTestSuiteCount: 3,
               failedTestSuiteCount: 2,
-              skippedTestSuiteCount: 0
+              skippedTestSuiteCount: 0,
+              inProgressTestSuiteCount: 0
             },
             {
               id: 2,
@@ -102,7 +105,8 @@ describe('TestSummaryHeaderComponent', () => {
               inconclusiveTestSuiteCount: 3,
               passedTestSuiteCount: 2,
               failedTestSuiteCount: 0,
-              skippedTestSuiteCount: 1
+              skippedTestSuiteCount: 1,
+              inProgressTestSuiteCount: 0
             },
             {
               id: 3,
@@ -110,7 +114,8 @@ describe('TestSummaryHeaderComponent', () => {
               inconclusiveTestSuiteCount: 7,
               passedTestSuiteCount: 4,
               failedTestSuiteCount: 1,
-              skippedTestSuiteCount: 3
+              skippedTestSuiteCount: 3,
+              inProgressTestSuiteCount: 2
             },
             {
               id: 4,
@@ -118,7 +123,8 @@ describe('TestSummaryHeaderComponent', () => {
               inconclusiveTestSuiteCount: 0,
               passedTestSuiteCount: 2,
               failedTestSuiteCount: 3,
-              skippedTestSuiteCount: 0
+              skippedTestSuiteCount: 0,
+              inProgressTestSuiteCount: 0
             },
             {
               id: 5,
@@ -126,7 +132,8 @@ describe('TestSummaryHeaderComponent', () => {
               inconclusiveTestSuiteCount: 0,
               passedTestSuiteCount: 0,
               failedTestSuiteCount: 1,
-              skippedTestSuiteCount: 0
+              skippedTestSuiteCount: 0,
+              inProgressTestSuiteCount: 0
             }
           ].map(testReportsFromSpecConfig)
         }
@@ -138,7 +145,7 @@ describe('TestSummaryHeaderComponent', () => {
     it('shows the total number of tests in the total counter', () => {
       expect(
         fixture.debugElement.query(By.css('.test-counts .count-indicator.total .count')).nativeElement.textContent
-      ).toBe('37');
+      ).toBe('39');
     });
 
     [
@@ -160,6 +167,14 @@ describe('TestSummaryHeaderComponent', () => {
             .textContent
         ).toBe(`${specConfig.expectedCount} ${specConfig.statusName}`);
       });
+    });
+
+    it(`does not show the number of in progress tests`, () => {
+      expect(fixture.debugElement.query(By.css(`.test-counts .count-indicator.in-progress .count`))).toBeNull();
+    });
+
+    it(`does not show a rate partition for in progress tests in the rate indicator`, () => {
+      expect(fixture.debugElement.query(By.css(`.test-rates .status-rate.in-progress`))).toBeNull();
     });
   });
 
