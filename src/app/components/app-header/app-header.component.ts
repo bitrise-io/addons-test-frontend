@@ -95,4 +95,9 @@ export class AppHeaderComponent implements OnInit {
   selectedSmallTabmenuItemChanged() {
     this.router.navigate(this.selectedSmallTabmenuItem.routerLink);
   }
+
+  selectedStatusChanged() {
+    const selectedStatusMenuItem = this.statusMenuItems.find(statusMenuItem => statusMenuItem.value === this.selectedStatus);
+    this.router.navigate([], {queryParams: {status: selectedStatusMenuItem.queryParam}});
+  }
 }
