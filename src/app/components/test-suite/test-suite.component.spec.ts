@@ -131,7 +131,28 @@ describe('TestSuiteComponent', () => {
     });
   });
 
-  describe('when test suite is not yet finished', () => {
+  describe('when test suite is in progress', () => {
+    beforeEach(() => {
+      testSuiteComponent.testSuite.status = TestSuiteStatus.inProgress;
+
+      fixture.detectChanges();
+    });
+
+    it('renders a bar', () => {
+      expect(fixture.debugElement.query(By.css('.test-result-bar'))).not.toBeNull();
+    });
+
+    it('does not render a bar for passed and failed statuses', () => {
+      expect(fixture.debugElement.query(By.css('.test-case-bar.passed'))).toBeNull();
+      expect(fixture.debugElement.query(By.css('.test-case-bar.failed'))).toBeNull();
+    });
+
+    it('renders a "Test cases" button, but hidden', () => {
+      expect(fixture.debugElement.query(By.css('.test-cases-button[hidden]'))).not.toBeNull();
+    });
+  });
+
+  describe('when test suite is inconclusive', () => {
     beforeEach(() => {
       testSuiteComponent.testSuite.status = TestSuiteStatus.inconclusive;
 

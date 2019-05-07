@@ -27,6 +27,7 @@
   $border-width: 1px;
   $colored-border-left-width: 8px;
   $status-icon-size: 24px;
+  $result-bar-border-radius: 4px;
 
   border: $border-width solid $white-three;
   border-radius: 8px;
@@ -57,6 +58,9 @@
         @if ($status-class == 'skipped') {
           $color: $warm-grey;
         }
+        @if ($status-class == 'in-progress') {
+          $color: $light-eggplant;
+        }
 
         border-left-color: $color;
 
@@ -70,6 +74,7 @@
     @include test-suite-with-status-class(passed);
     @include test-suite-with-status-class(skipped);
     @include test-suite-with-status-class(inconclusive);
+    @include test-suite-with-status-class(in-progress);
 
     .detail-wrapper.status-title .detail .title {
       color: $dark-blue-grey;
@@ -91,12 +96,12 @@
 
       :first-child,
       &:before {
-        @include border-left-radius(4px);
+        @include border-left-radius($result-bar-border-radius);
       }
 
       :last-child,
       &:before {
-        @include border-right-radius(4px);
+        @include border-right-radius($result-bar-border-radius);
       }
 
       .test-case-bar {
@@ -118,7 +123,8 @@
     }
 
     &.inconclusive .detail-wrapper.test-results .detail .test-result-bar:before,
-    &.skipped .detail-wrapper.test-results .detail .test-result-bar:before {
+    &.skipped .detail-wrapper.test-results .detail .test-result-bar:before,
+    &.in-progress .detail-wrapper.test-results .detail .test-result-bar:before {
       content: '';
       width: 100%;
     }
@@ -129,6 +135,61 @@
 
     &.skipped .detail-wrapper.test-results .detail .test-result-bar:before {
       background-color: $warm-grey;
+    }
+
+    &.in-progress {
+      .detail-wrapper.status-title .detail .status-icon {
+        @keyframes spin {
+          0% {
+            transform: rotate(0deg);
+          }
+          25% {
+            transform: rotate(90deg);
+          }
+          50% {
+            transform: rotate(180deg);
+          }
+          75% {
+            transform: rotate(270deg);
+          }
+          100% {
+            transform: rotate(360deg);
+          }
+        }
+
+        animation: spin 4s cubic-bezier(0.2, 1, 0.8, 1) 0s infinite;
+      }
+
+      .detail-wrapper.test-results .detail .test-result-bar {
+        position: relative;
+        @include border-left-radius($result-bar-border-radius);
+        @include border-right-radius($result-bar-border-radius);
+        overflow: hidden;
+
+        &:before {
+          $color1: $light-eggplant;
+          $color2: $pale-purple;
+
+          position: absolute;
+          top: 0;
+          left: -50%;
+          @include size(500%, 100%);
+          background-image: linear-gradient(-90deg, $color1, $color2 15%, $color1 30%);
+          background-size: 60%;
+          background-origin: content-box;
+
+          @keyframes crawl {
+            0% {
+              background-position-x: 35%;
+            }
+            100% {
+              background-position-x: 165%;
+            }
+          }
+
+          animation: crawl 3s linear 0s infinite;
+        }
+      }
     }
 
     .test-cases-button {
