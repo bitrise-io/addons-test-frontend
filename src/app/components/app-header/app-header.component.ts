@@ -93,7 +93,7 @@ export class AppHeaderComponent implements OnInit {
   }
 
   selectedSmallTabmenuItemChanged() {
-    this.router.navigate(this.selectedSmallTabmenuItem.routerLink, {queryParamsHandling: "merge"});
+    this.router.navigate(this.selectedSmallTabmenuItem.routerLink, {queryParamsHandling: 'merge'});
   }
 
   selectedStatusChanged() {
