@@ -283,7 +283,7 @@ export class ProviderService {
   deserializeJUnitXMLTestCase(testCaseResponse: JUnitXMLTestCaseResponse) {
     const testCase = new TestCase();
 
-    testCase.name = testCaseResponse.name;
+    testCase.name = testCaseResponse.classname;
     switch (testCaseResponse.status) {
       case 'passed':
         testCase.status = TestCaseStatus.passed;
@@ -299,7 +299,7 @@ export class ProviderService {
         break;
     }
     testCase.durationInMilliseconds = Number(testCaseResponse.duration);
-    testCase.context = testCaseResponse.classname;
+    testCase.context = testCaseResponse.name;
     testCase.summary = testCaseResponse.error
       ? `${testCaseResponse.error.message}\n\n${testCaseResponse.error.body}`
       : testCaseResponse.status;

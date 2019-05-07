@@ -603,9 +603,9 @@ describe('ProviderService', () => {
       const testCase = service.deserializeJUnitXMLTestCase(testCaseResponse);
 
       expect(testCase instanceof TestCase).toBeTruthy();
-      expect(testCase.name).toBe('should default path to an empty string');
+      expect(testCase.name).toBe('JUnitXmlReporter.constructor');
       expect(testCase.durationInMilliseconds).toBe(1000);
-      expect(testCase.context).toBe('JUnitXmlReporter.constructor');
+      expect(testCase.context).toBe('should default path to an empty string');
     });
 
     [
