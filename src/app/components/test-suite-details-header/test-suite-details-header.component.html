@@ -1,16 +1,17 @@
 <section class="navigation">
-  <a [routerLink]="['../../']" class="navigation-button all-devices">
+  <a [routerLink]="['../../']" class="navigation-button all-devices" queryParamsHandling="merge">
     <span class="arrow" inlineSVG="/assets/images/arrow-quit.svg"></span> <span>All devices</span>
   </a>
   <a
     [routerLink]="['../../testsuite', previousTestSuite.id]"
+    queryParamsHandling="merge"
     *ngIf="previousTestSuite"
     class="navigation-button previous-device"
   >
     <span class="arrow" inlineSVG="/assets/images/arrow-dashed-tail-left.svg"></span>
     <span>Previous device</span>
   </a>
-  <a [routerLink]="['../../testsuite', nextTestSuite.id]" *ngIf="nextTestSuite" class="navigation-button next-device">
+  <a [routerLink]="['../../testsuite', nextTestSuite.id]" queryParamsHandling="merge" *ngIf="nextTestSuite" class="navigation-button next-device">
     <span>Next device</span>
     <span class="arrow" inlineSVG="/assets/images/arrow-dashed-tail-right.svg"></span>
   </a>
