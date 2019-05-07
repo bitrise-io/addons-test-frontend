@@ -20,8 +20,8 @@ export class AppHeaderComponent implements OnInit {
   tabmenuItems: any[];
   selectedSmallTabmenuItem: any;
   summedFailedTestCount: number;
+  _selectedStatus: TestSuiteStatus;
 
-  _selectedStatus = TestSuiteStatus.failed;
   get selectedStatus() {
     return this._selectedStatus;
   }
