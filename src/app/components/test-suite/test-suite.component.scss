@@ -119,6 +119,11 @@
           background-color: $vivid-pink;
           color: $vivid-pink;
         }
+
+        &.skipped {
+          background-color: $warm-grey;
+          color: $warm-grey;
+        }
       }
     }
 

@@ -39,6 +39,11 @@
             *ngIf="failedTestCaseCount > 0"
             [style.width.%]="(100 * failedTestCaseCount) / testSuite.testCases.length"
           >{{ failedTestCaseCount }}</div>
+          <div
+            class="test-case-bar skipped"
+            *ngIf="skippedTestCaseCount > 0"
+            [style.width.%]="(100 * skippedTestCaseCount) / testSuite.testCases.length"
+          >{{ skippedTestCaseCount }}</div>
         </div>
       </div>
     </div>

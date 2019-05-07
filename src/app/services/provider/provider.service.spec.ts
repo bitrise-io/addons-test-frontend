@@ -634,8 +634,8 @@ describe('ProviderService', () => {
         specPreparation: () => {
           testCaseResponse.status = 'skipped';
         },
-        expectedStatusName: 'failed',
-        expectedStatus: TestCaseStatus.failed,
+        expectedStatusName: 'skipped',
+        expectedStatus: TestCaseStatus.skipped,
         expectedSummary: 'skipped'
       }
     ].forEach((specConfig: any) => {

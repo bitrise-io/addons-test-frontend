@@ -2,7 +2,8 @@ import { Injectable } from '@angular/core';
 
 export enum TestCaseStatus {
   passed = 1,
-  failed = 2
+  failed = 2,
+  skipped = 3
 }
 
 export type TestCaseResponse = {
@@ -27,6 +28,8 @@ export class TestCase {
         return 'passed';
       case TestCaseStatus.failed:
         return 'failed';
+        case TestCaseStatus.skipped:
+        return 'skipped';
     }
   }
 
@@ -36,6 +39,8 @@ export class TestCase {
         return 'passed';
       case TestCaseStatus.failed:
         return 'failed';
+        case TestCaseStatus.skipped:
+        return 'skipped';
     }
   }
 

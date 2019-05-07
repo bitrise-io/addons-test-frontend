@@ -284,7 +284,20 @@ export class ProviderService {
     const testCase = new TestCase();
 
     testCase.name = testCaseResponse.name;
-    testCase.status = testCaseResponse.status === 'passed' ? TestCaseStatus.passed : TestCaseStatus.failed;
+    switch (testCaseResponse.status) {
+      case 'passed':
+        testCase.status = TestCaseStatus.passed;
+
+        break;
+      case 'skipped':
+        testCase.status = TestCaseStatus.skipped;
+
+        break;
+      default:
+        testCase.status = TestCaseStatus.failed;
+
+        break;
+    }
     testCase.durationInMilliseconds = Number(testCaseResponse.duration);
     testCase.context = testCaseResponse.classname;
     testCase.summary = testCaseResponse.error

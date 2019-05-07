@@ -17,7 +17,7 @@ export class TestSuiteDetailsHeaderComponent implements OnInit {
   TestReportType = TestReportType;
   TestCase = TestCase;
 
-  orderedTestCaseStatuses = [TestCaseStatus.failed, TestCaseStatus.passed];
+  orderedTestCaseStatuses = [TestCaseStatus.failed, TestCaseStatus.passed, TestCaseStatus.skipped];
   testCaseCountsByStatuses: {
     [status: number]: number;
   };
