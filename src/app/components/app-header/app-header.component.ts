@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { Router, NavigationEnd } from '@angular/router';
+import { Router, NavigationEnd, ActivatedRoute } from '@angular/router';
 import { filter } from 'rxjs/operators';
 import { Observable } from 'rxjs';
 import { Store } from '@ngrx/store';
@@ -30,22 +30,28 @@ export class AppHeaderComponent implements OnInit {
     this.store.dispatch(new FilterReports({ filter: status }));
   }
 
-  statusMenuItems = [{ name: 'All', value: null }].concat(
+  statusMenuItems = [{ name: 'All', value: null, queryParam: null }].concat(
     [TestSuiteStatus.failed, TestSuiteStatus.passed, TestSuiteStatus.skipped, TestSuiteStatus.inconclusive].map(
       item => ({
         name: TestSuite.statusName(item).replace(/^./, x => x.toUpperCase()),
-        value: item
+        value: item,
+        queryParam: TestSuite.statusName(item)
       })
     )
   );
 
-  constructor(private router: Router, private store: Store<{ testReport: TestReportState }>) {
+  constructor(private router: Router, private activatedRoute: ActivatedRoute, private store: Store<{ testReport: TestReportState }>) {
     this.testReports$ = store.select('testReport', 'testReports');
 
     router.events.pipe(filter(event => event instanceof NavigationEnd)).subscribe((event: NavigationEnd) => {
       if (this.tabmenuItems !== undefined) {
         this.selectSmallTabmenuItemForUrl(event.url);
       }
+    });
+
+    activatedRoute.queryParams.subscribe(params => {
+      const statusMenuItemFromQueryParams = this.statusMenuItems.find(statusMenuItem => statusMenuItem.queryParam === params['status']);
+      this.selectedStatus = statusMenuItemFromQueryParams ? statusMenuItemFromQueryParams.value : null;
     });
   }
 
