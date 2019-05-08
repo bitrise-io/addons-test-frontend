@@ -11,7 +11,7 @@ import filterReports from './filter-reports';
 import { TestSuite, TestSuiteStatus } from 'src/app/models/test-suite.model';
 import { TestReport } from 'src/app/models/test-report.model';
 
-const UPDATE_INTERVAL_MS = 2000;
+const UPDATE_INTERVAL_MS = 5000;
 
 @Injectable()
 export class ReportEffects {
