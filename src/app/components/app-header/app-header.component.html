@@ -16,6 +16,7 @@
         *ngFor="let tabmenuItem of tabmenuItems"
         [routerLink]="tabmenuItem.routerLink"
         routerLinkActive="active"
+        queryParamsHandling="merge"
       >
         <span class="text">{{ tabmenuItem.name }}</span>
         <span class="notification-bubble error failed-test-count" *ngIf="tabmenuItem.failedTestCount > 0"
@@ -38,7 +39,7 @@
   <ng-container [ngTemplateOutlet]="statusSelect"></ng-container>
 </section>
 <ng-template #statusSelect>
-  <select class="status-select" [ngClass]="TestSuite.statusCssClass(selectedStatus)" [(ngModel)]="selectedStatus">
+  <select class="status-select" [ngClass]="TestSuite.statusCssClass(selectedStatus)" [(ngModel)]="selectedStatus" (change)="selectedStatusChanged()">
     <option *ngFor="let item of statusMenuItems" [ngValue]="item.value">{{ item.name }}</option>
   </select>
 </ng-template>

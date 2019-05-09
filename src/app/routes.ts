@@ -17,5 +17,5 @@ export const appRoutes: Routes = [
       testSuite: TestSuiteResolve
     }
   },
-  { path: '', redirectTo: '/summary', pathMatch: 'full' }
+  { path: '', redirectTo: '/summary?status=failed', pathMatch: 'full' }
 ];

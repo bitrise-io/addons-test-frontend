@@ -166,6 +166,31 @@ describe('AppHeaderComponent', () => {
       }));
     });
 
+    describe('and passed is selected in the global status filter', () => {
+      let globalFilterElement: DebugElement;
+
+      beforeEach(fakeAsync(() => {
+        globalFilterElement = fixture.debugElement.query(By.css('.status-select'));
+        globalFilterElement.nativeElement.value = globalFilterElement.nativeElement.options[2].value;
+        globalFilterElement.nativeElement.dispatchEvent(new Event('change'));
+      }));
+
+      it('calls selectedStatusChanged', () => {
+        spyOn(appHeaderElement, 'selectedStatusChanged');
+
+        globalFilterElement.nativeElement.value = globalFilterElement.nativeElement.options[2].value;
+        globalFilterElement.nativeElement.dispatchEvent(new Event('change'));
+
+        expect(appHeaderElement.selectedStatusChanged).toHaveBeenCalled();
+      });
+
+      it('sets status passed as query parameter', fakeAsync(() => {
+        tick();
+
+        expect(location.path()).toContain('status=passed');
+      }));
+    });
+
     describe('and a dropdown item is selected', () => {
       let dropdownElement: DebugElement;
 
