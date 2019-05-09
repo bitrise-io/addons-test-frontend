@@ -70,7 +70,7 @@ export class TestSummaryHeaderComponent implements OnInit {
       );
 
       this.totalTestCount = allTestSuiteStatuses.reduce(
-        (sumByStatus, status: TestSuiteStatus) => sumByStatus + this.testCountsByStatuses[status],
+        (totalSum, status: TestSuiteStatus) => totalSum + this.testCountsByStatuses[status],
         0
       );
     });
