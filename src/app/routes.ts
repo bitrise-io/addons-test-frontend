@@ -5,7 +5,6 @@ import { TestReportWrapperComponent } from './components/test-report-wrapper/tes
 import { TestSuiteDetailsComponent } from './components/test-suite-details/test-suite-details.component';
 import { testSuiteDetailsMenuRoutes } from './components/test-suite-details/menu/routes';
 import { TestSuiteResolve } from './services/test-suite.resolve.service';
-import { TestSuite, TestSuiteStatus } from './models/test-suite.model';
 
 export const appRoutes: Routes = [
   { path: 'summary', component: TestSummaryComponent },
@@ -18,5 +17,5 @@ export const appRoutes: Routes = [
       testSuite: TestSuiteResolve
     }
   },
-  { path: '', redirectTo: `/summary?status=${TestSuite.statusName(TestSuiteStatus.failed)}`, pathMatch: 'full' }
+  { path: '', redirectTo: '/summary?status=failed', pathMatch: 'full' }
 ];
