@@ -17,6 +17,24 @@
     {
       "device_name": "iPhone 7",
       "api_level": "API Level 24",
+      "status": "pending",
+      "orientation": "portrait",
+      "locale": "English",
+      "step_id": "abcdefgh123456789",
+      "output_urls": {}
+    },
+    {
+      "device_name": "iPhone 7",
+      "api_level": "API Level 24",
+      "status": "inProgress",
+      "orientation": "portrait",
+      "locale": "English",
+      "step_id": "abcdefgh123456789",
+      "output_urls": {}
+    },
+    {
+      "device_name": "iPhone 7",
+      "api_level": "API Level 24",
       "status": "complete",
       "test_results": [
         {

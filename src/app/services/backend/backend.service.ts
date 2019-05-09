@@ -6,7 +6,7 @@ import { BackendService, TestReportsResult, LogResult, TestReportResult } from '
 import { ProviderService, Provider } from 'src/app/services/provider/provider.service';
 import { Performance } from 'src/app/models/performance.model';
 import { TestReportResponse, TestReport } from 'src/app/models/test-report.model';
-import { TestSuite } from 'src/app/models/test-suite.model';
+import { TestSuite, TestSuiteStatus } from 'src/app/models/test-suite.model';
 import { Log, RawLog } from 'src/app/models/log.model';
 
 import * as MOCKED_DATA from './mock-data.json';
@@ -36,6 +36,10 @@ export class RealBackendService implements BackendService {
 
     if (testReport.provider === Provider.firebaseTestlab) {
       testReport.testSuites.forEach((testSuite: TestSuite) => {
+        if (testSuite.status === TestSuiteStatus.inProgress) {
+          return;
+        }
+
         const testCasesResponse = MOCKED_DATA[testSuite.testCasesURL];
         testSuite.testCases = this.providerService.deserializeFirebaseTestlabTestCases(testCasesResponse);
       });

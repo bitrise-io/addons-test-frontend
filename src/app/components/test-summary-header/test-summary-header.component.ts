@@ -17,7 +17,7 @@ export class TestSummaryHeaderComponent implements OnInit {
   TestSuiteStatus = TestSuiteStatus;
   testReports$: Observable<TestReport[]>;
   testFilter$: Observable<TestSuiteStatus>;
-  orderedTestSuiteStatuses = [
+  visibleTestSuiteStatuses = [
     TestSuiteStatus.failed,
     TestSuiteStatus.passed,
     TestSuiteStatus.skipped,
@@ -46,11 +46,19 @@ export class TestSummaryHeaderComponent implements OnInit {
   ngOnInit() {
     this.store.dispatch(new FetchReports());
 
-    this.testFilter$.subscribe(filter => {
+    this.testFilter$.subscribe((filter) => {
       this.selectedStatus = filter;
     });
-    this.testReports$.subscribe(testReports => {
-      this.testCountsByStatuses = this.orderedTestSuiteStatuses.reduce(
+    this.testReports$.subscribe((testReports) => {
+      const allTestSuiteStatuses = [
+        TestSuiteStatus.failed,
+        TestSuiteStatus.passed,
+        TestSuiteStatus.skipped,
+        TestSuiteStatus.inconclusive,
+        TestSuiteStatus.inProgress
+      ];
+
+      this.testCountsByStatuses = allTestSuiteStatuses.reduce(
         (sumByStatus, status: TestSuiteStatus) => ({
           ...sumByStatus,
           [status]: testReports.reduce(
@@ -61,8 +69,8 @@ export class TestSummaryHeaderComponent implements OnInit {
         {}
       );
 
-      this.totalTestCount = this.orderedTestSuiteStatuses.reduce(
-        (sumByStatus, status: TestSuiteStatus) => sumByStatus + this.testCountsByStatuses[status],
+      this.totalTestCount = allTestSuiteStatuses.reduce(
+        (totalSum, status: TestSuiteStatus) => totalSum + this.testCountsByStatuses[status],
         0
       );
     });

@@ -26,32 +26,32 @@ export type FirebaseTestlabTestSuiteResponse = {
   device_name: string;
   api_level: string;
   status: string;
-  test_results: [
+  test_results?: [
     {
       total?: Number;
       failed?: Number;
     }
   ];
-  outcome: string;
+  outcome?: string;
   orientation: string;
   locale: string;
   step_id: string;
   output_urls: {
-    video_url: string;
-    test_suite_xml_url: string;
-    log_urls: string[];
-    asset_urls: {
+    video_url?: string;
+    test_suite_xml_url?: string;
+    log_urls?: string[];
+    asset_urls?: {
       [filename: string]: string;
     };
-    screenshot_urls: string[];
+    screenshot_urls?: string[];
   };
-  test_type: string;
-  test_issues: [
+  test_type?: string;
+  test_issues?: [
     {
       name: string;
     }
   ];
-  step_duration_in_seconds: Number;
+  step_duration_in_seconds?: Number;
 };
 
 export type FirebaseTestlabTestCasesResponse = string;
@@ -146,61 +146,52 @@ export class ProviderService {
 
   deserializeFirebaseTestlabTestSuite(testSuiteResponse: FirebaseTestlabTestSuiteResponse) {
     const testSuite = new TestSuite();
+    testSuite.deviceName = testSuiteResponse.device_name;
+    testSuite.suiteName = null;
+    testSuite.deviceOperatingSystem = testSuiteResponse.api_level;
+    testSuite.orientation = TestSuiteOrientation[testSuiteResponse.orientation];
+    testSuite.locale = testSuiteResponse.locale;
 
     switch (testSuiteResponse.status) {
       case 'pending':
       case 'inProgress':
-        testSuite.status = TestSuiteStatus.inconclusive;
+        testSuite.status = TestSuiteStatus.inProgress;
+        testSuite.durationInMilliseconds = null;
 
         break;
       case 'complete':
         if (testSuiteResponse.outcome === 'inconclusive') {
           testSuite.status = TestSuiteStatus.inconclusive;
-
-          break;
-        }
-
-        if (testSuiteResponse.outcome === 'skipped') {
+        } else if (testSuiteResponse.outcome === 'skipped') {
           testSuite.status = TestSuiteStatus.skipped;
-
-          break;
-        }
-
-        if (testSuiteResponse.outcome === 'failure') {
+        } else if (testSuiteResponse.outcome === 'failure') {
           testSuite.status = TestSuiteStatus.failed;
-
-          break;
+        } else {
+          testSuite.status = TestSuiteStatus.passed;
         }
 
-        testSuite.status = TestSuiteStatus.passed;
+        testSuite.durationInMilliseconds = 1000 * Number(testSuiteResponse.step_duration_in_seconds);
+        testSuite.screenshots = testSuiteResponse.output_urls.screenshot_urls.map((screenshotURL) => {
+          const filenameRegExp = /^.+\/([^?\n]*).*$/;
+
+          return {
+            url: screenshotURL,
+            filename: filenameRegExp.test(screenshotURL) ? filenameRegExp.exec(screenshotURL)[1] : null
+          };
+        });
+        testSuite.testCasesURL = testSuiteResponse.output_urls.test_suite_xml_url;
+        testSuite.artifacts = Object.entries(testSuiteResponse.output_urls.asset_urls).map(
+          ([artifactFilename, artifactURL]) => {
+            const testArtifact = new TestArtifact();
+            testArtifact.downloadURL = artifactURL;
+            testArtifact.filename = artifactFilename;
+
+            return testArtifact;
+          }
+        );
+        testSuite.videoUrl = testSuiteResponse.output_urls.video_url;
+        testSuite.logUrl = testSuiteResponse.output_urls.log_urls[0];
     }
-
-    testSuite.deviceName = testSuiteResponse.device_name;
-    testSuite.suiteName = null;
-    testSuite.deviceOperatingSystem = testSuiteResponse.api_level;
-    testSuite.durationInMilliseconds = 1000 * Number(testSuiteResponse.step_duration_in_seconds);
-    testSuite.orientation = TestSuiteOrientation[testSuiteResponse.orientation];
-    testSuite.locale = testSuiteResponse.locale;
-    testSuite.screenshots = testSuiteResponse.output_urls.screenshot_urls.map((screenshotURL) => {
-      const filenameRegExp = /^.+\/([^?\n]*).*$/;
-
-      return {
-        url: screenshotURL,
-        filename: filenameRegExp.test(screenshotURL) ? filenameRegExp.exec(screenshotURL)[1] : null
-      };
-    });
-    testSuite.testCasesURL = testSuiteResponse.output_urls.test_suite_xml_url;
-    testSuite.artifacts = Object.entries(testSuiteResponse.output_urls.asset_urls).map(
-      ([artifactFilename, artifactURL]) => {
-        const testArtifact = new TestArtifact();
-        testArtifact.downloadURL = artifactURL;
-        testArtifact.filename = artifactFilename;
-
-        return testArtifact;
-      }
-    );
-    testSuite.videoUrl = testSuiteResponse.output_urls.video_url;
-    testSuite.logUrl = testSuiteResponse.output_urls.log_urls[0];
 
     return testSuite;
   }
@@ -268,9 +259,7 @@ export class ProviderService {
 
   deserializeFirebaseTestlabTestCases(testCasesResponse: FirebaseTestlabTestCasesResponse) {
     const parser = new DOMParser();
-    const testSuiteElement = parser
-      .parseFromString(testCasesResponse, 'application/xml')
-      .querySelector('testsuite');
+    const testSuiteElement = parser.parseFromString(testCasesResponse, 'application/xml').querySelector('testsuite');
 
     return Array.from(testSuiteElement.children[0].children).map((testCaseItemElement: Element) => {
       const testCase = new TestCase();
@@ -294,10 +283,23 @@ export class ProviderService {
   deserializeJUnitXMLTestCase(testCaseResponse: JUnitXMLTestCaseResponse) {
     const testCase = new TestCase();
 
-    testCase.name = testCaseResponse.name;
-    testCase.status = testCaseResponse.status === 'passed' ? TestCaseStatus.passed : TestCaseStatus.failed;
+    testCase.name = testCaseResponse.classname;
+    switch (testCaseResponse.status) {
+      case 'passed':
+        testCase.status = TestCaseStatus.passed;
+
+        break;
+      case 'skipped':
+        testCase.status = TestCaseStatus.skipped;
+
+        break;
+      default:
+        testCase.status = TestCaseStatus.failed;
+
+        break;
+    }
     testCase.durationInMilliseconds = Number(testCaseResponse.duration);
-    testCase.context = testCaseResponse.classname;
+    testCase.context = testCaseResponse.name;
     testCase.summary = testCaseResponse.error
       ? `${testCaseResponse.error.message}\n\n${testCaseResponse.error.body}`
       : testCaseResponse.status;

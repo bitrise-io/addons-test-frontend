@@ -102,27 +102,29 @@ describe('TestSuiteComponent', () => {
     });
   });
 
-  describe('when test suite has both passed and failed test cases', () => {
+  describe('when test suite only has skipped test cases', () => {
     beforeEach(() => {
-      testSuiteComponent.testSuite.status = TestSuiteStatus.failed;
+      testSuiteComponent.testSuite.status = TestSuiteStatus.passed;
       testSuiteComponent.testSuite.testCases = Array(3)
         .fill(null)
         .map(() => new TestCase());
-      testSuiteComponent.testSuite.testCases[0].status = TestCaseStatus.passed;
-      testSuiteComponent.testSuite.testCases[1].status = TestCaseStatus.failed;
-      testSuiteComponent.testSuite.testCases[2].status = TestCaseStatus.failed;
+      testSuiteComponent.testSuite.testCases[0].status = TestCaseStatus.skipped;
+      testSuiteComponent.testSuite.testCases[1].status = TestCaseStatus.skipped;
+      testSuiteComponent.testSuite.testCases[2].status = TestCaseStatus.skipped;
 
       fixture.detectChanges();
     });
 
-    it('renders bars for both status', () => {
-      expect(fixture.debugElement.query(By.css('.test-case-bar.passed'))).not.toBeNull();
-      expect(fixture.debugElement.query(By.css('.test-case-bar.failed'))).not.toBeNull();
+    it('renders a bar for skipped status', () => {
+      expect(fixture.debugElement.query(By.css('.test-case-bar.skipped'))).not.toBeNull();
     });
 
-    it('bars have test case count as content', () => {
-      expect(fixture.debugElement.query(By.css('.test-case-bar.passed')).nativeElement.textContent).toBe('1');
-      expect(fixture.debugElement.query(By.css('.test-case-bar.failed')).nativeElement.textContent).toBe('2');
+    it('related bar has skipped test case count as content', () => {
+      expect(fixture.debugElement.query(By.css('.test-case-bar.skipped')).nativeElement.textContent).toBe('3');
+    });
+
+    it('does not render a bar for passed status', () => {
+      expect(fixture.debugElement.query(By.css('.test-case-bar.passed'))).toBeNull();
     });
 
     it('renders a visible "Test cases" button', () => {
@@ -131,7 +133,60 @@ describe('TestSuiteComponent', () => {
     });
   });
 
-  describe('when test suite is not yet finished', () => {
+  describe('when test suite has passed, failed, and skipped test cases', () => {
+    beforeEach(() => {
+      testSuiteComponent.testSuite.status = TestSuiteStatus.failed;
+      testSuiteComponent.testSuite.testCases = Array(4)
+        .fill(null)
+        .map(() => new TestCase());
+      testSuiteComponent.testSuite.testCases[0].status = TestCaseStatus.passed;
+      testSuiteComponent.testSuite.testCases[1].status = TestCaseStatus.failed;
+      testSuiteComponent.testSuite.testCases[2].status = TestCaseStatus.failed;
+      testSuiteComponent.testSuite.testCases[3].status = TestCaseStatus.skipped;
+
+      fixture.detectChanges();
+    });
+
+    it('renders bars for both status', () => {
+      expect(fixture.debugElement.query(By.css('.test-case-bar.passed'))).not.toBeNull();
+      expect(fixture.debugElement.query(By.css('.test-case-bar.failed'))).not.toBeNull();
+      expect(fixture.debugElement.query(By.css('.test-case-bar.skipped'))).not.toBeNull();
+    });
+
+    it('bars have test case count as content', () => {
+      expect(fixture.debugElement.query(By.css('.test-case-bar.passed')).nativeElement.textContent).toBe('1');
+      expect(fixture.debugElement.query(By.css('.test-case-bar.failed')).nativeElement.textContent).toBe('2');
+      expect(fixture.debugElement.query(By.css('.test-case-bar.skipped')).nativeElement.textContent).toBe('1');
+    });
+
+    it('renders a visible "Test cases" button', () => {
+      expect(fixture.debugElement.query(By.css('.test-cases-button[hidden]'))).toBeNull();
+      expect(fixture.debugElement.query(By.css('.test-cases-button'))).not.toBeNull();
+    });
+  });
+
+  describe('when test suite is in progress', () => {
+    beforeEach(() => {
+      testSuiteComponent.testSuite.status = TestSuiteStatus.inProgress;
+
+      fixture.detectChanges();
+    });
+
+    it('renders a bar', () => {
+      expect(fixture.debugElement.query(By.css('.test-result-bar'))).not.toBeNull();
+    });
+
+    it('does not render a bar for passed and failed statuses', () => {
+      expect(fixture.debugElement.query(By.css('.test-case-bar.passed'))).toBeNull();
+      expect(fixture.debugElement.query(By.css('.test-case-bar.failed'))).toBeNull();
+    });
+
+    it('renders a "Test cases" button, but hidden', () => {
+      expect(fixture.debugElement.query(By.css('.test-cases-button[hidden]'))).not.toBeNull();
+    });
+  });
+
+  describe('when test suite is inconclusive', () => {
     beforeEach(() => {
       testSuiteComponent.testSuite.status = TestSuiteStatus.inconclusive;
 

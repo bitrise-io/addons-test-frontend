@@ -5,11 +5,12 @@
       <div class="count-wrapper">
         <div class="count">{{ totalTestCount }}</div>
         <div class="name">total</div>
+        <div class="note" [hidden]="testCountsByStatuses[TestSuiteStatus.inProgress] === 0">{{ testCountsByStatuses[TestSuiteStatus.inProgress] }} in progress</div>
       </div>
     </div>
     <div
       class="count-indicator"
-      *ngFor="let testSuiteStatus of orderedTestSuiteStatuses"
+      *ngFor="let testSuiteStatus of visibleTestSuiteStatuses"
       [ngClass]="TestSuite.statusCssClass(testSuiteStatus)"
       [class.filtered-out]="isStatusFilteredOut(testSuiteStatus)"
     >
@@ -42,10 +43,10 @@
   <div class="test-rates text-top">
     <div
       class="status-rate"
-      *ngFor="let testSuiteStatus of orderedTestSuiteStatuses"
+      *ngFor="let testSuiteStatus of visibleTestSuiteStatuses"
       [hidden]="testCountsByStatuses[testSuiteStatus] == 0"
       [ngClass]="TestSuite.statusCssClass(testSuiteStatus)"
-      [style.width]="(100 * testCountsByStatuses[testSuiteStatus]) / totalTestCount + '%'"
+      [style.width]="(100 * testCountsByStatuses[testSuiteStatus]) / (totalTestCount - testCountsByStatuses[TestSuiteStatus.inProgress]) + '%'"
     >{{ testCountsByStatuses[testSuiteStatus] }} {{ TestSuite.statusName(testSuiteStatus) }}</div>
   </div>
 </section>

@@ -8,6 +8,7 @@ describe('TextFromDurationInMilliseconds', () => {
   });
 
   [
+    { milliseconds: null, expectedText: 'N/A' },
     { milliseconds: 2, expectedText: '2 ms' },
     { milliseconds: 1000, expectedText: '1 sec' },
     { milliseconds: 2000, expectedText: '2 sec' },
