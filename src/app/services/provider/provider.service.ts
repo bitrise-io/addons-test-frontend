@@ -151,6 +151,7 @@ export class ProviderService {
     testSuite.deviceOperatingSystem = testSuiteResponse.api_level;
     testSuite.orientation = TestSuiteOrientation[testSuiteResponse.orientation];
     testSuite.locale = testSuiteResponse.locale;
+    testSuite.stepID = testSuiteResponse.step_id;
 
     switch (testSuiteResponse.status) {
       case 'pending':
@@ -171,14 +172,14 @@ export class ProviderService {
         }
 
         testSuite.durationInMilliseconds = 1000 * Number(testSuiteResponse.step_duration_in_seconds);
-        testSuite.screenshots = testSuiteResponse.output_urls.screenshot_urls.map((screenshotURL) => {
+        testSuite.screenshots = testSuiteResponse.output_urls.screenshot_urls ? testSuiteResponse.output_urls.screenshot_urls.map((screenshotURL) => {
           const filenameRegExp = /^.+\/([^?\n]*).*$/;
 
           return {
             url: screenshotURL,
             filename: filenameRegExp.test(screenshotURL) ? filenameRegExp.exec(screenshotURL)[1] : null
           };
-        });
+        }) : [];
         testSuite.testCasesURL = testSuiteResponse.output_urls.test_suite_xml_url;
         testSuite.artifacts = Object.entries(testSuiteResponse.output_urls.asset_urls).map(
           ([artifactFilename, artifactURL]) => {
