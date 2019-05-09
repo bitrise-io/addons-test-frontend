@@ -17,6 +17,7 @@ export class TestSuiteComponent implements OnInit {
 
   passedTestCaseCount: number;
   failedTestCaseCount: number;
+  skippedTestCaseCount: number;
 
   ngOnInit() {
     if (this.testSuite.testCases) {
@@ -25,6 +26,9 @@ export class TestSuiteComponent implements OnInit {
       ).length;
       this.failedTestCaseCount = this.testSuite.testCases.filter(
         (testCase: TestCase) => testCase.status === TestCaseStatus.failed
+      ).length;
+      this.skippedTestCaseCount = this.testSuite.testCases.filter(
+        (testCase: TestCase) => testCase.status === TestCaseStatus.skipped
       ).length;
     }
   }

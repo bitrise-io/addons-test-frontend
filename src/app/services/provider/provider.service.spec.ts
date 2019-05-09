@@ -54,6 +54,30 @@ describe('ProviderService', () => {
     };
   }
 
+  function pendingFirebaseTestlabTestSuiteResponse(): FirebaseTestlabTestSuiteResponse {
+    return {
+      device_name: 'iPhone 7',
+      api_level: 'API Level 24',
+      status: 'pending',
+      orientation: 'portrait',
+      locale: 'English',
+      step_id: 'abcdefgh123456789',
+      output_urls: {}
+    };
+  }
+
+  function inProgressFirebaseTestlabTestSuiteResponse(): FirebaseTestlabTestSuiteResponse {
+    return {
+      device_name: 'iPhone 7',
+      api_level: 'API Level 24',
+      status: 'inProgress',
+      orientation: 'portrait',
+      locale: 'English',
+      step_id: 'abcdefgh123456789',
+      output_urls: {}
+    };
+  }
+
   function basicFirebaseTestlabTestCasesResponse(): string {
     // tslint:disable-next-line:max-line-length
     return '<?xml version="1.0" encoding="UTF-8"?>\n<testsuite>\n<testcase type="array">\n<testcase-item>\n<name>name A</name>\n<classname>classname A</classname>\n<failure>The A failed</failure>\n</testcase-item>\n<testcase-item>\n<name>name B</name>\n<classname>classname B</classname>\n</testcase-item>\n</testcase>\n</testsuite>';
@@ -224,30 +248,27 @@ describe('ProviderService', () => {
   describe('deserializeFirebaseTestlabTestSuite', () => {
     let testSuiteResponse: FirebaseTestlabTestSuiteResponse;
 
-    beforeEach(() => {
-      testSuiteResponse = basicFirebaseTestlabTestSuiteResponse();
-    });
-
     [
       {
         statusName: 'pending',
         specPreparation: () => {
-          testSuiteResponse.status = 'pending';
+          testSuiteResponse = pendingFirebaseTestlabTestSuiteResponse();
         },
-        expectedStatusName: 'inconclusive',
-        expectedStatus: TestSuiteStatus.inconclusive
+        expectedStatusName: 'in progress',
+        expectedStatus: TestSuiteStatus.inProgress
       },
       {
         statusName: 'in progress',
         specPreparation: () => {
-          testSuiteResponse.status = 'inProgress';
+          testSuiteResponse = inProgressFirebaseTestlabTestSuiteResponse();
         },
-        expectedStatusName: 'inconclusive',
-        expectedStatus: TestSuiteStatus.inconclusive
+        expectedStatusName: 'in progress',
+        expectedStatus: TestSuiteStatus.inProgress
       },
       {
         statusName: 'complete & inconclusive',
         specPreparation: () => {
+          testSuiteResponse = basicFirebaseTestlabTestSuiteResponse();
           testSuiteResponse.status = 'complete';
           testSuiteResponse.outcome = 'inconclusive';
         },
@@ -257,6 +278,7 @@ describe('ProviderService', () => {
       {
         statusName: 'complete & passed',
         specPreparation: () => {
+          testSuiteResponse = basicFirebaseTestlabTestSuiteResponse();
           testSuiteResponse.status = 'complete';
           testSuiteResponse.outcome = 'success';
         },
@@ -266,6 +288,7 @@ describe('ProviderService', () => {
       {
         statusName: 'complete & failed',
         specPreparation: () => {
+          testSuiteResponse = basicFirebaseTestlabTestSuiteResponse();
           testSuiteResponse.status = 'complete';
           testSuiteResponse.outcome = 'failure';
         },
@@ -275,6 +298,7 @@ describe('ProviderService', () => {
       {
         statusName: 'complete & skipped',
         specPreparation: () => {
+          testSuiteResponse = basicFirebaseTestlabTestSuiteResponse();
           testSuiteResponse.status = 'complete';
           testSuiteResponse.outcome = 'skipped';
         },
@@ -579,9 +603,9 @@ describe('ProviderService', () => {
       const testCase = service.deserializeJUnitXMLTestCase(testCaseResponse);
 
       expect(testCase instanceof TestCase).toBeTruthy();
-      expect(testCase.name).toBe('should default path to an empty string');
+      expect(testCase.name).toBe('JUnitXmlReporter.constructor');
       expect(testCase.durationInMilliseconds).toBe(1000);
-      expect(testCase.context).toBe('JUnitXmlReporter.constructor');
+      expect(testCase.context).toBe('should default path to an empty string');
     });
 
     [
@@ -610,8 +634,8 @@ describe('ProviderService', () => {
         specPreparation: () => {
           testCaseResponse.status = 'skipped';
         },
-        expectedStatusName: 'failed',
-        expectedStatus: TestCaseStatus.failed,
+        expectedStatusName: 'skipped',
+        expectedStatus: TestCaseStatus.skipped,
         expectedSummary: 'skipped'
       }
     ].forEach((specConfig: any) => {

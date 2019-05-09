@@ -8,7 +8,8 @@ describe('TestSuite', () => {
       { testSuiteStatus: TestSuiteStatus.inconclusive, expectedName: 'inconclusive' },
       { testSuiteStatus: TestSuiteStatus.passed, expectedName: 'passed' },
       { testSuiteStatus: TestSuiteStatus.failed, expectedName: 'failed' },
-      { testSuiteStatus: TestSuiteStatus.skipped, expectedName: 'skipped' }
+      { testSuiteStatus: TestSuiteStatus.skipped, expectedName: 'skipped' },
+      { testSuiteStatus: TestSuiteStatus.inProgress, expectedName: 'in progress' }
     ].forEach((specConfig: any) => {
       describe(`when providing status ${specConfig.testSuiteStatus}`, () => {
         it(`returns name ${specConfig.expectedName}`, () => {
@@ -23,7 +24,8 @@ describe('TestSuite', () => {
       { testSuiteStatus: TestSuiteStatus.inconclusive, expectedCssClass: 'inconclusive' },
       { testSuiteStatus: TestSuiteStatus.passed, expectedCssClass: 'passed' },
       { testSuiteStatus: TestSuiteStatus.failed, expectedCssClass: 'failed' },
-      { testSuiteStatus: TestSuiteStatus.skipped, expectedCssClass: 'skipped' }
+      { testSuiteStatus: TestSuiteStatus.skipped, expectedCssClass: 'skipped' },
+      { testSuiteStatus: TestSuiteStatus.inProgress, expectedCssClass: 'in-progress' }
     ].forEach((specConfig: any) => {
       describe(`when providing status ${specConfig.testSuiteStatus}`, () => {
         it(`returns CSS class ${specConfig.expectedCssClass}`, () => {
@@ -55,7 +57,8 @@ describe('TestSuite', () => {
       { testSuiteStatus: TestSuiteStatus.inconclusive, expectedName: 'inconclusive' },
       { testSuiteStatus: TestSuiteStatus.passed, expectedName: 'passed' },
       { testSuiteStatus: TestSuiteStatus.failed, expectedName: 'failed' },
-      { testSuiteStatus: TestSuiteStatus.skipped, expectedName: 'skipped' }
+      { testSuiteStatus: TestSuiteStatus.skipped, expectedName: 'skipped' },
+      { testSuiteStatus: TestSuiteStatus.inProgress, expectedName: 'in progress' }
     ].forEach((specConfig: any) => {
       describe(`when test suite has status ${specConfig.testSuiteStatus}`, () => {
         beforeEach(() => {
@@ -78,7 +81,8 @@ describe('TestSuite', () => {
       { testSuiteStatus: TestSuiteStatus.inconclusive, expectedCssClass: 'inconclusive' },
       { testSuiteStatus: TestSuiteStatus.passed, expectedCssClass: 'passed' },
       { testSuiteStatus: TestSuiteStatus.failed, expectedCssClass: 'failed' },
-      { testSuiteStatus: TestSuiteStatus.skipped, expectedCssClass: 'skipped' }
+      { testSuiteStatus: TestSuiteStatus.skipped, expectedCssClass: 'skipped' },
+      { testSuiteStatus: TestSuiteStatus.inProgress, expectedCssClass: 'in-progress' }
     ].forEach((specConfig: any) => {
       describe(`when test suite has status ${specConfig.testSuiteStatus}`, () => {
         beforeEach(() => {

@@ -6,6 +6,7 @@
         <div class="status-icon passed" inlineSVG="/assets/images/sign-check.svg"></div>
         <div class="status-icon skipped" inlineSVG="/assets/images/sign-arrowheads.svg"></div>
         <div class="status-icon inconclusive" inlineSVG="/assets/images/sign-questionmark.svg"></div>
+        <div class="status-icon in-progress" inlineSVG="/assets/images/sign-empty.svg"></div>
         <div class="title" *ngIf="testReport.type == TestReportType.uiTest">
           <div class="name">{{ testSuite.deviceName }}</div>
           <div class="operating-system">{{ testSuite.deviceOperatingSystem }}</div>
@@ -21,7 +22,7 @@
     <div class="detail-wrapper test-results">
       <div class="detail">
         <div
-          *ngIf="testSuite.status == TestSuiteStatus.inconclusive || testSuite.status == TestSuiteStatus.skipped"
+          *ngIf="testSuite.status == TestSuiteStatus.inconclusive || testSuite.status == TestSuiteStatus.skipped || testSuite.status == TestSuiteStatus.inProgress"
           class="test-result-bar"
         ></div>
         <div
@@ -38,6 +39,11 @@
             *ngIf="failedTestCaseCount > 0"
             [style.width.%]="(100 * failedTestCaseCount) / testSuite.testCases.length"
           >{{ failedTestCaseCount }}</div>
+          <div
+            class="test-case-bar skipped"
+            *ngIf="skippedTestCaseCount > 0"
+            [style.width.%]="(100 * skippedTestCaseCount) / testSuite.testCases.length"
+          >{{ skippedTestCaseCount }}</div>
         </div>
       </div>
     </div>

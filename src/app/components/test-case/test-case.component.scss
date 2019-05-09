@@ -46,6 +46,9 @@
         @if ($status-class == 'failed') {
           $color: $vivid-pink;
         }
+        @if ($status-class == 'skipped') {
+          $color: $warm-grey;
+        }
 
         border-left-color: $color;
 
@@ -57,6 +60,7 @@
 
     @include test-case-with-status-class(failed);
     @include test-case-with-status-class(passed);
+    @include test-case-with-status-class(skipped);
 
     .heading {
       .detail-wrapper.status-name .detail .status-icon {

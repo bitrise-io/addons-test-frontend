@@ -101,4 +101,8 @@
   .status-rate.passed {
     @include ui-modifier-status-rate-with-color($green-teal);
   }
+
+  .status-rate.skipped {
+    @include ui-modifier-status-rate-with-color($warm-grey);
+  }
 }

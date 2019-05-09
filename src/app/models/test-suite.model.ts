@@ -6,7 +6,8 @@ export enum TestSuiteStatus {
   inconclusive = 0,
   passed = 1,
   failed = 2,
-  skipped = 3
+  skipped = 3,
+  inProgress = 4
 }
 
 export enum TestSuiteOrientation {
@@ -58,7 +59,8 @@ export class TestSuite {
       [TestSuiteStatus.inconclusive]: 'inconclusive',
       [TestSuiteStatus.passed]: 'passed',
       [TestSuiteStatus.failed]: 'failed',
-      [TestSuiteStatus.skipped]: 'skipped'
+      [TestSuiteStatus.skipped]: 'skipped',
+      [TestSuiteStatus.inProgress]: 'in progress'
     };
 
     return statusNames[status];
@@ -69,7 +71,8 @@ export class TestSuite {
       [TestSuiteStatus.inconclusive]: 'inconclusive',
       [TestSuiteStatus.passed]: 'passed',
       [TestSuiteStatus.failed]: 'failed',
-      [TestSuiteStatus.skipped]: 'skipped'
+      [TestSuiteStatus.skipped]: 'skipped',
+      [TestSuiteStatus.inProgress]: 'in-progress'
     };
 
     return statusCssClasses[status];

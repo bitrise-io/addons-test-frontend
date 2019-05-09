@@ -6,7 +6,8 @@ describe('TestCase', () => {
   describe('class method statusName', () => {
     [
       { testCaseStatus: TestCaseStatus.passed, expectedName: 'passed' },
-      { testCaseStatus: TestCaseStatus.failed, expectedName: 'failed' }
+      { testCaseStatus: TestCaseStatus.failed, expectedName: 'failed' },
+      { testCaseStatus: TestCaseStatus.skipped, expectedName: 'skipped' }
     ].forEach((specConfig: any) => {
       describe(`when providing status ${specConfig.testCaseStatus}`, () => {
         it(`returns name ${specConfig.expectedName}`, () => {
@@ -19,7 +20,8 @@ describe('TestCase', () => {
   describe('class method statusCssClass', () => {
     [
       { testCaseStatus: TestCaseStatus.passed, expectedCssClass: 'passed' },
-      { testCaseStatus: TestCaseStatus.failed, expectedCssClass: 'failed' }
+      { testCaseStatus: TestCaseStatus.failed, expectedCssClass: 'failed' },
+      { testCaseStatus: TestCaseStatus.skipped, expectedCssClass: 'skipped' }
     ].forEach((specConfig: any) => {
       describe(`when providing status ${specConfig.testCaseStatus}`, () => {
         it(`returns CSS class ${specConfig.expectedCssClass}`, () => {
@@ -36,7 +38,8 @@ describe('TestCase', () => {
 
     [
       { testCaseStatus: TestCaseStatus.passed, expectedName: 'passed' },
-      { testCaseStatus: TestCaseStatus.failed, expectedName: 'failed' }
+      { testCaseStatus: TestCaseStatus.failed, expectedName: 'failed' },
+      { testCaseStatus: TestCaseStatus.skipped, expectedName: 'skipped' }
     ].forEach((specConfig: any) => {
       describe(`when test case has status ${specConfig.testCaseStatus}`, () => {
         beforeEach(() => {
@@ -57,7 +60,8 @@ describe('TestCase', () => {
 
     [
       { testCaseStatus: TestCaseStatus.passed, expectedCssClass: 'passed' },
-      { testCaseStatus: TestCaseStatus.failed, expectedCssClass: 'failed' }
+      { testCaseStatus: TestCaseStatus.failed, expectedCssClass: 'failed' },
+      { testCaseStatus: TestCaseStatus.skipped, expectedCssClass: 'skipped' }
     ].forEach((specConfig: any) => {
       describe(`when test case has status ${specConfig.testCaseStatus}`, () => {
         beforeEach(() => {
