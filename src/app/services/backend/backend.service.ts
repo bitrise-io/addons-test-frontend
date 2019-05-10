@@ -17,16 +17,18 @@ import { Log, RawLog } from 'src/app/models/log.model';
 
 @Injectable()
 export class RealBackendService implements BackendService {
+  buildSlug = 'build-2019-05-09_14-46-29';
+
   constructor(private httpClient: HttpClient, private providerService: ProviderService) {}
 
   getPerformance(testReport: TestReport, testSuite: TestSuite): Observable<Performance> {
     return this.httpClient
-      .get(`http://localhost:5001/api/builds/build-2019-05-09_14-46-29/steps/${testSuite.stepID}`)
+      .get(`http://localhost:5001/api/builds/${this.buildSlug}/steps/${testSuite.stepID}`)
       .pipe(map((performance: Performance) => performance));
   }
 
   getReports(): Observable<TestReportsResult> {
-    return this.httpClient.get(`http://localhost:5001/api/builds/build-2019-05-09_14-46-29/test_reports`).pipe(
+    return this.httpClient.get(`http://localhost:5001/api/builds/${this.buildSlug}/test_reports`).pipe(
       map((testReportResponses: TestReportResponse[]) =>
         testReportResponses.map((testReportResponse: TestReportResponse) =>
           new TestReport().deserialize(testReportResponse)
@@ -40,7 +42,7 @@ export class RealBackendService implements BackendService {
 
   getReportDetails(testReport: TestReport): Observable<TestReportResult> {
     return this.httpClient
-      .get(`http://localhost:5001/api/builds/build-2019-05-09_14-46-29/test_reports/${testReport.id}`)
+      .get(`http://localhost:5001/api/builds/${this.buildSlug}/test_reports/${testReport.id}`)
       .pipe(
         map((testReportDetailsResponse: FirebaseTestlabTestReportDetailsResponse | JUnitXMLTestReportDetailsResponse) =>
           this.providerService.deserializeTestReportDetails(testReportDetailsResponse, testReport)
