@@ -81,7 +81,10 @@ export class RealBackendService implements BackendService {
   }
 
   getLog(testReport: TestReport, testSuite: TestSuite): Observable<LogResult> {
-    return this.httpClient.get(testSuite.logUrl).pipe(
+    return this.httpClient.get(testSuite.logUrl, {
+      headers: { 'Access-Control-Allow-Origin': '*' },
+      responseType: 'text'
+    }).pipe(
       map((fullLog: string) => {
         const log = new Log().deserialize(<RawLog>fullLog);
 

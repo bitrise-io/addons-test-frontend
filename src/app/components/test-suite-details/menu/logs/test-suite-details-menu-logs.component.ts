@@ -20,6 +20,8 @@ const INITIAL_MAXIMUM_NUMBER_OF_VISIBLE_LINES = 20;
 })
 export class TestSuiteDetailsMenuLogsComponent implements OnInit, OnDestroy {
   subscription = new Subscription();
+  testReport: TestReport;
+  testSuite: TestSuite;
   downloadLogURL: string;
 
   levelFilterItems = [
@@ -51,6 +53,17 @@ export class TestSuiteDetailsMenuLogsComponent implements OnInit, OnDestroy {
     private activatedRoute: ActivatedRoute
   ) {
     this.log$ = store.select('log');
+
+    this.subscription.add(
+      this.activatedRoute.parent.data.subscribe(
+        (data: { testSuite: { selectedTestReport: TestReport; selectedTestSuite: TestSuite } }) => {
+          this.testReport = data.testSuite.selectedTestReport;
+          this.testSuite = data.testSuite.selectedTestSuite;
+
+          this.store.dispatch(new FetchLog({ testReport: this.testReport, testSuite: this.testSuite }));
+        }
+      )
+    );
   }
 
   selectedLevelFilterItemChanged() {
@@ -59,23 +72,13 @@ export class TestSuiteDetailsMenuLogsComponent implements OnInit, OnDestroy {
   }
 
   ngOnInit() {
-    let testReport: TestReport;
-    let testSuite: TestSuite;
-
-    this.subscription.add(
-      this.activatedRoute.parent.data.subscribe(
-        (data: { testSuite: { selectedTestReport: TestReport; selectedTestSuite: TestSuite } }) => {
-          testReport = data.testSuite.selectedTestReport;
-          testSuite = data.testSuite.selectedTestSuite;
-
-          this.store.dispatch(new FetchLog({ testReport: testReport, testSuite: testSuite }));
-        }
-      )
-    );
-
     this.subscription.add(
       this.log$.subscribe((logResult: LogResult) => {
-        const logData = logResult.logs[testReport.id][testSuite.id];
+        if (!logResult.logs) {
+          return;
+        }
+
+        const logData = logResult.logs[this.testReport.id][this.testSuite.id];
         this.log = logData.log;
         this.downloadLogURL = logData.downloadURL;
 
