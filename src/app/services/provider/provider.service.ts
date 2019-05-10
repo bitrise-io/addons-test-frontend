@@ -262,16 +262,16 @@ export class ProviderService {
     const parser = new DOMParser();
     const testSuiteElement = parser.parseFromString(testCasesResponse, 'application/xml').querySelector('testsuite');
 
-    return Array.from(testSuiteElement.children[0].children).map((testCaseItemElement: Element) => {
+    return Array.from(testSuiteElement.querySelectorAll('testcase')).map((testCaseItemElement: Element) => {
       const testCase = new TestCase();
 
-      testCase.name = testCaseItemElement.querySelector('name').innerHTML;
-      testCase.durationInMilliseconds = null;
-      testCase.context = testCaseItemElement.querySelector('classname').innerHTML;
+      testCase.name = testCaseItemElement.getAttribute('name');
+      testCase.durationInMilliseconds = testCaseItemElement.hasAttribute('time') ? Number(testCaseItemElement.getAttribute('time')) * 1000 : null;
+      testCase.context = testCaseItemElement.getAttribute('classname');
 
-      if (testCaseItemElement.querySelector('failure')) {
+      if (testCaseItemElement.getAttribute('failure')) {
         testCase.status = TestCaseStatus.failed;
-        testCase.summary = testCaseItemElement.querySelector('failure').innerHTML;
+        testCase.summary = testCaseItemElement.getAttribute('failure');
       } else {
         testCase.status = TestCaseStatus.passed;
         testCase.summary = 'passed';
