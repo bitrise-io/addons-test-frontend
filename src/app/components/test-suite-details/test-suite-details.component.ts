@@ -23,8 +23,7 @@ export class TestSuiteDetailsComponent implements OnInit, OnDestroy {
   testSuite: TestSuite;
   previousTestSuite: TestSuite;
   nextTestSuite: TestSuite;
-  testReportsSubscription: Subscription;
-  activatedRouteParamsChangeSubscription: Subscription;
+  subscription = new Subscription();
 
   testSuiteDetailsMenuItems = [
     {
@@ -69,21 +68,30 @@ export class TestSuiteDetailsComponent implements OnInit, OnDestroy {
     private activatedRoute: ActivatedRoute
   ) {
     this.testReports$ = store.select('testReport', 'testReports');
+
+    this.subscription.add(
+      this.activatedRoute.data.subscribe(
+        (data: { testSuite: { selectedTestReport: TestReport; selectedTestSuite: TestSuite } }) => {
+          this.testReport = data.testSuite.selectedTestReport;
+          this.testSuite = data.testSuite.selectedTestSuite;
+
+          this.updateSelectedTestSuiteDetailsMenuItem();
+        }
+      )
+    );
   }
 
   ngOnInit() {
-    this.updateSelectedTestSuiteDetailsMenuItem();
-
     this.store.dispatch(new FetchReports());
 
-    this.testReportsSubscription = this.testReports$.subscribe((testReports: TestReport[]) => {
+    this.subscription.add(this.testReports$.subscribe((testReports: TestReport[]) => {
       this.testReports = testReports;
       this.configureFromUrlParams();
-    });
+    }));
 
-    this.activatedRouteParamsChangeSubscription = this.activatedRoute.params.subscribe((params: Params) => {
+    this.subscription.add(this.activatedRoute.params.subscribe((params: Params) => {
       this.configureFromUrlParams(params);
-    });
+    }));
 
     this.router.events.pipe(filter((event) => event instanceof NavigationEnd)).subscribe((event: NavigationEnd) => {
       this.updateSelectedTestSuiteDetailsMenuItem();
@@ -91,8 +99,7 @@ export class TestSuiteDetailsComponent implements OnInit, OnDestroy {
   }
 
   ngOnDestroy() {
-    this.testReportsSubscription.unsubscribe();
-    this.activatedRouteParamsChangeSubscription.unsubscribe();
+    this.subscription.unsubscribe();
   }
 
   configureFromUrlParams(params = this.activatedRoute.snapshot.params) {
@@ -116,14 +123,14 @@ export class TestSuiteDetailsComponent implements OnInit, OnDestroy {
   updateSelectedTestSuiteDetailsMenuItem() {
     if (
       this.selectedTestSuiteDetailsMenuItem &&
-      this.selectedTestSuiteDetailsMenuItem.subpath === this.activatedRoute.firstChild.snapshot.routeConfig.path
+      this.selectedTestSuiteDetailsMenuItem.subpath === this.activatedRoute.snapshot.firstChild.routeConfig.path
     ) {
       return;
     }
 
     this.selectedTestSuiteDetailsMenuItem = this.testSuiteDetailsMenuItems.find(
       (testSuiteDetailsMenuItem: any) =>
-        testSuiteDetailsMenuItem.subpath === this.activatedRoute.firstChild.snapshot.routeConfig.path
+        testSuiteDetailsMenuItem.subpath === this.activatedRoute.snapshot.firstChild.routeConfig.path
     );
   }
 

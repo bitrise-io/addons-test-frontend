@@ -35,7 +35,23 @@ export class TestSuiteResolve
     } = route;
 
     return this.testReports$.pipe(
-      first(),
+      first((testReports: TestReport[]) => {
+        if (!testReportId) {
+          return true;
+        }
+
+        const selectedTestReport = testReports.find(
+          (testReport: TestReport) => testReport.id === testReportId
+        );
+
+        if (!testSuiteId) {
+          return selectedTestReport !== undefined;
+        }
+
+        return selectedTestReport && selectedTestReport.testSuites.some(
+          (testSuite: TestSuite) => testSuite.id === Number(testSuiteId)
+        );
+      }),
       map((testReports: TestReport[]) => {
         const testSuiteData = {
           selectedTestReport: null,
