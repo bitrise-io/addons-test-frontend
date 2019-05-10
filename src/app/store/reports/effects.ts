@@ -2,7 +2,7 @@ import { Injectable, Inject } from '@angular/core';
 import { Actions, Effect, ofType } from '@ngrx/effects';
 import { Store } from '@ngrx/store';
 import { Observable, of, forkJoin } from 'rxjs';
-import { switchMap, map, withLatestFrom, merge, mergeMap } from 'rxjs/operators';
+import { switchMap, withLatestFrom, mergeMap } from 'rxjs/operators';
 
 import { ReportActionTypes, ReceiveReports, ReportActions, FilterReports, ReceiveFilteredReports } from './actions';
 import {
@@ -27,11 +27,10 @@ export class ReportEffects {
         mergeMap((result: TestReportsResult) =>
           forkJoin(...result.testReports.map((testReport) => this.backendService.getReportDetails(testReport)))
         ),
-        map(
-          (results: TestReportResult[]) =>
-            new ReceiveReports({ testReports: results.map((result: TestReportResult) => result.testReport) })
-        ),
-        merge(of(new FilterReports({ filter })))
+        mergeMap((results: TestReportResult[]) => [
+          new ReceiveReports({ testReports: results.map((result: TestReportResult) => result.testReport) }),
+          new FilterReports({ filter })
+        ])
       );
     })
   );
@@ -40,11 +39,11 @@ export class ReportEffects {
   $filterReports: Observable<ReportActions> = this.actions$.pipe(
     ofType(ReportActionTypes.Filter),
     withLatestFrom(this.store$),
-    map(([filterReportsActions, testReportState]: [FilterReports, { testReport: TestReportState }]) => {
+    switchMap(([filterReportsActions, testReportState]: [FilterReports, { testReport: TestReportState }]) => {
       const { payload: { filter } } = filterReportsActions; // prettier-ignore
       const { testReport: { testReports } } = testReportState; // prettier-ignore
 
-      return new ReceiveFilteredReports({ testReports: filterReports(testReports, filter) });
+      return of(new ReceiveFilteredReports({ testReports: filterReports(testReports, filter) }));
     })
   );
 
