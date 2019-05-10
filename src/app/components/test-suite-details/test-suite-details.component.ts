@@ -6,7 +6,7 @@ import { Store } from '@ngrx/store';
 
 import { TestReport } from 'src/app/models/test-report.model';
 import { TestReportState } from 'src/app/store/reports/reducer';
-import { FetchReports } from 'src/app/store/reports/actions';
+import { StartPollingReports } from 'src/app/store/reports/actions';
 import { TestSuite } from 'src/app/models/test-suite.model';
 import { Provider } from 'src/app/services/provider/provider.service';
 
@@ -82,7 +82,7 @@ export class TestSuiteDetailsComponent implements OnInit, OnDestroy {
   }
 
   ngOnInit() {
-    this.store.dispatch(new FetchReports());
+    this.store.dispatch(new StartPollingReports());
 
     this.subscription.add(this.testReports$.subscribe((testReports: TestReport[]) => {
       this.testReports = testReports;

@@ -4,14 +4,14 @@ import { TestSuiteStatus } from 'src/app/models/test-suite.model';
 import { TestReportsResult } from 'src/app/services/backend/backend.model';
 
 export enum ReportActionTypes {
-  Fetch = '[Reports] Fetch',
+  StartPolling = '[Reports] StartPolling',
   Receive = '[Reports] Receive',
   Filter = '[Reports] Filter',
   ReceiveFiltered = '[Reports] ReceiveFiltered'
 }
 
-export class FetchReports implements Action {
-  readonly type = ReportActionTypes.Fetch;
+export class StartPollingReports implements Action {
+  readonly type = ReportActionTypes.StartPolling;
 }
 
 export class ReceiveReports implements Action {
@@ -32,4 +32,4 @@ export class FilterReports implements Action {
   constructor(public payload: { filter: TestSuiteStatus }) {}
 }
 
-export type ReportActions = FetchReports | ReceiveReports | FilterReports | ReceiveFilteredReports;
+export type ReportActions = StartPollingReports | ReceiveReports | FilterReports | ReceiveFilteredReports;
