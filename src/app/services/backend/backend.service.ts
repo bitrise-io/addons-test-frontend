@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { Observable, of, forkJoin } from 'rxjs';
-
+import { map, mergeMap } from 'rxjs/operators';
 import { BackendService, TestReportsResult, LogResult, TestReportResult } from './backend.model';
 import {
   ProviderService,
@@ -14,9 +14,6 @@ import { Performance } from 'src/app/models/performance.model';
 import { TestReportResponse, TestReport } from 'src/app/models/test-report.model';
 import { TestSuite, TestSuiteStatus } from 'src/app/models/test-suite.model';
 import { Log, RawLog } from 'src/app/models/log.model';
-
-import * as MOCKED_DATA from './mock-data.json';
-import { map, mergeMap } from 'rxjs/operators';
 
 @Injectable()
 export class RealBackendService implements BackendService {
