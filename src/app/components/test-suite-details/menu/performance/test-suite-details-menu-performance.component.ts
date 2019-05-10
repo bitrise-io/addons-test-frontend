@@ -72,9 +72,12 @@ export class TestSuiteDetailsMenuPerformanceComponent implements OnInit, OnDestr
     );
 
     this.subscription.add(
-      this.performance$.subscribe((performance) => {
-        this.hasLoaded = true;
-        this.parsePerformanceData(performance);
+      this.performance$.subscribe((performanceData) => {
+        this.hasLoaded = performanceData.metrics !== null;
+
+        if (this.hasLoaded) {
+          this.parsePerformanceData(performanceData);
+        }
       })
     );
   }

@@ -14,7 +14,7 @@ export class PerformanceEffects {
     switchMap((action: FetchPerformance) =>
       this.backendService
         .getPerformance(action.payload.testReport, action.payload.testSuite)
-        .pipe(map((performace) => new ReceivePerformance(performace)))
+        .pipe(map((performanceData) => new ReceivePerformance(performanceData)))
     )
   );
 
