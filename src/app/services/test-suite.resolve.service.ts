@@ -4,7 +4,7 @@ import { Observable } from 'rxjs';
 import { first, map } from 'rxjs/operators';
 import { Store } from '@ngrx/store';
 import { TestReport } from '../models/test-report.model';
-import { FetchReports } from '../store/reports/actions';
+import { StartPollingReports } from '../store/reports/actions';
 import { TestSuite } from '../models/test-suite.model';
 
 @Injectable()
@@ -25,7 +25,7 @@ export class TestSuiteResolve
   }
 
   resolve(route: ActivatedRouteSnapshot) {
-    this.store.dispatch(new FetchReports());
+    this.store.dispatch(new StartPollingReports());
 
     const {
       params: {
