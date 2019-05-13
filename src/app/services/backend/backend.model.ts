@@ -32,7 +32,7 @@ export interface LogResult {
 }
 
 export interface BackendService {
-  getPerformance(testReport: TestReport, testSuite: TestSuite): Observable<Performance>;
+  getPerformance(testSuite: TestSuite): Observable<Performance>;
   getReports(): Observable<TestReportsResult>;
   getReportDetails(testReport: TestReport): Observable<TestReportResult>;
   getLog(testReport: TestReport, testSuite: TestSuite): Observable<LogResult>;

@@ -57,16 +57,12 @@ export class TestSuiteDetailsMenuPerformanceComponent implements OnInit, OnDestr
   }
 
   ngOnInit() {
-    let testReport: TestReport;
     let testSuite: TestSuite;
 
     this.subscription.add(
       this.activatedRoute.parent.data.subscribe(
-        (data: { testSuite: { selectedTestReport: TestReport; selectedTestSuite: TestSuite } }) => {
-          testReport = data.testSuite.selectedTestReport;
-          testSuite = data.testSuite.selectedTestSuite;
-
-          this.store.dispatch(new FetchPerformance({ testReport: testReport, testSuite: testSuite }));
+        ({testSuite: {selectedTestSuite: testSuite}}: any) => {
+          this.store.dispatch(new FetchPerformance({ testSuite: testSuite }));
         }
       )
     );

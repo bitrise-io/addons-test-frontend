@@ -21,7 +21,7 @@ export class RealBackendService implements BackendService {
 
   constructor(private httpClient: HttpClient, private providerService: ProviderService) {}
 
-  getPerformance(testReport: TestReport, testSuite: TestSuite): Observable<Performance> {
+  getPerformance(testSuite: TestSuite): Observable<Performance> {
     return this.httpClient
       .get(`http://localhost:5001/api/builds/${this.buildSlug}/steps/${testSuite.stepID}`)
       .pipe(map((performance: Performance) => performance));

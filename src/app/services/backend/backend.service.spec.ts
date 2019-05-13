@@ -39,10 +39,9 @@ describe('BackendService', () => {
 
   describe('mock data shape', () => {
     it('should load performance data', () => {
-      const testReport = new TestReport();
       const testSuite = new TestSuite();
 
-      service.getPerformance(testReport, testSuite).subscribe((performance: Performance) => {
+      service.getPerformance(testSuite).subscribe((performance: Performance) => {
         const keys = Object.keys(performance);
         expect(keys).toContain('cpu_samples');
         expect(keys).toContain('ram_samples');
