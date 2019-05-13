@@ -1,6 +1,8 @@
 import { TestBed, async, ComponentFixture, inject } from '@angular/core/testing';
 import { By } from '@angular/platform-browser';
 import { Component, Input } from '@angular/core';
+import { ActivatedRoute } from '@angular/router';
+import { of } from 'rxjs';
 import { Store, StoreModule } from '@ngrx/store';
 import { InlineSVGModule } from 'ng-inline-svg';
 
@@ -20,6 +22,7 @@ class MockTestSummaryHeaderComponent {}
   template: ''
 })
 class MockTestReportComponent {
+  @Input() buildSlug: string;
   @Input() testReport: TestReport;
 }
 
@@ -32,7 +35,13 @@ describe('TestSummaryComponent', () => {
     TestBed.configureTestingModule({
       imports: [StoreModule.forRoot({ testReport: reportsReducer }), InlineSVGModule.forRoot()],
       declarations: [TestSummaryComponent, MockTestSummaryHeaderComponent, MockTestReportComponent],
-      providers: [provideMockStore({})]
+      providers: [provideMockStore({}),
+        {
+          provide: ActivatedRoute,
+          useValue: {
+            params: of({buildSlug: 'build-slug'})
+          }
+        }]
     }).compileComponents();
   }));
 

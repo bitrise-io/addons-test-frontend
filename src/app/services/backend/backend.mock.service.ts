@@ -14,12 +14,12 @@ import * as MOCKED_DATA from './mock-data.json';
 export class MockBackendService implements BackendService {
   constructor(private providerService: ProviderService) {}
 
-  getPerformance(testSuite: TestSuite): Observable<Performance> {
+  getPerformance(buildSlug: string, testSuite: TestSuite): Observable<Performance> {
     const { performance }: any = MOCKED_DATA;
     return of(performance);
   }
 
-  getReports(): Observable<TestReportsResult> {
+  getReports(buildSlug: string): Observable<TestReportsResult> {
     const { test_reports }: any = MOCKED_DATA;
 
     const testReports = test_reports.map((testReportResponse: TestReportResponse) =>
@@ -29,7 +29,7 @@ export class MockBackendService implements BackendService {
     return of({ testReports });
   }
 
-  getReportDetails(testReport: TestReport): Observable<TestReportResult> {
+  getReportDetails(buildSlug: string, testReport: TestReport): Observable<TestReportResult> {
     const testReportDetailsResponse = MOCKED_DATA[`test_report/${testReport.id}`];
     this.providerService.deserializeTestReportDetails(testReportDetailsResponse, testReport);
 
@@ -43,7 +43,7 @@ export class MockBackendService implements BackendService {
     return of({ testReport });
   }
 
-  getLog(testReport: TestReport, testSuite: TestSuite): Observable<LogResult> {
+  getLog(buildSlug: string, testReport: TestReport, testSuite: TestSuite): Observable<LogResult> {
     const { fullLog, downloadURL }: any = MOCKED_DATA[testSuite.logUrl];
     const log = new Log().deserialize(<RawLog>fullLog);
 

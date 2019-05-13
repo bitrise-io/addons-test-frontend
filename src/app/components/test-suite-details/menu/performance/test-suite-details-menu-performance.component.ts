@@ -62,7 +62,7 @@ export class TestSuiteDetailsMenuPerformanceComponent implements OnInit, OnDestr
     this.subscription.add(
       this.activatedRoute.parent.data.subscribe(
         ({testSuite: {selectedTestSuite: testSuite}}: any) => {
-          this.store.dispatch(new FetchPerformance({ testSuite: testSuite }));
+          this.store.dispatch(new FetchPerformance({ buildSlug: this.activatedRoute.snapshot.params.buildSlug, testSuite: testSuite }));
         }
       )
     );

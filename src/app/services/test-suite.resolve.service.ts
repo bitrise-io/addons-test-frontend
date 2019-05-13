@@ -12,6 +12,7 @@ export class TestSuiteResolve
   implements
     Resolve<
       Observable<{
+        buildSlug: string;
         selectedTestReport: TestReport;
         selectedTestSuite: TestSuite;
       }>
@@ -25,14 +26,15 @@ export class TestSuiteResolve
   }
 
   resolve(route: ActivatedRouteSnapshot) {
-    this.store.dispatch(new StartPollingReports());
-
     const {
       params: {
+        buildSlug,
         testReportId,
         testSuiteId
       }
     } = route;
+
+    this.store.dispatch(new StartPollingReports(buildSlug));
 
     return this.testReports$.pipe(
       first((testReports: TestReport[]) => {
@@ -54,6 +56,7 @@ export class TestSuiteResolve
       }),
       map((testReports: TestReport[]) => {
         const testSuiteData = {
+          buildSlug: buildSlug,
           selectedTestReport: null,
           selectedTestSuite: null
         };

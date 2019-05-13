@@ -47,10 +47,10 @@ describe('AppHeaderComponent', () => {
       imports: [
         StoreModule.forRoot({ testReport: reportsReducer }),
         RouterTestingModule.withRoutes([
-          { path: 'summary', component: MockTestSummaryComponent },
-          { path: 'testreport/1', component: MockTestReportComponent },
-          { path: 'testreport/2', component: MockTestReportComponent },
-          { path: 'testreport/3', component: MockTestReportComponent }
+          { path: 'build/:buildSlug/summary', component: MockTestSummaryComponent },
+          { path: 'build/:buildSlug/testreport/1', component: MockTestReportComponent },
+          { path: 'build/:buildSlug/testreport/2', component: MockTestReportComponent },
+          { path: 'build/:buildSlug/testreport/3', component: MockTestReportComponent }
         ]),
         HttpClientTestingModule,
         FormsModule,
@@ -76,6 +76,7 @@ describe('AppHeaderComponent', () => {
     location = TestBed.get(Location);
     fixture = TestBed.createComponent(AppHeaderComponent);
     appHeaderElement = fixture.debugElement.componentInstance;
+    appHeaderElement.buildSlug = 'build-slug';
   });
 
   it('creates the app header', () => {
@@ -162,7 +163,7 @@ describe('AppHeaderComponent', () => {
       it('directs to corresponding route', fakeAsync(() => {
         tick();
 
-        expect(location.path()).toBe('/testreport/2');
+        expect(location.path()).toBe('/build/build-slug/testreport/2');
       }));
     });
 
@@ -173,6 +174,8 @@ describe('AppHeaderComponent', () => {
         globalFilterElement = fixture.debugElement.query(By.css('.status-select'));
         globalFilterElement.nativeElement.value = globalFilterElement.nativeElement.options[2].value;
         globalFilterElement.nativeElement.dispatchEvent(new Event('change'));
+
+        tick();
       }));
 
       it('calls selectedStatusChanged', () => {
@@ -184,11 +187,9 @@ describe('AppHeaderComponent', () => {
         expect(appHeaderElement.selectedStatusChanged).toHaveBeenCalled();
       });
 
-      it('sets status passed as query parameter', fakeAsync(() => {
-        tick();
-
+      it('sets status passed as query parameter', () => {
         expect(location.path()).toContain('status=passed');
-      }));
+      });
     });
 
     describe('and a dropdown item is selected', () => {
@@ -215,7 +216,7 @@ describe('AppHeaderComponent', () => {
 
         tick();
 
-        expect(location.path()).toBe('/testreport/1');
+        expect(location.path()).toBe('/build/build-slug/testreport/1');
       }));
     });
   });

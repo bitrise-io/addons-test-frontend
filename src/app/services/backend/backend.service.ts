@@ -21,13 +21,13 @@ export class RealBackendService implements BackendService {
 
   constructor(private httpClient: HttpClient, private providerService: ProviderService) {}
 
-  getPerformance(testSuite: TestSuite): Observable<Performance> {
+  getPerformance(buildSlug: string, testSuite: TestSuite): Observable<Performance> {
     return this.httpClient
       .get(`http://localhost:5001/api/builds/${this.buildSlug}/steps/${testSuite.stepID}`)
       .pipe(map((performance: Performance) => performance));
   }
 
-  getReports(): Observable<TestReportsResult> {
+  getReports(buildSlug: string): Observable<TestReportsResult> {
     return this.httpClient.get(`http://localhost:5001/api/builds/${this.buildSlug}/test_reports`).pipe(
       map((testReportResponses: TestReportResponse[]) =>
         testReportResponses.map((testReportResponse: TestReportResponse) =>
@@ -40,7 +40,7 @@ export class RealBackendService implements BackendService {
     );
   }
 
-  getReportDetails(testReport: TestReport): Observable<TestReportResult> {
+  getReportDetails(buildSlug: string, testReport: TestReport): Observable<TestReportResult> {
     return this.httpClient
       .get(`http://localhost:5001/api/builds/${this.buildSlug}/test_reports/${testReport.id}`)
       .pipe(
@@ -82,7 +82,7 @@ export class RealBackendService implements BackendService {
       );
   }
 
-  getLog(testReport: TestReport, testSuite: TestSuite): Observable<LogResult> {
+  getLog(buildSlug: string, testReport: TestReport, testSuite: TestSuite): Observable<LogResult> {
     return this.httpClient.get(testSuite.logUrl, {
       headers: { 'Access-Control-Allow-Origin': '*' },
       responseType: 'text'

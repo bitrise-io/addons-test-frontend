@@ -16,6 +16,7 @@ import { Provider } from 'src/app/services/provider/provider.service';
   styleUrls: ['./test-suite-details.component.scss']
 })
 export class TestSuiteDetailsComponent implements OnInit, OnDestroy {
+  buildSlug: string;
   testReports: TestReport[];
   testReports$: Observable<TestReport[]>;
   testSuites: TestSuite[];
@@ -71,7 +72,8 @@ export class TestSuiteDetailsComponent implements OnInit, OnDestroy {
 
     this.subscription.add(
       this.activatedRoute.data.subscribe(
-        (data: { testSuite: { selectedTestReport: TestReport; selectedTestSuite: TestSuite } }) => {
+        (data: { testSuite: { buildSlug: string; selectedTestReport: TestReport; selectedTestSuite: TestSuite } }) => {
+          this.buildSlug = data.testSuite.buildSlug;
           this.testReport = data.testSuite.selectedTestReport;
           this.testSuite = data.testSuite.selectedTestSuite;
 
@@ -82,7 +84,7 @@ export class TestSuiteDetailsComponent implements OnInit, OnDestroy {
   }
 
   ngOnInit() {
-    this.store.dispatch(new StartPollingReports());
+    this.store.dispatch(new StartPollingReports({ buildSlug: this.buildSlug }));
 
     this.subscription.add(this.testReports$.subscribe((testReports: TestReport[]) => {
       this.testReports = testReports;

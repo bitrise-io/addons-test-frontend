@@ -9,6 +9,7 @@ import { TestCase, TestCaseStatus } from '../../models/test-case.model';
   styleUrls: ['./test-suite.component.scss']
 })
 export class TestSuiteComponent implements OnInit {
+  @Input() buildSlug: string;
   @Input() testReport: TestReport;
   @Input() testSuite: TestSuite;
 

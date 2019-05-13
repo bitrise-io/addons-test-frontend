@@ -12,7 +12,7 @@ export enum PerformanceActionTypes {
 export class FetchPerformance implements Action {
   readonly type = PerformanceActionTypes.Fetch;
 
-  constructor(public payload: { testSuite: TestSuite}) {}
+  constructor(public payload: { buildSlug: string, testSuite: TestSuite}) {}
 }
 
 export class ReceivePerformance implements Action {
