@@ -17,18 +17,16 @@ import { Log, RawLog } from 'src/app/models/log.model';
 
 @Injectable()
 export class RealBackendService implements BackendService {
-  buildSlug = 'build-2019-05-09_14-46-29';
-
   constructor(private httpClient: HttpClient, private providerService: ProviderService) {}
 
   getPerformance(buildSlug: string, testSuite: TestSuite): Observable<Performance> {
     return this.httpClient
-      .get(`http://localhost:5001/api/builds/${this.buildSlug}/steps/${testSuite.stepID}`)
+      .get(`http://localhost:5001/api/builds/${buildSlug}/steps/${testSuite.stepID}`)
       .pipe(map((performance: Performance) => performance));
   }
 
   getReports(buildSlug: string): Observable<TestReportsResult> {
-    return this.httpClient.get(`http://localhost:5001/api/builds/${this.buildSlug}/test_reports`).pipe(
+    return this.httpClient.get(`http://localhost:5001/api/builds/${buildSlug}/test_reports`).pipe(
       map((testReportResponses: TestReportResponse[]) =>
         testReportResponses.map((testReportResponse: TestReportResponse) =>
           new TestReport().deserialize(testReportResponse)
@@ -42,17 +40,17 @@ export class RealBackendService implements BackendService {
 
   getReportDetails(buildSlug: string, testReport: TestReport): Observable<TestReportResult> {
     return this.httpClient
-      .get(`http://localhost:5001/api/builds/${this.buildSlug}/test_reports/${testReport.id}`)
+      .get(`http://localhost:5001/api/builds/${buildSlug}/test_reports/${testReport.id}`)
       .pipe(
         map((testReportDetailsResponse: FirebaseTestlabTestReportDetailsResponse | JUnitXMLTestReportDetailsResponse) =>
           this.providerService.deserializeTestReportDetails(testReportDetailsResponse, testReport)
         ),
-        mergeMap((testReport: TestReport) => {
-          if (testReport.provider === Provider.firebaseTestlab) {
+        mergeMap((_testReport: TestReport) => {
+          if (_testReport.provider === Provider.firebaseTestlab) {
             return forkJoin(
-              testReport.testSuites.map((testSuite: TestSuite) => {
+              _testReport.testSuites.map((testSuite: TestSuite) => {
                 if (testSuite.status === TestSuiteStatus.inProgress) {
-                  return of({ testReport });
+                  return of({ _testReport });
                 } else {
                   return this.httpClient
                     .get(testSuite.testCasesURL, {
@@ -65,7 +63,7 @@ export class RealBackendService implements BackendService {
                           testCasesResponse
                         );
 
-                        return { testReport };
+                        return { _testReport };
                       })
                     );
                 }

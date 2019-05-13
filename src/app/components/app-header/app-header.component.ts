@@ -44,19 +44,6 @@ export class AppHeaderComponent implements OnInit {
   constructor(private router: Router, private activatedRoute: ActivatedRoute, private store: Store<{ testReport: TestReportState }>) {
     this.testReports$ = store.select('testReport', 'testReports');
 
-    router.events.pipe(filter((event) => event instanceof NavigationEnd || event instanceof RoutesRecognized)).subscribe((event: NavigationEnd | RoutesRecognized) => {
-      if (event instanceof NavigationEnd) {
-        if (this.tabmenuItems !== undefined) {
-          this.selectSmallTabmenuItemForUrl(event.url);
-        }
-      }
-      else if (event instanceof RoutesRecognized) {
-        if (event.state.root.firstChild) {
-          this.buildSlug = event.state.root.firstChild.params.buildSlug;
-        }
-      }
-    });
-
     activatedRoute.queryParams.subscribe(params => {
       const statusMenuItemFromQueryParams = this.statusMenuItems.find(statusMenuItem => statusMenuItem.queryParam === params['status']);
       this.selectedStatus = statusMenuItemFromQueryParams ? statusMenuItemFromQueryParams.value : null;
@@ -64,7 +51,20 @@ export class AppHeaderComponent implements OnInit {
   }
 
   ngOnInit() {
-    this.store.dispatch(new StartPollingReports({ buildSlug: this.buildSlug }));
+    this.router.events.pipe(
+      filter((event) => event instanceof NavigationEnd || event instanceof RoutesRecognized)
+    ).subscribe((event: NavigationEnd | RoutesRecognized) => {
+      if (event instanceof NavigationEnd) {
+        if (this.tabmenuItems !== undefined) {
+          this.selectSmallTabmenuItemForUrl(event.url);
+        }
+      } else if (event instanceof RoutesRecognized) {
+        if (event.state.root.firstChild) {
+          this.buildSlug = event.state.root.firstChild.params.buildSlug;
+          this.store.dispatch(new StartPollingReports({ buildSlug: this.buildSlug }));
+        }
+      }
+    });
 
     this.testReports$.subscribe(testReports => {
       const failedTestCountsOfTestReports = testReports.map(
