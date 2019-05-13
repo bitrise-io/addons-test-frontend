@@ -172,14 +172,16 @@ export class ProviderService {
         }
 
         testSuite.durationInMilliseconds = 1000 * Number(testSuiteResponse.step_duration_in_seconds);
-        testSuite.screenshots = testSuiteResponse.output_urls.screenshot_urls ? testSuiteResponse.output_urls.screenshot_urls.map((screenshotURL) => {
-          const filenameRegExp = /^.+\/([^?\n]*).*$/;
+        testSuite.screenshots = testSuiteResponse.output_urls.screenshot_urls
+          ? testSuiteResponse.output_urls.screenshot_urls.map((screenshotURL) => {
+              const filenameRegExp = /^.+\/([^?\n]*).*$/;
 
-          return {
-            url: screenshotURL,
-            filename: filenameRegExp.test(screenshotURL) ? filenameRegExp.exec(screenshotURL)[1] : null
-          };
-        }) : [];
+              return {
+                url: screenshotURL,
+                filename: filenameRegExp.test(screenshotURL) ? filenameRegExp.exec(screenshotURL)[1] : null
+              };
+            })
+          : [];
         testSuite.testCasesURL = testSuiteResponse.output_urls.test_suite_xml_url;
         testSuite.artifacts = Object.entries(testSuiteResponse.output_urls.asset_urls).map(
           ([artifactFilename, artifactURL]) => {
@@ -266,7 +268,9 @@ export class ProviderService {
       const testCase = new TestCase();
 
       testCase.name = testCaseItemElement.getAttribute('name');
-      testCase.durationInMilliseconds = testCaseItemElement.hasAttribute('time') ? Number(testCaseItemElement.getAttribute('time')) * 1000 : null;
+      testCase.durationInMilliseconds = testCaseItemElement.hasAttribute('time')
+        ? Number(testCaseItemElement.getAttribute('time')) * 1000
+        : null;
       testCase.context = testCaseItemElement.getAttribute('classname');
 
       if (testCaseItemElement.getAttribute('failure')) {
