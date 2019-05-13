@@ -56,13 +56,12 @@ export class TestSuiteDetailsMenuLogsComponent implements OnInit, OnDestroy {
 
     this.subscription.add(
       this.activatedRoute.parent.data.subscribe(
-        (data: { testSuite: { buildSlug: string; selectedTestReport: TestReport; selectedTestSuite: TestSuite } }) => {
+        (data: { testSuite: { selectedTestReport: TestReport; selectedTestSuite: TestSuite } }) => {
           this.testReport = data.testSuite.selectedTestReport;
           this.testSuite = data.testSuite.selectedTestSuite;
 
           this.store.dispatch(
             new FetchLog({
-              buildSlug: data.testSuite.buildSlug,
               testReport: this.testReport,
               testSuite: this.testSuite
             })

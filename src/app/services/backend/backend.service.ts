@@ -80,7 +80,7 @@ export class RealBackendService implements BackendService {
       );
   }
 
-  getLog(buildSlug: string, testReport: TestReport, testSuite: TestSuite): Observable<LogResult> {
+  getLog(testReport: TestReport, testSuite: TestSuite): Observable<LogResult> {
     return this.httpClient.get(testSuite.logUrl, {
       headers: { 'Access-Control-Allow-Origin': '*' },
       responseType: 'text'

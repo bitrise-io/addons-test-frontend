@@ -12,7 +12,7 @@ export enum LogActionTypes {
 export class FetchLog implements Action {
   readonly type = LogActionTypes.Fetch;
 
-  constructor(public payload: { buildSlug: string, testReport: TestReport, testSuite: TestSuite}) {}
+  constructor(public payload: { testReport: TestReport, testSuite: TestSuite}) {}
 }
 
 export class ReceiveLog implements Action {

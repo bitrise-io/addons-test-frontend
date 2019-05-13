@@ -13,7 +13,7 @@ export class LogEffects {
     ofType(LogActionTypes.Fetch),
     switchMap((action: FetchLog) =>
       this.backendService
-        .getLog(action.payload.buildSlug, action.payload.testReport, action.payload.testSuite)
+        .getLog(action.payload.testReport, action.payload.testSuite)
         .pipe(map((result) => new ReceiveLog(result)))
     )
   );

@@ -95,7 +95,7 @@ describe('BackendService', () => {
 
       testReport.testSuites = [testSuite];
 
-      service.getLog(buildSlug, testReport, testSuite).subscribe((logResult: LogResult) => {
+      service.getLog(testReport, testSuite).subscribe((logResult: LogResult) => {
         const keys = Object.keys(logResult);
         expect(keys).toContain('logs');
         expect(Object.keys(logResult.logs)).toContain('1');

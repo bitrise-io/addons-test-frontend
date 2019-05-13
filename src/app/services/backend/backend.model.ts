@@ -35,5 +35,5 @@ export interface BackendService {
   getPerformance(buildSlug: string, testSuite: TestSuite): Observable<Performance>;
   getReports(buildSlug: string): Observable<TestReportsResult>;
   getReportDetails(buildSlug: string, testReport: TestReport): Observable<TestReportResult>;
-  getLog(buildSlug: string, testReport: TestReport, testSuite: TestSuite): Observable<LogResult>;
+  getLog(testReport: TestReport, testSuite: TestSuite): Observable<LogResult>;
 }
