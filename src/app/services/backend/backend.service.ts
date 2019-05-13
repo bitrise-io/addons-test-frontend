@@ -14,6 +14,7 @@ import { Performance } from 'src/app/models/performance.model';
 import { TestReportResponse, TestReport } from 'src/app/models/test-report.model';
 import { TestSuite, TestSuiteStatus } from 'src/app/models/test-suite.model';
 import { Log, RawLog } from 'src/app/models/log.model';
+import { environment } from 'src/environments/environment';
 
 @Injectable()
 export class RealBackendService implements BackendService {
@@ -21,12 +22,12 @@ export class RealBackendService implements BackendService {
 
   getPerformance(buildSlug: string, testSuite: TestSuite): Observable<Performance> {
     return this.httpClient
-      .get(`http://localhost:5001/api/builds/${buildSlug}/steps/${testSuite.stepID}`)
+      .get(`${environment.apiRootUrl}/api/builds/${buildSlug}/steps/${testSuite.stepID}`)
       .pipe(map((performance: Performance) => performance));
   }
 
   getReports(buildSlug: string): Observable<TestReportsResult> {
-    return this.httpClient.get(`http://localhost:5001/api/builds/${buildSlug}/test_reports`).pipe(
+    return this.httpClient.get(`${environment.apiRootUrl}/api/builds/${buildSlug}/test_reports`).pipe(
       map((testReportResponses: TestReportResponse[]) =>
         testReportResponses.map((testReportResponse: TestReportResponse) =>
           new TestReport().deserialize(testReportResponse)
@@ -40,7 +41,7 @@ export class RealBackendService implements BackendService {
 
   getReportDetails(buildSlug: string, testReport: TestReport): Observable<TestReportResult> {
     return this.httpClient
-      .get(`http://localhost:5001/api/builds/${buildSlug}/test_reports/${testReport.id}`)
+      .get(`${environment.apiRootUrl}/api/builds/${buildSlug}/test_reports/${testReport.id}`)
       .pipe(
         map((testReportDetailsResponse: FirebaseTestlabTestReportDetailsResponse | JUnitXMLTestReportDetailsResponse) =>
           this.providerService.deserializeTestReportDetails(testReportDetailsResponse, testReport)
