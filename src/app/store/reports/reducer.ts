@@ -14,7 +14,7 @@ const initialState: TestReportState = {
   filter: TestSuiteStatus.failed
 };
 
-export default (state = initialState, action: ReportActions) => {
+export function ReportsReducer(state = initialState, action: ReportActions) {
   switch (action.type) {
     case ReportActionTypes.Receive: {
       const {

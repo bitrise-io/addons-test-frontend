@@ -26,9 +26,9 @@ import { TestSuiteDetailsHeaderComponent } from './components/test-suite-details
 import { TestSuiteDetailsMenuModule } from './components/test-suite-details/menu/menu.module';
 
 import artifactsReducer from 'src/app/store/artifacts/reducer';
-import reportsReducer from 'src/app/store/reports/reducer';
-import performanceReducer from 'src/app/store/performance/reducer';
-import logReducer from 'src/app/store/log/reducer';
+import { ReportsReducer } from 'src/app/store/reports/reducer';
+import { PerformanceReducer } from 'src/app/store/performance/reducer';
+import { LogReducer } from 'src/app/store/log/reducer';
 import { ReportEffects } from 'src/app/store/reports/effects';
 import { ArtifactEffects } from 'src/app/store/artifacts/effects';
 import { PerformanceEffects } from 'src/app/store/performance/effects';
@@ -56,10 +56,10 @@ import { ZipperService } from './services/zipper.service';
     HttpClientModule,
     FormsModule,
     StoreModule.forRoot({
-      testReport: reportsReducer,
+      testReport: ReportsReducer,
       testArtifact: artifactsReducer,
-      performance: performanceReducer,
-      log: logReducer
+      performance: PerformanceReducer,
+      log: LogReducer
     }),
     StoreDevtoolsModule.instrument({ maxAge: 25, logOnly: false }),
     EffectsModule.forRoot([ReportEffects, ArtifactEffects, PerformanceEffects, LogEffects]),
