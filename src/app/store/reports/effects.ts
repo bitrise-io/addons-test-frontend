@@ -52,10 +52,6 @@ export class ReportEffects {
     ofType(ReportActionTypes.Filter),
     withLatestFrom(this.store$),
     switchMap(([filterReportsActions, testReportState]: [FilterReports, { testReport: TestReportState }]) => {
-      if (!testReportState.testReport) {
-        return;
-      }
-
       const { payload: { filter } } = filterReportsActions; // prettier-ignore
       const { testReport: { testReports } } = testReportState; // prettier-ignore
 
