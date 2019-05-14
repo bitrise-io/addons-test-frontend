@@ -46,12 +46,12 @@ export class RealBackendService implements BackendService {
         map((testReportDetailsResponse: FirebaseTestlabTestReportDetailsResponse | JUnitXMLTestReportDetailsResponse) =>
           this.providerService.deserializeTestReportDetails(testReportDetailsResponse, testReport)
         ),
-        mergeMap((_testReport: TestReport) => {
-          if (_testReport.provider === Provider.firebaseTestlab) {
+        mergeMap((aTestReport: TestReport) => {
+          if (aTestReport.provider === Provider.firebaseTestlab) {
             return forkJoin(
-              _testReport.testSuites.map((testSuite: TestSuite) => {
+              aTestReport.testSuites.map((testSuite: TestSuite) => {
                 if (testSuite.status === TestSuiteStatus.inProgress) {
-                  return of({ _testReport });
+                  return of({ _testReport: aTestReport });
                 } else {
                   return this.httpClient
                     .get(testSuite.testCasesURL, {
@@ -64,7 +64,7 @@ export class RealBackendService implements BackendService {
                           testCasesResponse
                         );
 
-                        return { _testReport };
+                        return { _testReport: aTestReport };
                       })
                     );
                 }
