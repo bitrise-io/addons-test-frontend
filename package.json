@@ -35,6 +35,7 @@
     "@bitrise/beam": "^0.1.6",
     "@ngrx/effects": "^6.0.1",
     "@ngrx/store": "^6.0.1",
+    "@ngrx/store-devtools": "^7.4.0",
     "core-js": "^2.5.4",
     "jszip": "^3.2.1",
     "lodash.kebabcase": "^4.1.1",
