@@ -9,7 +9,7 @@ const initialState: ArtifactStoreState = {
   testArtifacts: []
 };
 
-export default (state = initialState, action: ArtifactActions) => {
+export function ArtifactsReducer(state = initialState, action: ArtifactActions) {
   switch (action.type) {
     case ArtifactActionTypes.Receive:
       const {

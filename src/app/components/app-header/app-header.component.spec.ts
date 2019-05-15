@@ -10,7 +10,7 @@ import { InlineSVGModule } from 'ng-inline-svg';
 
 import { AppHeaderComponent } from './app-header.component';
 import { TestReport } from '../../models/test-report.model';
-import reportsReducer, { TestReportState } from 'src/app/store/reports/reducer';
+import { ReportsReducer, TestReportState } from 'src/app/store/reports/reducer';
 import { TestSuite } from '../../models/test-suite.model';
 import { MockStore, provideMockStore } from 'src/app/mock-store/testing';
 
@@ -45,7 +45,7 @@ describe('AppHeaderComponent', () => {
   beforeEach(async(() => {
     TestBed.configureTestingModule({
       imports: [
-        StoreModule.forRoot({ testReport: reportsReducer }),
+        StoreModule.forRoot({ testReport: ReportsReducer }),
         RouterTestingModule.withRoutes([
           { path: 'builds/:buildSlug/summary', component: MockTestSummaryComponent },
           { path: 'builds/:buildSlug/testreport/1', component: MockTestReportComponent },

@@ -7,7 +7,7 @@ import { InlineSVGModule } from 'ng-inline-svg';
 
 import { TestReportWrapperComponent } from './test-report-wrapper.component';
 import { TestReport } from '../../models/test-report.model';
-import reportsReducer, { TestReportState } from 'src/app/store/reports/reducer';
+import { ReportsReducer, TestReportState } from 'src/app/store/reports/reducer';
 import { Router } from '@angular/router';
 import { provideMockStore, MockStore } from 'src/app/mock-store/testing';
 
@@ -36,7 +36,7 @@ xdescribe('TestReportWrapperComponent', () => {
             component: TestReportWrapperComponent
           }
         ]),
-        StoreModule.forRoot({ testReport: reportsReducer }),
+        StoreModule.forRoot({ testReport: ReportsReducer }),
         InlineSVGModule.forRoot()
       ],
       declarations: [TestReportWrapperComponent, MockTestReportComponent],

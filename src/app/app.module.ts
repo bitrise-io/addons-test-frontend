@@ -25,7 +25,7 @@ import { TestSuiteDetailsComponent } from './components/test-suite-details/test-
 import { TestSuiteDetailsHeaderComponent } from './components/test-suite-details-header/test-suite-details-header.component';
 import { TestSuiteDetailsMenuModule } from './components/test-suite-details/menu/menu.module';
 
-import artifactsReducer from 'src/app/store/artifacts/reducer';
+import { ArtifactsReducer } from 'src/app/store/artifacts/reducer';
 import { ReportsReducer } from 'src/app/store/reports/reducer';
 import { PerformanceReducer } from 'src/app/store/performance/reducer';
 import { LogReducer } from 'src/app/store/log/reducer';
@@ -57,7 +57,7 @@ import { ZipperService } from './services/zipper.service';
     FormsModule,
     StoreModule.forRoot({
       testReport: ReportsReducer,
-      testArtifact: artifactsReducer,
+      testArtifact: ArtifactsReducer,
       performance: PerformanceReducer,
       log: LogReducer
     }),

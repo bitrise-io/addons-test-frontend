@@ -1,4 +1,4 @@
-import performanceReducer from './reducer';
+import { PerformanceReducer } from './reducer';
 import { ReceivePerformance, PerformanceActions } from './actions';
 import { Performance } from 'src/app/models/performance.model';
 
@@ -18,13 +18,13 @@ describe('Performance reducer', () => {
       }
     };
 
-    const newState = performanceReducer(initialState, new ReceivePerformance(performance));
+    const newState = PerformanceReducer(initialState, new ReceivePerformance(performance));
 
     expect(newState).toBe(performance);
   });
 
   it(`doesn't update the state for an unknown action`, () => {
-    const newState = performanceReducer(initialState, <PerformanceActions>(<unknown>{ type: 'Unknown' }));
+    const newState = PerformanceReducer(initialState, <PerformanceActions>(<unknown>{ type: 'Unknown' }));
 
     expect(newState).toBe(initialState);
   });
