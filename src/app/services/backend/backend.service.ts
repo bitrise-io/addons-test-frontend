@@ -21,7 +21,7 @@ export class RealBackendService implements BackendService {
   constructor(private httpClient: HttpClient, private providerService: ProviderService) {}
 
   getPerformance = (buildSlug: string, testSuite: TestSuite): Observable<Performance> =>
-    this.httpClient.get<Performance>(`${environment.apiRootUrl}/api/builds/${buildSlug}/steps/${testSuite.stepID}`);
+    this.httpClient.get<Performance>(`${environment.apiRootUrl}/api/builds/${buildSlug}/steps/${testSuite.stepID}`)
 
   getReports = (buildSlug: string): Observable<TestReportsResult> =>
     this.httpClient.get(`${environment.apiRootUrl}/api/builds/${buildSlug}/test_reports`).pipe(
@@ -33,7 +33,7 @@ export class RealBackendService implements BackendService {
       map((testReports: TestReport[]) => {
         return { testReports };
       })
-    );
+    )
 
   getReportDetails = (buildSlug: string, testReport: TestReport): Observable<TestReportResult> =>
     this.httpClient.get(`${environment.apiRootUrl}/api/builds/${buildSlug}/test_reports/${testReport.id}`).pipe(
@@ -68,7 +68,7 @@ export class RealBackendService implements BackendService {
           return of({ testReport });
         }
       })
-    );
+    )
 
   getLog = (testReport: TestReport, testSuite: TestSuite): Observable<LogResult> =>
     this.httpClient
@@ -90,5 +90,5 @@ export class RealBackendService implements BackendService {
             }
           };
         })
-      );
+      )
 }
