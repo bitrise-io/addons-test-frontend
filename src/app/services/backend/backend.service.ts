@@ -45,7 +45,7 @@ export class RealBackendService implements BackendService {
           return forkJoin(
             testReport.testSuites.map((testSuite: TestSuite) => {
               if (testSuite.status === TestSuiteStatus.inProgress) {
-                return of({ testReport: testReport });
+                return of();
               } else {
                 if (testSuite.testCasesURL) {
                   return this.httpClient
