@@ -8,7 +8,7 @@ import { TestSuite } from 'src/app/models/test-suite.model';
 @Component({
   selector: 'bitrise-test-suite-details-menu-test-cases',
   templateUrl: './test-suite-details-menu-test-cases.component.html',
-  styleUrls: ['./test-suite-details-menu-test-cases.component.scss']
+  styleUrls: []
 })
 export class TestSuiteDetailsMenuTestCasesComponent implements OnInit, OnDestroy {
   testReport: TestReport;
