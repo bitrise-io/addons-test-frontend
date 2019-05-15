@@ -54,15 +54,12 @@ export class AppHeaderComponent implements OnInit {
     this.router.events.pipe(
       filter((event) => event instanceof NavigationEnd || event instanceof RoutesRecognized)
     ).subscribe((event: NavigationEnd | RoutesRecognized) => {
-      if (event instanceof NavigationEnd) {
-        if (this.tabmenuItems !== undefined) {
-          this.selectSmallTabmenuItemForUrl(event.url);
-        }
-      } else if (event instanceof RoutesRecognized) {
-        if (event.state.root.firstChild) {
-          this.buildSlug = event.state.root.firstChild.params.buildSlug;
-          this.store.dispatch(new StartPollingReports({ buildSlug: this.buildSlug }));
-        }
+      if (event instanceof NavigationEnd && this.tabmenuItems !== undefined) {
+        this.selectSmallTabmenuItemForUrl(event.url);
+      }
+      if (event instanceof RoutesRecognized && event.state.root.firstChild) {
+        this.buildSlug = event.state.root.firstChild.params.buildSlug;
+        this.store.dispatch(new StartPollingReports({ buildSlug: this.buildSlug }));
       }
     });
 

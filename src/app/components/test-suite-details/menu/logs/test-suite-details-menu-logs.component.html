@@ -24,7 +24,7 @@
 <button
   class="load-more-logs"
   (click)="maximumNumberOfVisibleLines = maximumNumberOfVisibleLines + INITIAL_MAXIMUM_NUMBER_OF_VISIBLE_LINES"
-  *ngIf="filteredLogLines !== undefined && maximumNumberOfVisibleLines < filteredLogLines.length"
+  *ngIf="filteredLogLines && maximumNumberOfVisibleLines < filteredLogLines.length"
 >
   Load more
 </button>

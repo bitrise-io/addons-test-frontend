@@ -56,7 +56,7 @@ export class TestSuiteResolve
       }),
       map((testReports: TestReport[]) => {
         const testSuiteData = {
-          buildSlug: buildSlug,
+          buildSlug,
           selectedTestReport: null,
           selectedTestSuite: null
         };

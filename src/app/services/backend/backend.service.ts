@@ -20,85 +20,75 @@ import { environment } from 'src/environments/environment';
 export class RealBackendService implements BackendService {
   constructor(private httpClient: HttpClient, private providerService: ProviderService) {}
 
-  getPerformance(buildSlug: string, testSuite: TestSuite): Observable<Performance> {
-    return this.httpClient
-      .get(`${environment.apiRootUrl}/api/builds/${buildSlug}/steps/${testSuite.stepID}`)
-      .pipe(map((performance: Performance) => performance));
-  }
+  getPerformance = (buildSlug: string, testSuite: TestSuite): Observable<Performance> =>
+    this.httpClient.get<Performance>(`${environment.apiRootUrl}/api/builds/${buildSlug}/steps/${testSuite.stepID}`);
 
-  getReports(buildSlug: string): Observable<TestReportsResult> {
-    return this.httpClient.get(`${environment.apiRootUrl}/api/builds/${buildSlug}/test_reports`).pipe(
+  getReports = (buildSlug: string): Observable<TestReportsResult> =>
+    this.httpClient.get(`${environment.apiRootUrl}/api/builds/${buildSlug}/test_reports`).pipe(
       map((testReportResponses: TestReportResponse[]) =>
         testReportResponses.map((testReportResponse: TestReportResponse) =>
           new TestReport().deserialize(testReportResponse)
         )
       ),
       map((testReports: TestReport[]) => {
-        return { testReports: testReports };
+        return { testReports };
       })
     );
-  }
 
-  getReportDetails(buildSlug: string, testReport: TestReport): Observable<TestReportResult> {
-    return this.httpClient
-      .get(`${environment.apiRootUrl}/api/builds/${buildSlug}/test_reports/${testReport.id}`)
-      .pipe(
-        map((testReportDetailsResponse: FirebaseTestlabTestReportDetailsResponse | JUnitXMLTestReportDetailsResponse) =>
-          this.providerService.deserializeTestReportDetails(testReportDetailsResponse, testReport)
-        ),
-        mergeMap((_testReport: TestReport) => {
-          if (_testReport.provider === Provider.firebaseTestlab) {
-            return forkJoin(
-              _testReport.testSuites.map((testSuite: TestSuite) => {
-                if (testSuite.status === TestSuiteStatus.inProgress) {
-                  return of({ _testReport });
-                } else {
-                  return this.httpClient
-                    .get(testSuite.testCasesURL, {
-                      headers: { 'Access-Control-Allow-Origin': '*' },
-                      responseType: 'text'
+  getReportDetails = (buildSlug: string, testReport: TestReport): Observable<TestReportResult> =>
+    this.httpClient.get(`${environment.apiRootUrl}/api/builds/${buildSlug}/test_reports/${testReport.id}`).pipe(
+      map((testReportDetailsResponse: FirebaseTestlabTestReportDetailsResponse | JUnitXMLTestReportDetailsResponse) =>
+        this.providerService.deserializeTestReportDetails(testReportDetailsResponse, testReport)
+      ),
+      mergeMap((_testReport: TestReport) => {
+        if (_testReport.provider === Provider.firebaseTestlab) {
+          return forkJoin(
+            _testReport.testSuites.map((testSuite: TestSuite) => {
+              if (testSuite.status === TestSuiteStatus.inProgress) {
+                return of({ _testReport });
+              } else {
+                return this.httpClient
+                  .get(testSuite.testCasesURL, {
+                    headers: { 'Access-Control-Allow-Origin': '*' },
+                    responseType: 'text'
+                  })
+                  .pipe(
+                    map((testCasesResponse: FirebaseTestlabTestCasesResponse) => {
+                      testSuite.testCases = this.providerService.deserializeFirebaseTestlabTestCases(testCasesResponse);
                     })
-                    .pipe(
-                      map((testCasesResponse: FirebaseTestlabTestCasesResponse) => {
-                        testSuite.testCases = this.providerService.deserializeFirebaseTestlabTestCases(
-                          testCasesResponse
-                        );
+                  );
+              }
+            })
+          ).pipe(
+            map(() => {
+              return { testReport };
+            })
+          );
+        } else {
+          return of({ testReport });
+        }
+      })
+    );
 
-                        return { _testReport };
-                      })
-                    );
+  getLog = (testReport: TestReport, testSuite: TestSuite): Observable<LogResult> =>
+    this.httpClient
+      .get(testSuite.logUrl, {
+        headers: { 'Access-Control-Allow-Origin': '*' },
+        responseType: 'text'
+      })
+      .pipe(
+        map((fullLog: string) => {
+          const log = new Log().deserialize(<RawLog>fullLog);
+
+          return {
+            logs: {
+              [testReport.id]: {
+                [testSuite.id]: {
+                  log
                 }
-              })
-            ).pipe(
-              map(() => {
-                return { testReport };
-              })
-            );
-          } else {
-            return of({ testReport });
-          }
-        })
-      );
-  }
-
-  getLog(testReport: TestReport, testSuite: TestSuite): Observable<LogResult> {
-    return this.httpClient.get(testSuite.logUrl, {
-      headers: { 'Access-Control-Allow-Origin': '*' },
-      responseType: 'text'
-    }).pipe(
-      map((fullLog: string) => {
-        const log = new Log().deserialize(<RawLog>fullLog);
-
-        return {
-          logs: {
-            [testReport.id]: {
-              [testSuite.id]: {
-                log
               }
             }
-          }
-        };
-      })
-    );
-  }
+          };
+        })
+      );
 }
