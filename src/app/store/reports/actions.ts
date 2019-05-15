@@ -12,6 +12,8 @@ export enum ReportActionTypes {
 
 export class StartPollingReports implements Action {
   readonly type = ReportActionTypes.StartPolling;
+
+  constructor(public payload: { buildSlug: string }) {}
 }
 
 export class ReceiveReports implements Action {

@@ -12,6 +12,7 @@ export class TestSuiteResolve
   implements
     Resolve<
       Observable<{
+        buildSlug: string;
         selectedTestReport: TestReport;
         selectedTestSuite: TestSuite;
       }>
@@ -25,19 +26,37 @@ export class TestSuiteResolve
   }
 
   resolve(route: ActivatedRouteSnapshot) {
-    this.store.dispatch(new StartPollingReports());
-
     const {
       params: {
+        buildSlug,
         testReportId,
         testSuiteId
       }
     } = route;
 
+    this.store.dispatch(new StartPollingReports(buildSlug));
+
     return this.testReports$.pipe(
-      first(),
+      first((testReports: TestReport[]) => {
+        if (!testReportId) {
+          return true;
+        }
+
+        const selectedTestReport = testReports.find(
+          (testReport: TestReport) => testReport.id === testReportId
+        );
+
+        if (!testSuiteId) {
+          return selectedTestReport !== undefined;
+        }
+
+        return selectedTestReport && selectedTestReport.testSuites.some(
+          (testSuite: TestSuite) => testSuite.id === Number(testSuiteId)
+        );
+      }),
       map((testReports: TestReport[]) => {
         const testSuiteData = {
+          buildSlug,
           selectedTestReport: null,
           selectedTestSuite: null
         };

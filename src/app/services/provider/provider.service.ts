@@ -151,6 +151,7 @@ export class ProviderService {
     testSuite.deviceOperatingSystem = testSuiteResponse.api_level;
     testSuite.orientation = TestSuiteOrientation[testSuiteResponse.orientation];
     testSuite.locale = testSuiteResponse.locale;
+    testSuite.stepID = testSuiteResponse.step_id;
 
     switch (testSuiteResponse.status) {
       case 'pending':
@@ -171,14 +172,19 @@ export class ProviderService {
         }
 
         testSuite.durationInMilliseconds = 1000 * Number(testSuiteResponse.step_duration_in_seconds);
-        testSuite.screenshots = testSuiteResponse.output_urls.screenshot_urls.map((screenshotURL) => {
-          const filenameRegExp = /^.+\/([^?\n]*).*$/;
 
-          return {
-            url: screenshotURL,
-            filename: filenameRegExp.test(screenshotURL) ? filenameRegExp.exec(screenshotURL)[1] : null
-          };
-        });
+        testSuite.screenshots = [];
+        if (testSuiteResponse.output_urls.screenshot_urls) {
+          testSuite.screenshots = testSuiteResponse.output_urls.screenshot_urls.map((screenshotURL) => {
+            const filenameRegExp = /^.+\/([^?\n]*).*$/;
+
+            return {
+              url: screenshotURL,
+              filename: filenameRegExp.test(screenshotURL) ? filenameRegExp.exec(screenshotURL)[1] : null
+            };
+          });
+        }
+
         testSuite.testCasesURL = testSuiteResponse.output_urls.test_suite_xml_url;
         testSuite.artifacts = Object.entries(testSuiteResponse.output_urls.asset_urls).map(
           ([artifactFilename, artifactURL]) => {
@@ -261,16 +267,18 @@ export class ProviderService {
     const parser = new DOMParser();
     const testSuiteElement = parser.parseFromString(testCasesResponse, 'application/xml').querySelector('testsuite');
 
-    return Array.from(testSuiteElement.children[0].children).map((testCaseItemElement: Element) => {
+    return Array.from(testSuiteElement.querySelectorAll('testcase')).map((testCaseItemElement: Element) => {
       const testCase = new TestCase();
 
-      testCase.name = testCaseItemElement.querySelector('name').innerHTML;
-      testCase.durationInMilliseconds = null;
-      testCase.context = testCaseItemElement.querySelector('classname').innerHTML;
+      testCase.name = testCaseItemElement.getAttribute('name');
+      testCase.durationInMilliseconds = testCaseItemElement.hasAttribute('time')
+        ? Number(testCaseItemElement.getAttribute('time')) * 1000
+        : null;
+      testCase.context = testCaseItemElement.getAttribute('classname');
 
-      if (testCaseItemElement.querySelector('failure')) {
+      if (testCaseItemElement.getAttribute('failure')) {
         testCase.status = TestCaseStatus.failed;
-        testCase.summary = testCaseItemElement.querySelector('failure').innerHTML;
+        testCase.summary = testCaseItemElement.getAttribute('failure');
       } else {
         testCase.status = TestCaseStatus.passed;
         testCase.summary = 'passed';

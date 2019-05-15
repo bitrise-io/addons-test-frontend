@@ -80,7 +80,7 @@ describe('ProviderService', () => {
 
   function basicFirebaseTestlabTestCasesResponse(): string {
     // tslint:disable-next-line:max-line-length
-    return '<?xml version="1.0" encoding="UTF-8"?>\n<testsuite>\n<testcase type="array">\n<testcase-item>\n<name>name A</name>\n<classname>classname A</classname>\n<failure>The A failed</failure>\n</testcase-item>\n<testcase-item>\n<name>name B</name>\n<classname>classname B</classname>\n</testcase-item>\n</testcase>\n</testsuite>';
+    return '<?xml version="1.0" encoding="UTF-8"?>\n<testsuite>\n<properties />\n<testcase name="name A" classname="classname A" failure="The A failed" />\n<testcase name="name B" classname="classname B" time="1.3" />\n</testsuite>';
   }
 
   function basicJUnitXMLTestSuiteResponse(): JUnitXMLTestSuiteResponse {
@@ -587,7 +587,7 @@ describe('ProviderService', () => {
       expect(testCases[1].name).toBe('name B');
       expect(testCases[1].status).toBe(TestCaseStatus.passed);
       expect(testCases[1].context).toBe('classname B');
-      expect(testCases[1].durationInMilliseconds).toBeNull();
+      expect(testCases[1].durationInMilliseconds).toBe(1300);
       expect(testCases[1].summary).toBe('passed');
     });
   });

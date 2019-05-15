@@ -13,8 +13,8 @@ export class PerformanceEffects {
     ofType(PerformanceActionTypes.Fetch),
     switchMap((action: FetchPerformance) =>
       this.backendService
-        .getPerformance(action.payload.testReport, action.payload.testSuite)
-        .pipe(map((performace) => new ReceivePerformance(performace)))
+        .getPerformance(action.payload.buildSlug, action.payload.testSuite)
+        .pipe(map((performanceData) => new ReceivePerformance(performanceData)))
     )
   );
 

@@ -1,6 +1,8 @@
 import { TestBed, async, ComponentFixture, inject } from '@angular/core/testing';
-import { HttpClientTestingModule } from '@angular/common/http/testing';
 import { By } from '@angular/platform-browser';
+import { HttpClientTestingModule } from '@angular/common/http/testing';
+import { ActivatedRoute } from '@angular/router';
+import { of } from 'rxjs';
 import { Store, StoreModule } from '@ngrx/store';
 import { InlineSVGModule } from 'ng-inline-svg';
 
@@ -59,7 +61,13 @@ describe('TestSummaryHeaderComponent', () => {
         InlineSVGModule.forRoot()
       ],
       declarations: [TestSummaryHeaderComponent],
-      providers: [provideMockStore({})]
+      providers: [provideMockStore({}),
+      {
+        provide: ActivatedRoute,
+        useValue: {
+          params: of({buildSlug: 'build-slug'})
+        }
+      }]
     }).compileComponents();
   }));
 

@@ -9,9 +9,9 @@ const initialState: Performance = {
 export default (state = initialState, action: PerformanceActions) => {
   switch (action.type) {
     case PerformanceActionTypes.Receive:
-      const { payload: performance } = <ReceivePerformance>action;
+      const { payload: performanceData } = <ReceivePerformance>action;
 
-      return performance;
+      return performanceData;
     default:
       return state;
   }
