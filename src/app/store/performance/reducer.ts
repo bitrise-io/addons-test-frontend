@@ -15,4 +15,4 @@ export function PerformanceReducer(state = initialState, action: PerformanceActi
     default:
       return state;
   }
-};
+}

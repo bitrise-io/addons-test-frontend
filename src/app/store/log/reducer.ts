@@ -30,4 +30,4 @@ export function LogReducer(state = initialState, action: LogActions) {
     default:
       return state;
   }
-};
+}

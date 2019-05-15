@@ -49,4 +49,4 @@ export function ReportsReducer(state = initialState, action: ReportActions) {
     default:
       return state;
   }
-};
+}

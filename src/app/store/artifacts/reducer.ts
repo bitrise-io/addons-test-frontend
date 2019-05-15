@@ -23,4 +23,4 @@ export function ArtifactsReducer(state = initialState, action: ArtifactActions) 
     default:
       return state;
   }
-};
+}
