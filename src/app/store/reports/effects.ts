@@ -1,10 +1,10 @@
 import { Injectable, Inject } from '@angular/core';
 import { Actions, Effect, ofType } from '@ngrx/effects';
 import { Store } from '@ngrx/store';
-import { Observable, timer, forkJoin } from 'rxjs';
-import { switchMap, map, withLatestFrom, takeWhile, mergeMap } from 'rxjs/operators';
+import { Observable, timer, forkJoin, of } from 'rxjs';
+import { switchMap, withLatestFrom, takeWhile, mergeMap } from 'rxjs/operators';
 
-import { ReportActionTypes, ReceiveReports, ReportActions, FilterReports, ReceiveFilteredReports } from './actions';
+import { ReportActionTypes, ReceiveReports, ReportActions, FilterReports, ReceiveFilteredReports, StartPollingReports } from './actions';
 import { BackendService, BACKEND_SERVICE, TestReportsResult } from 'src/app/services/backend/backend.model';
 import { TestReportState } from './reducer';
 import filterReports from './filter-reports';
@@ -18,8 +18,8 @@ export class ReportEffects {
   @Effect()
   $fetchReports: Observable<ReportActions> = this.actions$.pipe(
     ofType(ReportActionTypes.StartPolling),
-    mergeMap(() =>
-      this.backendService.getReports().pipe(
+    mergeMap((action: StartPollingReports) =>
+      this.backendService.getReports(action.payload.buildSlug).pipe(
         switchMap(({ testReports }: TestReportsResult) =>
           timer(0, UPDATE_INTERVAL_MS).pipe(
             takeWhile(
@@ -38,7 +38,7 @@ export class ReportEffects {
               const { testReport: { filter } } = testReportState; // prettier-ignore
 
               return forkJoin(
-                ...testReports.map((loadedTestReport) => this.backendService.getReportDetails(loadedTestReport))
+                ...testReports.map((loadedTestReport) => this.backendService.getReportDetails(action.payload.buildSlug, loadedTestReport))
               ).pipe(mergeMap(() => [new ReceiveReports({ testReports: testReports }), new FilterReports({ filter })]));
             })
           )
@@ -51,11 +51,11 @@ export class ReportEffects {
   $filterReports: Observable<ReportActions> = this.actions$.pipe(
     ofType(ReportActionTypes.Filter),
     withLatestFrom(this.store$),
-    map(([filterReportsActions, testReportState]: [FilterReports, { testReport: TestReportState }]) => {
+    switchMap(([filterReportsActions, testReportState]: [FilterReports, { testReport: TestReportState }]) => {
       const { payload: { filter } } = filterReportsActions; // prettier-ignore
       const { testReport: { testReports } } = testReportState; // prettier-ignore
 
-      return new ReceiveFilteredReports({ testReports: filterReports(testReports, filter) });
+      return of(new ReceiveFilteredReports({ testReports: filterReports(testReports, filter) }));
     })
   );
 

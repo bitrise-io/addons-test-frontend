@@ -18,6 +18,7 @@ import { Log } from 'src/app/models/log.model';
 describe('BackendService', () => {
   let service: BackendService;
   const mockProviderService = new ProviderService();
+  const buildSlug = 'abcdefgh12345678';
 
   beforeEach(() => {
     TestBed.configureTestingModule({
@@ -39,10 +40,9 @@ describe('BackendService', () => {
 
   describe('mock data shape', () => {
     it('should load performance data', () => {
-      const testReport = new TestReport();
       const testSuite = new TestSuite();
 
-      service.getPerformance(testReport, testSuite).subscribe((performance: Performance) => {
+      service.getPerformance(buildSlug, testSuite).subscribe((performance: Performance) => {
         const keys = Object.keys(performance);
         expect(keys).toContain('cpu_samples');
         expect(keys).toContain('ram_samples');
@@ -52,7 +52,7 @@ describe('BackendService', () => {
     });
 
     it('should load report data', () => {
-      service.getReports().subscribe((result: TestReportsResult) => {
+      service.getReports(buildSlug).subscribe((result: TestReportsResult) => {
         let keys = Object.keys(result);
         expect(keys).toContain('testReports');
 
@@ -72,7 +72,7 @@ describe('BackendService', () => {
         .createSpy('deserializeTestReportDetails')
         .and.callFake(() => { testReport.testSuites = []; });
 
-      service.getReportDetails(testReport).subscribe((result: TestReportResult) => {
+      service.getReportDetails(buildSlug, testReport).subscribe((result: TestReportResult) => {
         let keys = Object.keys(result);
         expect(keys).toContain('testReport');
 

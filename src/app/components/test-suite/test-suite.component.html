@@ -55,7 +55,7 @@
     <div class="detail-wrapper locale" *ngIf="testReport.type == TestReportType.uiTest">
       <div class="detail">{{ testSuite.locale }}</div>
     </div>
-    <a class="test-cases-button" [routerLink]="['/testreport', testReport.id, 'testsuite', testSuite.id]" queryParamsHandling="merge" [hidden]="testSuite.status != TestSuiteStatus.passed && testSuite.status != TestSuiteStatus.failed">
+    <a class="test-cases-button" [routerLink]="['/build', buildSlug, 'testreport', testReport.id, 'testsuite', testSuite.id]" queryParamsHandling="merge" [hidden]="testSuite.status != TestSuiteStatus.passed && testSuite.status != TestSuiteStatus.failed">
       <span>Test Cases</span> <span class="arrow" inlineSVG="/assets/images/arrow-dashed-tail-right.svg"></span>
     </a>
   </div>

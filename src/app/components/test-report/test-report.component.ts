@@ -7,5 +7,6 @@ import { TestReport } from '../../models/test-report.model';
   styleUrls: ['./test-report.component.scss']
 })
 export class TestReportComponent {
+  @Input() buildSlug: string;
   @Input() testReport: TestReport;
 }

@@ -2,6 +2,7 @@
   <bitrise-heading-text>{{ testReport.name }}</bitrise-heading-text>
   <bitrise-test-suite
     *ngFor="let testSuite of testReport.testSuites"
+    [buildSlug]="buildSlug"
     [testReport]="testReport"
     [testSuite]="testSuite"
   ></bitrise-test-suite>

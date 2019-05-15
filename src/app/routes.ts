@@ -7,15 +7,15 @@ import { testSuiteDetailsMenuRoutes } from './components/test-suite-details/menu
 import { TestSuiteResolve } from './services/test-suite.resolve.service';
 
 export const appRoutes: Routes = [
-  { path: 'summary', component: TestSummaryComponent },
-  { path: 'testreport/:testReportId', component: TestReportWrapperComponent },
+  { path: 'build/:buildSlug/summary', component: TestSummaryComponent },
+  { path: 'build/:buildSlug/testreport/:testReportId', component: TestReportWrapperComponent },
   {
-    path: 'testreport/:testReportId/testsuite/:testSuiteId',
+    path: 'build/:buildSlug/testreport/:testReportId/testsuite/:testSuiteId',
     component: TestSuiteDetailsComponent,
     children: testSuiteDetailsMenuRoutes,
     resolve: {
       testSuite: TestSuiteResolve
     }
   },
-  { path: '', redirectTo: '/summary?status=failed', pathMatch: 'full' }
+  { path: 'build/:buildSlug', redirectTo: '/build/:buildSlug/summary?status=failed', pathMatch: 'full' }
 ];

@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { ActivatedRoute, Params } from '@angular/router';
 import { Observable } from 'rxjs';
 import { Store } from '@ngrx/store';
 
@@ -30,7 +31,7 @@ export class TestSummaryHeaderComponent implements OnInit {
 
   selectedStatus: TestSuiteStatus;
 
-  constructor(private store: Store<{ testReport: TestReportState }>) {
+  constructor(private activatedRoute: ActivatedRoute, private store: Store<{ testReport: TestReportState }>) {
     this.testReports$ = store.select('testReport', 'testReports');
     this.testFilter$ = store.select('testReport', 'filter');
   }
@@ -44,7 +45,9 @@ export class TestSummaryHeaderComponent implements OnInit {
   }
 
   ngOnInit() {
-    this.store.dispatch(new StartPollingReports());
+    this.activatedRoute.params.subscribe((params: Params) => {
+      this.store.dispatch(new StartPollingReports(params.buildSlug));
+    });
 
     this.testFilter$.subscribe((filter) => {
       this.selectedStatus = filter;

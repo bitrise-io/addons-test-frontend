@@ -1,5 +1,5 @@
 import { Component, OnInit, OnDestroy } from '@angular/core';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, Params } from '@angular/router';
 import { Observable, Subscription } from 'rxjs';
 import { combineLatest } from 'rxjs';
 import { map } from 'rxjs/operators';
@@ -15,6 +15,7 @@ import { StartPollingReports } from 'src/app/store/reports/actions';
   styleUrls: ['./test-report-wrapper.component.scss']
 })
 export class TestReportWrapperComponent implements OnInit, OnDestroy {
+  buildSlug: string;
   testReports: TestReport[];
   testReports$: Observable<TestReport[]>;
   testReport: TestReport;
@@ -25,7 +26,11 @@ export class TestReportWrapperComponent implements OnInit, OnDestroy {
   }
 
   ngOnInit() {
-    this.store.dispatch(new StartPollingReports());
+    this.activatedRoute.params.subscribe((params: Params) => {
+      this.buildSlug = params.buildSlug;
+
+      this.store.dispatch(new StartPollingReports({ buildSlug: this.buildSlug }));
+    });
 
     this.combinedSubscription = combineLatest(this.activatedRoute.params, this.testReports$)
       .pipe(

@@ -1,4 +1,4 @@
 <div class="test-summary centered-max-width main-content-padding-x">
   <bitrise-test-summary-header></bitrise-test-summary-header>
-  <bitrise-test-report *ngFor="let testReport of testReports" [testReport]="testReport"></bitrise-test-report>
+  <bitrise-test-report *ngFor="let testReport of testReports" [buildSlug]="buildSlug" [testReport]="testReport"></bitrise-test-report>
 </div>
