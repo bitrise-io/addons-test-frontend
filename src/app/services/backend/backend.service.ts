@@ -21,17 +21,13 @@ export class RealBackendService implements BackendService {
   constructor(private httpClient: HttpClient, private providerService: ProviderService) {}
 
   getPerformance(buildSlug: string, testSuite: TestSuite): Observable<Performance> {
-    const requestUrl = `${environment.apiRootUrl}/api/builds/${buildSlug}/steps/${testSuite.stepID}`;
-    console.log(requestUrl);
-
-    return this.httpClient.get(requestUrl).pipe(map((performance: Performance) => performance));
+    return this.httpClient
+      .get(`${environment.apiRootUrl}/api/builds/${buildSlug}/steps/${testSuite.stepID}`)
+      .pipe(map((performance: Performance) => performance));
   }
 
   getReports(buildSlug: string): Observable<TestReportsResult> {
-    const requestUrl = `${environment.apiRootUrl}/api/builds/${buildSlug}/test_reports`;
-    console.log(requestUrl);
-
-    return this.httpClient.get(requestUrl).pipe(
+    return this.httpClient.get(`${environment.apiRootUrl}/api/builds/${buildSlug}/test_reports`).pipe(
       map((testReportResponses: TestReportResponse[]) =>
         testReportResponses.map((testReportResponse: TestReportResponse) =>
           new TestReport().deserialize(testReportResponse)
@@ -44,10 +40,8 @@ export class RealBackendService implements BackendService {
   }
 
   getReportDetails(buildSlug: string, testReport: TestReport): Observable<TestReportResult> {
-    const requestUrl = `${environment.apiRootUrl}/api/builds/${buildSlug}/test_reports/${testReport.id}`;
-    console.log(requestUrl);
-
-    return this.httpClient.get(requestUrl)
+    return this.httpClient
+      .get(`${environment.apiRootUrl}/api/builds/${buildSlug}/test_reports/${testReport.id}`)
       .pipe(
         map((testReportDetailsResponse: FirebaseTestlabTestReportDetailsResponse | JUnitXMLTestReportDetailsResponse) =>
           this.providerService.deserializeTestReportDetails(testReportDetailsResponse, testReport)
@@ -59,8 +53,6 @@ export class RealBackendService implements BackendService {
                 if (testSuite.status === TestSuiteStatus.inProgress) {
                   return of({ testReport: testReport });
                 } else {
-                  console.log(testSuite.testCasesURL);
-
                   if (testSuite.testCasesURL) {
                     return this.httpClient
                     .get(testSuite.testCasesURL, {
@@ -97,9 +89,6 @@ export class RealBackendService implements BackendService {
   }
 
   getLog(testReport: TestReport, testSuite: TestSuite): Observable<LogResult> {
-    const requestUrl = testSuite.logUrl;
-    console.log(requestUrl);
-
     return this.httpClient.get(testSuite.logUrl, {
       headers: { 'Access-Control-Allow-Origin': '*' },
       responseType: 'text'
