@@ -59,6 +59,8 @@ export class RealBackendService implements BackendService {
                 if (testSuite.status === TestSuiteStatus.inProgress) {
                   return of({ _testReport: aTestReport });
                 } else {
+                  console.log(testSuite.testCasesURL);
+
                   return this.httpClient
                     .get(testSuite.testCasesURL, {
                       headers: { 'Access-Control-Allow-Origin': '*' },
