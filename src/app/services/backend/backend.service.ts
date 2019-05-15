@@ -63,6 +63,8 @@ export class RealBackendService implements BackendService {
                     );
                 } else {
                   testSuite.testCases = [];
+
+                  return of();
                 }
               }
             })
