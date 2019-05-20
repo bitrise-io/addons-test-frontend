@@ -1,4 +1,4 @@
-import logReducer, { LogStoreState } from './reducer';
+import { LogReducer, LogStoreState } from './reducer';
 import { ReceiveLog, LogActions } from './actions';
 import { Log } from 'src/app/models/log.model';
 
@@ -8,7 +8,7 @@ describe('Log reducer', () => {
   };
 
   it('updates the state with log', () => {
-    const newState = logReducer(
+    const newState = LogReducer(
       initialState,
       new ReceiveLog({
         logs: {
@@ -27,7 +27,7 @@ describe('Log reducer', () => {
   });
 
   it(`doesn't update the state for an unknown action`, () => {
-    const newState = logReducer(initialState, <LogActions>(<unknown>{ type: 'Unknown' }));
+    const newState = LogReducer(initialState, <LogActions>(<unknown>{ type: 'Unknown' }));
 
     expect(newState).toBe(initialState);
   });

@@ -16,7 +16,7 @@ import { TestReportState } from 'src/app/store/reports/reducer';
 import { TestSuite } from 'src/app/models/test-suite.model';
 import { TestSuiteResolve } from 'src/app/services/test-suite.resolve.service';
 import { Log } from '../../../../models/log.model';
-import logReducer, { LogStoreState } from 'src/app/store/log/reducer';
+import { LogReducer, LogStoreState } from 'src/app/store/log/reducer';
 
 describe('TestSuiteDetailsMenuLogsComponent', () => {
   let fixture: ComponentFixture<TestSuiteDetailsMenuLogsComponent>;
@@ -47,7 +47,7 @@ describe('TestSuiteDetailsMenuLogsComponent', () => {
       imports: [
         HttpClientTestingModule,
         FormsModule,
-        StoreModule.forRoot({ log: logReducer }),
+        StoreModule.forRoot({ log: LogReducer }),
         InlineSVGModule.forRoot()
       ],
       declarations: [TestSuiteDetailsMenuLogsComponent],

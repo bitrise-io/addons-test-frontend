@@ -8,7 +8,7 @@ import { InlineSVGModule } from 'ng-inline-svg';
 
 import { TestSummaryHeaderComponent } from './test-summary-header.component';
 import { TestReport } from '../../models/test-report.model';
-import reportsReducer, { TestReportState } from 'src/app/store/reports/reducer';
+import { ReportsReducer, TestReportState } from 'src/app/store/reports/reducer';
 import { TestSuite, TestSuiteStatus } from '../../models/test-suite.model';
 import { MockStore, provideMockStore } from 'src/app/mock-store/testing';
 
@@ -57,7 +57,7 @@ describe('TestSummaryHeaderComponent', () => {
     TestBed.configureTestingModule({
       imports: [
         HttpClientTestingModule,
-        StoreModule.forRoot({ testReport: reportsReducer }),
+        StoreModule.forRoot({ testReport: ReportsReducer }),
         InlineSVGModule.forRoot()
       ],
       declarations: [TestSummaryHeaderComponent],

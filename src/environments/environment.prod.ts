@@ -4,5 +4,5 @@ export const environment = {
   production: true,
   ServicesModule,
   segmentWriteKey: '55iZpqNHYN37mfsfk9SOfKBv9GpGBBTv',
-  apiRootUrl: 'https://vdt.bitrise.io'
+  apiRootUrl: ''
 };

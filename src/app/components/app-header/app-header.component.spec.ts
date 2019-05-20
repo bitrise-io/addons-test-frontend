@@ -10,7 +10,7 @@ import { InlineSVGModule } from 'ng-inline-svg';
 
 import { AppHeaderComponent } from './app-header.component';
 import { TestReport } from '../../models/test-report.model';
-import reportsReducer, { TestReportState } from 'src/app/store/reports/reducer';
+import { ReportsReducer, TestReportState } from 'src/app/store/reports/reducer';
 import { TestSuite } from '../../models/test-suite.model';
 import { MockStore, provideMockStore } from 'src/app/mock-store/testing';
 
@@ -45,12 +45,12 @@ describe('AppHeaderComponent', () => {
   beforeEach(async(() => {
     TestBed.configureTestingModule({
       imports: [
-        StoreModule.forRoot({ testReport: reportsReducer }),
+        StoreModule.forRoot({ testReport: ReportsReducer }),
         RouterTestingModule.withRoutes([
-          { path: 'build/:buildSlug/summary', component: MockTestSummaryComponent },
-          { path: 'build/:buildSlug/testreport/1', component: MockTestReportComponent },
-          { path: 'build/:buildSlug/testreport/2', component: MockTestReportComponent },
-          { path: 'build/:buildSlug/testreport/3', component: MockTestReportComponent }
+          { path: 'builds/:buildSlug/summary', component: MockTestSummaryComponent },
+          { path: 'builds/:buildSlug/testreport/1', component: MockTestReportComponent },
+          { path: 'builds/:buildSlug/testreport/2', component: MockTestReportComponent },
+          { path: 'builds/:buildSlug/testreport/3', component: MockTestReportComponent }
         ]),
         HttpClientTestingModule,
         FormsModule,
@@ -163,7 +163,7 @@ describe('AppHeaderComponent', () => {
       it('directs to corresponding route', fakeAsync(() => {
         tick();
 
-        expect(location.path()).toBe('/build/build-slug/testreport/2');
+        expect(location.path()).toBe('/builds/build-slug/testreport/2');
       }));
     });
 
@@ -216,7 +216,7 @@ describe('AppHeaderComponent', () => {
 
         tick();
 
-        expect(location.path()).toBe('/build/build-slug/testreport/1');
+        expect(location.path()).toBe('/builds/build-slug/testreport/1');
       }));
     });
   });

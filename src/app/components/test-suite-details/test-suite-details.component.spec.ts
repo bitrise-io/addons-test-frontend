@@ -7,7 +7,7 @@ import { FormsModule } from '@angular/forms';
 import { from } from 'rxjs';
 
 import { TestSuiteDetailsComponent } from './test-suite-details.component';
-import reportsReducer, { TestReportState } from 'src/app/store/reports/reducer';
+import { ReportsReducer, TestReportState } from 'src/app/store/reports/reducer';
 import { TestReport } from '../../models/test-report.model';
 import { TestSuite } from '../../models/test-suite.model';
 import { MockStore, provideMockStore } from 'src/app/mock-store/testing';
@@ -31,7 +31,7 @@ xdescribe('TestSuiteDetailsComponent', () => {
 
   beforeEach(() => {
     TestBed.configureTestingModule({
-      imports: [RouterTestingModule, FormsModule, StoreModule.forRoot({ testReport: reportsReducer })],
+      imports: [RouterTestingModule, FormsModule, StoreModule.forRoot({ testReport: ReportsReducer })],
       declarations: [TestSuiteDetailsComponent, MockTestSuiteDetailsHeaderComponent],
       providers: [
         {

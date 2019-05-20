@@ -12,7 +12,7 @@ import { TestReport } from 'src/app/models/test-report.model';
 import { TestReportState } from 'src/app/store/reports/reducer';
 import { TestSuite } from 'src/app/models/test-suite.model';
 import { TestArtifact } from '../../../../models/test-artifact.model';
-import artifactsReducer, { ArtifactStoreState } from 'src/app/store/artifacts/reducer';
+import { ArtifactsReducer, ArtifactStoreState } from 'src/app/store/artifacts/reducer';
 import { ZipperService } from 'src/app/services/zipper.service';
 
 describe('TestSuiteDetailsMenuTestArtifactsComponent', () => {
@@ -38,7 +38,7 @@ describe('TestSuiteDetailsMenuTestArtifactsComponent', () => {
     TestBed.configureTestingModule({
       imports: [
         HttpClientTestingModule,
-        StoreModule.forRoot({ testArtifact: artifactsReducer }),
+        StoreModule.forRoot({ testArtifact: ArtifactsReducer }),
         InlineSVGModule.forRoot()
       ],
       declarations: [TestSuiteDetailsMenuTestArtifactsComponent],
