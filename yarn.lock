@@ -215,10 +215,10 @@
   dependencies:
     tslib "^1.9.0"
 
-"@bitrise/beam@^0.1.6":
-  version "0.1.6"
-  resolved "https://registry.yarnpkg.com/@bitrise/beam/-/beam-0.1.6.tgz#4cbd827ba056ac0058a91603b5bff47ae04e892f"
-  integrity sha512-/Z8WxJ/Q3OBiGUoMDi5AJrVrEX0yn/xgJ1S2CmrqMEFMmsYpftceDHuWKJHe1YIifYfXVtHVh73dTHZWDO2YSg==
+"@bitrise/beam@^0.2.0":
+  version "0.2.0"
+  resolved "https://registry.yarnpkg.com/@bitrise/beam/-/beam-0.2.0.tgz#c1a16ebed5692e27543e7ae6569badadc590959e"
+  integrity sha512-0N/8zQh6ByMmpodXFypKh5RIGyXf72tEdB6GHyup2IqDwJVaWHwIpDSTNDkzNAsdDHJAZN1+z89ZRCKMOIme4w==
 
 "@ngrx/effects@^6.0.1":
   version "6.1.2"
