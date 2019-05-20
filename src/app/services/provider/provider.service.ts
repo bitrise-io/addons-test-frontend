@@ -88,7 +88,7 @@ export type JUnitXMLTestCaseResponse = {
   duration: Number;
   status: string;
   error?: {
-    message: string;
+    message?: string;
     body: string;
   };
 };
@@ -308,9 +308,15 @@ export class ProviderService {
     }
     testCase.durationInMilliseconds = Number(testCaseResponse.duration);
     testCase.context = testCaseResponse.name;
-    testCase.summary = testCaseResponse.error
-      ? `${testCaseResponse.error.message}\n\n${testCaseResponse.error.body}`
-      : testCaseResponse.status;
+    if (testCaseResponse.error) {
+      if (testCaseResponse.error.message) {
+        testCase.summary = `${testCaseResponse.error.message}\n\n${testCaseResponse.error.body}`;
+      } else {
+        testCase.summary = testCaseResponse.error.body;
+      }
+    } else {
+      testCase.summary = testCaseResponse.status;
+    }
 
     return testCase;
   }

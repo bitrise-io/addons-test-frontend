@@ -630,6 +630,18 @@ describe('ProviderService', () => {
         expectedSummary: 'Error message\n\nError body'
       },
       {
+        statusName: 'failed (no message)',
+        specPreparation: () => {
+          testCaseResponse.status = 'failed';
+          testCaseResponse.error = {
+            body: 'Error body'
+          };
+        },
+        expectedStatusName: 'failed',
+        expectedStatus: TestCaseStatus.failed,
+        expectedSummary: 'Error body'
+      },
+      {
         statusName: 'skipped',
         specPreparation: () => {
           testCaseResponse.status = 'skipped';
