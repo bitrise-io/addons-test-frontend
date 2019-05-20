@@ -1,7 +1,7 @@
 import { TestReport } from 'src/app/models/test-report.model';
 import { TestSuiteStatus } from 'src/app/models/test-suite.model';
 
-export default function filterReports(reports: TestReport[], status: TestSuiteStatus) {
+export function filterReports(reports: TestReport[], status: TestSuiteStatus) {
   if (status || status === 0) {
     return reports.map(report => {
       const newReport = Object.assign(new TestReport(), report);

@@ -40,23 +40,32 @@ export class RealBackendService implements BackendService {
       map((testReportDetailsResponse: FirebaseTestlabTestReportDetailsResponse | JUnitXMLTestReportDetailsResponse) =>
         this.providerService.deserializeTestReportDetails(testReportDetailsResponse, testReport)
       ),
-      mergeMap((_testReport: TestReport) => {
-        if (_testReport.provider === Provider.firebaseTestlab) {
+      mergeMap(() => {
+        if (testReport.provider === Provider.firebaseTestlab) {
           return forkJoin(
-            _testReport.testSuites.map((testSuite: TestSuite) => {
+            testReport.testSuites.map((testSuite: TestSuite) => {
               if (testSuite.status === TestSuiteStatus.inProgress) {
-                return of({ _testReport });
+                return of({});
               } else {
-                return this.httpClient
-                  .get(testSuite.testCasesURL, {
-                    headers: { 'Access-Control-Allow-Origin': '*' },
-                    responseType: 'text'
-                  })
-                  .pipe(
-                    map((testCasesResponse: FirebaseTestlabTestCasesResponse) => {
-                      testSuite.testCases = this.providerService.deserializeFirebaseTestlabTestCases(testCasesResponse);
+                if (testSuite.testCasesURL) {
+                  return this.httpClient
+                    .get(testSuite.testCasesURL, {
+                      headers: { 'Access-Control-Allow-Origin': '*' },
+                      responseType: 'text'
                     })
-                  );
+                    .pipe(
+                      map(
+                        (testCasesResponse: FirebaseTestlabTestCasesResponse) =>
+                          (testSuite.testCases = this.providerService.deserializeFirebaseTestlabTestCases(
+                            testCasesResponse
+                          ))
+                      )
+                    );
+                } else {
+                  testSuite.testCases = [];
+
+                  return of({});
+                }
               }
             })
           ).pipe(

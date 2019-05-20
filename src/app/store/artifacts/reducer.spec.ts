@@ -1,4 +1,4 @@
-import artifactsReducer, { ArtifactStoreState } from './reducer';
+import { ArtifactsReducer, ArtifactStoreState } from './reducer';
 import { ReceiveArtifact, ArtifactActions } from './actions';
 import { TestArtifact } from 'src/app/models/test-artifact.model';
 
@@ -8,7 +8,7 @@ describe('Artifacts reducer', () => {
   };
 
   it('updates the state with artifacts received', () => {
-    const newState = artifactsReducer(
+    const newState = ArtifactsReducer(
       initialState,
       new ReceiveArtifact({
         testArtifacts: [new TestArtifact().deserialize({ filename: 'filename', downloadURL: 'download-url' })]
@@ -19,7 +19,7 @@ describe('Artifacts reducer', () => {
   });
 
   it(`doesn't update the state for an unknown action`, () => {
-    const newState = artifactsReducer(initialState, <ArtifactActions>(<unknown>{ type: 'Unknown' }));
+    const newState = ArtifactsReducer(initialState, <ArtifactActions>(<unknown>{ type: 'Unknown' }));
 
     expect(newState).toBe(initialState);
   });

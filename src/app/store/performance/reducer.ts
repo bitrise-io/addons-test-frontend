@@ -6,7 +6,7 @@ const initialState: Performance = {
   metrics: null
 };
 
-export default (state = initialState, action: PerformanceActions) => {
+export function PerformanceReducer(state = initialState, action: PerformanceActions) {
   switch (action.type) {
     case PerformanceActionTypes.Receive:
       const { payload: performanceData } = <ReceivePerformance>action;
@@ -15,4 +15,4 @@ export default (state = initialState, action: PerformanceActions) => {
     default:
       return state;
   }
-};
+}

@@ -8,7 +8,7 @@ import { InlineSVGModule } from 'ng-inline-svg';
 
 import { TestSummaryComponent } from './test-summary.component';
 import { TestReport } from '../../models/test-report.model';
-import reportsReducer, { TestReportState } from 'src/app/store/reports/reducer';
+import { ReportsReducer, TestReportState } from 'src/app/store/reports/reducer';
 import { provideMockStore, MockStore } from 'src/app/mock-store/testing';
 
 @Component({
@@ -33,7 +33,7 @@ describe('TestSummaryComponent', () => {
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      imports: [StoreModule.forRoot({ testReport: reportsReducer }), InlineSVGModule.forRoot()],
+      imports: [StoreModule.forRoot({ testReport: ReportsReducer }), InlineSVGModule.forRoot()],
       declarations: [TestSummaryComponent, MockTestSummaryHeaderComponent, MockTestReportComponent],
       providers: [provideMockStore({}),
         {

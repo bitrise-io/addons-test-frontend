@@ -88,7 +88,7 @@ export type JUnitXMLTestCaseResponse = {
   duration: Number;
   status: string;
   error?: {
-    message: string;
+    message?: string;
     body: string;
   };
 };
@@ -243,7 +243,7 @@ export class ProviderService {
     testSuite.deviceName = null;
     testSuite.suiteName = testSuiteResponse.name;
     testSuite.deviceOperatingSystem = null;
-    testSuite.durationInMilliseconds = Number(duration);
+    testSuite.durationInMilliseconds = Number(duration) / 10000000;
     testSuite.orientation = null;
     testSuite.locale = null;
     testSuite.screenshots = null;
@@ -306,11 +306,17 @@ export class ProviderService {
 
         break;
     }
-    testCase.durationInMilliseconds = Number(testCaseResponse.duration);
+    testCase.durationInMilliseconds = Number(testCaseResponse.duration) / 10000000;
     testCase.context = testCaseResponse.name;
-    testCase.summary = testCaseResponse.error
-      ? `${testCaseResponse.error.message}\n\n${testCaseResponse.error.body}`
-      : testCaseResponse.status;
+    if (testCaseResponse.error) {
+      if (testCaseResponse.error.message) {
+        testCase.summary = `${testCaseResponse.error.message}\n\n${testCaseResponse.error.body}`;
+      } else {
+        testCase.summary = testCaseResponse.error.body;
+      }
+    } else {
+      testCase.summary = testCaseResponse.status;
+    }
 
     return testCase;
   }

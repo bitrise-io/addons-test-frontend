@@ -71,12 +71,12 @@ export class AppHeaderComponent implements OnInit {
       this.tabmenuItems = [
         {
           name: 'Test Summary',
-          routerLink: [`/build/${this.buildSlug}/summary`]
+          routerLink: [`/builds/${this.buildSlug}/summary`]
         }
       ].concat(
         testReports.map((testReport: TestReport, index: number) => ({
           name: testReport.name,
-          routerLink: [`/build/${this.buildSlug}/testreport/` + testReport.id],
+          routerLink: [`/builds/${this.buildSlug}/testreport/` + testReport.id],
           failedTestCount: failedTestCountsOfTestReports[index]
         }))
       );

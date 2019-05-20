@@ -94,7 +94,7 @@ describe('ProviderService', () => {
         {
           name: 'should default path to an empty string',
           classname: 'JUnitXmlReporter.constructor',
-          duration: 1000,
+          duration: 20000000,
           status: 'failed',
           error: {
             message: 'test failure',
@@ -108,7 +108,7 @@ describe('ProviderService', () => {
         skipped: 0,
         failed: 1,
         error: 0,
-        duration: 1000
+        duration: 20000000
       }
     };
   }
@@ -117,7 +117,7 @@ describe('ProviderService', () => {
     return {
       name: 'should default path to an empty string',
       classname: 'JUnitXmlReporter.constructor',
-      duration: 1000,
+      duration: 20000000,
       status: 'passed'
     };
   }
@@ -436,7 +436,7 @@ describe('ProviderService', () => {
       expect(testSuite.deviceName).toBeNull();
       expect(testSuite.suiteName).toBe('JUnitXmlReporter.constructor');
       expect(testSuite.deviceOperatingSystem).toBeNull();
-      expect(testSuite.durationInMilliseconds).toBe(1000);
+      expect(testSuite.durationInMilliseconds).toBe(2);
       expect(testSuite.orientation).toBeNull();
       expect(testSuite.locale).toBeNull();
       expect(testSuite.screenshots).toBeNull();
@@ -454,7 +454,7 @@ describe('ProviderService', () => {
             skipped: 0,
             failed: 0,
             error: 0,
-            duration: 1000
+            duration: 20000000
           };
         },
         expectedStatusName: 'passed',
@@ -469,7 +469,7 @@ describe('ProviderService', () => {
             skipped: 1,
             failed: 0,
             error: 0,
-            duration: 1000
+            duration: 20000000
           };
         },
         expectedStatusName: 'skipped',
@@ -484,7 +484,7 @@ describe('ProviderService', () => {
             skipped: 0,
             failed: 1,
             error: 0,
-            duration: 1000
+            duration: 20000000
           };
         },
         expectedStatusName: 'failed',
@@ -499,7 +499,7 @@ describe('ProviderService', () => {
             skipped: 0,
             failed: 0,
             error: 1,
-            duration: 1000
+            duration: 20000000
           };
         },
         expectedStatusName: 'failed',
@@ -514,7 +514,7 @@ describe('ProviderService', () => {
             skipped: 1,
             failed: 2,
             error: 0,
-            duration: 1000
+            duration: 20000000
           };
         },
         expectedStatusName: 'failed',
@@ -529,7 +529,7 @@ describe('ProviderService', () => {
             skipped: 1,
             failed: 0,
             error: 2,
-            duration: 1000
+            duration: 20000000
           };
         },
         expectedStatusName: 'failed',
@@ -604,7 +604,7 @@ describe('ProviderService', () => {
 
       expect(testCase instanceof TestCase).toBeTruthy();
       expect(testCase.name).toBe('JUnitXmlReporter.constructor');
-      expect(testCase.durationInMilliseconds).toBe(1000);
+      expect(testCase.durationInMilliseconds).toBe(2);
       expect(testCase.context).toBe('should default path to an empty string');
     });
 
@@ -628,6 +628,18 @@ describe('ProviderService', () => {
         expectedStatusName: 'failed',
         expectedStatus: TestCaseStatus.failed,
         expectedSummary: 'Error message\n\nError body'
+      },
+      {
+        statusName: 'failed (no message)',
+        specPreparation: () => {
+          testCaseResponse.status = 'failed';
+          testCaseResponse.error = {
+            body: 'Error body'
+          };
+        },
+        expectedStatusName: 'failed',
+        expectedStatus: TestCaseStatus.failed,
+        expectedSummary: 'Error body'
       },
       {
         statusName: 'skipped',

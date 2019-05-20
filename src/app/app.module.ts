@@ -24,10 +24,10 @@ import { TestSuiteDetailsComponent } from './components/test-suite-details/test-
 import { TestSuiteDetailsHeaderComponent } from './components/test-suite-details-header/test-suite-details-header.component';
 import { TestSuiteDetailsMenuModule } from './components/test-suite-details/menu/menu.module';
 
-import artifactsReducer from 'src/app/store/artifacts/reducer';
-import reportsReducer from 'src/app/store/reports/reducer';
-import performanceReducer from 'src/app/store/performance/reducer';
-import logReducer from 'src/app/store/log/reducer';
+import { ArtifactsReducer } from 'src/app/store/artifacts/reducer';
+import { ReportsReducer } from 'src/app/store/reports/reducer';
+import { PerformanceReducer } from 'src/app/store/performance/reducer';
+import { LogReducer } from 'src/app/store/log/reducer';
 import { ReportEffects } from 'src/app/store/reports/effects';
 import { ArtifactEffects } from 'src/app/store/artifacts/effects';
 import { PerformanceEffects } from 'src/app/store/performance/effects';
@@ -55,10 +55,10 @@ import { ZipperService } from './services/zipper.service';
     HttpClientModule,
     FormsModule,
     StoreModule.forRoot({
-      testReport: reportsReducer,
-      testArtifact: artifactsReducer,
-      performance: performanceReducer,
-      log: logReducer
+      testReport: ReportsReducer,
+      testArtifact: ArtifactsReducer,
+      performance: PerformanceReducer,
+      log: LogReducer
     }),
     EffectsModule.forRoot([ReportEffects, ArtifactEffects, PerformanceEffects, LogEffects]),
     InlineSVGModule.forRoot(),

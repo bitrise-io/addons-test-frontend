@@ -16,7 +16,7 @@ const initialState: LogStoreState = {
   logs: null
 };
 
-export default (state = initialState, action: LogActions) => {
+export function LogReducer(state = initialState, action: LogActions) {
   switch (action.type) {
     case LogActionTypes.Receive:
       const {
@@ -30,4 +30,4 @@ export default (state = initialState, action: LogActions) => {
     default:
       return state;
   }
-};
+}

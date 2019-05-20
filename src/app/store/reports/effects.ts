@@ -7,7 +7,7 @@ import { switchMap, withLatestFrom, takeWhile, mergeMap } from 'rxjs/operators';
 import { ReportActionTypes, ReceiveReports, ReportActions, FilterReports, ReceiveFilteredReports, StartPollingReports } from './actions';
 import { BackendService, BACKEND_SERVICE, TestReportsResult } from 'src/app/services/backend/backend.model';
 import { TestReportState } from './reducer';
-import filterReports from './filter-reports';
+import { filterReports } from './filter-reports';
 import { TestSuite, TestSuiteStatus } from 'src/app/models/test-suite.model';
 import { TestReport } from 'src/app/models/test-report.model';
 
