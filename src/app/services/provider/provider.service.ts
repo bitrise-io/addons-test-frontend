@@ -243,7 +243,7 @@ export class ProviderService {
     testSuite.deviceName = null;
     testSuite.suiteName = testSuiteResponse.name;
     testSuite.deviceOperatingSystem = null;
-    testSuite.durationInMilliseconds = Number(duration);
+    testSuite.durationInMilliseconds = Number(duration) / 10000000;
     testSuite.orientation = null;
     testSuite.locale = null;
     testSuite.screenshots = null;
@@ -306,7 +306,7 @@ export class ProviderService {
 
         break;
     }
-    testCase.durationInMilliseconds = Number(testCaseResponse.duration);
+    testCase.durationInMilliseconds = Number(testCaseResponse.duration) / 10000000;
     testCase.context = testCaseResponse.name;
     if (testCaseResponse.error) {
       if (testCaseResponse.error.message) {
