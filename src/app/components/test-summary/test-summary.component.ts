@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { ActivatedRoute, Params } from '@angular/router';
 import { Observable } from 'rxjs';
 import { Store } from '@ngrx/store';
 
@@ -12,15 +13,20 @@ import { StartPollingReports } from 'src/app/store/reports/actions';
   styleUrls: ['./test-summary.component.scss']
 })
 export class TestSummaryComponent implements OnInit {
+  buildSlug: string;
   testReports: TestReport[];
   testReports$: Observable<TestReport[]>;
 
-  constructor(private store: Store<{ testReport: TestReportState }>) {
+  constructor(private activatedRoute: ActivatedRoute, private store: Store<{ testReport: TestReportState }>) {
     this.testReports$ = store.select('testReport', 'filteredReports');
   }
 
   ngOnInit() {
-    this.store.dispatch(new StartPollingReports());
+    this.activatedRoute.params.subscribe((params: Params) => {
+      this.buildSlug = params.buildSlug;
+
+      this.store.dispatch(new StartPollingReports({ buildSlug: this.buildSlug }));
+    });
 
     this.testReports$.subscribe((testReports: TestReport[]) => {
       this.testReports = testReports;

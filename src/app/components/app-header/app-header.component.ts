@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { Router, NavigationEnd, ActivatedRoute } from '@angular/router';
+import { Router, NavigationEnd, RoutesRecognized, ActivatedRoute } from '@angular/router';
 import { filter } from 'rxjs/operators';
 import { Observable } from 'rxjs';
 import { Store } from '@ngrx/store';
@@ -15,6 +15,7 @@ import { TestReportState } from 'src/app/store/reports/reducer';
   styleUrls: ['./app-header.component.scss']
 })
 export class AppHeaderComponent implements OnInit {
+  buildSlug: string;
   TestSuite = TestSuite;
   testReports$: Observable<TestReport[]>;
   tabmenuItems: any[];
@@ -43,12 +44,6 @@ export class AppHeaderComponent implements OnInit {
   constructor(private router: Router, private activatedRoute: ActivatedRoute, private store: Store<{ testReport: TestReportState }>) {
     this.testReports$ = store.select('testReport', 'testReports');
 
-    router.events.pipe(filter(event => event instanceof NavigationEnd)).subscribe((event: NavigationEnd) => {
-      if (this.tabmenuItems !== undefined) {
-        this.selectSmallTabmenuItemForUrl(event.url);
-      }
-    });
-
     activatedRoute.queryParams.subscribe(params => {
       const statusMenuItemFromQueryParams = this.statusMenuItems.find(statusMenuItem => statusMenuItem.queryParam === params['status']);
       this.selectedStatus = statusMenuItemFromQueryParams ? statusMenuItemFromQueryParams.value : null;
@@ -56,7 +51,17 @@ export class AppHeaderComponent implements OnInit {
   }
 
   ngOnInit() {
-    this.store.dispatch(new StartPollingReports());
+    this.router.events.pipe(
+      filter((event) => event instanceof NavigationEnd || event instanceof RoutesRecognized)
+    ).subscribe((event: NavigationEnd | RoutesRecognized) => {
+      if (event instanceof NavigationEnd && this.tabmenuItems !== undefined) {
+        this.selectSmallTabmenuItemForUrl(event.url);
+      }
+      if (event instanceof RoutesRecognized && event.state.root.firstChild) {
+        this.buildSlug = event.state.root.firstChild.params.buildSlug;
+        this.store.dispatch(new StartPollingReports({ buildSlug: this.buildSlug }));
+      }
+    });
 
     this.testReports$.subscribe(testReports => {
       const failedTestCountsOfTestReports = testReports.map(
@@ -66,12 +71,12 @@ export class AppHeaderComponent implements OnInit {
       this.tabmenuItems = [
         {
           name: 'Test Summary',
-          routerLink: ['/summary']
+          routerLink: [`/build/${this.buildSlug}/summary`]
         }
       ].concat(
         testReports.map((testReport: TestReport, index: number) => ({
           name: testReport.name,
-          routerLink: ['/testreport/' + testReport.id],
+          routerLink: [`/build/${this.buildSlug}/testreport/` + testReport.id],
           failedTestCount: failedTestCountsOfTestReports[index]
         }))
       );

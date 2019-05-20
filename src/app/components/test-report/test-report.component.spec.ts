@@ -13,6 +13,7 @@ import { TestSuite } from 'src/app/models/test-suite.model';
   template: ''
 })
 class MockTestSuiteComponent {
+  @Input() buildSlug: string;
   @Input() testReport: TestReport;
   @Input() testSuite: TestSuite;
 }

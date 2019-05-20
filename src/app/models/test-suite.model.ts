@@ -47,6 +47,7 @@ export class TestSuite {
   durationInMilliseconds: number;
   orientation: TestSuiteOrientation;
   locale: string;
+  stepID?: string;
   testCasesURL?: string;
   testCases: TestCase[];
   screenshots?: TestSuiteScreenshot[];
