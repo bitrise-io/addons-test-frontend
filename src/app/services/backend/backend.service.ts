@@ -26,7 +26,7 @@ export class RealBackendService implements BackendService {
         return {
           slug: appResponse.app_slug,
           name: appResponse.app_title,
-        }
+        };
       })
     )
 
