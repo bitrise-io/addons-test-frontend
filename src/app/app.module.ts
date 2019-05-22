@@ -24,10 +24,12 @@ import { TestSuiteDetailsComponent } from './components/test-suite-details/test-
 import { TestSuiteDetailsHeaderComponent } from './components/test-suite-details-header/test-suite-details-header.component';
 import { TestSuiteDetailsMenuModule } from './components/test-suite-details/menu/menu.module';
 
+import { AppReducer } from 'src/app/store/app/reducer';
 import { ArtifactsReducer } from 'src/app/store/artifacts/reducer';
 import { ReportsReducer } from 'src/app/store/reports/reducer';
 import { PerformanceReducer } from 'src/app/store/performance/reducer';
 import { LogReducer } from 'src/app/store/log/reducer';
+import { AppEffects } from './store/app/effects';
 import { ReportEffects } from 'src/app/store/reports/effects';
 import { ArtifactEffects } from 'src/app/store/artifacts/effects';
 import { PerformanceEffects } from 'src/app/store/performance/effects';
@@ -55,12 +57,13 @@ import { ZipperService } from './services/zipper.service';
     HttpClientModule,
     FormsModule,
     StoreModule.forRoot({
+      app: AppReducer,
       testReport: ReportsReducer,
       testArtifact: ArtifactsReducer,
       performance: PerformanceReducer,
       log: LogReducer
     }),
-    EffectsModule.forRoot([ReportEffects, ArtifactEffects, PerformanceEffects, LogEffects]),
+    EffectsModule.forRoot([AppEffects, ReportEffects, ArtifactEffects, PerformanceEffects, LogEffects]),
     InlineSVGModule.forRoot(),
     environment.ServicesModule,
     TestSuiteDetailsMenuModule

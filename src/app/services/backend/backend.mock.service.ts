@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { Observable, of } from 'rxjs';
 
-import { BackendService, TestReportsResult, LogResult, TestReportResult } from './backend.model';
+import { BackendService, TestReportsResult, LogResult, TestReportResult, AppResult } from './backend.model';
 import { ProviderService, Provider } from 'src/app/services/provider/provider.service';
 import { Performance } from 'src/app/models/performance.model';
 import { TestReportResponse, TestReport } from 'src/app/models/test-report.model';
@@ -13,6 +13,10 @@ import * as MOCKED_DATA from './mock-data.json';
 @Injectable()
 export class MockBackendService implements BackendService {
   constructor(private providerService: ProviderService) {}
+
+  getApp(): Observable<AppResult> {
+    return of(MOCKED_DATA['app']);
+  }
 
   getPerformance(buildSlug: string, testSuite: TestSuite): Observable<Performance> {
     const { performance }: any = MOCKED_DATA;
