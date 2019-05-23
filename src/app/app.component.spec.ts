@@ -1,12 +1,16 @@
-import { TestBed, async, tick, fakeAsync, ComponentFixture } from '@angular/core/testing';
+import { TestBed, async, tick, fakeAsync, ComponentFixture, inject } from '@angular/core/testing';
 import { RouterTestingModule } from '@angular/router/testing';
 import { By } from '@angular/platform-browser';
 import { Router } from '@angular/router';
 import { Component } from '@angular/core';
 import { InlineSVGModule } from 'ng-inline-svg';
+import { Store, StoreModule } from '@ngrx/store';
 import { AppComponent } from './app.component';
 import { environment } from 'src/environments/environment';
 import { HttpClientModule } from '@angular/common/http';
+import { MockStore, provideMockStore } from './mock-store/testing';
+import { AppStoreState, AppReducer } from './store/app/reducer';
+import { Beam } from '@bitrise/beam';
 
 @Component({
   selector: 'bitrise-app-header',
@@ -34,12 +38,14 @@ class MockRouterOutletBComponent {}
 
 describe('AppComponent', () => {
   let router: Router;
+  let store: MockStore<{ app: AppStoreState }>;
   let fixture: ComponentFixture<AppComponent>;
   let app: AppComponent;
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
       imports: [
+        StoreModule.forRoot({ app: AppReducer }),
         InlineSVGModule.forRoot(),
         RouterTestingModule.withRoutes([
           { path: 'mocked-route-a', component: MockRouterOutletAComponent },
@@ -48,6 +54,7 @@ describe('AppComponent', () => {
         HttpClientModule,
         environment.ServicesModule
       ],
+      providers: [provideMockStore({})],
       declarations: [
         AppComponent,
         MockAppHeaderComponent,
@@ -58,6 +65,16 @@ describe('AppComponent', () => {
     }).compileComponents();
 
     router = TestBed.get(Router);
+  }));
+
+  beforeEach(inject([Store], (mockStore: MockStore<{ app: AppStoreState }>) => {
+    store = mockStore;
+    store.setState({
+      app: {
+        slug: undefined,
+        name: undefined
+      }
+    });
   }));
 
   beforeEach(() => {
@@ -94,4 +111,26 @@ describe('AppComponent', () => {
     expect(fixture.debugElement.query(By.css('bitrise-mock-router-outlet-a-component'))).toBeNull();
     expect(fixture.debugElement.query(By.css('bitrise-mock-router-outlet-b-component'))).not.toBeNull();
   }));
+
+  describe('when app info is fetched', () => {
+    beforeEach(() => {
+      store.setState({
+        app: {
+          slug: 'my-app-slug',
+          name: 'My app'
+        }
+      });
+
+      Beam['init'] = jasmine.createSpy('init').and.callFake(() => {});
+
+      fixture.detectChanges();
+    });
+
+    it('sets Beam header with fetched info', () => {
+      expect(Beam.init).toHaveBeenCalledWith({
+        app_slug: 'my-app-slug',
+        app_name: 'My app'
+      });
+    });
+  });
 });

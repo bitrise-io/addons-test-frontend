@@ -2,7 +2,7 @@ import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { Observable, of, forkJoin } from 'rxjs';
 import { map, mergeMap } from 'rxjs/operators';
-import { BackendService, TestReportsResult, LogResult, TestReportResult } from './backend.model';
+import { BackendService, TestReportsResult, LogResult, TestReportResult, AppResult } from './backend.model';
 import {
   ProviderService,
   Provider,
@@ -19,6 +19,16 @@ import { environment } from 'src/environments/environment';
 @Injectable()
 export class RealBackendService implements BackendService {
   constructor(private httpClient: HttpClient, private providerService: ProviderService) {}
+
+  getApp = (): Observable<AppResult> =>
+    this.httpClient.get(`${environment.apiRootUrl}/api/app`).pipe(
+      map((appResponse: any) => {
+        return {
+          slug: appResponse.app_slug,
+          name: appResponse.app_title,
+        };
+      })
+    )
 
   getPerformance = (buildSlug: string, testSuite: TestSuite): Observable<Performance> =>
     this.httpClient.get<Performance>(`${environment.apiRootUrl}/api/builds/${buildSlug}/steps/${testSuite.stepID}`)

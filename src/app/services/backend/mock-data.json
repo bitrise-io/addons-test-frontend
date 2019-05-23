@@ -1,4 +1,8 @@
 {
+  "app": {
+    "slug": "d08709ae5c5f6171",
+    "name": "Fast building app"
+  },
   "test_reports": [
     {
       "id": "ftl",

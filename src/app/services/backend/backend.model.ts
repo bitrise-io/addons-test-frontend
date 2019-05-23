@@ -8,6 +8,11 @@ import { TestSuite } from 'src/app/models/test-suite.model';
 
 export const BACKEND_SERVICE = 'BACKEND_SERVICE';
 
+export interface AppResult {
+  slug: string;
+  name: string;
+}
+
 export interface TestArtifactsResult {
   testArtifacts: TestArtifact[];
 }
@@ -32,6 +37,7 @@ export interface LogResult {
 }
 
 export interface BackendService {
+  getApp(): Observable<AppResult>;
   getPerformance(buildSlug: string, testSuite: TestSuite): Observable<Performance>;
   getReports(buildSlug: string): Observable<TestReportsResult>;
   getReportDetails(buildSlug: string, testReport: TestReport): Observable<TestReportResult>;
