@@ -80,7 +80,7 @@ describe('ProviderService', () => {
 
   function basicFirebaseTestlabTestCasesResponse(): string {
     // tslint:disable-next-line:max-line-length
-    return '<?xml version="1.0" encoding="UTF-8"?>\n<testsuite>\n<properties />\n<testcase name="name A" classname="classname A" failure="The A failed" />\n<testcase name="name B" classname="classname B" time="1.3" />\n</testsuite>';
+    return '<?xml version="1.0" encoding="UTF-8"?>\n<testsuite>\n<properties />\n<testcase name="name A" classname="classname A">\n<failure>The A failed</failure>\n</testcase>\n<testcase name="name B" classname="classname B" time="1.3" />\n</testsuite>';
   }
 
   function basicJUnitXMLTestSuiteResponse(): JUnitXMLTestSuiteResponse {
