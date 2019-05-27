@@ -276,9 +276,9 @@ export class ProviderService {
         : null;
       testCase.context = testCaseItemElement.getAttribute('classname');
 
-      if (testCaseItemElement.getAttribute('failure')) {
+      if (testCaseItemElement.querySelector('failure')) {
         testCase.status = TestCaseStatus.failed;
-        testCase.summary = testCaseItemElement.getAttribute('failure');
+        testCase.summary = testCaseItemElement.querySelector('failure').textContent;
       } else {
         testCase.status = TestCaseStatus.passed;
         testCase.summary = 'passed';
