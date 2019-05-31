@@ -47,7 +47,7 @@ export class AppComponent implements OnInit {
       initializeSegment(segmentWriteKey);
 
       this.router.events.pipe(filter((event) => event instanceof NavigationEnd)).subscribe((event: NavigationEnd) => {
-        window.analytics.page();
+        window.analytics.page({ addonId: 'addons-testing' });
       });
     }
   }
