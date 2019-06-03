@@ -265,27 +265,28 @@ export class ProviderService {
 
   deserializeFirebaseTestlabTestCases(testCasesResponse: FirebaseTestlabTestCasesResponse) {
     const parser = new DOMParser();
-    const testSuiteElement = parser.parseFromString(testCasesResponse, 'application/xml').querySelector('testsuite');
 
-    return Array.from(testSuiteElement.querySelectorAll('testcase')).map((testCaseItemElement: Element) => {
-      const testCase = new TestCase();
+    return Array.from(parser.parseFromString(testCasesResponse, 'application/xml').querySelectorAll('testcase')).map(
+      (testCaseItemElement: Element) => {
+        const testCase = new TestCase();
 
-      testCase.name = testCaseItemElement.getAttribute('name');
-      testCase.durationInMilliseconds = testCaseItemElement.hasAttribute('time')
-        ? Number(testCaseItemElement.getAttribute('time')) * 1000
-        : null;
-      testCase.context = testCaseItemElement.getAttribute('classname');
+        testCase.name = testCaseItemElement.getAttribute('name');
+        testCase.durationInMilliseconds = testCaseItemElement.hasAttribute('time')
+          ? Number(testCaseItemElement.getAttribute('time')) * 1000
+          : null;
+        testCase.context = testCaseItemElement.getAttribute('classname');
 
-      if (testCaseItemElement.querySelector('failure')) {
-        testCase.status = TestCaseStatus.failed;
-        testCase.summary = testCaseItemElement.querySelector('failure').textContent;
-      } else {
-        testCase.status = TestCaseStatus.passed;
-        testCase.summary = 'passed';
+        if (testCaseItemElement.querySelector('failure')) {
+          testCase.status = TestCaseStatus.failed;
+          testCase.summary = testCaseItemElement.querySelector('failure').textContent;
+        } else {
+          testCase.status = TestCaseStatus.passed;
+          testCase.summary = 'passed';
+        }
+
+        return testCase;
       }
-
-      return testCase;
-    });
+    );
   }
 
   deserializeJUnitXMLTestCase(testCaseResponse: JUnitXMLTestCaseResponse) {
