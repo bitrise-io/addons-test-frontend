@@ -78,11 +78,6 @@ describe('ProviderService', () => {
     };
   }
 
-  function basicFirebaseTestlabTestCasesResponse(): string {
-    // tslint:disable-next-line:max-line-length
-    return '<?xml version="1.0" encoding="UTF-8"?>\n<testsuite>\n<properties />\n<testcase name="name A" classname="classname A">\n<failure>The A failed</failure>\n</testcase>\n<testcase name="name B" classname="classname B" time="1.3" />\n</testsuite>';
-  }
-
   function basicJUnitXMLTestSuiteResponse(): JUnitXMLTestSuiteResponse {
     return {
       name: 'JUnitXmlReporter.constructor',
@@ -569,26 +564,60 @@ describe('ProviderService', () => {
   describe('deserializeFirebaseTestlabTestCases', () => {
     let testCasesResponse: FirebaseTestlabTestCasesResponse;
 
-    beforeEach(() => {
-      testCasesResponse = basicFirebaseTestlabTestCasesResponse();
+    describe('when XML response contains one test suite', () => {
+      beforeEach(() => {
+        // tslint:disable-next-line:max-line-length
+        testCasesResponse = '<?xml version="1.0" encoding="UTF-8"?>\n<testsuite>\n<properties />\n<testcase name="name A" classname="classname A">\n<failure>The A failed</failure>\n</testcase>\n<testcase name="name B" classname="classname B" time="1.3" />\n</testsuite>';
+      });
+
+      it('returns test cases from that test suite', () => {
+        const testCases = service.deserializeFirebaseTestlabTestCases(testCasesResponse);
+
+        expect(testCases.length).toBe(2);
+
+        expect(testCases[0].name).toBe('name A');
+        expect(testCases[0].status).toBe(TestCaseStatus.failed);
+        expect(testCases[0].context).toBe('classname A');
+        expect(testCases[0].durationInMilliseconds).toBeNull();
+        expect(testCases[0].summary).toBe('The A failed');
+
+        expect(testCases[1].name).toBe('name B');
+        expect(testCases[1].status).toBe(TestCaseStatus.passed);
+        expect(testCases[1].context).toBe('classname B');
+        expect(testCases[1].durationInMilliseconds).toBe(1300);
+        expect(testCases[1].summary).toBe('passed');
+      });
     });
 
-    it('returns test cases with appropriate data', () => {
-      const testCases = service.deserializeFirebaseTestlabTestCases(testCasesResponse);
+    describe('when XML response contains multiple test suites', () => {
+      beforeEach(() => {
+        // tslint:disable-next-line:max-line-length
+        testCasesResponse = '<?xml version="1.0" encoding="UTF-8"?>\n<testsuites>\n<testsuite>\n<properties />\n<testcase name="name A" classname="classname A">\n<failure>The A failed</failure>\n</testcase>\n<testcase name="name B" classname="classname B" time="1.3" />\n</testsuite>\n<testsuite>\n<testcase name="name C" classname="classname C" time="1.8" />\n</testsuite>\n</testsuites>';
+      });
 
-      expect(testCases.length).toBe(2);
+      it('returns test cases from all test suites', () => {
+        const testCases = service.deserializeFirebaseTestlabTestCases(testCasesResponse);
 
-      expect(testCases[0].name).toBe('name A');
-      expect(testCases[0].status).toBe(TestCaseStatus.failed);
-      expect(testCases[0].context).toBe('classname A');
-      expect(testCases[0].durationInMilliseconds).toBeNull();
-      expect(testCases[0].summary).toBe('The A failed');
+        expect(testCases.length).toBe(3);
 
-      expect(testCases[1].name).toBe('name B');
-      expect(testCases[1].status).toBe(TestCaseStatus.passed);
-      expect(testCases[1].context).toBe('classname B');
-      expect(testCases[1].durationInMilliseconds).toBe(1300);
-      expect(testCases[1].summary).toBe('passed');
+        expect(testCases[0].name).toBe('name A');
+        expect(testCases[0].status).toBe(TestCaseStatus.failed);
+        expect(testCases[0].context).toBe('classname A');
+        expect(testCases[0].durationInMilliseconds).toBeNull();
+        expect(testCases[0].summary).toBe('The A failed');
+
+        expect(testCases[1].name).toBe('name B');
+        expect(testCases[1].status).toBe(TestCaseStatus.passed);
+        expect(testCases[1].context).toBe('classname B');
+        expect(testCases[1].durationInMilliseconds).toBe(1300);
+        expect(testCases[1].summary).toBe('passed');
+
+        expect(testCases[2].name).toBe('name C');
+        expect(testCases[2].status).toBe(TestCaseStatus.passed);
+        expect(testCases[2].context).toBe('classname C');
+        expect(testCases[2].durationInMilliseconds).toBe(1800);
+        expect(testCases[2].summary).toBe('passed');
+      });
     });
   });
 
