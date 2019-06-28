@@ -39,7 +39,7 @@ export class AppComponent implements OnInit {
         app_name: name
       });
 
-      if (segmentWriteKey && !window.analytics.initialize) {
+      if (segmentWriteKey && !(window.analytics && window.analytics.initialize)) {
         initializeSegment(segmentWriteKey);
 
         this.router.events.pipe(filter((event) => event instanceof NavigationEnd)).subscribe((event: NavigationEnd) => {
