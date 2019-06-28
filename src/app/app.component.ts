@@ -28,27 +28,26 @@ export class AppComponent implements OnInit {
   }
 
   ngOnInit() {
-    this.appResult$.subscribe((appResult: AppResult) => {
-      if (!appResult.slug || !appResult.name) {
+    const { segmentWriteKey } = environment;
+    this.appResult$.subscribe(({ slug, name }: AppResult) => {
+      if (!slug || !name) {
         return;
       }
 
       Beam.init({
-        app_slug: appResult.slug,
-        app_name: appResult.name
+        app_slug: slug,
+        app_name: name
       });
+
+      if (segmentWriteKey && !window.analytics.initialize) {
+        initializeSegment(segmentWriteKey);
+
+        this.router.events.pipe(filter((event) => event instanceof NavigationEnd)).subscribe((event: NavigationEnd) => {
+          window.analytics.page({ addonId: 'addons-testing', appSlug: slug, appName: name });
+        });
+      }
     });
 
     this.store.dispatch(new FetchApp());
-
-    const { segmentWriteKey } = environment;
-
-    if (segmentWriteKey) {
-      initializeSegment(segmentWriteKey);
-
-      this.router.events.pipe(filter((event) => event instanceof NavigationEnd)).subscribe((event: NavigationEnd) => {
-        window.analytics.page({ addonId: 'addons-testing' });
-      });
-    }
   }
 }
