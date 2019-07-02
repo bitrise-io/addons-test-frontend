@@ -60,12 +60,14 @@ export class TestSuiteDetailsMenuLogsComponent implements OnInit, OnDestroy {
           this.testReport = data.testSuite.selectedTestReport;
           this.testSuite = data.testSuite.selectedTestSuite;
 
-          this.store.dispatch(
-            new FetchLog({
-              testReport: this.testReport,
-              testSuite: this.testSuite
-            })
-          );
+          if (this.testSuite.logUrl) {
+            this.store.dispatch(
+              new FetchLog({
+                testReport: this.testReport,
+                testSuite: this.testSuite
+              })
+            );
+          }
         }
       )
     );

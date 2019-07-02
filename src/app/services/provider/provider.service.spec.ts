@@ -339,6 +339,19 @@ describe('ProviderService', () => {
       );
       expect(testSuite.artifacts[1].filename).toBe('file2.txt');
     });
+
+    describe('when response is complete, but has no URL set for test cases, screenshots, log', () => {
+      beforeEach(() => {
+        testSuiteResponse = basicFirebaseTestlabTestSuiteResponse();
+        testSuiteResponse.status = 'complete';
+        testSuiteResponse.outcome = 'failure';
+        testSuiteResponse.output_urls = {};
+      });
+
+      it('deserializes response without issues', () => {
+        expect(() => service.deserializeFirebaseTestlabTestSuite(testSuiteResponse)).not.toThrowError();
+      });
+    });
   });
 
   describe('deserializeJUnitXMLTestReportDetails', () => {

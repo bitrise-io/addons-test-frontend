@@ -52,6 +52,10 @@ export class TestSuiteDetailsMenuVideoComponent implements OnInit, OnDestroy {
 
   @ViewChild('player')
   set player(_video: ElementRef<HTMLVideoElement>) {
+    if (!_video) {
+      return;
+    }
+
     this.video = _video.nativeElement;
 
     if (this.video.readyState > 3) {
