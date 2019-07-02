@@ -58,11 +58,9 @@ export class TestSuiteDetailsMenuPerformanceComponent implements OnInit, OnDestr
 
   ngOnInit() {
     this.subscription.add(
-      this.activatedRoute.parent.data.subscribe(
-        ({testSuite: {buildSlug, selectedTestSuite: testSuite}}: any) => {
-          this.store.dispatch(new FetchPerformance({ buildSlug, testSuite: testSuite }));
-        }
-      )
+      this.activatedRoute.parent.data.subscribe(({ testSuite: { buildSlug, selectedTestSuite: testSuite } }: any) => {
+        this.store.dispatch(new FetchPerformance({ buildSlug, testSuite: testSuite }));
+      })
     );
 
     this.subscription.add(
@@ -79,14 +77,19 @@ export class TestSuiteDetailsMenuPerformanceComponent implements OnInit, OnDestr
   parsePerformanceData = function(performanceData: Performance) {
     this.metrics.forEach((metric) => {
       metric.sampleGroups.forEach((sampleGroup) => {
-        sampleGroup.samples = Object.entries(performanceData[sampleGroup.id]).map(([key, value]) => ({
-          time: Number(key),
-          value
-        }));
+        sampleGroup.samples = Object.entries(performanceData[sampleGroup.id])
+          .map(([key, value]) => ({
+            time: Number(key),
+            value
+          }))
+          .sort(({ time: t1 }, { time: t2 }) => t1 - t2);
 
         const sampleTimes = Object.keys(performanceData[sampleGroup.id]);
 
-        this.durationInMilliseconds = Math.max(Number(sampleTimes[sampleTimes.length - 1]), this.durationInMilliseconds || 0);
+        this.durationInMilliseconds = Math.max(
+          Number(sampleTimes[sampleTimes.length - 1]),
+          this.durationInMilliseconds || 0
+        );
       });
     });
 
