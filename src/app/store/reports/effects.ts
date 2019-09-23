@@ -1,10 +1,17 @@
 import { Injectable, Inject } from '@angular/core';
 import { Actions, Effect, ofType } from '@ngrx/effects';
 import { Store } from '@ngrx/store';
-import { Observable, timer, forkJoin, of } from 'rxjs';
+import { Observable, timer, forkJoin, of, from } from 'rxjs';
 import { switchMap, withLatestFrom, takeWhile, mergeMap } from 'rxjs/operators';
 
-import { ReportActionTypes, ReceiveReports, ReportActions, FilterReports, ReceiveFilteredReports, StartPollingReports } from './actions';
+import {
+  ReportActionTypes,
+  ReceiveReports,
+  ReportActions,
+  FilterReports,
+  ReceiveFilteredReports,
+  StartPollingReports
+} from './actions';
 import { BackendService, BACKEND_SERVICE, TestReportsResult } from 'src/app/services/backend/backend.model';
 import { TestReportState } from './reducer';
 import { filterReports } from './filter-reports';
@@ -33,14 +40,20 @@ export class ReportEffects {
                     ) !== undefined
                 )
             ),
-            withLatestFrom(this.store$),
-            switchMap(([_, testReportState]: [any, { testReport: TestReportState }]) => {
-              const { testReport: { filter } } = testReportState; // prettier-ignore
+            switchMap(() =>
+              forkJoin(
+                ...testReports.map((loadedTestReport) =>
+                  this.backendService.getReportDetails(action.payload.buildSlug, loadedTestReport)
+                )
+              ).pipe(
+                withLatestFrom(this.store$),
+                switchMap(([_, testReportState]: [any, { testReport: TestReportState }]) => {
+                  const { testReport: { filter } } = testReportState; // prettier-ignore
 
-              return forkJoin(
-                ...testReports.map((loadedTestReport) => this.backendService.getReportDetails(action.payload.buildSlug, loadedTestReport))
-              ).pipe(mergeMap(() => [new ReceiveReports({ testReports: testReports }), new FilterReports({ filter })]));
-            })
+                  return from([new ReceiveReports({ testReports: testReports }), new FilterReports({ filter })]);
+                })
+              )
+            )
           )
         )
       )
