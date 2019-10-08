@@ -1,0 +1,37 @@
+@import '../../../sass/constants';
+@import '../../../sass/mixins';
+
+.notification {
+  $border-width: 1px;
+  @include ui-element-body;
+  display: flex;
+  align-items: center;
+  border: $border-width solid;
+  border-radius: 8px;
+  @include padding-x(1.5 * $grid-size);
+  @include padding-y(1.5 * $grid-size - $border-width);
+
+  .icon {
+    flex-shrink: 0;
+    margin-right: $grid-size;
+  }
+
+  .content {
+    line-height: 3 * $grid-size;
+
+    ::ng-deep a {
+      color: inherit !important;
+    }
+  }
+
+  &.warning {
+    border-color: $marigold;
+    background-color: $corn-silk;
+    color: $deep-orange;
+
+    .icon ::ng-deep svg {
+      display: block;
+      fill: $deep-orange;
+    }
+  }
+}

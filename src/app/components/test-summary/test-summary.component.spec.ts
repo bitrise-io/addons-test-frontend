@@ -18,6 +18,12 @@ import { provideMockStore, MockStore } from 'src/app/mock-store/testing';
 class MockTestSummaryHeaderComponent {}
 
 @Component({
+  selector: 'bitrise-notification',
+  template: ''
+})
+class MockNotificationComponent {}
+
+@Component({
   selector: 'bitrise-test-report',
   template: ''
 })
@@ -34,14 +40,21 @@ describe('TestSummaryComponent', () => {
   beforeEach(async(() => {
     TestBed.configureTestingModule({
       imports: [StoreModule.forRoot({ testReport: ReportsReducer }), InlineSVGModule.forRoot()],
-      declarations: [TestSummaryComponent, MockTestSummaryHeaderComponent, MockTestReportComponent],
-      providers: [provideMockStore({}),
+      declarations: [
+        TestSummaryComponent,
+        MockTestSummaryHeaderComponent,
+        MockTestReportComponent,
+        MockNotificationComponent
+      ],
+      providers: [
+        provideMockStore({}),
         {
           provide: ActivatedRoute,
           useValue: {
-            params: of({buildSlug: 'build-slug'})
+            params: of({ buildSlug: 'build-slug' })
           }
-        }]
+        }
+      ]
     }).compileComponents();
   }));
 
@@ -65,11 +78,6 @@ describe('TestSummaryComponent', () => {
     expect(testSummary).not.toBeNull();
   });
 
-  it('renders test summary header', () => {
-    const testSummaryHeader = fixture.debugElement.query(By.css('bitrise-test-summary-header'));
-    expect(testSummaryHeader).not.toBeNull();
-  });
-
   describe('when there are some test reports', () => {
     beforeEach(() => {
       store.setState({
@@ -85,8 +93,46 @@ describe('TestSummaryComponent', () => {
       fixture.detectChanges();
     });
 
+    it('renders test summary header', () => {
+      const testSummaryHeader = fixture.debugElement.query(By.css('bitrise-test-summary-header'));
+      expect(testSummaryHeader).not.toBeNull();
+    });
+
     it('renders as many test report components as there are test reports', () => {
       expect(fixture.debugElement.queryAll(By.css('bitrise-test-report')).length).toBe(3);
+    });
+
+    it('does not render warning notification', () => {
+      const warningNotification = fixture.debugElement.query(By.css('bitrise-notification'));
+      expect(warningNotification).toBeNull();
+    });
+  });
+
+  describe('when there are no test reports', () => {
+    beforeEach(() => {
+      store.setState({
+        testReport: {
+          testReports: [],
+          filter: null,
+          filteredReports: []
+        }
+      });
+
+      fixture.detectChanges();
+    });
+
+    it('does not render test summary header', () => {
+      const testSummaryHeader = fixture.debugElement.query(By.css('bitrise-test-summary-header'));
+      expect(testSummaryHeader).toBeNull();
+    });
+
+    it('does not render any test report components', () => {
+      expect(fixture.debugElement.queryAll(By.css('bitrise-test-report')).length).toBe(0);
+    });
+
+    it('renders warning notification', () => {
+      const warningNotification = fixture.debugElement.query(By.css('bitrise-notification'));
+      expect(warningNotification).not.toBeNull();
     });
   });
 });
