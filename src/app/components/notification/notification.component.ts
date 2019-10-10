@@ -1,4 +1,4 @@
-import { Component, Input } from '@angular/core';
+import { Component, Input, OnInit } from '@angular/core';
 
 export enum NotificationType {
   warning = 'warning'
@@ -18,7 +18,7 @@ const typeIconUrls = {
   styleUrls: ['./notification.component.scss']
 })
 
-export class NotificationComponent {
+export class NotificationComponent implements OnInit {
   @Input() type: NotificationType;
   typeCssClass: string;
   typeIconUrl: string;
