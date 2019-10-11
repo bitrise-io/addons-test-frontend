@@ -238,13 +238,13 @@ describe('AppHeaderComponent', () => {
       dropdownItemElements = fixture.debugElement.queryAll(By.css('.tabmenu-select option'));
     });
 
-    it('loads only one tab for the summary (and for the mobile-only dropdown)', () => {
+    it('loads only one tab for the summary', () => {
       expect(tabElements.length).toBe(1);
-      expect(dropdownItemElements.length).toBe(1);
     });
 
-    it('shows 0 failed tests in the mobile-only section', () => {
-      expect(summedFailedTestCountElement.query(By.css('.text')).nativeElement.textContent).toBe('0 failed tests');
+    it('does not show mobile-only dropdown)', () => {
+      expect(summedFailedTestCountElement).toBeNull();
+      expect(dropdownItemElements.length).toBe(0);
     });
   });
 });

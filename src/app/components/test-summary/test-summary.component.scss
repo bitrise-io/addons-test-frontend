@@ -3,4 +3,9 @@
 
 .test-summary {
   box-sizing: border-box;
+  min-height: 60 * $grid-size;
+
+  .notification-wrapper {
+    @include margin-y(8 * $grid-size);
+  }
 }

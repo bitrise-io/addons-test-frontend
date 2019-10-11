@@ -18,6 +18,7 @@ export class AppHeaderComponent implements OnInit {
   buildSlug: string;
   TestSuite = TestSuite;
   testReports$: Observable<TestReport[]>;
+  testReports: TestReport[];
   tabmenuItems: any[];
   selectedSmallTabmenuItem: any;
   summedFailedTestCount: number;
@@ -64,6 +65,7 @@ export class AppHeaderComponent implements OnInit {
     });
 
     this.testReports$.subscribe(testReports => {
+      this.testReports = testReports;
       const failedTestCountsOfTestReports = testReports.map(
         testReport => testReport.testSuitesWithStatus(TestSuiteStatus.failed).length
       );

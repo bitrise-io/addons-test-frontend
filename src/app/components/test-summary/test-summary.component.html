@@ -1,4 +1,14 @@
 <div class="test-summary centered-max-width main-content-padding-x">
-  <bitrise-test-summary-header></bitrise-test-summary-header>
-  <bitrise-test-report *ngFor="let testReport of testReports" [buildSlug]="buildSlug" [testReport]="testReport"></bitrise-test-report>
+  <bitrise-test-summary-header *ngIf="testReports.length > 0"></bitrise-test-summary-header>
+  <div class="notification-wrapper" *ngIf="testReports.length === 0">
+    <bitrise-notification type="warning">
+      Testing add-on wasn't configured correctly. Please make sure you configure it in the Workflow Editor.
+      <a href="https://devcenter.bitrise.io/testing/test-reports/" target="_blank">Get help for setting up Testing add-on.</a>
+    </bitrise-notification>
+  </div>
+  <bitrise-test-report
+    *ngFor="let testReport of testReports"
+    [buildSlug]="buildSlug"
+    [testReport]="testReport"
+  ></bitrise-test-report>
 </div>

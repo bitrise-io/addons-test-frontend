@@ -13,6 +13,7 @@ import { appRoutes } from './routes';
 import { MaximizePipe } from './pipes/maximize.pipe';
 
 import { AppComponent } from './app.component';
+import { NotificationComponent } from './components/notification/notification.component';
 import { AppHeaderComponent } from './components/app-header/app-header.component';
 import { AppFooterComponent } from './components/app-footer/app-footer.component';
 import { TestSummaryComponent } from './components/test-summary/test-summary.component';
@@ -40,6 +41,7 @@ import { ZipperService } from './services/zipper.service';
 @NgModule({
   declarations: [
     AppComponent,
+    NotificationComponent,
     AppHeaderComponent,
     AppFooterComponent,
     MaximizePipe,
