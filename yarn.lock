@@ -4812,6 +4812,13 @@ ng-inline-svg@^8.2.1:
   resolved "https://registry.yarnpkg.com/ng-inline-svg/-/ng-inline-svg-8.2.1.tgz#29c833d17a22d4664f9369d82dd541f429db67be"
   integrity sha512-yMHP4VH1v7gTqVjndbr6MRix2mZncoSznWpSaPftc9ZIKafegTnGy6UzTc4Zn2FPVsqr6iCJ7MkfC3cDnIxoNw==
 
+ngx-window-token@^2.0.1:
+  version "2.0.1"
+  resolved "https://registry.yarnpkg.com/ngx-window-token/-/ngx-window-token-2.0.1.tgz#8f91221af4116aa9f49bb3f7a6f1111639884fba"
+  integrity sha512-rvqdqJEfnWXQFU5fyfYt06E10tR/UtFOYdF3QebfcOh5VIJhnTKiprX8e4B9OrX7WEVFm9BT8uV72xXcEgsaKA==
+  dependencies:
+    tslib "^1.9.0"
+
 nice-try@^1.0.4:
   version "1.0.5"
   resolved "https://registry.yarnpkg.com/nice-try/-/nice-try-1.0.5.tgz#a3378a7696ce7d223e88fc9b764bd7ef1089e366"
