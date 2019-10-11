@@ -17,9 +17,8 @@ import { Provider } from 'src/app/services/provider/provider.service';
   styleUrls: ['./test-suite-details.component.scss']
 })
 export class TestSuiteDetailsComponent implements OnInit, OnDestroy {
+  appResult: AppResult;
   appResult$: Observable<AppResult>;
-  appSlug: string;
-  appName: string;
   buildSlug: string;
   testReports: TestReport[];
   testReports$: Observable<TestReport[]>;
@@ -98,9 +97,8 @@ export class TestSuiteDetailsComponent implements OnInit, OnDestroy {
     this.store.dispatch(new StartPollingReports({ buildSlug: this.buildSlug }));
 
     this.subscription.add(
-      this.appResult$.subscribe(({ slug, name }: AppResult) => {
-        this.appSlug = slug;
-        this.appName = name;
+      this.appResult$.subscribe((appResult: AppResult) => {
+        this.appResult = appResult;
       })
     );
 
@@ -168,8 +166,9 @@ export class TestSuiteDetailsComponent implements OnInit, OnDestroy {
     if (selectedTestSuiteDetailsMenuItem.shouldSendAnalyticsEventOnSelection) {
       window.analytics.track({
         addonId: 'addons-testing',
-        appSlug: this.appSlug,
-        appName: this.appName,
+        appSlug: this.appResult.slug,
+        appName: this.appResult.name,
+        event: 'tabSelected',
         selectedTab: selectedTestSuiteDetailsMenuItem.subpath
       });
     }

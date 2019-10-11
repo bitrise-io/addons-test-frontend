@@ -9,6 +9,7 @@ import { TestSuite } from 'src/app/models/test-suite.model';
 import { TestArtifact } from 'src/app/models/test-artifact.model';
 import { FetchArtifact } from 'src/app/store/artifacts/actions';
 import { RemoteFile, ZipperService } from 'src/app/services/zipper.service';
+import { AppResult } from 'src/app/services/backend/backend.model';
 
 @Component({
   selector: 'bitrise-test-suite-details-menu-test-artifacts',
@@ -17,6 +18,8 @@ import { RemoteFile, ZipperService } from 'src/app/services/zipper.service';
 })
 export class TestSuiteDetailsMenuTestArtifactsComponent implements OnInit, OnDestroy {
   subscription = new Subscription();
+  appResult: AppResult;
+  appResult$: Observable<AppResult>;
   testArtifacts: TestArtifact[];
   testArtifacts$: Observable<any>;
   generatingZip = false;
@@ -31,6 +34,7 @@ export class TestSuiteDetailsMenuTestArtifactsComponent implements OnInit, OnDes
     private activatedRoute: ActivatedRoute,
     private zipper: ZipperService
   ) {
+    this.appResult$ = store.select('app');
     this.testArtifacts$ = store.select('testArtifact');
   }
 
@@ -52,6 +56,12 @@ export class TestSuiteDetailsMenuTestArtifactsComponent implements OnInit, OnDes
     );
 
     this.subscription.add(
+      this.appResult$.subscribe((appResult: AppResult) => {
+        this.appResult = appResult;
+      })
+    );
+
+    this.subscription.add(
       this.testArtifacts$.subscribe((testArtifactsData: any) => {
         this.testArtifacts = testArtifactsData.testArtifacts;
       })
@@ -59,6 +69,13 @@ export class TestSuiteDetailsMenuTestArtifactsComponent implements OnInit, OnDes
   }
 
   async downloadAll() {
+    window.analytics.track({
+      addonId: 'addons-testing',
+      appSlug: this.appResult.slug,
+      appName: this.appResult.name,
+      event: 'downloadAllArtifactsSelected'
+    });
+
     if (this.generatingZip || !this.testArtifacts) {
       return;
     }
@@ -70,6 +87,15 @@ export class TestSuiteDetailsMenuTestArtifactsComponent implements OnInit, OnDes
     const zipName = `${kebabCase(this.suiteName)}-test-artifacts`;
     await this.zipper.zipFilesFromUrls(files, zipName);
     this.generatingZip = false;
+  }
+
+  downloadArtifactSelected() {
+    window.analytics.track({
+      addonId: 'addons-testing',
+      appSlug: this.appResult.slug,
+      appName: this.appResult.name,
+      event: 'downloadArtifactSelected'
+    });
   }
 
   ngOnDestroy() {
