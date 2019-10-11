@@ -4,6 +4,7 @@ import { Observable, Subscription } from 'rxjs';
 import { filter } from 'rxjs/operators';
 import { Store } from '@ngrx/store';
 
+import { AppResult } from 'src/app/services/backend/backend.model';
 import { TestReport } from 'src/app/models/test-report.model';
 import { TestReportState } from 'src/app/store/reports/reducer';
 import { StartPollingReports } from 'src/app/store/reports/actions';
@@ -16,6 +17,9 @@ import { Provider } from 'src/app/services/provider/provider.service';
   styleUrls: ['./test-suite-details.component.scss']
 })
 export class TestSuiteDetailsComponent implements OnInit, OnDestroy {
+  appResult$: Observable<AppResult>;
+  appSlug: string;
+  appName: string;
   buildSlug: string;
   testReports: TestReport[];
   testReports$: Observable<TestReport[]>;
@@ -30,32 +34,38 @@ export class TestSuiteDetailsComponent implements OnInit, OnDestroy {
     {
       name: 'Test Cases',
       subpath: 'testcases',
-      availableProviders: [Provider.firebaseTestlab, Provider.jUnitXML]
+      availableProviders: [Provider.firebaseTestlab, Provider.jUnitXML],
+      shouldSendAnalyticsEventOnSelection: false
     },
     {
       name: 'Performance',
       subpath: 'performance',
-      availableProviders: [Provider.firebaseTestlab]
+      availableProviders: [Provider.firebaseTestlab],
+      shouldSendAnalyticsEventOnSelection: false
     },
     {
       name: 'Video',
       subpath: 'video',
-      availableProviders: [Provider.firebaseTestlab]
+      availableProviders: [Provider.firebaseTestlab],
+      shouldSendAnalyticsEventOnSelection: false
     },
     {
       name: 'Screenshots',
       subpath: 'screenshots',
-      availableProviders: [Provider.firebaseTestlab]
+      availableProviders: [Provider.firebaseTestlab],
+      shouldSendAnalyticsEventOnSelection: false
     },
     {
       name: 'Test Artifacts',
       subpath: 'testartifacts',
-      availableProviders: [Provider.firebaseTestlab, Provider.jUnitXML]
+      availableProviders: [Provider.firebaseTestlab, Provider.jUnitXML],
+      shouldSendAnalyticsEventOnSelection: true
     },
     {
       name: 'Logs',
       subpath: 'logs',
-      availableProviders: [Provider.firebaseTestlab]
+      availableProviders: [Provider.firebaseTestlab],
+      shouldSendAnalyticsEventOnSelection: true
     }
   ];
   selectedTestSuiteDetailsMenuItem: {
@@ -68,6 +78,7 @@ export class TestSuiteDetailsComponent implements OnInit, OnDestroy {
     private store: Store<{ testReport: TestReportState }>,
     private activatedRoute: ActivatedRoute
   ) {
+    this.appResult$ = store.select('app');
     this.testReports$ = store.select('testReport', 'testReports');
 
     this.subscription.add(
@@ -86,14 +97,25 @@ export class TestSuiteDetailsComponent implements OnInit, OnDestroy {
   ngOnInit() {
     this.store.dispatch(new StartPollingReports({ buildSlug: this.buildSlug }));
 
-    this.subscription.add(this.testReports$.subscribe((testReports: TestReport[]) => {
-      this.testReports = testReports;
-      this.configureFromUrlParams();
-    }));
+    this.subscription.add(
+      this.appResult$.subscribe(({ slug, name }: AppResult) => {
+        this.appSlug = slug;
+        this.appName = name;
+      })
+    );
 
-    this.subscription.add(this.activatedRoute.params.subscribe((params: Params) => {
-      this.configureFromUrlParams(params);
-    }));
+    this.subscription.add(
+      this.testReports$.subscribe((testReports: TestReport[]) => {
+        this.testReports = testReports;
+        this.configureFromUrlParams();
+      })
+    );
+
+    this.subscription.add(
+      this.activatedRoute.params.subscribe((params: Params) => {
+        this.configureFromUrlParams(params);
+      })
+    );
 
     this.router.events.pipe(filter((event) => event instanceof NavigationEnd)).subscribe((event: NavigationEnd) => {
       this.updateSelectedTestSuiteDetailsMenuItem();
@@ -136,7 +158,20 @@ export class TestSuiteDetailsComponent implements OnInit, OnDestroy {
     );
   }
 
-  selectedTestSuiteDetailsMenuItemChanged() {
-    this.router.navigate([`./${this.selectedTestSuiteDetailsMenuItem.subpath}`], { relativeTo: this.activatedRoute });
+  selectedTestSuiteDetailsMenuItemChanged(selectedTestSuiteDetailsMenuItem) {
+    if (!selectedTestSuiteDetailsMenuItem) {
+      this.router.navigate([`./${this.selectedTestSuiteDetailsMenuItem.subpath}`], { relativeTo: this.activatedRoute });
+
+      selectedTestSuiteDetailsMenuItem = this.selectedTestSuiteDetailsMenuItem;
+    }
+
+    if (selectedTestSuiteDetailsMenuItem.shouldSendAnalyticsEventOnSelection) {
+      window.analytics.track({
+        addonId: 'addons-testing',
+        appSlug: this.appSlug,
+        appName: this.appName,
+        selectedTab: selectedTestSuiteDetailsMenuItem.subpath
+      });
+    }
   }
 }
