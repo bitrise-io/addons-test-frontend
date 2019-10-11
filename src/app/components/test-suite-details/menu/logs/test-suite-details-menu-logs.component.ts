@@ -8,7 +8,7 @@ import { LogLineLevel } from 'src/app/models/log-line-level.model';
 import { FetchLog } from 'src/app/store/log/actions';
 import { TestReport } from 'src/app/models/test-report.model';
 import { TestSuite } from 'src/app/models/test-suite.model';
-import { LogResult } from 'src/app/services/backend/backend.model';
+import { LogResult, AppResult } from 'src/app/services/backend/backend.model';
 import { LogStoreState } from 'src/app/store/log/reducer';
 
 const INITIAL_MAXIMUM_NUMBER_OF_VISIBLE_LINES = 20;
@@ -20,6 +20,8 @@ const INITIAL_MAXIMUM_NUMBER_OF_VISIBLE_LINES = 20;
 })
 export class TestSuiteDetailsMenuLogsComponent implements OnInit, OnDestroy {
   subscription = new Subscription();
+  appResult: AppResult;
+  appResult$: Observable<AppResult>;
   testReport: TestReport;
   testSuite: TestSuite;
   downloadLogURL: string;
@@ -52,6 +54,7 @@ export class TestSuiteDetailsMenuLogsComponent implements OnInit, OnDestroy {
     }>,
     private activatedRoute: ActivatedRoute
   ) {
+    this.appResult$ = store.select('app');
     this.log$ = store.select('log');
 
     this.subscription.add(
@@ -79,6 +82,12 @@ export class TestSuiteDetailsMenuLogsComponent implements OnInit, OnDestroy {
   }
 
   ngOnInit() {
+    this.subscription.add(
+      this.appResult$.subscribe((appResult: AppResult) => {
+        this.appResult = appResult;
+      })
+    );
+
     this.subscription.add(
       this.log$.subscribe((logResult: LogResult) => {
         if (!logResult.logs) {
@@ -109,5 +118,16 @@ export class TestSuiteDetailsMenuLogsComponent implements OnInit, OnDestroy {
 
   ngOnDestroy() {
     this.subscription.unsubscribe();
+  }
+
+  logLineSelected(logLine: LogLine) {
+    logLine.isExpanded = !logLine.isExpanded;
+    window.analytics.track({
+      addonId: 'addons-testing',
+      appSlug: this.appResult.slug,
+      appName: this.appResult.name,
+      event: 'logLineSelected',
+      isExpanded: logLine.isExpanded
+    });
   }
 }
