@@ -1,8 +1,9 @@
-import { Component, OnInit, OnDestroy } from '@angular/core';
+import { Component, OnInit, OnDestroy, Inject } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { Observable, Subscription } from 'rxjs';
 import { Store } from '@ngrx/store';
 import * as kebabCase from 'lodash.kebabcase';
+import { WINDOW } from 'ngx-window-token';
 
 import { TestReport } from 'src/app/models/test-report.model';
 import { TestSuite } from 'src/app/models/test-suite.model';
@@ -26,7 +27,9 @@ export class TestSuiteDetailsMenuTestArtifactsComponent implements OnInit, OnDes
   suiteName: string;
 
   constructor(
+    @Inject(WINDOW) private window: Window,
     private store: Store<{
+      appResult: AppResult,
       testArtifact: {
         testArtifacts: TestArtifact[];
       };
@@ -69,7 +72,7 @@ export class TestSuiteDetailsMenuTestArtifactsComponent implements OnInit, OnDes
   }
 
   async downloadAll() {
-    window.analytics.track({
+    this.window.analytics.track({
       addonId: 'addons-testing',
       appSlug: this.appResult.slug,
       appName: this.appResult.name,
@@ -90,7 +93,7 @@ export class TestSuiteDetailsMenuTestArtifactsComponent implements OnInit, OnDes
   }
 
   downloadArtifactSelected() {
-    window.analytics.track({
+    this.window.analytics.track({
       addonId: 'addons-testing',
       appSlug: this.appResult.slug,
       appName: this.appResult.name,

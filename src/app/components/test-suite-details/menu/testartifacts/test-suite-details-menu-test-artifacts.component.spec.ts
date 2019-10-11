@@ -5,6 +5,7 @@ import { HttpClientTestingModule } from '@angular/common/http/testing';
 import { of } from 'rxjs';
 import { Store, StoreModule } from '@ngrx/store';
 import { InlineSVGModule } from 'ng-inline-svg';
+import { WINDOW } from 'ngx-window-token';
 
 import { MockStore, provideMockStore } from 'src/app/mock-store/testing';
 import { TestSuiteDetailsMenuTestArtifactsComponent } from './test-suite-details-menu-test-artifacts.component';
@@ -14,11 +15,13 @@ import { TestSuite } from 'src/app/models/test-suite.model';
 import { TestArtifact } from '../../../../models/test-artifact.model';
 import { ArtifactsReducer, ArtifactStoreState } from 'src/app/store/artifacts/reducer';
 import { ZipperService } from 'src/app/services/zipper.service';
+import { AppResult } from 'src/app/services/backend/backend.model';
 
 describe('TestSuiteDetailsMenuTestArtifactsComponent', () => {
   let fixture: ComponentFixture<TestSuiteDetailsMenuTestArtifactsComponent>;
   let testArtifactsComponent: TestSuiteDetailsMenuTestArtifactsComponent;
   let store: MockStore<{
+    app: AppResult;
     testReport: TestReportState;
     testArtifact: {
       testArtifacts: TestArtifact[];
@@ -27,6 +30,11 @@ describe('TestSuiteDetailsMenuTestArtifactsComponent', () => {
   let zipper: ZipperService;
   let testReport: TestReport;
   let testSuite: TestSuite;
+
+  const initialAppResultState = {
+    slug: undefined,
+    name: undefined
+  };
 
   const initialtestReportsState = {
     testReports: [],
@@ -43,6 +51,14 @@ describe('TestSuiteDetailsMenuTestArtifactsComponent', () => {
       ],
       declarations: [TestSuiteDetailsMenuTestArtifactsComponent],
       providers: [
+        {
+          provide: WINDOW,
+          useValue: {
+            analytics: {
+              track: () => {}
+            }
+          }
+        },
         provideMockStore({}),
         {
           provide: ActivatedRoute,
@@ -75,9 +91,10 @@ describe('TestSuiteDetailsMenuTestArtifactsComponent', () => {
 
   beforeEach(inject(
     [Store],
-    (mockStore: MockStore<{ testReport: TestReportState; testArtifact: ArtifactStoreState }>) => {
+    (mockStore: MockStore<{ app: AppResult; testReport: TestReportState; testArtifact: ArtifactStoreState }>) => {
       store = mockStore;
       store.setState({
+        app: initialAppResultState,
         testReport: initialtestReportsState,
         testArtifact: undefined
       });
@@ -91,6 +108,10 @@ describe('TestSuiteDetailsMenuTestArtifactsComponent', () => {
   describe('when there are some test artifacts', () => {
     beforeEach(() => {
       store.setState({
+        app: {
+          slug: 'test-slug',
+          name: 'Test name'
+        },
         testReport: {
           ...initialtestReportsState,
           testReports: [testReport]
@@ -118,6 +139,10 @@ describe('TestSuiteDetailsMenuTestArtifactsComponent', () => {
     beforeEach(() => {
       testArtifactsComponent.suiteName = 'whatever';
       store.setState({
+        app: {
+          slug: 'test-slug',
+          name: 'Test name'
+        },
         testReport: {
           ...initialtestReportsState,
           testReports: [testReport]

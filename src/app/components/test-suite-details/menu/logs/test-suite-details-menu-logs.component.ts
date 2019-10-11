@@ -1,7 +1,8 @@
-import { Component, OnInit, OnDestroy } from '@angular/core';
+import { Component, OnInit, OnDestroy, Inject } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { Observable, Subscription } from 'rxjs';
 import { Store } from '@ngrx/store';
+import { WINDOW } from 'ngx-window-token';
 import { Log } from 'src/app/models/log.model';
 import { LogLine } from 'src/app/models/log-line.model';
 import { LogLineLevel } from 'src/app/models/log-line-level.model';
@@ -49,7 +50,9 @@ export class TestSuiteDetailsMenuLogsComponent implements OnInit, OnDestroy {
   filteredLogLines: LogLine[];
 
   constructor(
+    @Inject(WINDOW) private window: Window,
     private store: Store<{
+      appResult: AppResult,
       log: LogStoreState;
     }>,
     private activatedRoute: ActivatedRoute
@@ -122,7 +125,7 @@ export class TestSuiteDetailsMenuLogsComponent implements OnInit, OnDestroy {
 
   logLineSelected(logLine: LogLine) {
     logLine.isExpanded = !logLine.isExpanded;
-    window.analytics.track({
+    this.window.analytics.track({
       addonId: 'addons-testing',
       appSlug: this.appResult.slug,
       appName: this.appResult.name,

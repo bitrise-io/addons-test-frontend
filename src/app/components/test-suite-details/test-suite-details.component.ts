@@ -1,8 +1,9 @@
-import { Component, OnInit, OnDestroy } from '@angular/core';
+import { Component, OnInit, OnDestroy, Inject } from '@angular/core';
 import { ActivatedRoute, Params, Router, NavigationEnd } from '@angular/router';
 import { Observable, Subscription } from 'rxjs';
 import { filter } from 'rxjs/operators';
 import { Store } from '@ngrx/store';
+import { WINDOW } from 'ngx-window-token';
 
 import { AppResult } from 'src/app/services/backend/backend.model';
 import { TestReport } from 'src/app/models/test-report.model';
@@ -73,8 +74,9 @@ export class TestSuiteDetailsComponent implements OnInit, OnDestroy {
   };
 
   constructor(
+    @Inject(WINDOW) private window: Window,
     private router: Router,
-    private store: Store<{ testReport: TestReportState }>,
+    private store: Store<{ appResult: AppResult; testReport: TestReportState }>,
     private activatedRoute: ActivatedRoute
   ) {
     this.appResult$ = store.select('app');
@@ -164,7 +166,7 @@ export class TestSuiteDetailsComponent implements OnInit, OnDestroy {
     }
 
     if (selectedTestSuiteDetailsMenuItem.shouldSendAnalyticsEventOnSelection) {
-      window.analytics.track({
+      this.window.analytics.track({
         addonId: 'addons-testing',
         appSlug: this.appResult.slug,
         appName: this.appResult.name,
