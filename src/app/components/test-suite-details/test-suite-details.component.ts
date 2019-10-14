@@ -158,7 +158,7 @@ export class TestSuiteDetailsComponent implements OnInit, OnDestroy {
     );
   }
 
-  selectedTestSuiteDetailsMenuItemChanged(selectedTestSuiteDetailsMenuItem) {
+  selectedTestSuiteDetailsMenuItemChanged(selectedTestSuiteDetailsMenuItem?) {
     if (!selectedTestSuiteDetailsMenuItem) {
       this.router.navigate([`./${this.selectedTestSuiteDetailsMenuItem.subpath}`], { relativeTo: this.activatedRoute });
 
