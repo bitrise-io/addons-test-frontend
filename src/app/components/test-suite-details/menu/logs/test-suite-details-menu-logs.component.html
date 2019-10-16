@@ -13,7 +13,7 @@
     class="line warning"
     *ngFor="let logLine of (filteredLogLines | slice: 0:maximumNumberOfVisibleLines)"
     [ngClass]="{ expanded: logLine.isExpanded }"
-    (click)="logLine.isExpanded = !logLine.isExpanded"
+    (click)="logLineSelected(logLine)"
   >
     <div class="level-icon" [inlineSVG]="logLine.levelIconUrl"></div>
     <div class="date">{{ logLine.date | date: 'HH:mm:ss:SSS' }}</div>

@@ -8,7 +8,7 @@
 <div class="test-artifacts" *ngIf="testArtifacts">
   <div class="test-artifact" *ngFor="let testArtifact of testArtifacts">
     <div class="filename">{{ testArtifact.filename }}</div>
-    <a class="download" href="{{ testArtifact.downloadURL }}" target="_blank">
+    <a class="download" href="{{ testArtifact.downloadURL }}" target="_blank" (click)="downloadArtifactSelected()">
       <div class="arrow" inlineSVG="/assets/images/download.svg"></div>
       <span>Download</span>
     </a>

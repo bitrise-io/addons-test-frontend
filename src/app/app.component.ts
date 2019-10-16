@@ -3,6 +3,7 @@ import { NavigationEnd, Router } from '@angular/router';
 import { Beam } from '@bitrise/beam';
 import { filter } from 'rxjs/operators';
 import { Store } from '@ngrx/store';
+import { WINDOW } from 'ngx-window-token';
 
 import { environment } from 'src/environments/environment';
 import { initializeSegment } from 'src/app/services/segment';
@@ -23,7 +24,11 @@ import { FetchApp } from './store/app/actions';
 export class AppComponent implements OnInit {
   appResult$: Observable<AppResult>;
 
-  constructor(private router: Router, private store: Store<{ testReport: AppStoreState }>) {
+  constructor(
+    @Inject(WINDOW) private window: Window,
+    private router: Router,
+    private store: Store<{ testReport: AppStoreState }>
+  ) {
     this.appResult$ = store.select('app');
   }
 
@@ -39,11 +44,11 @@ export class AppComponent implements OnInit {
         app_name: name
       });
 
-      if (segmentWriteKey && !(window.analytics && window.analytics.initialize)) {
+      if (segmentWriteKey && !(this.window.analytics && this.window.analytics.initialize)) {
         initializeSegment(segmentWriteKey);
 
         this.router.events.pipe(filter((event) => event instanceof NavigationEnd)).subscribe((event: NavigationEnd) => {
-          window.analytics.page({ addonId: 'addons-testing', appSlug: slug, appName: name });
+          this.window.analytics.page({ addonId: 'addons-testing', appSlug: slug, appName: name });
         });
       }
     });

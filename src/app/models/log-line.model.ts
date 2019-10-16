@@ -17,7 +17,7 @@ export class LogLine implements Deserializable {
   level: LogLineLevel;
   tag: string;
   message: string;
-  isExpanded: false;
+  isExpanded: boolean;
 
   public static levelIconUrl(level: LogLineLevel): string {
     const levelCssClasses = {

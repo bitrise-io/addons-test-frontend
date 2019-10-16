@@ -9,7 +9,7 @@
   <section class="test-suite-details-body-wrapper">
     <ul class="menu">
       <li *ngFor="let testSuiteDetailsMenuItem of testSuiteDetailsMenuItems" [hidden]="!testSuiteDetailsMenuItem.availableProviders.includes(testReport.provider)" class="menu-item">
-        <a [routerLink]="[testSuiteDetailsMenuItem.subpath]" routerLinkActive="active" queryParamsHandling="merge" class="link">{{
+        <a [routerLink]="[testSuiteDetailsMenuItem.subpath]" routerLinkActive="active" (click)="selectedTestSuiteDetailsMenuItemChanged(testSuiteDetailsMenuItem)" queryParamsHandling="merge" class="link">{{
           testSuiteDetailsMenuItem.name
         }}</a>
       </li>
