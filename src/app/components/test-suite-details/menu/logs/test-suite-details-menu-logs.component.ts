@@ -52,7 +52,7 @@ export class TestSuiteDetailsMenuLogsComponent implements OnInit, OnDestroy {
   constructor(
     @Inject(WINDOW) private window: Window,
     private store: Store<{
-      appResult: AppResult,
+      appResult: AppResult;
       log: LogStoreState;
     }>,
     private activatedRoute: ActivatedRoute
@@ -125,11 +125,10 @@ export class TestSuiteDetailsMenuLogsComponent implements OnInit, OnDestroy {
 
   logLineSelected(logLine: LogLine) {
     logLine.isExpanded = !logLine.isExpanded;
-    this.window.analytics.track({
+    this.window.analytics.track('logLineSelected', {
       addonId: 'addons-testing',
       appSlug: this.appResult.slug,
       appName: this.appResult.name,
-      event: 'logLineSelected',
       isExpanded: logLine.isExpanded
     });
   }

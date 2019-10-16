@@ -29,7 +29,7 @@ export class TestSuiteDetailsMenuTestArtifactsComponent implements OnInit, OnDes
   constructor(
     @Inject(WINDOW) private window: Window,
     private store: Store<{
-      appResult: AppResult,
+      appResult: AppResult;
       testArtifact: {
         testArtifacts: TestArtifact[];
       };
@@ -72,11 +72,10 @@ export class TestSuiteDetailsMenuTestArtifactsComponent implements OnInit, OnDes
   }
 
   async downloadAll() {
-    this.window.analytics.track({
+    this.window.analytics.track('downloadAllArtifactsSelected', {
       addonId: 'addons-testing',
       appSlug: this.appResult.slug,
-      appName: this.appResult.name,
-      event: 'downloadAllArtifactsSelected'
+      appName: this.appResult.name
     });
 
     if (this.generatingZip || !this.testArtifacts) {
@@ -93,11 +92,10 @@ export class TestSuiteDetailsMenuTestArtifactsComponent implements OnInit, OnDes
   }
 
   downloadArtifactSelected() {
-    this.window.analytics.track({
+    this.window.analytics.track('downloadArtifactSelected', {
       addonId: 'addons-testing',
       appSlug: this.appResult.slug,
-      appName: this.appResult.name,
-      event: 'downloadArtifactSelected'
+      appName: this.appResult.name
     });
   }
 

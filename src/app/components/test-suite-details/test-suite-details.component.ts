@@ -166,11 +166,10 @@ export class TestSuiteDetailsComponent implements OnInit, OnDestroy {
     }
 
     if (selectedTestSuiteDetailsMenuItem.shouldSendAnalyticsEventOnSelection) {
-      this.window.analytics.track({
+      this.window.analytics.track('tabSelected', {
         addonId: 'addons-testing',
         appSlug: this.appResult.slug,
         appName: this.appResult.name,
-        event: 'tabSelected',
         selectedTab: selectedTestSuiteDetailsMenuItem.subpath
       });
     }
