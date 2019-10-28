@@ -282,6 +282,9 @@ export class ProviderService {
         if (testCaseItemElement.querySelector('failure')) {
           testCase.status = TestCaseStatus.failed;
           testCase.summary = testCaseItemElement.querySelector('failure').textContent;
+        } else if (testCaseItemElement.querySelector('skipped')) {
+          testCase.status = TestCaseStatus.skipped;
+          testCase.summary = testCaseItemElement.querySelector('skipped').textContent;
         } else {
           testCase.status = TestCaseStatus.passed;
           testCase.summary = 'passed';

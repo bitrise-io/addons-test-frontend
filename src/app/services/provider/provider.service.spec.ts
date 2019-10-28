@@ -605,13 +605,13 @@ describe('ProviderService', () => {
     describe('when XML response contains multiple test suites', () => {
       beforeEach(() => {
         // tslint:disable-next-line:max-line-length
-        testCasesResponse = '<?xml version="1.0" encoding="UTF-8"?>\n<testsuites>\n<testsuite>\n<properties />\n<testcase name="name A" classname="classname A">\n<failure>The A failed</failure>\n</testcase>\n<testcase name="name B" classname="classname B" time="1.3" />\n</testsuite>\n<testsuite>\n<testcase name="name C" classname="classname C" time="1.8" />\n</testsuite>\n</testsuites>';
+        testCasesResponse = '<?xml version="1.0" encoding="UTF-8"?><testsuites><testsuite><properties /><testcase name="name A" classname="classname A"><failure>The A failed</failure></testcase><testcase name="name B" classname="classname B" time="1.3" /></testsuite><testsuite><testcase name="name C" classname="classname C" time="1.8" /></testsuite>  <testsuite><testcase name="name D" classname="classname D" time="0.4" ><skipped>D is skipped</skipped></testcase></testsuite></testsuites>';
       });
 
       it('returns test cases from all test suites', () => {
         const testCases = service.deserializeFirebaseTestlabTestCases(testCasesResponse);
 
-        expect(testCases.length).toBe(3);
+        expect(testCases.length).toBe(4);
 
         expect(testCases[0].name).toBe('name A');
         expect(testCases[0].status).toBe(TestCaseStatus.failed);
@@ -630,6 +630,12 @@ describe('ProviderService', () => {
         expect(testCases[2].context).toBe('classname C');
         expect(testCases[2].durationInMilliseconds).toBe(1800);
         expect(testCases[2].summary).toBe('passed');
+
+        expect(testCases[3].name).toBe('name D');
+        expect(testCases[3].status).toBe(TestCaseStatus.skipped);
+        expect(testCases[3].context).toBe('classname D');
+        expect(testCases[3].durationInMilliseconds).toBe(400);
+        expect(testCases[3].summary).toBe('D is skipped');
       });
     });
   });
