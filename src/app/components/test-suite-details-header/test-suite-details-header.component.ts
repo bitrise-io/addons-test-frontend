@@ -1,4 +1,5 @@
-import { Component, Input, OnInit } from '@angular/core';
+import { Component, Input, OnChanges } from '@angular/core';
+
 import { TestReport, TestReportType } from 'src/app/models/test-report.model';
 import { TestSuite } from 'src/app/models/test-suite.model';
 import { TestCase, TestCaseStatus } from 'src/app/models/test-case.model';
@@ -8,7 +9,7 @@ import { TestCase, TestCaseStatus } from 'src/app/models/test-case.model';
   templateUrl: 'test-suite-details-header.component.html',
   styleUrls: ['test-suite-details-header.component.scss']
 })
-export class TestSuiteDetailsHeaderComponent implements OnInit {
+export class TestSuiteDetailsHeaderComponent implements OnChanges {
   @Input() testReport: TestReport;
   @Input() testSuite: TestSuite;
   @Input() previousTestSuite: TestSuite;
@@ -23,7 +24,7 @@ export class TestSuiteDetailsHeaderComponent implements OnInit {
   };
   totalTestCaseCount: number;
 
-  ngOnInit() {
+  ngOnChanges(): void {
     this.testCaseCountsByStatuses = this.orderedTestCaseStatuses.reduce(
       (sumByStatus, status: TestCaseStatus) => ({
         ...sumByStatus,
