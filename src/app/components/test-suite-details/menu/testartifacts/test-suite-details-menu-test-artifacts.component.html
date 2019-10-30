@@ -1,6 +1,6 @@
 <div class="name">
   <span>Test Artifacts</span>
-  <button class="download-all" (click)="downloadAll()">
+  <button class="download-all" (click)="downloadAll()" *ngIf="testArtifacts && testArtifacts.length">
     <div class="arrow" inlineSVG="/assets/images/download.svg"></div>
     <span>Download All Files</span>
   </button>

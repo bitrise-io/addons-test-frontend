@@ -1,7 +1,7 @@
 <div class="screenshots">
   <bitrise-heading-text>
     <span>Screenshots</span>
-    <button class="screenshots__download-all" (click)="downloadAll()">
+    <button class="screenshots__download-all" (click)="downloadAll()" *ngIf="screenshots && screenshots.length">
       <div class="arrow" inlineSVG="/assets/images/download.svg"></div>
       <span>Download All Screenshots</span>
     </button>
