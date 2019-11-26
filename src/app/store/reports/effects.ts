@@ -25,7 +25,7 @@ export class ReportEffects {
   @Effect()
   $fetchReports: Observable<ReportActions> = this.actions$.pipe(
     ofType(ReportActionTypes.StartPolling),
-    mergeMap((action: StartPollingReports) =>
+    switchMap((action: StartPollingReports) =>
       this.backendService.getReports(action.payload.buildSlug).pipe(
         switchMap(({ testReports }: TestReportsResult) =>
           timer(0, UPDATE_INTERVAL_MS).pipe(
