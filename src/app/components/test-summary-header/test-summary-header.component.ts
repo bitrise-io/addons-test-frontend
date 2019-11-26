@@ -46,7 +46,7 @@ export class TestSummaryHeaderComponent implements OnInit {
 
   ngOnInit() {
     this.activatedRoute.params.subscribe((params: Params) => {
-      this.store.dispatch(new StartPollingReports(params.buildSlug));
+      this.store.dispatch(new StartPollingReports({ buildSlug: params.buildSlug }));
     });
 
     this.testFilter$.subscribe((filter) => {
