@@ -10,7 +10,9 @@
     "codecoverage": "ng test --watch=false --code-coverage --source-map=false",
     "lint": "ng lint",
     "yaml:lint": "yamllint ./src/**/*.yml",
-    "e2e": "ng e2e"
+    "e2e": "ng e2e",
+    "snyk-protect": "snyk protect",
+    "prepublish": "npm run snyk-protect"
   },
   "private": true,
   "browserslist": [
@@ -42,7 +44,8 @@
     "ngx-window-token": "^2.0.1",
     "normalize.css": "^8.0.1",
     "rxjs": "^6.3.3",
-    "zone.js": "^0.8.26"
+    "zone.js": "^0.8.26",
+    "snyk": "^1.258.2"
   },
   "devDependencies": {
     "@angular/language-service": "^7.1.0",
@@ -61,5 +64,6 @@
     "ts-node": "~5.0.1",
     "tslint": "~5.9.1",
     "typescript": "~3.1.6"
-  }
+  },
+  "snyk": true
 }
