@@ -60,33 +60,35 @@ fdescribe('Report Effects', () => {
       }));
     });
 
-    describe('and there are finished test reports', () => {
+    fdescribe('and there are finished test reports', () => {
       let mockBackendService: MockBackendService;
 
       beforeEach(() => {
-        const testReports = Array(3)
-          .fill(null)
-          .map(() => new TestReport());
-
-        testReports.forEach((testReport: TestReport) => {
-          testReport.testSuites = Array(4)
-            .fill(null)
-            .map(() => new TestSuite());
-        });
-
-        [TestSuiteStatus.inconclusive, TestSuiteStatus.passed, TestSuiteStatus.failed, TestSuiteStatus.skipped].forEach(
-          (testSuiteStatus) => {
-            testReports.forEach((testReport) => {
-              testReport.testSuites.forEach((testSuite: TestSuite) => {
-                testSuite.status = testSuiteStatus;
-              });
-            });
-          }
-        );
-
         mockBackendService = TestBed.get(BACKEND_SERVICE);
-        mockBackendService.getReports = jasmine.createSpy('getReports').and.callFake(() => of({ testReports: [] }));
-        mockBackendService.getReportDetails = jasmine.createSpy('getReportDetails');
+        mockBackendService.getReports = jasmine.createSpy('getReports').and.callFake(() =>
+          of({
+            testReports: Array(3)
+              .fill(null)
+              .map(() => new TestReport())
+          })
+        );
+        mockBackendService.getReportDetails = jasmine
+          .createSpy('getReportDetails')
+          .and.callFake((_buildSlug, testReport) => {
+            testReport.testSuites = [
+              TestSuiteStatus.inconclusive,
+              TestSuiteStatus.passed,
+              TestSuiteStatus.failed,
+              TestSuiteStatus.skipped
+            ].map((testSuiteStatus) => {
+              const testSuite = new TestSuite();
+              testSuite.status = testSuiteStatus;
+
+              return testSuite;
+            });
+
+            return of({ testReport });
+          });
       });
 
       it('calls getReports once, getReportDetails for each test report', fakeAsync(() => {
@@ -96,7 +98,7 @@ fdescribe('Report Effects', () => {
         subscription.unsubscribe();
 
         expect(mockBackendService.getReports).toHaveBeenCalledTimes(1);
-        expect(mockBackendService.getReportDetails).not.toHaveBeenCalledTimes(4);
+        expect(mockBackendService.getReportDetails).toHaveBeenCalledTimes(3);
       }));
     });
   });
