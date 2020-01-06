@@ -14,6 +14,13 @@ import { ProviderService } from 'src/app/services/provider/provider.service';
 import { TestSuiteStatus, TestSuite } from 'src/app/models/test-suite.model';
 import { TestReport } from 'src/app/models/test-report.model';
 
+const testSuiteWithStatus = (testSuiteStatus: TestSuiteStatus) => {
+  const testSuite = new TestSuite();
+  testSuite.status = testSuiteStatus;
+
+  return testSuite;
+};
+
 fdescribe('Report Effects', () => {
   let actions$: Observable<ReportActions>;
   let effects;
@@ -41,15 +48,11 @@ fdescribe('Report Effects', () => {
 
   describe('when fetching test reports', () => {
     describe('and there are no test reports', () => {
-      let mockBackendService: MockBackendService;
-
-      beforeEach(() => {
-        mockBackendService = TestBed.get(BACKEND_SERVICE);
+      it('calls getReports once, does not call getReportDetails', fakeAsync(() => {
+        const mockBackendService = TestBed.get(BACKEND_SERVICE);
         mockBackendService.getReports = jasmine.createSpy('getReports').and.callFake(() => of({ testReports: [] }));
         mockBackendService.getReportDetails = jasmine.createSpy('getReportDetails');
-      });
 
-      it('calls getReports once, does not call getReportDetails', fakeAsync(() => {
         actions$ = of(new StartPollingReports({ buildSlug: 'test-build-slug' }));
         const subscription = effects.$fetchReports.subscribe();
         tick(6000);
@@ -60,16 +63,15 @@ fdescribe('Report Effects', () => {
       }));
     });
 
-    fdescribe('and there are finished test reports', () => {
-      let mockBackendService: MockBackendService;
-
-      beforeEach(() => {
-        mockBackendService = TestBed.get(BACKEND_SERVICE);
+    describe('and there are only finished test reports', () => {
+      it('calls getReports once, getReportDetails for each test report', fakeAsync(() => {
+        const testReports = Array(3)
+          .fill(null)
+          .map(() => new TestReport());
+        const mockBackendService = TestBed.get(BACKEND_SERVICE);
         mockBackendService.getReports = jasmine.createSpy('getReports').and.callFake(() =>
           of({
-            testReports: Array(3)
-              .fill(null)
-              .map(() => new TestReport())
+            testReports: testReports
           })
         );
         mockBackendService.getReportDetails = jasmine
@@ -80,18 +82,11 @@ fdescribe('Report Effects', () => {
               TestSuiteStatus.passed,
               TestSuiteStatus.failed,
               TestSuiteStatus.skipped
-            ].map((testSuiteStatus) => {
-              const testSuite = new TestSuite();
-              testSuite.status = testSuiteStatus;
-
-              return testSuite;
-            });
+            ].map(testSuiteWithStatus);
 
             return of({ testReport });
           });
-      });
 
-      it('calls getReports once, getReportDetails for each test report', fakeAsync(() => {
         actions$ = of(new StartPollingReports({ buildSlug: 'test-build-slug' }));
         const subscription = effects.$fetchReports.subscribe();
         tick(6000);
@@ -99,6 +94,55 @@ fdescribe('Report Effects', () => {
 
         expect(mockBackendService.getReports).toHaveBeenCalledTimes(1);
         expect(mockBackendService.getReportDetails).toHaveBeenCalledTimes(3);
+        expect(mockBackendService.getReportDetails).toHaveBeenCalledWith('test-build-slug', testReports[0]);
+        expect(mockBackendService.getReportDetails).toHaveBeenCalledWith('test-build-slug', testReports[1]);
+        expect(mockBackendService.getReportDetails).toHaveBeenCalledWith('test-build-slug', testReports[2]);
+      }));
+    });
+
+    describe('and there are some in-progress test reports', () => {
+      it('calls getReports once, getReportDetails for each test report once, plus periodically until in-progress test reports finish', fakeAsync(() => {
+        const testReports = Array(3)
+          .fill(null)
+          .map(() => new TestReport());
+        const mockBackendService = TestBed.get(BACKEND_SERVICE);
+        mockBackendService.getReports = jasmine.createSpy('getReports').and.callFake(() =>
+          of({
+            testReports: testReports
+          })
+        );
+        const inProgressTestSuite = testSuiteWithStatus(TestSuiteStatus.inProgress);
+        setTimeout(() => {
+          inProgressTestSuite.status = TestSuiteStatus.passed;
+        }, 11000);
+
+        mockBackendService.getReportDetails = jasmine
+          .createSpy('getReportDetails')
+          .and.callFake((_buildSlug, testReport) => {
+            testReport.testSuites = [
+              TestSuiteStatus.inconclusive,
+              TestSuiteStatus.passed,
+              TestSuiteStatus.failed,
+              TestSuiteStatus.skipped
+            ].map(testSuiteWithStatus);
+
+            if (testReport === testReports[0]) {
+              testReport.testSuites.push(inProgressTestSuite);
+            }
+
+            return of({ testReport });
+          });
+
+        actions$ = of(new StartPollingReports({ buildSlug: 'test-build-slug' }));
+        const subscription = effects.$fetchReports.subscribe();
+        tick(16000);
+        subscription.unsubscribe();
+
+        expect(mockBackendService.getReports).toHaveBeenCalledTimes(1);
+        expect(mockBackendService.getReportDetails).toHaveBeenCalledTimes(9);
+        expect(mockBackendService.getReportDetails).toHaveBeenCalledWith('test-build-slug', testReports[0]);
+        expect(mockBackendService.getReportDetails).toHaveBeenCalledWith('test-build-slug', testReports[1]);
+        expect(mockBackendService.getReportDetails).toHaveBeenCalledWith('test-build-slug', testReports[2]);
       }));
     });
   });
