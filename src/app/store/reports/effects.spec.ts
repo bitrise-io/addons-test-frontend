@@ -4,11 +4,11 @@ import { Observable, of } from 'rxjs';
 import { StoreModule } from '@ngrx/store';
 import { provideMockActions } from '@ngrx/effects/testing';
 
-import { ReportActions, StartPollingReports, ReceiveReports, FilterReports } from './actions';
+import { ReportActions, StartPollingReports } from './actions';
 import { ReportsReducer } from './reducer';
 import { ReportEffects } from './effects';
 import { provideMockStore } from 'src/app/mock-store/testing';
-import { BACKEND_SERVICE, BackendService } from 'src/app/services/backend/backend.model';
+import { BACKEND_SERVICE } from 'src/app/services/backend/backend.model';
 import { MockBackendService } from 'src/app/services/backend/backend.mock.service';
 import { ProviderService } from 'src/app/services/provider/provider.service';
 import { TestSuiteStatus, TestSuite } from 'src/app/models/test-suite.model';
@@ -89,14 +89,22 @@ fdescribe('Report Effects', () => {
 
         actions$ = of(new StartPollingReports({ buildSlug: 'test-build-slug' }));
         const subscription = effects.$fetchReports.subscribe();
-        tick(6000);
-        subscription.unsubscribe();
+        tick(1000);
 
         expect(mockBackendService.getReports).toHaveBeenCalledTimes(1);
         expect(mockBackendService.getReportDetails).toHaveBeenCalledTimes(3);
         expect(mockBackendService.getReportDetails).toHaveBeenCalledWith('test-build-slug', testReports[0]);
         expect(mockBackendService.getReportDetails).toHaveBeenCalledWith('test-build-slug', testReports[1]);
         expect(mockBackendService.getReportDetails).toHaveBeenCalledWith('test-build-slug', testReports[2]);
+
+        mockBackendService.getReports.calls.reset();
+        mockBackendService.getReportDetails.calls.reset();
+
+        tick(5000);
+        subscription.unsubscribe();
+
+        expect(mockBackendService.getReports).not.toHaveBeenCalled();
+        expect(mockBackendService.getReportDetails).not.toHaveBeenCalled();
       }));
     });
 
@@ -135,14 +143,45 @@ fdescribe('Report Effects', () => {
 
         actions$ = of(new StartPollingReports({ buildSlug: 'test-build-slug' }));
         const subscription = effects.$fetchReports.subscribe();
-        tick(16000);
-        subscription.unsubscribe();
+        tick(1000);
 
         expect(mockBackendService.getReports).toHaveBeenCalledTimes(1);
-        expect(mockBackendService.getReportDetails).toHaveBeenCalledTimes(9);
+        expect(mockBackendService.getReportDetails).toHaveBeenCalledTimes(3);
         expect(mockBackendService.getReportDetails).toHaveBeenCalledWith('test-build-slug', testReports[0]);
         expect(mockBackendService.getReportDetails).toHaveBeenCalledWith('test-build-slug', testReports[1]);
         expect(mockBackendService.getReportDetails).toHaveBeenCalledWith('test-build-slug', testReports[2]);
+
+        mockBackendService.getReports.calls.reset();
+        mockBackendService.getReportDetails.calls.reset();
+
+        tick(5000);
+
+        expect(mockBackendService.getReports).not.toHaveBeenCalled();
+        expect(mockBackendService.getReportDetails).toHaveBeenCalledTimes(3);
+        expect(mockBackendService.getReportDetails).toHaveBeenCalledWith('test-build-slug', testReports[0]);
+        expect(mockBackendService.getReportDetails).toHaveBeenCalledWith('test-build-slug', testReports[1]);
+        expect(mockBackendService.getReportDetails).toHaveBeenCalledWith('test-build-slug', testReports[2]);
+
+        mockBackendService.getReports.calls.reset();
+        mockBackendService.getReportDetails.calls.reset();
+
+        tick(5000);
+
+        expect(mockBackendService.getReports).not.toHaveBeenCalled();
+        expect(mockBackendService.getReportDetails).toHaveBeenCalledTimes(3);
+        expect(mockBackendService.getReportDetails).toHaveBeenCalledWith('test-build-slug', testReports[0]);
+        expect(mockBackendService.getReportDetails).toHaveBeenCalledWith('test-build-slug', testReports[1]);
+        expect(mockBackendService.getReportDetails).toHaveBeenCalledWith('test-build-slug', testReports[2]);
+
+        mockBackendService.getReports.calls.reset();
+        mockBackendService.getReportDetails.calls.reset();
+
+        tick(5000);
+
+        expect(mockBackendService.getReports).not.toHaveBeenCalled();
+        expect(mockBackendService.getReportDetails).not.toHaveBeenCalled();
+
+        subscription.unsubscribe();
       }));
     });
   });
