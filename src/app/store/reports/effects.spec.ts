@@ -13,6 +13,7 @@ import { MockBackendService } from 'src/app/services/backend/backend.mock.servic
 import { ProviderService } from 'src/app/services/provider/provider.service';
 import { TestSuiteStatus, TestSuite } from 'src/app/models/test-suite.model';
 import { TestReport } from 'src/app/models/test-report.model';
+import { delay } from 'rxjs/operators';
 
 const testSuiteWithStatus = (testSuiteStatus: TestSuiteStatus) => {
   const testSuite = new TestSuite();
@@ -228,6 +229,76 @@ fdescribe('Report Effects', () => {
         });
 
         tick(1000);
+
+        subscription.unsubscribe();
+      }));
+    });
+
+    describe('and filter is set to a state, but changes during getReports', () => {
+      beforeEach(inject([Store], (mockStore: MockStore<{ testReport: TestReportState }>) => {
+        store = mockStore;
+      }));
+
+      it('emits all received reports, emits new filter state, does not re-call getReports', fakeAsync(() => {
+        const testReports = Array(3)
+          .fill(null)
+          .map(() => new TestReport());
+
+        store.setState({
+          testReport: {
+            testReports: undefined,
+            filteredReports: undefined,
+            filter: TestSuiteStatus.failed
+          }
+        });
+
+        const mockBackendService = TestBed.get(BACKEND_SERVICE);
+        mockBackendService.getReports = jasmine
+          .createSpy('getReports')
+          .and.callFake((_buildSlug) => of({ testReports: testReports }).pipe(delay(1500)));
+        mockBackendService.getReportDetails = jasmine
+          .createSpy('getReportDetails')
+          .and.callFake((_buildSlug, testReport) => {
+            testReport.testSuites = [testSuiteWithStatus(TestSuiteStatus.passed)];
+
+            return of({ testReport });
+          });
+
+        actions$ = of(new StartPollingReports({ buildSlug: 'test-build-slug' }));
+        let emits = [];
+        const subscription = effects.$fetchReports.subscribe(({ payload, type }) => {
+          emits.push({ payload, type });
+        });
+
+        tick(1000);
+
+        expect(mockBackendService.getReports).toHaveBeenCalledTimes(1);
+        expect(mockBackendService.getReportDetails).not.toHaveBeenCalled();
+        expect(emits.length).toBe(0);
+
+        mockBackendService.getReports.calls.reset();
+        mockBackendService.getReportDetails.calls.reset();
+        emits = [];
+
+        store.setState({
+          testReport: {
+            testReports: testReports,
+            filteredReports: testReports,
+            filter: TestSuiteStatus.passed
+          }
+        });
+
+        tick(1000);
+
+        expect(mockBackendService.getReports).not.toHaveBeenCalled();
+        expect(mockBackendService.getReportDetails).toHaveBeenCalledTimes(3);
+        expect(mockBackendService.getReportDetails).toHaveBeenCalledWith('test-build-slug', testReports[0]);
+        expect(mockBackendService.getReportDetails).toHaveBeenCalledWith('test-build-slug', testReports[1]);
+        expect(mockBackendService.getReportDetails).toHaveBeenCalledWith('test-build-slug', testReports[2]);
+
+        expect(emits.length).toBe(2);
+        expect(emits[0]).toEqual({ type: ReportActionTypes.Receive, payload: { testReports } });
+        expect(emits[1]).toEqual({ type: ReportActionTypes.Filter, payload: { filter: TestSuiteStatus.passed } });
 
         subscription.unsubscribe();
       }));
