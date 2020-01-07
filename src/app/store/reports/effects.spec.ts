@@ -1,13 +1,13 @@
-import { TestBed, fakeAsync, tick } from '@angular/core/testing';
+import { TestBed, fakeAsync, tick, inject } from '@angular/core/testing';
 
 import { Observable, of } from 'rxjs';
-import { StoreModule } from '@ngrx/store';
+import { StoreModule, Store } from '@ngrx/store';
 import { provideMockActions } from '@ngrx/effects/testing';
 
-import { ReportActions, StartPollingReports } from './actions';
-import { ReportsReducer } from './reducer';
+import { ReportActions, StartPollingReports, ReportActionTypes } from './actions';
+import { ReportsReducer, TestReportState } from './reducer';
 import { ReportEffects } from './effects';
-import { provideMockStore } from 'src/app/mock-store/testing';
+import { provideMockStore, MockStore } from 'src/app/mock-store/testing';
 import { BACKEND_SERVICE } from 'src/app/services/backend/backend.model';
 import { MockBackendService } from 'src/app/services/backend/backend.mock.service';
 import { ProviderService } from 'src/app/services/provider/provider.service';
@@ -22,6 +22,7 @@ const testSuiteWithStatus = (testSuiteStatus: TestSuiteStatus) => {
 };
 
 fdescribe('Report Effects', () => {
+  let store: MockStore<{ testReport: TestReportState }>;
   let actions$: Observable<ReportActions>;
   let effects;
 
@@ -180,6 +181,53 @@ fdescribe('Report Effects', () => {
 
         expect(mockBackendService.getReports).not.toHaveBeenCalled();
         expect(mockBackendService.getReportDetails).not.toHaveBeenCalled();
+
+        subscription.unsubscribe();
+      }));
+    });
+
+    describe('and filter is set to a state', () => {
+      beforeEach(inject([Store], (mockStore: MockStore<{ testReport: TestReportState }>) => {
+        store = mockStore;
+      }));
+
+      it('emits all received reports, emits filter state', fakeAsync(() => {
+        const testReports = Array(3)
+          .fill(null)
+          .map(() => new TestReport());
+
+        store.setState({
+          testReport: {
+            testReports: testReports,
+            filteredReports: testReports,
+            filter: TestSuiteStatus.failed
+          }
+        });
+
+        const mockBackendService = TestBed.get(BACKEND_SERVICE);
+        mockBackendService.getReports = () => of({ testReports: testReports });
+        mockBackendService.getReportDetails = (_buildSlug, testReport) => {
+          if (testReport === testReports[0]) {
+            testReport.testSuites = testSuiteWithStatus(TestSuiteStatus.passed);
+          } else if (testReport === testReports[1]) {
+            testReport.testSuites = testSuiteWithStatus(TestSuiteStatus.failed);
+          } else if (testReport === testReports[2]) {
+            testReport.testSuites = testSuiteWithStatus(TestSuiteStatus.inProgress);
+          }
+
+          return of({ testReport });
+        };
+
+        actions$ = of(new StartPollingReports({ buildSlug: 'test-build-slug' }));
+        const subscription = effects.$fetchReports.subscribe(({ payload, type }) => {
+          if (type === ReportActionTypes.Receive) {
+            expect(payload.testReports).toEqual(testReports);
+          } else if (type === ReportActionTypes.Filter) {
+            expect(payload.filter).toEqual(TestSuiteStatus.failed);
+          }
+        });
+
+        tick(1000);
 
         subscription.unsubscribe();
       }));
