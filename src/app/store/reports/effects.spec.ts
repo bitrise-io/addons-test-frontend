@@ -187,6 +187,39 @@ fdescribe('Report Effects', () => {
       }));
     });
 
+    describe('and getReportDetails takes a significant amount of time', () => {
+      it('only starts period interval countdown after getReportDetails has finished', fakeAsync(() => {
+        const testReport = new TestReport()
+        const mockBackendService = TestBed.get(BACKEND_SERVICE);
+        mockBackendService.getReports = jasmine
+          .createSpy('getReports')
+          .and.callFake(() => of({ testReports: [testReport] }));
+        mockBackendService.getReportDetails = jasmine
+          .createSpy('getReportDetails')
+          .and.callFake((_buildSlug, testReport) => {
+            testReport.testSuites = [testSuiteWithStatus(TestSuiteStatus.inProgress)];
+
+            return of({ testReport }).pipe(delay(2000));
+          });
+
+        actions$ = of(new StartPollingReports({ buildSlug: 'test-build-slug' }));
+        const subscription = effects.$fetchReports.subscribe();
+        tick(1000);
+
+        expect(mockBackendService.getReports).toHaveBeenCalledTimes(1);
+        expect(mockBackendService.getReportDetails).toHaveBeenCalledTimes(1);
+        expect(mockBackendService.getReportDetails).toHaveBeenCalledWith('test-build-slug', testReport);
+
+        mockBackendService.getReportDetails.calls.reset();
+
+        tick(5000);
+
+        expect(mockBackendService.getReportDetails).not.toHaveBeenCalled();
+
+        subscription.unsubscribe();
+      }));
+    });
+
     describe('and filter is set to a state', () => {
       beforeEach(inject([Store], (mockStore: MockStore<{ testReport: TestReportState }>) => {
         store = mockStore;
