@@ -23,15 +23,20 @@ const UPDATE_INTERVAL_MS = 5000;
 @Injectable()
 export class ReportEffects {
   @Effect()
+  latestFetchReportsObservable: Observable<ReceiveReports | FilterReports>;
   $fetchReports: Observable<ReportActions> = this.actions$.pipe(
     ofType(ReportActionTypes.StartPolling),
     switchMap((action: StartPollingReports) => {
-      return new Observable((subscriber) => {
+      const fetchReportsObservable = (this.latestFetchReportsObservable = new Observable((subscriber) => {
         this.backendService
           .getReports(action.payload.buildSlug)
           .toPromise()
           .then(({ testReports }: TestReportsResult) => {
             const periodicallyGetReportDetailsAndEmitStateUntilFinished = () => {
+              if (fetchReportsObservable !== this.latestFetchReportsObservable) {
+                return;
+              }
+
               const getReportDetailsPromises = testReports.map((testReport: TestReport) => {
                 return this.backendService.getReportDetails(action.payload.buildSlug, testReport).toPromise();
               });
@@ -41,6 +46,10 @@ export class ReportEffects {
                   .pipe(take(1))
                   .toPromise()
                   .then(({ testReport: { filter } }) => {
+                    if (fetchReportsObservable !== this.latestFetchReportsObservable) {
+                      return;
+                    }
+
                     subscriber.next(new ReceiveReports({ testReports: testReports }));
                     subscriber.next(new FilterReports({ filter }));
 
@@ -63,7 +72,9 @@ export class ReportEffects {
 
             periodicallyGetReportDetailsAndEmitStateUntilFinished();
           });
-      });
+      }));
+
+      return this.latestFetchReportsObservable;
     })
   );
 
