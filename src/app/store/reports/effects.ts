@@ -22,8 +22,8 @@ const UPDATE_INTERVAL_MS = 5000;
 
 @Injectable()
 export class ReportEffects {
-  @Effect()
   latestFetchReportsObservable: Observable<ReceiveReports | FilterReports>;
+  @Effect()
   $fetchReports: Observable<ReportActions> = this.actions$.pipe(
     ofType(ReportActionTypes.StartPolling),
     switchMap((action: StartPollingReports) => {
