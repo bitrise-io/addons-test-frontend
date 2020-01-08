@@ -13,7 +13,7 @@ import { MockBackendService } from 'src/app/services/backend/backend.mock.servic
 import { ProviderService } from 'src/app/services/provider/provider.service';
 import { TestSuiteStatus, TestSuite } from 'src/app/models/test-suite.model';
 import { TestReport } from 'src/app/models/test-report.model';
-import { delay } from 'rxjs/operators';
+import { delay, map } from 'rxjs/operators';
 
 const testSuiteWithStatus = (testSuiteStatus: TestSuiteStatus) => {
   const testSuite = new TestSuite();
@@ -121,11 +121,8 @@ fdescribe('Report Effects', () => {
             testReports: testReports
           })
         );
-        const inProgressTestSuite = testSuiteWithStatus(TestSuiteStatus.inProgress);
-        setTimeout(() => {
-          inProgressTestSuite.status = TestSuiteStatus.passed;
-        }, 11000);
 
+        let isInProgressTestSuiteFinished = false;
         mockBackendService.getReportDetails = jasmine
           .createSpy('getReportDetails')
           .and.callFake((_buildSlug, testReport) => {
@@ -137,7 +134,9 @@ fdescribe('Report Effects', () => {
             ].map(testSuiteWithStatus);
 
             if (testReport === testReports[0]) {
-              testReport.testSuites.push(inProgressTestSuite);
+              testReport.testSuites.push(
+                testSuiteWithStatus(isInProgressTestSuiteFinished ? TestSuiteStatus.passed : TestSuiteStatus.inProgress)
+              );
             }
 
             return of({ testReport });
@@ -156,17 +155,7 @@ fdescribe('Report Effects', () => {
         mockBackendService.getReports.calls.reset();
         mockBackendService.getReportDetails.calls.reset();
 
-        tick(5000);
-
-        expect(mockBackendService.getReports).not.toHaveBeenCalled();
-        expect(mockBackendService.getReportDetails).toHaveBeenCalledTimes(3);
-        expect(mockBackendService.getReportDetails).toHaveBeenCalledWith('test-build-slug', testReports[0]);
-        expect(mockBackendService.getReportDetails).toHaveBeenCalledWith('test-build-slug', testReports[1]);
-        expect(mockBackendService.getReportDetails).toHaveBeenCalledWith('test-build-slug', testReports[2]);
-
-        mockBackendService.getReports.calls.reset();
-        mockBackendService.getReportDetails.calls.reset();
-
+        isInProgressTestSuiteFinished = true;
         tick(5000);
 
         expect(mockBackendService.getReports).not.toHaveBeenCalled();
@@ -189,18 +178,25 @@ fdescribe('Report Effects', () => {
 
     describe('and getReportDetails takes a significant amount of time', () => {
       it('only starts period interval countdown after getReportDetails has finished', fakeAsync(() => {
-        const testReport = new TestReport()
+        const testReport = new TestReport();
+        const inProgressTestSuite = testSuiteWithStatus(TestSuiteStatus.inProgress);
         const mockBackendService = TestBed.get(BACKEND_SERVICE);
         mockBackendService.getReports = jasmine
           .createSpy('getReports')
           .and.callFake(() => of({ testReports: [testReport] }));
         mockBackendService.getReportDetails = jasmine
           .createSpy('getReportDetails')
-          .and.callFake((_buildSlug, testReport) => {
-            testReport.testSuites = [testSuiteWithStatus(TestSuiteStatus.inProgress)];
+          .and.callFake((_buildSlug, testReport) =>
+            of({ testReport })
+              .pipe(delay(2000))
+              .pipe(
+                map(() => {
+                  testReport.testSuites = [inProgressTestSuite];
 
-            return of({ testReport }).pipe(delay(2000));
-          });
+                  return { testReport };
+                })
+              )
+          );
 
         actions$ = of(new StartPollingReports({ buildSlug: 'test-build-slug' }));
         const subscription = effects.$fetchReports.subscribe();
@@ -215,6 +211,12 @@ fdescribe('Report Effects', () => {
         tick(5000);
 
         expect(mockBackendService.getReportDetails).not.toHaveBeenCalled();
+
+        inProgressTestSuite.status = TestSuiteStatus.passed;
+        mockBackendService.getReportDetails.calls.reset();
+        tick(6000);
+        expect(mockBackendService.getReportDetails).toHaveBeenCalledTimes(1);
+        expect(mockBackendService.getReportDetails).toHaveBeenCalledWith('test-build-slug', testReport);
 
         subscription.unsubscribe();
       }));
@@ -242,11 +244,11 @@ fdescribe('Report Effects', () => {
         mockBackendService.getReports = () => of({ testReports: testReports });
         mockBackendService.getReportDetails = (_buildSlug, testReport) => {
           if (testReport === testReports[0]) {
-            testReport.testSuites = testSuiteWithStatus(TestSuiteStatus.passed);
+            testReport.testSuites = [testSuiteWithStatus(TestSuiteStatus.inconclusive)];
           } else if (testReport === testReports[1]) {
-            testReport.testSuites = testSuiteWithStatus(TestSuiteStatus.failed);
+            testReport.testSuites = [testSuiteWithStatus(TestSuiteStatus.passed)];
           } else if (testReport === testReports[2]) {
-            testReport.testSuites = testSuiteWithStatus(TestSuiteStatus.inProgress);
+            testReport.testSuites = [testSuiteWithStatus(TestSuiteStatus.failed)];
           }
 
           return of({ testReport });
@@ -359,6 +361,7 @@ fdescribe('Report Effects', () => {
         mockBackendService.getReports = jasmine
           .createSpy('getReports')
           .and.callFake((_buildSlug) => of({ testReports: testReports }));
+        let isInProgressTestSuiteFinished = false;
         mockBackendService.getReportDetails = jasmine
           .createSpy('getReportDetails')
           .and.callFake((_buildSlug, testReport) => {
@@ -367,7 +370,9 @@ fdescribe('Report Effects', () => {
             } else if (testReport === testReports[1]) {
               testReport.testSuites = [testSuiteWithStatus(TestSuiteStatus.failed)];
             } else if (testReport === testReports[2]) {
-              testReport.testSuites = [testSuiteWithStatus(TestSuiteStatus.inProgress)];
+              testReport.testSuites = [
+                testSuiteWithStatus(isInProgressTestSuiteFinished ? TestSuiteStatus.passed : TestSuiteStatus.inProgress)
+              ];
             }
 
             return of({ testReport });
@@ -395,6 +400,7 @@ fdescribe('Report Effects', () => {
         mockBackendService.getReportDetails.calls.reset();
         emits = [];
 
+        isInProgressTestSuiteFinished = true;
         store.setState({
           testReport: {
             testReports: testReports,
@@ -444,9 +450,13 @@ fdescribe('Report Effects', () => {
         mockBackendService.getReportDetails = jasmine
           .createSpy('getReportDetails')
           .and.callFake((_buildSlug, testReport) => {
-            testReport.testSuites = [testSuiteWithStatus(TestSuiteStatus.passed)];
-
-            return of({ testReport }).pipe(delay(1500));
+            return of({ testReport })
+              .pipe(delay(1500))
+              .pipe(
+                map(() => {
+                  testReport.testSuites = [testSuiteWithStatus(TestSuiteStatus.passed)];
+                })
+              );
           });
 
         actions$ = of(new StartPollingReports({ buildSlug: 'test-build-slug' }));
