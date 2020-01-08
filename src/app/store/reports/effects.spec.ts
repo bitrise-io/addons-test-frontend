@@ -121,7 +121,7 @@ describe('Report Effects', () => {
     });
 
     describe('when there are some in-progress test reports', () => {
-      it('calls getReports once, getReportDetails for each test report once, plus periodically until in-progress test reports finish', fakeAsync(() => {
+      it('calls getReports once, getReportDetails for each test report once, re-polls until all test reports finish', fakeAsync(() => {
         const testReports = testReportList(2);
         const testSuitesOfTestReports = [
           testSuitesWithStatuses([
@@ -332,7 +332,7 @@ describe('Report Effects', () => {
         store = mockStore;
       }));
 
-      it('emits all received reports, emits old filter state, then new filter state after period interval, does not re-call getReports & getReportDetails', fakeAsync(() => {
+      it('emits all reports, old filter state, new filter state after re-poll, does not re-call requests', fakeAsync(() => {
         const testReports = testReportList(2);
         const testSuitesOfTestReports = [
           [testSuiteWithStatus(TestSuiteStatus.inProgress)],
