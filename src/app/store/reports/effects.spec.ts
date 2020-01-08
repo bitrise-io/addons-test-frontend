@@ -497,5 +497,79 @@ fdescribe('Report Effects', () => {
         subscription.unsubscribe();
       }));
     });
+
+    describe('and a new fetch report starts before the previous is finished', () => {
+      it('emits the result of the new fetch, does not emit the result of the old fetch', fakeAsync(() => {
+        const testReports = [new TestReport()];
+
+        const mockBackendService = TestBed.get(BACKEND_SERVICE);
+        mockBackendService.getReports = jasmine
+          .createSpy('getReports')
+          .and.callFake((_buildSlug) => of({ testReports: testReports }).pipe(delay(3000)));
+        mockBackendService.getReportDetails = jasmine
+          .createSpy('getReportDetails')
+          .and.callFake((_buildSlug, testReport) => {
+            return of({ testReport })
+              .pipe(delay(3000))
+              .pipe(
+                map(() => {
+                  testReport.testSuites = [testSuiteWithStatus(TestSuiteStatus.passed)];
+                })
+              );
+          });
+
+        actions$ = new Observable((observer) => {
+          observer.next(new StartPollingReports({ buildSlug: 'old-test-build-slug' }));
+
+          setTimeout(() => {
+            observer.next(new StartPollingReports({ buildSlug: 'new-test-build-slug' }));
+          }, 2000)
+        });
+        let emits = [];
+        const subscription = effects.$fetchReports.subscribe(({ payload, type }) => {
+          emits.push({ payload, type });
+        });
+
+        tick(1000);
+
+        expect(mockBackendService.getReports).toHaveBeenCalledTimes(1);
+        expect(mockBackendService.getReports).toHaveBeenCalledWith('old-test-build-slug');
+        expect(mockBackendService.getReportDetails).not.toHaveBeenCalled();
+        expect(emits.length).toBe(0);
+
+        mockBackendService.getReports.calls.reset();
+        mockBackendService.getReportDetails.calls.reset();
+        emits = [];
+        tick(2000);
+
+        expect(mockBackendService.getReports).toHaveBeenCalledTimes(1);
+        expect(mockBackendService.getReports).toHaveBeenCalledWith('new-test-build-slug');
+        expect(mockBackendService.getReportDetails).not.toHaveBeenCalled();
+        expect(emits.length).toBe(0);
+
+        mockBackendService.getReports.calls.reset();
+        mockBackendService.getReportDetails.calls.reset();
+        emits = [];
+        tick(3000);
+
+        expect(mockBackendService.getReports).not.toHaveBeenCalled();
+        expect(mockBackendService.getReportDetails).toHaveBeenCalledTimes(1);
+        expect(mockBackendService.getReportDetails).toHaveBeenCalledWith('new-test-build-slug', testReports[0]);
+        expect(emits.length).toBe(0);
+
+        mockBackendService.getReports.calls.reset();
+        mockBackendService.getReportDetails.calls.reset();
+        emits = [];
+        tick(3000);
+
+        expect(mockBackendService.getReports).not.toHaveBeenCalled();
+        expect(mockBackendService.getReportDetails).not.toHaveBeenCalled();
+        expect(emits.length).toBe(2);
+        expect(emits[0]).toEqual({ type: ReportActionTypes.Receive, payload: { testReports } });
+        expect(emits[1]).toEqual({ type: ReportActionTypes.Filter, payload: { filter: TestSuiteStatus.passed } });
+
+        subscription.unsubscribe();
+      }));
+    });
   });
 });
