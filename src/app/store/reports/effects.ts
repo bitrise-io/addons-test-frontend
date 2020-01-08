@@ -1,8 +1,8 @@
 import { Injectable, Inject } from '@angular/core';
 import { Actions, Effect, ofType } from '@ngrx/effects';
 import { Store } from '@ngrx/store';
-import { Observable, timer, forkJoin, of, from } from 'rxjs';
-import { switchMap, withLatestFrom, takeWhile, mergeMap } from 'rxjs/operators';
+import { Observable, of } from 'rxjs';
+import { switchMap, withLatestFrom, take } from 'rxjs/operators';
 
 import {
   ReportActionTypes,
@@ -25,39 +25,46 @@ export class ReportEffects {
   @Effect()
   $fetchReports: Observable<ReportActions> = this.actions$.pipe(
     ofType(ReportActionTypes.StartPolling),
-    switchMap((action: StartPollingReports) =>
-      this.backendService.getReports(action.payload.buildSlug).pipe(
-        switchMap(({ testReports }: TestReportsResult) =>
-          timer(0, UPDATE_INTERVAL_MS).pipe(
-            takeWhile(
-              () =>
-                testReports.every((testReport: TestReport) => !testReport.testSuites) ||
-                testReports.some(
-                  (testReport: TestReport) =>
-                    testReport.testSuites &&
-                    testReport.testSuites.find(
-                      (testSuite: TestSuite) => testSuite.status === TestSuiteStatus.inProgress
-                    ) !== undefined
-                )
-            ),
-            switchMap(() =>
-              forkJoin(
-                ...testReports.map((loadedTestReport) =>
-                  this.backendService.getReportDetails(action.payload.buildSlug, loadedTestReport)
-                )
-              ).pipe(
-                withLatestFrom(this.store$),
-                switchMap(([_, testReportState]: [any, { testReport: TestReportState }]) => {
-                  const { testReport: { filter } } = testReportState; // prettier-ignore
+    switchMap((action: StartPollingReports) => {
+      return new Observable((subscriber) => {
+        this.backendService
+          .getReports(action.payload.buildSlug)
+          .toPromise()
+          .then(({ testReports }: TestReportsResult) => {
+            const periodicallyGetReportDetailsAndEmitStateUntilFinished = () => {
+              const getReportDetailsPromises = testReports.map((testReport: TestReport) => {
+                return this.backendService.getReportDetails(action.payload.buildSlug, testReport).toPromise();
+              });
 
-                  return from([new ReceiveReports({ testReports: testReports }), new FilterReports({ filter })]);
-                })
-              )
-            )
-          )
-        )
-      )
-    )
+              Promise.all(getReportDetailsPromises).then(() => {
+                this.store$
+                  .pipe(take(1))
+                  .toPromise()
+                  .then(({ testReport: { filter } }) => {
+                    subscriber.next(new ReceiveReports({ testReports: testReports }));
+                    subscriber.next(new FilterReports({ filter }));
+
+                    if (
+                      testReports.some(
+                        (testReport: TestReport) =>
+                          !testReport.testSuites ||
+                          testReport.testSuites.find(
+                            (testSuite: TestSuite) => testSuite.status === TestSuiteStatus.inProgress
+                          ) !== undefined
+                      )
+                    ) {
+                      setTimeout(() => {
+                        periodicallyGetReportDetailsAndEmitStateUntilFinished();
+                      }, UPDATE_INTERVAL_MS);
+                    }
+                  });
+              });
+            };
+
+            periodicallyGetReportDetailsAndEmitStateUntilFinished();
+          });
+      });
+    })
   );
 
   @Effect()
