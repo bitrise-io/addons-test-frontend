@@ -1,7 +1,7 @@
 import { Injectable, Inject } from '@angular/core';
 import { Actions, Effect, ofType } from '@ngrx/effects';
 import { Store } from '@ngrx/store';
-import { Observable, of } from 'rxjs';
+import { Observable, of, Observer } from 'rxjs';
 import { switchMap, withLatestFrom, take } from 'rxjs/operators';
 
 import {
@@ -22,57 +22,58 @@ const UPDATE_INTERVAL_MS = 5000;
 
 @Injectable()
 export class ReportEffects {
-  latestFetchReportsObservable: Observable<ReceiveReports | FilterReports>;
+  latestFetchReportsObservable: Observable<ReportActions>;
+
   @Effect()
   $fetchReports: Observable<ReportActions> = this.actions$.pipe(
     ofType(ReportActionTypes.StartPolling),
     switchMap((action: StartPollingReports) => {
-      const fetchReportsObservable = (this.latestFetchReportsObservable = new Observable((subscriber) => {
-        this.backendService
-          .getReports(action.payload.buildSlug)
-          .toPromise()
-          .then(({ testReports }: TestReportsResult) => {
-            const periodicallyGetReportDetailsAndEmitStateUntilFinished = () => {
-              if (fetchReportsObservable !== this.latestFetchReportsObservable) {
-                return;
-              }
+      const fetchReportsObservable = (this.latestFetchReportsObservable = new Observable(
+        (observer: Observer<ReportActions>) => {
+          this.backendService
+            .getReports(action.payload.buildSlug)
+            .toPromise()
+            .then(({ testReports }: TestReportsResult) => {
+              const periodicallyGetReportDetailsAndEmitActionsUntilFinished = () => {
+                if (fetchReportsObservable !== this.latestFetchReportsObservable) {
+                  return;
+                }
 
-              const getReportDetailsPromises = testReports.map((testReport: TestReport) => {
-                return this.backendService.getReportDetails(action.payload.buildSlug, testReport).toPromise();
-              });
+                Promise.all(
+                  testReports.map((testReport: TestReport) =>
+                    this.backendService.getReportDetails(action.payload.buildSlug, testReport).toPromise()
+                  )
+                ).then(() => {
+                  this.store$
+                    .pipe(take(1))
+                    .toPromise()
+                    .then(({ testReport: { filter } }) => {
+                      if (fetchReportsObservable !== this.latestFetchReportsObservable) {
+                        return;
+                      }
 
-              Promise.all(getReportDetailsPromises).then(() => {
-                this.store$
-                  .pipe(take(1))
-                  .toPromise()
-                  .then(({ testReport: { filter } }) => {
-                    if (fetchReportsObservable !== this.latestFetchReportsObservable) {
-                      return;
-                    }
+                      observer.next(new ReceiveReports({ testReports }));
+                      observer.next(new FilterReports({ filter }));
 
-                    subscriber.next(new ReceiveReports({ testReports: testReports }));
-                    subscriber.next(new FilterReports({ filter }));
+                      if (
+                        testReports.some(
+                          (testReport: TestReport) =>
+                            !testReport.testSuites ||
+                            testReport.testSuites.find(
+                              (testSuite: TestSuite) => testSuite.status === TestSuiteStatus.inProgress
+                            ) !== undefined
+                        )
+                      ) {
+                        setTimeout(periodicallyGetReportDetailsAndEmitActionsUntilFinished, UPDATE_INTERVAL_MS);
+                      }
+                    });
+                });
+              };
 
-                    if (
-                      testReports.some(
-                        (testReport: TestReport) =>
-                          !testReport.testSuites ||
-                          testReport.testSuites.find(
-                            (testSuite: TestSuite) => testSuite.status === TestSuiteStatus.inProgress
-                          ) !== undefined
-                      )
-                    ) {
-                      setTimeout(() => {
-                        periodicallyGetReportDetailsAndEmitStateUntilFinished();
-                      }, UPDATE_INTERVAL_MS);
-                    }
-                  });
-              });
-            };
-
-            periodicallyGetReportDetailsAndEmitStateUntilFinished();
-          });
-      }));
+              periodicallyGetReportDetailsAndEmitActionsUntilFinished();
+            });
+        }
+      ));
 
       return this.latestFetchReportsObservable;
     })
