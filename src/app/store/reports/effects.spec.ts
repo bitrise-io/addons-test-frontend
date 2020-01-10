@@ -13,7 +13,7 @@ import { TestSuiteStatus, TestSuite } from 'src/app/models/test-suite.model';
 import { TestReport } from 'src/app/models/test-report.model';
 import { ReportActions, StartPollingReports, ReportActionTypes } from './actions';
 import { ReportsReducer, TestReportState } from './reducer';
-import { ReportEffects } from './effects';
+import { ReportEffects, UPDATE_INTERVAL_MS } from './effects';
 
 describe('Report Effects', () => {
   let store: MockStore<{ testReport: TestReportState }>;
@@ -41,7 +41,7 @@ describe('Report Effects', () => {
     effects = TestBed.get(ReportEffects);
   });
 
-  describe('#fetchReports', () => {
+  describe('fetchReports', () => {
     const testSuiteWithStatus = (testSuiteStatus: TestSuiteStatus) => {
       const testSuite = new TestSuite();
       testSuite.status = testSuiteStatus;
@@ -58,12 +58,8 @@ describe('Report Effects', () => {
 
     const createMockedBackendServiceWithSpies = ({ getReports, getReportDetails }) => {
       const mockBackendService = TestBed.get(BACKEND_SERVICE);
-      mockBackendService.getReports = getReports
-        ? jasmine.createSpy('getReports').and.callFake(getReports)
-        : jasmine.createSpy('getReports');
-      mockBackendService.getReportDetails = getReportDetails
-        ? jasmine.createSpy('getReportDetails').and.callFake(getReportDetails)
-        : jasmine.createSpy('getReportDetails');
+      mockBackendService.getReports = jasmine.createSpy('getReports').and.callFake(getReports);
+      mockBackendService.getReportDetails = jasmine.createSpy('getReportDetails').and.callFake(getReportDetails);
 
       return mockBackendService;
     };
@@ -72,7 +68,7 @@ describe('Report Effects', () => {
       it('calls getReports once, does not call getReportDetails', fakeAsync(() => {
         const mockBackendService = createMockedBackendServiceWithSpies({
           getReports: () => of({ testReports: [] }),
-          getReportDetails: undefined
+          getReportDetails: (_buildSlug: string, testReport: TestReport) => of({ testReport })
         });
 
         actions$ = of(new StartPollingReports({ buildSlug: 'test-build-slug' }));
@@ -89,7 +85,7 @@ describe('Report Effects', () => {
         const testReports = testReportList(2);
         const mockBackendService = createMockedBackendServiceWithSpies({
           getReports: () => of({ testReports }),
-          getReportDetails: (_buildSlug, testReport) => {
+          getReportDetails: (_buildSlug: string, testReport: TestReport) => {
             testReport.testSuites = testSuitesWithStatuses([
               TestSuiteStatus.inconclusive,
               TestSuiteStatus.passed,
@@ -113,7 +109,48 @@ describe('Report Effects', () => {
         mockBackendService.getReports.calls.reset();
         mockBackendService.getReportDetails.calls.reset();
 
-        tick(5000);
+        tick(UPDATE_INTERVAL_MS);
+
+        expect(mockBackendService.getReports).not.toHaveBeenCalled();
+        expect(mockBackendService.getReportDetails).not.toHaveBeenCalled();
+      }));
+    });
+
+    describe('when there are some test reports which did not get test suites via getReportDetails', () => {
+      it('calls getReports once, getReportDetails for each test report once, re-polls until all test reports get test suites', fakeAsync(() => {
+        const testReports = testReportList(1);
+        let testSuitesOfTestReport: TestSuite[];
+        const mockBackendService = createMockedBackendServiceWithSpies({
+          getReports: () => of({ testReports }),
+          getReportDetails: (_buildSlug: string, testReport: TestReport) => {
+            testReport.testSuites = testSuitesOfTestReport;
+
+            return of({ testReport });
+          }
+        });
+
+        actions$ = of(new StartPollingReports({ buildSlug: 'test-build-slug' }));
+        effects.$fetchReports.subscribe();
+        tick();
+
+        expect(mockBackendService.getReports).toHaveBeenCalledTimes(1);
+        expect(mockBackendService.getReportDetails).toHaveBeenCalledTimes(1);
+        expect(mockBackendService.getReportDetails).toHaveBeenCalledWith('test-build-slug', testReports[0]);
+
+        mockBackendService.getReports.calls.reset();
+        mockBackendService.getReportDetails.calls.reset();
+
+        testSuitesOfTestReport = [testSuiteWithStatus(TestSuiteStatus.passed)];
+        tick(UPDATE_INTERVAL_MS);
+
+        expect(mockBackendService.getReports).not.toHaveBeenCalled();
+        expect(mockBackendService.getReportDetails).toHaveBeenCalledTimes(1);
+        expect(mockBackendService.getReportDetails).toHaveBeenCalledWith('test-build-slug', testReports[0]);
+
+        mockBackendService.getReports.calls.reset();
+        mockBackendService.getReportDetails.calls.reset();
+
+        tick(UPDATE_INTERVAL_MS);
 
         expect(mockBackendService.getReports).not.toHaveBeenCalled();
         expect(mockBackendService.getReportDetails).not.toHaveBeenCalled();
@@ -140,7 +177,7 @@ describe('Report Effects', () => {
         ];
         const mockBackendService = createMockedBackendServiceWithSpies({
           getReports: () => of({ testReports }),
-          getReportDetails: (_buildSlug, testReport) => {
+          getReportDetails: (_buildSlug: string, testReport: TestReport) => {
             testReport.testSuites = testSuitesOfTestReports[testReports.indexOf(testReport)];
 
             return of({ testReport });
@@ -160,7 +197,7 @@ describe('Report Effects', () => {
         mockBackendService.getReportDetails.calls.reset();
 
         testSuitesOfTestReports[0][0].status = TestSuiteStatus.passed;
-        tick(5000);
+        tick(UPDATE_INTERVAL_MS);
 
         expect(mockBackendService.getReports).not.toHaveBeenCalled();
         expect(mockBackendService.getReportDetails).toHaveBeenCalledTimes(2);
@@ -170,7 +207,7 @@ describe('Report Effects', () => {
         mockBackendService.getReports.calls.reset();
         mockBackendService.getReportDetails.calls.reset();
 
-        tick(5000);
+        tick(UPDATE_INTERVAL_MS);
 
         expect(mockBackendService.getReports).not.toHaveBeenCalled();
         expect(mockBackendService.getReportDetails).not.toHaveBeenCalled();
@@ -183,7 +220,7 @@ describe('Report Effects', () => {
         const testSuites = [testSuiteWithStatus(TestSuiteStatus.inProgress)];
         const mockBackendService = createMockedBackendServiceWithSpies({
           getReports: () => of({ testReports }),
-          getReportDetails: (_buildSlug, testReport) =>
+          getReportDetails: (_buildSlug: string, testReport: TestReport) =>
             of({ testReport })
               .pipe(delay(2000))
               .pipe(
@@ -205,7 +242,7 @@ describe('Report Effects', () => {
 
         mockBackendService.getReportDetails.calls.reset();
 
-        tick(1999 + 5000);
+        tick(1999 + UPDATE_INTERVAL_MS);
 
         expect(mockBackendService.getReportDetails).not.toHaveBeenCalled();
 
@@ -243,7 +280,7 @@ describe('Report Effects', () => {
 
         createMockedBackendServiceWithSpies({
           getReports: () => of({ testReports }),
-          getReportDetails: (_buildSlug, testReport) => {
+          getReportDetails: (_buildSlug: string, testReport: TestReport) => {
             testReport.testSuites = testSuitesOfTestReports[testReports.indexOf(testReport)];
 
             return of({ testReport });
@@ -282,8 +319,8 @@ describe('Report Effects', () => {
         });
 
         const mockBackendService = createMockedBackendServiceWithSpies({
-          getReports: (_buildSlug) => of({ testReports }).pipe(delay(1000)),
-          getReportDetails: (_buildSlug, testReport) => {
+          getReports: () => of({ testReports }).pipe(delay(1000)),
+          getReportDetails: (_buildSlug: string, testReport: TestReport) => {
             testReport.testSuites = [testSuiteWithStatus(TestSuiteStatus.passed)];
 
             return of({ testReport });
@@ -348,12 +385,12 @@ describe('Report Effects', () => {
         });
 
         const mockBackendService = createMockedBackendServiceWithSpies({
-          getReports: (_buildSlug) => of({ testReports }),
-          getReportDetails: jasmine.createSpy('getReportDetails').and.callFake((_buildSlug, testReport) => {
+          getReports: () => of({ testReports }),
+          getReportDetails: (_buildSlug: string, testReport: TestReport) => {
             testReport.testSuites = testSuitesOfTestReports[testReports.indexOf(testReport)];
 
             return of({ testReport });
-          })
+          }
         });
 
         actions$ = of(new StartPollingReports({ buildSlug: 'test-build-slug' }));
@@ -386,7 +423,7 @@ describe('Report Effects', () => {
           }
         });
 
-        tick(5000);
+        tick(UPDATE_INTERVAL_MS);
 
         expect(mockBackendService.getReports).not.toHaveBeenCalled();
         expect(mockBackendService.getReportDetails).toHaveBeenCalledTimes(2);
@@ -417,8 +454,8 @@ describe('Report Effects', () => {
         });
 
         const mockBackendService = createMockedBackendServiceWithSpies({
-          getReports: (_buildSlug) => of({ testReports }),
-          getReportDetails: (_buildSlug, testReport) => {
+          getReports: () => of({ testReports }),
+          getReportDetails: (_buildSlug: string, testReport: TestReport) => {
             return of({ testReport })
               .pipe(delay(1000))
               .pipe(
@@ -470,8 +507,8 @@ describe('Report Effects', () => {
         const testReports = [new TestReport()];
 
         const mockBackendService = createMockedBackendServiceWithSpies({
-          getReports: (_buildSlug) => of({ testReports }).pipe(delay(2000)),
-          getReportDetails: (_buildSlug, testReport) => {
+          getReports: () => of({ testReports }).pipe(delay(2000)),
+          getReportDetails: (_buildSlug: string, testReport: TestReport) => {
             testReport.testSuites = [testSuiteWithStatus(TestSuiteStatus.passed)];
 
             return of({ testReport });

@@ -15,7 +15,7 @@ import {
 import { BackendService, BACKEND_SERVICE, TestReportsResult } from 'src/app/services/backend/backend.model';
 import { TestReportState } from './reducer';
 import { filterReports } from './filter-reports';
-import { TestSuite, TestSuiteStatus } from 'src/app/models/test-suite.model';
+import { TestSuiteStatus } from 'src/app/models/test-suite.model';
 import { TestReport } from 'src/app/models/test-report.model';
 
 export const UPDATE_INTERVAL_MS = 5000;
@@ -75,8 +75,8 @@ export class ReportEffects {
             observer.next(new ReceiveReports({ testReports }));
             observer.next(new FilterReports({ filter }));
 
-            const isAnyReportInProgress = testReports.some(({ testSuites }) =>
-              testSuites.some(({ status }) => status === TestSuiteStatus.inProgress)
+            const isAnyReportInProgress = testReports.some(
+              ({ testSuites }) => !testSuites || testSuites.some(({ status }) => status === TestSuiteStatus.inProgress)
             );
 
             if (isAnyReportInProgress) {
