@@ -117,7 +117,7 @@ describe('Report Effects', () => {
     });
 
     describe('when there are some test reports which did not get test suites via getReportDetails', () => {
-      it('calls getReports once, getReportDetails for each test report once, re-polls until all test reports get test suites', fakeAsync(() => {
+      it('calls getReports once, getReportDetails for each test report once, re-polls until all reports get test suites', fakeAsync(() => {
         const testReports = testReportList(1);
         let testSuitesOfTestReport: TestSuite[];
         const mockBackendService = createMockedBackendServiceWithSpies({
