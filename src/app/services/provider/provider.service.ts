@@ -62,7 +62,7 @@ export type JUnitXMLTestSuiteResponse = {
   properties: {
     [property: string]: string;
   };
-  tests: {
+  tests?: {
     name: string;
     classname: string;
     duration: Number;
@@ -259,7 +259,7 @@ export class ProviderService {
     });
     testSuite.videoUrl = null;
     testSuite.logUrl = null;
-    testSuite.testCases = testSuiteResponse.tests.map((testCaseResponse) =>
+    testSuite.testCases = (testSuiteResponse.tests || []).map((testCaseResponse) =>
       this.deserializeJUnitXMLTestCase(testCaseResponse)
     );
 

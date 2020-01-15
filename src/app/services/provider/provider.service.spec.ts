@@ -572,6 +572,28 @@ describe('ProviderService', () => {
       expect(testSuite.artifacts[1].downloadURL).toBe('https://www.bitrise.io/assets/svg/logo-bitrise.svg');
       expect(testSuite.artifacts[1].filename).toBe('file2.txt');
     });
+
+    it('sets 0 test cases if there is no tests field', () => {
+      testSuiteResponse = {
+        name: 'JUnitXmlReporter.constructor',
+        package: '',
+        properties: {
+          'compiler.debug': 'on'
+        },
+        totals: {
+          tests: 1,
+          passed: 0,
+          skipped: 0,
+          failed: 1,
+          error: 0,
+          duration: 20000000
+        }
+      }
+
+      const testSuite = service.deserializeJUnitXMLTestSuite(testSuiteResponse, testReportDetailsResponse);
+
+      expect(testSuite.testCases.length).toBe(0);
+    })
   });
 
   describe('deserializeFirebaseTestlabTestCases', () => {
