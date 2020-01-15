@@ -588,12 +588,12 @@ describe('ProviderService', () => {
           error: 0,
           duration: 20000000
         }
-      }
+      };
 
       const testSuite = service.deserializeJUnitXMLTestSuite(testSuiteResponse, testReportDetailsResponse);
 
       expect(testSuite.testCases.length).toBe(0);
-    })
+    });
   });
 
   describe('deserializeFirebaseTestlabTestCases', () => {
