@@ -33,6 +33,6 @@ describe('HeadingTextComponent', () => {
   });
 
   it('should contain the expected string', () => {
-    expect(fixture.debugElement.nativeElement.innerText).toBe(innerText);
+    expect(fixture.debugElement.nativeElement.innerHTML).toContain(innerText);
   });
 });
