@@ -19,6 +19,7 @@ import { AppFooterComponent } from './components/app-footer/app-footer.component
 import { TestSummaryComponent } from './components/test-summary/test-summary.component';
 import { TestReportWrapperComponent } from './components/test-report-wrapper/test-report-wrapper.component';
 import { TestSummaryHeaderComponent } from './components/test-summary-header/test-summary-header.component';
+import { LoaderCircleComponent } from './components/loader-circle/loader-circle.component';
 import { TestReportComponent } from './components/test-report/test-report.component';
 import { TestSuiteComponent } from './components/test-suite/test-suite.component';
 import { TestSuiteDetailsComponent } from './components/test-suite-details/test-suite-details.component';
@@ -51,7 +52,8 @@ import { ZipperService } from './services/zipper.service';
     TestReportComponent,
     TestSuiteComponent,
     TestSuiteDetailsComponent,
-    TestSuiteDetailsHeaderComponent
+    TestSuiteDetailsHeaderComponent,
+    LoaderCircleComponent
   ],
   imports: [
     BrowserModule,
