@@ -16,9 +16,11 @@ export class TestSummaryComponent implements OnInit {
   buildSlug: string;
   testReports: TestReport[];
   testReports$: Observable<TestReport[]>;
+  loading$: Observable<boolean>;
 
   constructor(private activatedRoute: ActivatedRoute, private store: Store<{ testReport: TestReportState }>) {
     this.testReports$ = store.select('testReport', 'filteredReports');
+    this.loading$ = store.select('testReport', 'isLoading');
   }
 
   ngOnInit() {
