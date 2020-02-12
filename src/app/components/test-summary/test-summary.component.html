@@ -1,8 +1,7 @@
 <div class="test-summary centered-max-width main-content-padding-x">
   <bitrise-test-summary-header *ngIf="testReports.length > 0"></bitrise-test-summary-header>
-  <loader-circle [show]="loading$ | async"></loader-circle>
+  <bitrise-loader-circle [show]="loading$ | async"></bitrise-loader-circle>
   <div class="notification-wrapper" *ngIf="!(loading$ | async) && !testReports.length">
-    <loader-circle></loader-circle>
       <bitrise-notification type="warning">
       Testing add-on wasn't configured correctly. Please make sure you configure it in the Workflow Editor.
       <a href="https://devcenter.bitrise.io/testing/test-reports/" target="_blank">Get help for setting up Testing add-on.</a>

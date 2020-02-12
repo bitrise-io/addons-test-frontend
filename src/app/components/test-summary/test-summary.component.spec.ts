@@ -34,7 +34,7 @@ class MockTestReportComponent {
 }
 
 @Component({
-  selector: 'loader-circle',
+  selector: 'bitrise-loader-circle',
   template: ''
 })
 class MockLoaderCircleComponent {

@@ -1,7 +1,7 @@
 import { Component, Input } from '@angular/core';
 
 @Component({
-  selector: 'loader-circle',
+  selector: 'bitrise-loader-circle',
   styleUrls: ['./loader-circle.component.scss'],
   template: `
     <div class="content" *ngIf="show">
