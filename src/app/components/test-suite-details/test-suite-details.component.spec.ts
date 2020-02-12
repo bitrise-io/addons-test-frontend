@@ -64,6 +64,7 @@ xdescribe('TestSuiteDetailsComponent', () => {
     store = mockStore;
     store.setState({
       testReport: {
+        isLoading: false,
         testReports: testReportIds.map((testReportId: string) => {
           const testReport = new TestReport();
           testReport.id = testReportId;

@@ -272,6 +272,7 @@ describe('Report Effects', () => {
 
         store.setState({
           testReport: {
+            isLoading: true,
             testReports: undefined,
             filteredReports: undefined,
             filter: TestSuiteStatus.failed
@@ -312,6 +313,7 @@ describe('Report Effects', () => {
 
         store.setState({
           testReport: {
+            isLoading: true,
             testReports: undefined,
             filteredReports: undefined,
             filter: TestSuiteStatus.failed
@@ -345,6 +347,7 @@ describe('Report Effects', () => {
 
         store.setState({
           testReport: {
+            isLoading: true,
             testReports,
             filteredReports: testReports,
             filter: TestSuiteStatus.passed
@@ -378,6 +381,7 @@ describe('Report Effects', () => {
 
         store.setState({
           testReport: {
+            isLoading: false,
             testReports: undefined,
             filteredReports: undefined,
             filter: TestSuiteStatus.failed
@@ -417,6 +421,7 @@ describe('Report Effects', () => {
         testSuitesOfTestReports[0][0].status = TestSuiteStatus.passed;
         store.setState({
           testReport: {
+            isLoading: true,
             testReports,
             filteredReports: testReports,
             filter: TestSuiteStatus.passed
@@ -448,6 +453,7 @@ describe('Report Effects', () => {
         store.setState({
           testReport: {
             testReports: undefined,
+            isLoading: true,
             filteredReports: undefined,
             filter: TestSuiteStatus.failed
           }
@@ -485,6 +491,7 @@ describe('Report Effects', () => {
 
         store.setState({
           testReport: {
+            isLoading: true,
             testReports,
             filteredReports: testReports,
             filter: TestSuiteStatus.passed

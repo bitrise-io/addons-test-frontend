@@ -3,13 +3,14 @@ import { ReceiveReports, ReceiveFilteredReports, FilterReports, ReportActions } 
 import { TestSuiteStatus } from 'src/app/models/test-suite.model';
 import { TestReport } from 'src/app/models/test-report.model';
 
-describe('Reports reducer', () => {
-  const initialState: TestReportState = {
-    testReports: [],
-    filteredReports: [],
-    filter: TestSuiteStatus.failed
-  };
+export const initialState: TestReportState = {
+  isLoading: true,
+  testReports: [],
+  filteredReports: [],
+  filter: TestSuiteStatus.failed
+};
 
+describe('Reports reducer', () => {
   it('updates the state with reports received', () => {
     const newState = ReportsReducer(
       initialState,

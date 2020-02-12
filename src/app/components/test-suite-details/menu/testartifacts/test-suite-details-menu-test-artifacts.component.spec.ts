@@ -16,6 +16,7 @@ import { TestArtifact } from '../../../../models/test-artifact.model';
 import { ArtifactsReducer, ArtifactStoreState } from 'src/app/store/artifacts/reducer';
 import { ZipperService } from 'src/app/services/zipper.service';
 import { AppResult } from 'src/app/services/backend/backend.model';
+import { initialState } from 'src/app/store/reports/reducer.spec';
 
 describe('TestSuiteDetailsMenuTestArtifactsComponent', () => {
   let fixture: ComponentFixture<TestSuiteDetailsMenuTestArtifactsComponent>;
@@ -36,11 +37,7 @@ describe('TestSuiteDetailsMenuTestArtifactsComponent', () => {
     name: undefined
   };
 
-  const initialtestReportsState = {
-    testReports: [],
-    filteredReports: [],
-    filter: null
-  };
+  const initialtestReportsState = initialState;
 
   beforeEach(() => {
     TestBed.configureTestingModule({

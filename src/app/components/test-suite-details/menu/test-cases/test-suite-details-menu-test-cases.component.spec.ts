@@ -14,6 +14,7 @@ import { TestReport } from 'src/app/models/test-report.model';
 import { TestReportState } from 'src/app/store/reports/reducer';
 import { TestSuite } from 'src/app/models/test-suite.model';
 import { TestCase } from 'src/app/models/test-case.model';
+import { initialState } from 'src/app/store/reports/reducer.spec';
 
 describe('TestSuiteDetailsMenuTestCasesComponent', () => {
   let store: MockStore<{
@@ -24,11 +25,7 @@ describe('TestSuiteDetailsMenuTestCasesComponent', () => {
   let fixture: ComponentFixture<TestSuiteDetailsMenuTestCasesComponent>;
   let component: TestSuiteDetailsMenuTestCasesComponent;
 
-  const initialtestReportsState = {
-    testReports: [],
-    filteredReports: [],
-    filter: null
-  };
+  const initialtestReportsState = initialState;
 
   beforeEach(async(() => {
     testReport = new TestReport();

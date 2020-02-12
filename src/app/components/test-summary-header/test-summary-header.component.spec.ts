@@ -77,7 +77,8 @@ describe('TestSummaryHeaderComponent', () => {
       testReport: {
         testReports: [],
         filteredReports: [],
-        filter: TestSuiteStatus.failed
+        filter: TestSuiteStatus.failed,
+        isLoading: true,
       }
     });
   }));
@@ -97,6 +98,7 @@ describe('TestSummaryHeaderComponent', () => {
         testReport: {
           filteredReports: [],
           filter: null,
+          isLoading: false,
           testReports: [
             {
               id: 1,
@@ -192,6 +194,7 @@ describe('TestSummaryHeaderComponent', () => {
         testReport: {
           filteredReports: [],
           filter: null,
+          isLoading: false,
           testReports: [
             {
               id: 1,

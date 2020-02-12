@@ -17,6 +17,7 @@ import { TestSuite } from 'src/app/models/test-suite.model';
 import { TestSuiteResolve } from 'src/app/services/test-suite.resolve.service';
 import { Log } from '../../../../models/log.model';
 import { LogReducer, LogStoreState } from 'src/app/store/log/reducer';
+import { initialState } from 'src/app/store/reports/reducer.spec';
 
 describe('TestSuiteDetailsMenuLogsComponent', () => {
   let fixture: ComponentFixture<TestSuiteDetailsMenuLogsComponent>;
@@ -29,11 +30,7 @@ describe('TestSuiteDetailsMenuLogsComponent', () => {
   let testSuite: TestSuite;
   let log: Log;
 
-  const initialtestReportsState = {
-    testReports: [],
-    filteredReports: [],
-    filter: null
-  };
+  const initialtestReportsState = initialState;
 
   beforeEach(() => {
     testReport = new TestReport();

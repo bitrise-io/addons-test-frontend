@@ -13,6 +13,7 @@ import { TestReport } from '../../models/test-report.model';
 import { ReportsReducer, TestReportState } from 'src/app/store/reports/reducer';
 import { TestSuite } from '../../models/test-suite.model';
 import { MockStore, provideMockStore } from 'src/app/mock-store/testing';
+import { initialState } from 'src/app/store/reports/reducer.spec';
 
 @Component({
   selector: 'bitrise-test-summary',
@@ -67,6 +68,7 @@ describe('AppHeaderComponent', () => {
       testReport: {
         testReports: [],
         filteredReports: [],
+        isLoading: false,
         filter: null
       }
     });
@@ -89,6 +91,7 @@ describe('AppHeaderComponent', () => {
         testReport: {
           filteredReports: [],
           filter: null,
+          isLoading: true,
           testReports: [
             { id: '1', name: 'UI Test A', failedTestSuiteCount: 2 },
             { id: '2', name: 'UI Test B', failedTestSuiteCount: 0 },
@@ -224,11 +227,7 @@ describe('AppHeaderComponent', () => {
   describe('when there are no test reports', () => {
     beforeEach(() => {
       store.setState({
-        testReport: {
-          testReports: [],
-          filteredReports: [],
-          filter: null
-        }
+        testReport: initialState
       });
 
       fixture.detectChanges();

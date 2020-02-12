@@ -10,6 +10,7 @@ import { TestSummaryComponent } from './test-summary.component';
 import { TestReport } from '../../models/test-report.model';
 import { ReportsReducer, TestReportState } from 'src/app/store/reports/reducer';
 import { provideMockStore, MockStore } from 'src/app/mock-store/testing';
+import { initialState } from 'src/app/store/reports/reducer.spec';
 
 @Component({
   selector: 'bitrise-test-summary-header',
@@ -32,6 +33,14 @@ class MockTestReportComponent {
   @Input() testReport: TestReport;
 }
 
+@Component({
+  selector: 'loader-circle',
+  template: ''
+})
+class MockLoaderCircleComponent {
+  @Input() show: boolean;
+}
+
 describe('TestSummaryComponent', () => {
   let store: MockStore<{ testReport: TestReportState }>;
   let fixture: ComponentFixture<TestSummaryComponent>;
@@ -44,7 +53,8 @@ describe('TestSummaryComponent', () => {
         TestSummaryComponent,
         MockTestSummaryHeaderComponent,
         MockTestReportComponent,
-        MockNotificationComponent
+        MockNotificationComponent,
+        MockLoaderCircleComponent
       ],
       providers: [
         provideMockStore({}),
@@ -60,13 +70,7 @@ describe('TestSummaryComponent', () => {
 
   beforeEach(inject([Store], (mockStore: MockStore<{ testReport: TestReportState }>) => {
     store = mockStore;
-    store.setState({
-      testReport: {
-        testReports: undefined,
-        filteredReports: undefined,
-        filter: null
-      }
-    });
+    store.setState({ testReport: initialState });
   }));
 
   beforeEach(() => {
@@ -83,6 +87,7 @@ describe('TestSummaryComponent', () => {
       store.setState({
         testReport: {
           testReports: [],
+          isLoading: false,
           filter: null,
           filteredReports: Array(3)
             .fill(null)
@@ -113,6 +118,7 @@ describe('TestSummaryComponent', () => {
       store.setState({
         testReport: {
           testReports: [],
+          isLoading: true,
           filter: null,
           filteredReports: []
         }
@@ -130,9 +136,25 @@ describe('TestSummaryComponent', () => {
       expect(fixture.debugElement.queryAll(By.css('bitrise-test-report')).length).toBe(0);
     });
 
+    it('renders loader while loading test reports', () => {
+      const loaderCircle = fixture.debugElement.query(By.css('loader-circle'));
+      expect(loaderCircle).not.toBeNull();
+    });
+
     it('renders warning notification', () => {
-      const warningNotification = fixture.debugElement.query(By.css('bitrise-notification'));
-      expect(warningNotification).not.toBeNull();
+      store.setState({
+        testReport: {
+          testReports: [],
+          isLoading: false,
+          filter: null,
+          filteredReports: []
+        }
+      });
+
+      fixture.detectChanges();
+
+      const loaderCircle = fixture.debugElement.query(By.css('.notification-wrapper'));
+      expect(loaderCircle).not.toBeNull();
     });
   });
 });
