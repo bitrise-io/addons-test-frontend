@@ -116,12 +116,7 @@ describe('TestSummaryComponent', () => {
   describe('when there are no test reports', () => {
     beforeEach(() => {
       store.setState({
-        testReport: {
-          testReports: [],
-          isLoading: true,
-          filter: null,
-          filteredReports: []
-        }
+        testReport: initialState
       });
 
       fixture.detectChanges();
@@ -137,17 +132,15 @@ describe('TestSummaryComponent', () => {
     });
 
     it('renders loader while loading test reports', () => {
-      const loaderCircle = fixture.debugElement.query(By.css('loader-circle'));
+      const loaderCircle = fixture.debugElement.query(By.css('bitrise-loader-circle'));
       expect(loaderCircle).not.toBeNull();
     });
 
     it('renders warning notification', () => {
       store.setState({
         testReport: {
-          testReports: [],
-          isLoading: false,
-          filter: null,
-          filteredReports: []
+          ...initialState,
+          isLoading: false
         }
       });
 
