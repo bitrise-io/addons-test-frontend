@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, Output } from '@angular/core';
 import { Router, NavigationEnd, RoutesRecognized, ActivatedRoute } from '@angular/router';
 import { filter } from 'rxjs/operators';
 import { Observable } from 'rxjs';
@@ -8,6 +8,8 @@ import { TestReport } from '../../models/test-report.model';
 import { TestSuiteStatus, TestSuite } from '../../models/test-suite.model';
 import { FilterReports, StartPollingReports } from 'src/app/store/reports/actions';
 import { TestReportState } from 'src/app/store/reports/reducer';
+
+const VERTICAL_LAYOUT_REPORT_LIMIT = 5;
 
 @Component({
   selector: 'bitrise-app-header',
@@ -49,6 +51,10 @@ export class AppHeaderComponent implements OnInit {
       const statusMenuItemFromQueryParams = this.statusMenuItems.find(statusMenuItem => statusMenuItem.queryParam === params['status']);
       this.selectedStatus = statusMenuItemFromQueryParams ? statusMenuItemFromQueryParams.value : null;
     });
+  }
+
+  @Output() get isVerticalLayout() {
+    return this.testReports.length < VERTICAL_LAYOUT_REPORT_LIMIT;
   }
 
   ngOnInit() {

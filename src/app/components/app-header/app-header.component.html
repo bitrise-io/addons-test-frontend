@@ -11,19 +11,22 @@
       </div>
     </div>
     <nav class="tabmenu">
-      <a
-        class="tabmenu-item"
-        *ngFor="let tabmenuItem of tabmenuItems"
-        [routerLink]="tabmenuItem.routerLink"
-        routerLinkActive="active"
-        queryParamsHandling="merge"
-      >
-        <span class="text">{{ tabmenuItem.name }}</span>
-        <span class="notification-bubble error failed-test-count" *ngIf="tabmenuItem.failedTestCount > 0"
-          >{{ tabmenuItem.failedTestCount | maximizeTo: 9 }}</span
+      <ng-container *ngFor="let tabmenuItem of tabmenuItems">
+          <a
+          class="tabmenu-item"
+          *ngIf="isVerticalLayout"
+          [routerLink]="tabmenuItem.routerLink"
+          routerLinkActive="active"
+          queryParamsHandling="merge"
         >
+          <span class="text">{{ tabmenuItem.name }}</span>
+          <span class="notification-bubble error failed-test-count" *ngIf="tabmenuItem.failedTestCount > 0"
+            >{{ tabmenuItem.failedTestCount | maximizeTo: 9 }}</span
+          >
       </a>
+      </ng-container>
       <div class="status-offset"></div>
+      <ng-container *ngIf="!isVerticalLayout" [ngTemplateOutlet]="reportsSelect"></ng-container>
       <ng-container [ngTemplateOutlet]="statusSelect"></ng-container>
     </nav>
   </div>
@@ -33,11 +36,14 @@
     <div class="icon" [inlineSVG]="'/assets/images/sign-cross.svg'"></div>
     <span class="text">{{ summedFailedTestCount }} failed tests</span>
   </div>
-  <select class="tabmenu-select" [(ngModel)]="selectedSmallTabmenuItem" (change)="selectedSmallTabmenuItemChanged()">
-    <option *ngFor="let tabmenuItem of tabmenuItems" [ngValue]="tabmenuItem">{{ tabmenuItem.name }}</option>
-  </select>
+  <ng-container [ngTemplateOutlet]="reportsSelect"></ng-container>
   <ng-container [ngTemplateOutlet]="statusSelect"></ng-container>
 </section>
+<ng-template #reportsSelect>
+  <select class="tabmenu-dropdown" [(ngModel)]="selectedSmallTabmenuItem" (change)="selectedSmallTabmenuItemChanged()">
+    <option *ngFor="let tabmenuItem of tabmenuItems" [ngValue]="tabmenuItem">{{ tabmenuItem.name }}</option>
+  </select>
+</ng-template>
 <ng-template #statusSelect>
   <select class="status-select" [ngClass]="TestSuite.statusCssClass(selectedStatus)" [(ngModel)]="selectedStatus" (change)="selectedStatusChanged()">
     <option *ngFor="let item of statusMenuItems" [ngValue]="item.value">{{ item.name }}</option>

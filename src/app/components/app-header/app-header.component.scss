@@ -134,6 +134,19 @@
   }
 }
 
+.tabmenu-dropdown {
+  @include ui-element-select;
+  @include ui-modifier-button-shadow;
+
+  flex-grow: 0.5;
+  display: block;
+  margin: auto 1em 1em auto;
+
+  @include width-max-screen-small {
+    width: 100%;
+  }
+}
+
 @include width-max-screen-small {
   .app-header {
     @include padding-y(16px);
@@ -169,12 +182,7 @@
       }
     }
 
-    .tabmenu-select {
-      @include ui-element-select;
-      @include ui-modifier-button-shadow;
-    }
-
-    .tabmenu-select, .status-select {
+    .status-select {
       display: block;
       margin-bottom: 16px;
       width: 100%;
