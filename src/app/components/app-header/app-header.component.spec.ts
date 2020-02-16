@@ -8,7 +8,7 @@ import { FormsModule } from '@angular/forms';
 import { Store, StoreModule } from '@ngrx/store';
 import { InlineSVGModule } from 'ng-inline-svg';
 
-import { AppHeaderComponent } from './app-header.component';
+import { AppHeaderComponent, VERTICAL_LAYOUT_REPORT_LIMIT } from './app-header.component';
 import { TestReport } from '../../models/test-report.model';
 import { ReportsReducer, TestReportState } from 'src/app/store/reports/reducer';
 import { TestSuite } from '../../models/test-suite.model';
@@ -33,6 +33,29 @@ class MockMaximizePipe implements PipeTransform {
     return '9+';
   }
 }
+
+const generateTestReports = (length: number): TestReport[] =>
+  Array.from(
+    { length },
+    (_, key) => ({
+      id: key + 1,
+      name: `UI Test ${String.fromCharCode('A'.charCodeAt(0) + key)}`,
+      failedTestSuiteCount: key
+    })).map((specConfig) => {
+      const testReport = new TestReport();
+      testReport.id = specConfig.id.toString();
+      testReport.name = specConfig.name;
+      testReport.testSuites = Array(specConfig.failedTestSuiteCount)
+        .fill(null)
+        .map(() => {
+          const testSuite = new TestSuite();
+          testSuite.status = 2;
+
+          return testSuite;
+        });
+
+      return testReport;
+    });
 
 describe('AppHeaderComponent', () => {
   let location: Location;
@@ -92,27 +115,7 @@ describe('AppHeaderComponent', () => {
           filteredReports: [],
           filter: null,
           isLoading: true,
-          testReports: [
-            { id: '1', name: 'UI Test A', failedTestSuiteCount: 2 },
-            { id: '2', name: 'UI Test B', failedTestSuiteCount: 0 },
-            { id: '3', name: 'UI Test C', failedTestSuiteCount: 1 },
-            { id: '4', name: 'Unit Test X', failedTestSuiteCount: 3 },
-            { id: '5', name: 'Unit Test Y', failedTestSuiteCount: 6 }
-          ].map((specConfig) => {
-            const testReport = new TestReport();
-            testReport.id = specConfig.id;
-            testReport.name = specConfig.name;
-            testReport.testSuites = Array(specConfig.failedTestSuiteCount)
-              .fill(null)
-              .map(() => {
-                const testSuite = new TestSuite();
-                testSuite.status = 2;
-
-                return testSuite;
-              });
-
-            return testReport;
-          })
+          testReports: generateTestReports(VERTICAL_LAYOUT_REPORT_LIMIT - 1)
         }
       });
 
@@ -121,38 +124,49 @@ describe('AppHeaderComponent', () => {
 
       tabElements = fixture.debugElement.queryAll(By.css('a.tabmenu-item'));
       summedFailedTestCountElement = fixture.debugElement.query(By.css('.summed-failed-test-count'));
-      dropdownItemElements = fixture.debugElement.queryAll(By.css('.tabmenu-select option'));
+      dropdownItemElements = fixture.debugElement.queryAll(By.css('.tabmenu-dropdown option'));
     });
 
     it('loads as many tabs (and items for the mobile-only dropdown) as there are test reports, plus one for the summary', () => {
-      expect(tabElements.length).toBe(6);
-      expect(dropdownItemElements.length).toBe(6);
+      expect(tabElements.length).toBe(5);
+      expect(dropdownItemElements.length).toBe(5);
+    });
+
+    it(`only uses vertical layout with less than ${VERTICAL_LAYOUT_REPORT_LIMIT} reports`, () => {
+      expect(fixture.componentInstance.isVerticalLayout).toBeTruthy();
+
+      store.setState({
+        testReport: {
+          filteredReports: [],
+          filter: null,
+          isLoading: true,
+          testReports: generateTestReports(VERTICAL_LAYOUT_REPORT_LIMIT)
+        }
+      });
+
+      fixture.detectChanges();
+      expect(fixture.componentInstance.isVerticalLayout).toBeFalsy();
     });
 
     it('shows the name of the test reports in the tabs (and in the items of the mobile-only dropdown)', () => {
       expect(tabElements[1].query(By.css('.text')).nativeElement.textContent).toBe('UI Test A');
       expect(tabElements[2].query(By.css('.text')).nativeElement.textContent).toBe('UI Test B');
       expect(tabElements[3].query(By.css('.text')).nativeElement.textContent).toBe('UI Test C');
-      expect(tabElements[4].query(By.css('.text')).nativeElement.textContent).toBe('Unit Test X');
-      expect(tabElements[5].query(By.css('.text')).nativeElement.textContent).toBe('Unit Test Y');
+      expect(tabElements[4].query(By.css('.text')).nativeElement.textContent).toBe('UI Test D');
 
       expect(dropdownItemElements[1].nativeElement.textContent).toBe('UI Test A');
       expect(dropdownItemElements[2].nativeElement.textContent).toBe('UI Test B');
       expect(dropdownItemElements[3].nativeElement.textContent).toBe('UI Test C');
-      expect(dropdownItemElements[4].nativeElement.textContent).toBe('Unit Test X');
-      expect(dropdownItemElements[5].nativeElement.textContent).toBe('Unit Test Y');
+      expect(dropdownItemElements[4].nativeElement.textContent).toBe('UI Test D');
     });
 
     it('shows bubble only for test reports with failed tests', () => {
-      expect(tabElements[1].query(By.css('.notification-bubble'))).not.toBeNull();
-      expect(tabElements[2].query(By.css('.notification-bubble'))).toBeNull();
-      expect(tabElements[3].query(By.css('.notification-bubble'))).not.toBeNull();
-      expect(tabElements[4].query(By.css('.notification-bubble'))).not.toBeNull();
-      expect(tabElements[5].query(By.css('.notification-bubble'))).not.toBeNull();
+      expect(tabElements[1].query(By.css('.notification-bubble'))).toBeNull();
+      expect(tabElements[2].query(By.css('.notification-bubble'))).not.toBeNull();
     });
 
     it('shows the sum of failed tests in the mobile-only section', () => {
-      expect(summedFailedTestCountElement.query(By.css('.text')).nativeElement.textContent).toBe('12 failed tests');
+      expect(summedFailedTestCountElement.query(By.css('.text')).nativeElement.textContent).toBe('6 failed tests');
     });
 
     describe('and a test report tab is selected', () => {
@@ -199,7 +213,7 @@ describe('AppHeaderComponent', () => {
       let dropdownElement: DebugElement;
 
       beforeEach(() => {
-        dropdownElement = fixture.debugElement.query(By.css('.tabmenu-select'));
+        dropdownElement = fixture.debugElement.query(By.css('.tabmenu-dropdown'));
         dropdownElement.nativeElement.value = dropdownElement.nativeElement.options[0].value;
         dropdownElement.nativeElement.dispatchEvent(new Event('change'));
       });
@@ -234,7 +248,7 @@ describe('AppHeaderComponent', () => {
 
       tabElements = fixture.debugElement.queryAll(By.css('a.tabmenu-item'));
       summedFailedTestCountElement = fixture.debugElement.query(By.css('.summed-failed-test-count'));
-      dropdownItemElements = fixture.debugElement.queryAll(By.css('.tabmenu-select option'));
+      dropdownItemElements = fixture.debugElement.queryAll(By.css('.tabmenu-dropdown option'));
     });
 
     it('loads only one tab for the summary', () => {
