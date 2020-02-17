@@ -73,6 +73,7 @@ xdescribe('TestReportWrapperComponent', () => {
         testReport: {
           filteredReports: [],
           filter: null,
+          isLoading: false,
           testReports: testReportIds.map((testReportId: string) => {
             const testReport = new TestReport();
             testReport.id = testReportId;

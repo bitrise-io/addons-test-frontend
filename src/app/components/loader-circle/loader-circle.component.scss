@@ -1,0 +1,85 @@
+@import "../../../sass/constants";
+
+$circle-size: $grid-size * 15;
+$mask-size: $grid-size * 3.75;
+
+.content {
+  display: inline-block;
+  vertical-align: middle;
+  text-align: left;
+  font-size: 0;
+}
+
+.loader-circle {
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  width: $circle-size;
+  height: $circle-size;
+  border-radius: 50%;
+  box-shadow: inset 0 0 0 6px $white-aqua;
+  margin-left: -($circle-size / 2);
+  margin-top: -($circle-size / 2);
+  animation: fade 1.2s infinite ease-in-out;
+
+  &.small {
+    width: $mask-size;
+    height: $mask-size;
+    margin-left: -($mask-size / 2);
+    margin-top: -($mask-size / 2);
+    box-shadow: inset 0 0 0 2px $white-aqua;
+
+    & + .loader-line-mask {
+      width: $mask-size;
+      height: $mask-size;
+      margin-left: -($mask-size / 2);
+      margin-top: -($mask-size / 2);
+      transform-origin: 15px 15px;
+
+      & .loader-line {
+        width: $mask-size;
+        height: $mask-size;
+        box-shadow: inset 0 0 0 2px $aqua;
+      }
+    }
+  }
+}
+.loader-line-mask {
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  width: $circle-size;
+  height: $circle-size;
+  margin-left: -($circle-size / 2);
+  margin-top: -($circle-size / 2);
+  overflow: hidden;
+  transform-origin: 60px 60px;
+  -webkit-mask-image: -webkit-linear-gradient(top, $black, rgba(0, 0, 0, 0));
+  mask-image: linear-gradient($black, rgba(0, 0, 0, 0));
+  animation: rotate 1.2s infinite linear;
+
+  & .loader-line {
+    width: $circle-size;
+    height: $circle-size;
+    border-radius: 50%;
+    box-shadow: inset 0 0 0 6px $aqua;
+  }
+}
+
+@keyframes rotate {
+  0% {
+    transform: rotate(0deg);
+  }
+  100% {
+    transform: rotate(360deg);
+  }
+}
+
+@keyframes fade {
+  0% {
+    opacity: 1;
+  }
+  50% {
+    opacity: 0.25;
+  }
+}

@@ -12,6 +12,12 @@ import { MockStore, provideMockStore } from './mock-store/testing';
 import { AppStoreState, AppReducer } from './store/app/reducer';
 import { Beam } from '@bitrise/beam';
 
+// at top
+declare const global: any;
+
+// before test
+global.requestAnimationFrame = (_: any) => { };
+
 @Component({
   selector: 'bitrise-app-header',
   template: ''

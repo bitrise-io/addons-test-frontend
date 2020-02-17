@@ -6,11 +6,13 @@ export interface TestReportState {
   testReports: TestReport[];
   filteredReports: TestReport[];
   filter: TestSuiteStatus;
+  isLoading: boolean;
 }
 
 const initialState: TestReportState = {
   testReports: [],
   filteredReports: [],
+  isLoading: true,
   filter: TestSuiteStatus.failed
 };
 
@@ -23,6 +25,7 @@ export function ReportsReducer(state = initialState, action: ReportActions) {
 
       return {
         ...state,
+        isLoading: false,
         testReports
       };
     }

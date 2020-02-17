@@ -13,6 +13,7 @@ import { TestReportState } from 'src/app/store/reports/reducer';
 import { TestSuiteDetailsMenuModule } from '../menu.module';
 import { TestSuite } from 'src/app/models/test-suite.model';
 import { ZipperService } from 'src/app/services/zipper.service';
+import { initialState } from 'src/app/store/reports/reducer.spec';
 
 describe('TestSuiteDetailsMenuScreenshotsComponent', () => {
   let fixture: ComponentFixture<TestSuiteDetailsMenuScreenshotsComponent>;
@@ -24,11 +25,7 @@ describe('TestSuiteDetailsMenuScreenshotsComponent', () => {
   let testReport: TestReport;
   let testSuite: TestSuite;
 
-  const initialtestReportsState = {
-    testReports: [],
-    filteredReports: [],
-    filter: null
-  };
+  const initialtestReportsState = initialState;
 
   beforeEach(() => {
     testReport = new TestReport();
