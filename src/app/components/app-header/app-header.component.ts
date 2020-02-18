@@ -9,7 +9,7 @@ import { TestSuiteStatus, TestSuite } from '../../models/test-suite.model';
 import { FilterReports, StartPollingReports } from 'src/app/store/reports/actions';
 import { TestReportState } from 'src/app/store/reports/reducer';
 
-export const VERTICAL_LAYOUT_REPORT_LIMIT = 5;
+export const HORIZONTAL_LAYOUT_REPORT_LIMIT = 5;
 
 @Component({
   selector: 'bitrise-app-header',
@@ -54,7 +54,7 @@ export class AppHeaderComponent implements OnInit {
   }
 
   @Output() get isVerticalLayout() {
-    return this.testReports.length < VERTICAL_LAYOUT_REPORT_LIMIT;
+    return this.testReports.length < HORIZONTAL_LAYOUT_REPORT_LIMIT;
   }
 
   ngOnInit() {

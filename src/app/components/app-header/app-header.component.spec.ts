@@ -8,7 +8,7 @@ import { FormsModule } from '@angular/forms';
 import { Store, StoreModule } from '@ngrx/store';
 import { InlineSVGModule } from 'ng-inline-svg';
 
-import { AppHeaderComponent, VERTICAL_LAYOUT_REPORT_LIMIT } from './app-header.component';
+import { AppHeaderComponent, HORIZONTAL_LAYOUT_REPORT_LIMIT } from './app-header.component';
 import { TestReport } from '../../models/test-report.model';
 import { ReportsReducer, TestReportState } from 'src/app/store/reports/reducer';
 import { TestSuite } from '../../models/test-suite.model';
@@ -115,7 +115,7 @@ describe('AppHeaderComponent', () => {
           filteredReports: [],
           filter: null,
           isLoading: true,
-          testReports: generateTestReports(VERTICAL_LAYOUT_REPORT_LIMIT - 1)
+          testReports: generateTestReports(HORIZONTAL_LAYOUT_REPORT_LIMIT - 1)
         }
       });
 
@@ -132,7 +132,7 @@ describe('AppHeaderComponent', () => {
       expect(dropdownItemElements.length).toBe(5);
     });
 
-    it(`only uses vertical layout with less than ${VERTICAL_LAYOUT_REPORT_LIMIT} reports`, () => {
+    it(`only uses vertical layout with less than ${HORIZONTAL_LAYOUT_REPORT_LIMIT} reports`, () => {
       expect(fixture.componentInstance.isVerticalLayout).toBeTruthy();
 
       store.setState({
@@ -140,7 +140,7 @@ describe('AppHeaderComponent', () => {
           filteredReports: [],
           filter: null,
           isLoading: true,
-          testReports: generateTestReports(VERTICAL_LAYOUT_REPORT_LIMIT)
+          testReports: generateTestReports(HORIZONTAL_LAYOUT_REPORT_LIMIT)
         }
       });
 
