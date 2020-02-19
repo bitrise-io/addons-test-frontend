@@ -133,7 +133,7 @@ describe('AppHeaderComponent', () => {
     });
 
     it(`only uses vertical layout with less than ${HORIZONTAL_LAYOUT_REPORT_LIMIT} reports`, () => {
-      expect(fixture.componentInstance.isVerticalLayout).toBeTruthy();
+      expect(fixture.componentInstance.isHorizontalLayout).toBeTruthy();
 
       store.setState({
         testReport: {
@@ -145,7 +145,7 @@ describe('AppHeaderComponent', () => {
       });
 
       fixture.detectChanges();
-      expect(fixture.componentInstance.isVerticalLayout).toBeFalsy();
+      expect(fixture.componentInstance.isHorizontalLayout).toBeFalsy();
     });
 
     it('shows the name of the test reports in the tabs (and in the items of the mobile-only dropdown)', () => {

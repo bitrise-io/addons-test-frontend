@@ -53,7 +53,7 @@ export class AppHeaderComponent implements OnInit {
     });
   }
 
-  @Output() get isVerticalLayout() {
+  @Output() get isHorizontalLayout() {
     return this.testReports.length < HORIZONTAL_LAYOUT_REPORT_LIMIT;
   }
 

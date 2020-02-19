@@ -14,7 +14,7 @@
       <ng-container *ngFor="let tabmenuItem of tabmenuItems">
           <a
           class="tabmenu-item"
-          *ngIf="isVerticalLayout"
+          *ngIf="isHorizontalLayout"
           [routerLink]="tabmenuItem.routerLink"
           routerLinkActive="active"
           queryParamsHandling="merge"
@@ -26,7 +26,7 @@
       </a>
       </ng-container>
       <div class="status-offset"></div>
-      <ng-container *ngIf="!isVerticalLayout" [ngTemplateOutlet]="reportsSelect"></ng-container>
+      <ng-container *ngIf="!isHorizontalLayout" [ngTemplateOutlet]="reportsSelect"></ng-container>
       <ng-container [ngTemplateOutlet]="statusSelect"></ng-container>
     </nav>
   </div>
