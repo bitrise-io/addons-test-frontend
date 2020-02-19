@@ -132,7 +132,7 @@ describe('AppHeaderComponent', () => {
       expect(dropdownItemElements.length).toBe(5);
     });
 
-    it(`only uses vertical layout with less than ${HORIZONTAL_LAYOUT_REPORT_LIMIT} reports`, () => {
+    it(`only uses horizontal layout with less than ${HORIZONTAL_LAYOUT_REPORT_LIMIT} reports`, () => {
       expect(fixture.componentInstance.isHorizontalLayout).toBeTruthy();
 
       store.setState({
