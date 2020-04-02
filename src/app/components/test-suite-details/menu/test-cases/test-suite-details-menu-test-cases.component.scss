@@ -1,0 +1,9 @@
+@import '../../../../../sass/constants';
+@import '../../../../../sass/mixins';
+
+.test-cases {
+  bitrise-heading-text {
+    display: block;
+    margin-bottom: 7 * $grid-size;
+  }
+}

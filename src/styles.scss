@@ -11,6 +11,11 @@
 @include font-face("Inconsolata", "/assets/fonts/inconsolata/Inconsolata-Regular", 400);
 @include font-face("Inconsolata", "/assets/fonts/inconsolata/Inconsolata-Bold", 700);
 
+html,
+body {
+  max-height: 150%;
+}
+
 body {
   margin: 0;
   background-color: $white;
