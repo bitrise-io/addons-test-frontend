@@ -1,10 +1,12 @@
 <section class="test-report">
   <bitrise-heading-text>{{ testReport.name }}</bitrise-heading-text>
-  <bitrise-test-suite
-    *ngFor="let testSuite of testReport.testSuites"
-    [buildSlug]="buildSlug"
-    [testReport]="testReport"
-    [testSuite]="testSuite"
-  ></bitrise-test-suite>
+  <virtual-scroller #scroll [items]="testReport.testSuites" [parentScroll]="scroll.window">
+    <bitrise-test-suite
+      *ngFor="let testSuite of scroll.viewPortItems"
+      [buildSlug]="buildSlug"
+      [testReport]="testReport"
+      [testSuite]="testSuite"
+    ></bitrise-test-suite>
+  </virtual-scroller>
   <div class="no-test-suites" *ngIf="testReport.testSuites.length == 0">No items</div>
 </section>

@@ -6,6 +6,7 @@ import { FormsModule } from '@angular/forms';
 import { InlineSVGModule } from 'ng-inline-svg';
 import { StoreModule } from '@ngrx/store';
 import { EffectsModule } from '@ngrx/effects';
+import { VirtualScrollerModule } from 'ngx-virtual-scroller';
 
 import { environment } from 'src/environments/environment';
 
@@ -70,7 +71,8 @@ import { ZipperService } from './services/zipper.service';
     EffectsModule.forRoot([AppEffects, ReportEffects, ArtifactEffects, PerformanceEffects, LogEffects]),
     InlineSVGModule.forRoot(),
     environment.ServicesModule,
-    TestSuiteDetailsMenuModule
+    TestSuiteDetailsMenuModule,
+    VirtualScrollerModule,
   ],
   providers: [TestSuiteResolve, ZipperService],
   bootstrap: [AppComponent]

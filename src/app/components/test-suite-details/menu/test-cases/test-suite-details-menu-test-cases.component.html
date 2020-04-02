@@ -1,10 +1,12 @@
 <div class="test-cases">
   <bitrise-heading-text>Test Cases</bitrise-heading-text>
   <ng-container *ngIf="testSuite">
-    <bitrise-test-case
-      *ngFor="let testCase of testSuite.testCases"
-      [testCase]="testCase"
-      [isNarrow]="true"
-    ></bitrise-test-case>
+    <virtual-scroller #scroll [items]="testSuite.testCases" [parentScroll]="scroll.window"  [enableUnequalChildrenSizes]="false">
+      <bitrise-test-case
+        *ngFor="let testCase of scroll.viewPortItems"
+        [testCase]="testCase"
+        [isNarrow]="true"
+      ></bitrise-test-case>
+    </virtual-scroller>
   </ng-container>
 </div>
