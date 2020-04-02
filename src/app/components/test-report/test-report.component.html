@@ -1,6 +1,9 @@
 <section class="test-report">
   <bitrise-heading-text>{{ testReport.name }}</bitrise-heading-text>
-  <virtual-scroller #scroll [items]="testReport.testSuites" [parentScroll]="scroll.window">
+  <virtual-scroller #scroll
+    [items]="testReport.testSuites"
+    [parentScroll]="scroll.window"
+    [enableUnequalChildrenSizes]="true">
     <bitrise-test-suite
       *ngFor="let testSuite of scroll.viewPortItems"
       [buildSlug]="buildSlug"

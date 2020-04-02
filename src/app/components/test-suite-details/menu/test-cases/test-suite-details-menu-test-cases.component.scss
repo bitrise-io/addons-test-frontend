@@ -3,7 +3,6 @@
 
 .test-cases {
   bitrise-heading-text {
-    display: block;
-    margin-bottom: 7 * $grid-size;
+    @include list-header;
   }
 }

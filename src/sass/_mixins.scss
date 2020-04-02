@@ -113,6 +113,11 @@
   text-overflow: ellipsis;
 }
 
+@mixin list-header {
+  display: block;
+  margin-bottom: 7 * $grid-size;
+}
+
 @mixin svg-color($color) {
   ::ng-deep svg {
     &,
