@@ -7,6 +7,7 @@ import { InlineSVGModule } from 'ng-inline-svg';
 import { TestReportComponent } from './test-report.component';
 import { TestReport } from '../../models/test-report.model';
 import { TestSuite } from 'src/app/models/test-suite.model';
+import { MockVirtualScrollerComponent, MockHeadingTextComponent } from '../../mock-components';
 
 @Component({
   selector: 'bitrise-test-suite',
@@ -18,23 +19,18 @@ class MockTestSuiteComponent {
   @Input() testSuite: TestSuite;
 }
 
-@Component({
-  selector: 'bitrise-heading-text',
-  template: ''
-})
-class MockHeadingTextComponent {
-}
-
 describe('TestReportComponent', () => {
   let fixture: ComponentFixture<TestReportComponent>;
   let testReportComponent: TestReportComponent;
   let testReport: TestReport;
 
   beforeEach(() => {
-    TestBed.configureTestingModule({
-      imports: [HttpClientTestingModule, RouterTestingModule, InlineSVGModule.forRoot()],
-      declarations: [TestReportComponent, MockTestSuiteComponent, MockHeadingTextComponent]
-    }).compileComponents();
+    TestBed
+      .configureTestingModule({
+        imports: [HttpClientTestingModule, RouterTestingModule, InlineSVGModule.forRoot()],
+        declarations: [TestReportComponent, MockTestSuiteComponent, MockHeadingTextComponent, MockVirtualScrollerComponent],
+      })
+      .compileComponents();
 
     fixture = TestBed.createComponent(TestReportComponent);
     testReportComponent = fixture.debugElement.componentInstance;
