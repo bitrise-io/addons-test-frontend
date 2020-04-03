@@ -1,5 +1,6 @@
-import { Component, OnInit, OnDestroy } from '@angular/core';
+import { Component, OnInit, OnDestroy, ViewChild } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
+import { VirtualScrollerComponent } from 'ngx-virtual-scroller';
 import { Subscription } from 'rxjs';
 
 import { TestReport } from 'src/app/models/test-report.model';
@@ -16,6 +17,13 @@ export class TestSuiteDetailsMenuTestCasesComponent implements OnInit, OnDestroy
   subscription: Subscription;
 
   constructor(private activatedRoute: ActivatedRoute) {}
+
+  @ViewChild(VirtualScrollerComponent)
+  private virtualScroller: VirtualScrollerComponent;
+
+  updateListHeight(index: number) {
+    this.virtualScroller.invalidateCachedMeasurementAtIndex(index);
+  }
 
   ngOnInit() {
     this.subscription = this.activatedRoute.parent.data.subscribe(

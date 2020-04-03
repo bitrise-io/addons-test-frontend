@@ -6,7 +6,8 @@
       [parentScroll]="scroll.window"
       [enableUnequalChildrenSizes]="true">
       <bitrise-test-case
-        *ngFor="let testCase of scroll.viewPortItems"
+        *ngFor="let testCase of scroll.viewPortItems; index as caseIndex"
+        (toggleSummaryEvent)="updateListHeight(caseIndex)"
         [testCase]="testCase"
         [isNarrow]="true"
       ></bitrise-test-case>
