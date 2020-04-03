@@ -7,7 +7,7 @@ import { InlineSVGModule } from 'ng-inline-svg';
 import { TestReportComponent } from './test-report.component';
 import { TestReport } from '../../models/test-report.model';
 import { TestSuite } from 'src/app/models/test-suite.model';
-import { MockVirtualScrollerComponent, MockHeadingTextComponent } from '../../mock-components';
+import { MockVirtualScrollerComponent, MockHeadingTextComponent } from '../../mock-components.spec';
 
 @Component({
   selector: 'bitrise-test-suite',
