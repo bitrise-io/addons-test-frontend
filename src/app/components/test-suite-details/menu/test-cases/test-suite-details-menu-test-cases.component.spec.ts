@@ -3,6 +3,7 @@ import { RouterTestingModule } from '@angular/router/testing';
 import { ActivatedRoute } from '@angular/router';
 import { InlineSVGModule } from 'ng-inline-svg';
 import { HttpClientTestingModule } from '@angular/common/http/testing';
+import { VirtualScrollerModule } from 'ngx-virtual-scroller';
 import { By } from '@angular/platform-browser';
 import { of } from 'rxjs';
 import { Store } from '@ngrx/store';
@@ -15,6 +16,7 @@ import { TestReportState } from 'src/app/store/reports/reducer';
 import { TestSuite } from 'src/app/models/test-suite.model';
 import { TestCase } from 'src/app/models/test-case.model';
 import { initialState } from 'src/app/store/reports/reducer.spec';
+import { MockVirtualScrollerComponent } from '../../../../mock-components.spec';
 
 describe('TestSuiteDetailsMenuTestCasesComponent', () => {
   let store: MockStore<{
@@ -37,30 +39,36 @@ describe('TestSuiteDetailsMenuTestCasesComponent', () => {
       .fill(null)
       .map(() => new TestCase());
 
-    TestBed.configureTestingModule({
-      imports: [
-        TestSuiteDetailsMenuModule,
-        RouterTestingModule.withRoutes([
+    TestBed
+      .overrideModule(TestSuiteDetailsMenuModule, {
+        remove: { imports: [VirtualScrollerModule] },
+        add: { declarations: [MockVirtualScrollerComponent] }
+      })
+      .configureTestingModule({
+        imports: [
+          TestSuiteDetailsMenuModule,
+          RouterTestingModule.withRoutes([
+            {
+              path: 'testreport/:testReportId/testsuite/:testSuiteId',
+              component: TestSuiteDetailsMenuTestCasesComponent
+            }
+          ]),
+          InlineSVGModule.forRoot(),
+          HttpClientTestingModule
+        ],
+        providers: [
+          provideMockStore({}),
           {
-            path: 'testreport/:testReportId/testsuite/:testSuiteId',
-            component: TestSuiteDetailsMenuTestCasesComponent
-          }
-        ]),
-        InlineSVGModule.forRoot(),
-        HttpClientTestingModule
-      ],
-      providers: [
-        provideMockStore({}),
-        {
-          provide: ActivatedRoute,
-          useValue: {
-            parent: {
-              data: of({ testSuite: { selectedTestReport: testReport, selectedTestSuite: testSuite } })
+            provide: ActivatedRoute,
+            useValue: {
+              parent: {
+                data: of({ testSuite: { selectedTestReport: testReport, selectedTestSuite: testSuite } })
+              }
             }
           }
-        }
-      ]
-    }).compileComponents();
+        ]
+      })
+      .compileComponents();
   }));
 
   beforeEach(inject([Store], (mockStore: MockStore<{ testReport: TestReportState }>) => {

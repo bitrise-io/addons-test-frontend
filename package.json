@@ -36,6 +36,7 @@
     "jszip": "^3.2.1",
     "lodash.kebabcase": "^4.1.1",
     "ng-inline-svg": "8.6.0",
+    "ngx-virtual-scroller": "3.0.3",
     "ngx-window-token": "^2.0.1",
     "normalize.css": "^8.0.1",
     "rxjs": "^6.3.3",

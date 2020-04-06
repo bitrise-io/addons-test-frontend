@@ -20,7 +20,7 @@
         class="show-more-button"
         [class.active]="isSummaryVisible"
         inlineSVG="/assets/images/arrow-down.svg"
-        (click)="isSummaryVisible = !isSummaryVisible"
+        (click)="toggleSummary()"
       ></button>
     </div>
     <pre class="summary" *ngIf="isSummaryVisible"><code class="code">{{ testCase.summary }}</code></pre>

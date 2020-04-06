@@ -1,0 +1,8 @@
+@import '../../../../../sass/constants';
+@import '../../../../../sass/mixins';
+
+.test-cases {
+  bitrise-heading-text {
+    @include list-header;
+  }
+}

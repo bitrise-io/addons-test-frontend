@@ -1,4 +1,4 @@
-import { Component, Input } from '@angular/core';
+import { Component, Input, Output, EventEmitter } from '@angular/core';
 import { TestCase, TestCaseStatus } from '../../models/test-case.model';
 
 @Component({
@@ -9,8 +9,14 @@ import { TestCase, TestCaseStatus } from '../../models/test-case.model';
 export class TestCaseComponent {
   @Input() testCase: TestCase;
   @Input() isNarrow = false;
+  @Output() toggleSummaryEvent = new EventEmitter<boolean>();
 
   TestCaseStatus = TestCaseStatus;
 
   isSummaryVisible = false;
+
+  toggleSummary() {
+    this.isSummaryVisible = !this.isSummaryVisible;
+    this.toggleSummaryEvent.emit(this.isSummaryVisible);
+  }
 }

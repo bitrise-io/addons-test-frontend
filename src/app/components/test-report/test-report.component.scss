@@ -7,4 +7,8 @@
     @include ui-element-body;
     color: $warm-grey;
   }
+
+  bitrise-heading-text {
+    @include list-header;
+  }
 }

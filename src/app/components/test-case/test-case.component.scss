@@ -2,12 +2,11 @@
 @import '../../../sass/mixins';
 
 :host:not(:last-of-type) .test-case {
-  margin-bottom: 16px;
+  padding-bottom: 16px;
 }
 
 :host:first-of-type .test-case {
   position: relative;
-  margin-top: 7 * $grid-size;
 
   .test-case-inner .heading .detail-wrapper:before {
     @include ui-element-subtitle;
@@ -28,11 +27,11 @@
   $colored-border-left-width: 8px;
   $status-icon-size: 24px;
 
-  border: $border-width solid $white-three;
-  border-radius: 8px;
-  @include ui-modifier-container-shadow;
-
   .test-case-inner {
+    border: $border-width solid $white-three;
+    border-radius: 8px;
+    @include ui-modifier-container-shadow;
+
     border-left: $colored-border-left-width solid;
     @include border-left-radius(8px);
 
