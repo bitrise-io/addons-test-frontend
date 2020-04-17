@@ -4,6 +4,9 @@
     <virtual-scroller #testCasesScroll
       [items]="testSuite.testCases"
       [parentScroll]="testCasesScroll.window"
+      [bufferAmount]="10"
+      [childHeight]="80"
+      [resizeBypassRefreshThreshold]="20"
       [enableUnequalChildrenSizes]="true">
       <bitrise-test-case
         *ngFor="let testCase of testCasesScroll.viewPortItems; index as caseIndex"

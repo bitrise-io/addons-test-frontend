@@ -2,6 +2,7 @@
   <bitrise-heading-text>{{ testReport.name }}</bitrise-heading-text>
   <virtual-scroller #testReportScroll
     [items]="testReport.testSuites"
+    [bufferAmount]="10"
     [parentScroll]="testReportScroll.window"
     [enableUnequalChildrenSizes]="true">
     <bitrise-test-suite
