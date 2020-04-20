@@ -8,6 +8,9 @@ import { Component, Input } from '@angular/core';
 export class MockVirtualScrollerComponent<T> {
   @Input('items') viewPortItems: Array<T>;
   @Input() parentScroll: string;
+  @Input() bufferAmount: number;
+  @Input() childHeight: number;
+  @Input() resizeBypassRefreshThreshold: number;
   @Input() enableUnequalChildrenSizes: boolean;
 }
 
