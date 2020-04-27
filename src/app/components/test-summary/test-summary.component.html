@@ -3,8 +3,8 @@
   <bitrise-loader-circle [show]="loading$ | async"></bitrise-loader-circle>
   <div class="notification-wrapper" *ngIf="!(loading$ | async) && !testReports.length">
       <bitrise-notification type="warning">
-      Testing add-on wasn't configured correctly. Please make sure you configure it in the Workflow Editor.
-      <a href="https://devcenter.bitrise.io/testing/test-reports/" target="_blank">Get help for setting up Testing add-on.</a>
+      Test Reports wasn't configured correctly. Please make sure you configure it in the Workflow Editor.
+      <a href="https://devcenter.bitrise.io/testing/test-reports/" target="_blank">Get help for setting up Test Reports.</a>
     </bitrise-notification>
   </div>
   <bitrise-test-report
