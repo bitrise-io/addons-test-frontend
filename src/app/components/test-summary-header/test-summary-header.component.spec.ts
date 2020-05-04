@@ -11,6 +11,8 @@ import { TestReport } from '../../models/test-report.model';
 import { ReportsReducer, TestReportState } from 'src/app/store/reports/reducer';
 import { TestSuite, TestSuiteStatus } from '../../models/test-suite.model';
 import { MockStore, provideMockStore } from 'src/app/mock-store/testing';
+import { StatusSelectorComponent } from '../status-selector/status-selector.component';
+import { FormsModule } from '@angular/forms';
 
 describe('TestSummaryHeaderComponent', () => {
   let store: MockStore<{ testReport: TestReportState }>;
@@ -58,16 +60,19 @@ describe('TestSummaryHeaderComponent', () => {
       imports: [
         HttpClientTestingModule,
         StoreModule.forRoot({ testReport: ReportsReducer }),
-        InlineSVGModule.forRoot()
+        InlineSVGModule.forRoot(),
+        FormsModule
       ],
-      declarations: [TestSummaryHeaderComponent],
-      providers: [provideMockStore({}),
-      {
-        provide: ActivatedRoute,
-        useValue: {
-          params: of({buildSlug: 'build-slug'})
+      declarations: [TestSummaryHeaderComponent, StatusSelectorComponent],
+      providers: [
+        provideMockStore({}),
+        {
+          provide: ActivatedRoute,
+          useValue: {
+            params: of({ buildSlug: 'build-slug' })
+          }
         }
-      }]
+      ]
     }).compileComponents();
   }));
 
@@ -78,7 +83,7 @@ describe('TestSummaryHeaderComponent', () => {
         testReports: [],
         filteredReports: [],
         filter: TestSuiteStatus.failed,
-        isLoading: true,
+        isLoading: true
       }
     });
   }));
