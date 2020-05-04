@@ -6,7 +6,7 @@ import { Store } from '@ngrx/store';
 import { TestReport } from '../../models/test-report.model';
 import { TestSuite, TestSuiteStatus } from '../../models/test-suite.model';
 import { TestReportState } from 'src/app/store/reports/reducer';
-import { StartPollingReports, FilterReports } from 'src/app/store/reports/actions';
+import { StartPollingReports, ResetReportsFilter } from 'src/app/store/reports/actions';
 
 @Component({
   selector: 'bitrise-test-summary-header',
@@ -44,12 +44,10 @@ export class TestSummaryHeaderComponent implements OnInit {
     }
   }
 
-  onStatusSelectorChange(status: TestSuiteStatus) {
-    this.store.dispatch(new FilterReports({ filter: status }));
-  }
-
   ngOnInit() {
-    this.store.dispatch(new FilterReports({ filter: null }));
+    // Reset status filter to show all
+    this.store.dispatch(ResetReportsFilter);
+
     this.activatedRoute.params.subscribe((params: Params) => {
       this.store.dispatch(new StartPollingReports({ buildSlug: params.buildSlug }));
     });
@@ -57,6 +55,7 @@ export class TestSummaryHeaderComponent implements OnInit {
     this.testFilter$.subscribe((filter) => {
       this.selectedStatus = filter;
     });
+
     this.testReports$.subscribe((testReports) => {
       const allTestSuiteStatuses = [
         TestSuiteStatus.failed,
