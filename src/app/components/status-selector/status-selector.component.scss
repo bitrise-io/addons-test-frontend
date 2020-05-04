@@ -1,0 +1,42 @@
+@import '../../../sass/constants';
+@import '../../../sass/mixins';
+
+:host .status-select {
+  @include ui-element-select;
+  @include ui-modifier-button-shadow;
+  min-width: 200px;
+
+  &.inconclusive,
+  &.passed,
+  &.failed,
+  &.skipped {
+    padding-left: $ui-element-select-horizontal-padding-default + 24px;
+    background-image: $ui-element-select-background-image-arrow, $ui-element-select-background-image-gradient;
+    background-position: 8px 10px, $ui-element-select-background-position-arrow,
+      $ui-element-select-background-position-gradient;
+  }
+
+  &.inconclusive {
+    background-image: url('/assets/images/sign-questionmark.svg'), $ui-element-select-background-image-arrow,
+      $ui-element-select-background-image-gradient;
+  }
+  &.passed {
+    background-image: url('/assets/images/sign-check.svg'), $ui-element-select-background-image-arrow,
+      $ui-element-select-background-image-gradient;
+  }
+  &.failed {
+    background-image: url('/assets/images/sign-cross.svg'), $ui-element-select-background-image-arrow,
+      $ui-element-select-background-image-gradient;
+  }
+  &.skipped {
+    background-image: url('/assets/images/sign-arrowheads.svg'), $ui-element-select-background-image-arrow,
+      $ui-element-select-background-image-gradient;
+  }
+}
+
+@include width-max-screen-medium {
+  :host .status-select {
+    display: block;
+    width: 100%;
+  }
+}
