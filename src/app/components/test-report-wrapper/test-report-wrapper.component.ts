@@ -7,7 +7,7 @@ import { Store } from '@ngrx/store';
 
 import { TestReport } from '../../models/test-report.model';
 import { TestReportState } from 'src/app/store/reports/reducer';
-import { StartPollingReports } from 'src/app/store/reports/actions';
+import { StartPollingReports, ResetReportsFilter } from 'src/app/store/reports/actions';
 
 @Component({
   selector: 'bitrise-test-report-wrapper',
@@ -35,7 +35,12 @@ export class TestReportWrapperComponent implements OnInit, OnDestroy {
     this.combinedSubscription = combineLatest(this.activatedRoute.params, this.testReports$)
       .pipe(
         map(([params, reports]) => {
-          this.testReport = reports.find((testReport: TestReport) => testReport.id === params['testReportId']);
+          const testReport = reports.find(({ id }: TestReport) => id === params['testReportId']);
+          if (!this.testReport || this.testReport.id !== testReport.id) {
+            // Reset status filter to show all
+            this.store.dispatch(ResetReportsFilter);
+          }
+          this.testReport = testReport;
         })
       )
       .subscribe();

@@ -3,6 +3,10 @@
 .test-report {
   margin-top: 4 * $grid-size;
 
+  .test-report-heading {
+    display: flex;
+  }
+
   .no-test-suites {
     @include ui-element-body;
     color: $warm-grey;

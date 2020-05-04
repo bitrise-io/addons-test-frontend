@@ -9,4 +9,5 @@ import { TestReport } from '../../models/test-report.model';
 export class TestReportComponent {
   @Input() buildSlug: string;
   @Input() testReport: TestReport;
+  @Input() showStatusSelector: boolean;
 }

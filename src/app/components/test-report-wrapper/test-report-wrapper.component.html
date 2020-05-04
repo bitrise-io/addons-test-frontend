@@ -1,3 +1,8 @@
 <div class="test-report-wrapper centered-max-width main-content-padding-x">
-  <bitrise-test-report [buildSlug]="buildSlug" [testReport]="testReport" *ngIf="testReport"></bitrise-test-report>
+  <bitrise-test-report
+    [buildSlug]="buildSlug"
+    [testReport]="testReport"
+    *ngIf="testReport"
+    [showStatusSelector]="true"
+  ></bitrise-test-report>
 </div>
