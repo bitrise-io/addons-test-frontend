@@ -177,7 +177,8 @@ $ui-element-select-background-position-gradient: center;
   appearance: none;
   border: 1px solid $white-darken;
   border-radius: 4px;
-  padding: 10px $ui-element-select-horizontal-padding-default + $ui-element-select-horizontal-padding-arrow 10px $ui-element-select-horizontal-padding-default;
+  padding: 10px $ui-element-select-horizontal-padding-default + $ui-element-select-horizontal-padding-arrow 10px
+    $ui-element-select-horizontal-padding-default;
   color: $dark-blue-grey;
   background-image: $ui-element-select-background-image-arrow, $ui-element-select-background-image-gradient;
   background-repeat: no-repeat;
@@ -275,12 +276,17 @@ $ui-element-select-background-position-gradient: center;
 
 // UI modifiers
 
-@mixin ui-modifier-header-5-underlined-purple-bold {
-  border-bottom: 2px solid $white-three;
+@mixin ui-modifier-header-5 {
   @include padding-y($grid-size - 1px);
   line-height: 6 * $grid-size;
   font-weight: 700;
   color: $dark-blue-grey;
+}
+
+@mixin ui-modifier-header-5-underlined-purple-bold {
+  @include ui-modifier-header-5;
+
+  border-bottom: 2px solid $white-three;
 }
 
 @mixin ui-modifier-button-shadow {
