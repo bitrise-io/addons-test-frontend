@@ -25,7 +25,6 @@
         </a>
       </ng-container>
       <ng-container *ngIf="!isHorizontalLayout" [ngTemplateOutlet]="reportsSelect"></ng-container>
-      <ng-container [ngTemplateOutlet]="statusSelect"></ng-container>
     </nav>
   </div>
 </section>
@@ -35,7 +34,6 @@
     <span class="text">{{ summedFailedTestCount }} failed tests</span>
   </div>
   <ng-container [ngTemplateOutlet]="reportsSelect"></ng-container>
-  <ng-container [ngTemplateOutlet]="statusSelect"></ng-container>
 </section>
 <ng-template #reportsSelect>
   <select class="tabmenu-dropdown" [(ngModel)]="selectedSmallTabmenuItem" (change)="selectedSmallTabmenuItemChanged()">
