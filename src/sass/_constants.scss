@@ -276,16 +276,14 @@ $ui-element-select-background-position-gradient: center;
 
 // UI modifiers
 
-@mixin ui-modifier-header-5 {
+@mixin ui-modifier-header-5-bold-dark {
   @include padding-y($grid-size - 1px);
   line-height: 6 * $grid-size;
   font-weight: 700;
   color: $dark-blue-grey;
 }
 
-@mixin ui-modifier-header-5-underlined-purple-bold {
-  @include ui-modifier-header-5;
-
+@mixin ui-modifier-header-5-border-bottom {
   border-bottom: 2px solid $white-three;
 }
 
