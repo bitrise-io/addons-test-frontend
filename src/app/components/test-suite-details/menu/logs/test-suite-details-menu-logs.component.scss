@@ -3,7 +3,8 @@
 
 .name {
   @include ui-element-header-5;
-  @include ui-modifier-header-5-underlined-purple-bold;
+  @include ui-modifier-header-5-bold-dark;
+  @include ui-modifier-header-5-border-bottom;
   display: flex;
   align-items: center;
   justify-content: space-between;

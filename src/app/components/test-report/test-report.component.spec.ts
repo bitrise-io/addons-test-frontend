@@ -4,10 +4,13 @@ import { By } from '@angular/platform-browser';
 import { HttpClientTestingModule } from '@angular/common/http/testing';
 import { RouterTestingModule } from '@angular/router/testing';
 import { InlineSVGModule } from 'ng-inline-svg';
+
 import { TestReportComponent } from './test-report.component';
+import { StatusSelectorComponent } from '../status-selector/status-selector.component';
 import { TestReport } from '../../models/test-report.model';
 import { TestSuite } from 'src/app/models/test-suite.model';
 import { MockVirtualScrollerComponent, MockHeadingTextComponent } from '../../mock-components.spec';
+import { FormsModule } from '@angular/forms';
 
 @Component({
   selector: 'bitrise-test-suite',
@@ -25,12 +28,16 @@ describe('TestReportComponent', () => {
   let testReport: TestReport;
 
   beforeEach(() => {
-    TestBed
-      .configureTestingModule({
-        imports: [HttpClientTestingModule, RouterTestingModule, InlineSVGModule.forRoot()],
-        declarations: [TestReportComponent, MockTestSuiteComponent, MockHeadingTextComponent, MockVirtualScrollerComponent],
-      })
-      .compileComponents();
+    TestBed.configureTestingModule({
+      imports: [HttpClientTestingModule, RouterTestingModule, InlineSVGModule.forRoot(), FormsModule],
+      declarations: [
+        TestReportComponent,
+        StatusSelectorComponent,
+        MockTestSuiteComponent,
+        MockHeadingTextComponent,
+        MockVirtualScrollerComponent
+      ]
+    }).compileComponents();
 
     fixture = TestBed.createComponent(TestReportComponent);
     testReportComponent = fixture.debugElement.componentInstance;

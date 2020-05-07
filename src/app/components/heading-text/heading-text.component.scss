@@ -1,11 +1,19 @@
 @import '../../../sass/constants';
 @import '../../../sass/mixins';
 
+:host {
+  flex: 1;
+}
+
 .heading-text {
   @include ui-element-header-5;
-  @include ui-modifier-header-5-underlined-purple-bold;
+  @include ui-modifier-header-5-bold-dark;
   display: flex;
   justify-content: space-between;
   width: 100%;
-  margin-bottom: 3 * $grid-size;
+
+  &.border-bottom {
+    @include ui-modifier-header-5-border-bottom;
+    margin-bottom: 3 * $grid-size;
+  }
 }

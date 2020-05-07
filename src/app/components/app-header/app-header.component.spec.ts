@@ -35,27 +35,25 @@ class MockMaximizePipe implements PipeTransform {
 }
 
 const generateTestReports = (length: number): TestReport[] =>
-  Array.from(
-    { length },
-    (_, key) => ({
-      id: key + 1,
-      name: `UI Test ${String.fromCharCode('A'.charCodeAt(0) + key)}`,
-      failedTestSuiteCount: key
-    })).map((specConfig) => {
-      const testReport = new TestReport();
-      testReport.id = specConfig.id.toString();
-      testReport.name = specConfig.name;
-      testReport.testSuites = Array(specConfig.failedTestSuiteCount)
-        .fill(null)
-        .map(() => {
-          const testSuite = new TestSuite();
-          testSuite.status = 2;
+  Array.from({ length }, (_, key) => ({
+    id: key + 1,
+    name: `UI Test ${String.fromCharCode('A'.charCodeAt(0) + key)}`,
+    failedTestSuiteCount: key
+  })).map((specConfig) => {
+    const testReport = new TestReport();
+    testReport.id = specConfig.id.toString();
+    testReport.name = specConfig.name;
+    testReport.testSuites = Array(specConfig.failedTestSuiteCount)
+      .fill(null)
+      .map(() => {
+        const testSuite = new TestSuite();
+        testSuite.status = 2;
 
-          return testSuite;
-        });
+        return testSuite;
+      });
 
-      return testReport;
-    });
+    return testReport;
+  });
 
 describe('AppHeaderComponent', () => {
   let location: Location;
@@ -119,7 +117,6 @@ describe('AppHeaderComponent', () => {
         }
       });
 
-      fixture.componentInstance.selectedStatus = null;
       fixture.detectChanges();
 
       tabElements = fixture.debugElement.queryAll(By.css('a.tabmenu-item'));
@@ -181,59 +178,6 @@ describe('AppHeaderComponent', () => {
         tick();
 
         expect(location.path()).toBe('/builds/build-slug/testreport/2');
-      }));
-    });
-
-    describe('and passed is selected in the global status filter', () => {
-      let globalFilterElement: DebugElement;
-
-      beforeEach(fakeAsync(() => {
-        globalFilterElement = fixture.debugElement.query(By.css('.status-select'));
-        globalFilterElement.nativeElement.value = globalFilterElement.nativeElement.options[2].value;
-        globalFilterElement.nativeElement.dispatchEvent(new Event('change'));
-
-        tick();
-      }));
-
-      it('calls selectedStatusChanged', () => {
-        spyOn(appHeaderElement, 'selectedStatusChanged');
-
-        globalFilterElement.nativeElement.value = globalFilterElement.nativeElement.options[2].value;
-        globalFilterElement.nativeElement.dispatchEvent(new Event('change'));
-
-        expect(appHeaderElement.selectedStatusChanged).toHaveBeenCalled();
-      });
-
-      it('sets status passed as query parameter', () => {
-        expect(location.path()).toContain('status=passed');
-      });
-    });
-
-    describe('and a dropdown item is selected', () => {
-      let dropdownElement: DebugElement;
-
-      beforeEach(() => {
-        dropdownElement = fixture.debugElement.query(By.css('.tabmenu-dropdown'));
-        dropdownElement.nativeElement.value = dropdownElement.nativeElement.options[0].value;
-        dropdownElement.nativeElement.dispatchEvent(new Event('change'));
-      });
-
-      it('calls selectedSmallTabmenuItemChanged', () => {
-        spyOn(appHeaderElement, 'selectedSmallTabmenuItemChanged');
-
-        dropdownElement.nativeElement.value = dropdownElement.nativeElement.options[1].value;
-        dropdownElement.nativeElement.dispatchEvent(new Event('change'));
-
-        expect(appHeaderElement.selectedSmallTabmenuItemChanged).toHaveBeenCalled();
-      });
-
-      it('directs to corresponding route', fakeAsync(() => {
-        dropdownElement.nativeElement.value = dropdownElement.nativeElement.options[1].value;
-        dropdownElement.nativeElement.dispatchEvent(new Event('change'));
-
-        tick();
-
-        expect(location.path()).toBe('/builds/build-slug/testreport/1');
       }));
     });
   });

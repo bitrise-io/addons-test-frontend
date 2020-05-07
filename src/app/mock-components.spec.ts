@@ -18,4 +18,6 @@ export class MockVirtualScrollerComponent<T> {
   selector: 'bitrise-heading-text',
   template: ''
 })
-export class MockHeadingTextComponent { }
+export class MockHeadingTextComponent {
+  @Input() borderBottom: boolean;
+}

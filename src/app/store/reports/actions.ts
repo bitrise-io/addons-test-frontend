@@ -34,4 +34,6 @@ export class FilterReports implements Action {
   constructor(public payload: { filter: TestSuiteStatus }) {}
 }
 
+export const ResetReportsFilter = new FilterReports({ filter: null });
+
 export type ReportActions = StartPollingReports | ReceiveReports | FilterReports | ReceiveFilteredReports;

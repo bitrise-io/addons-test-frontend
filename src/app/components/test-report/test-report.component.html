@@ -1,10 +1,15 @@
 <section class="test-report">
-  <bitrise-heading-text>{{ testReport.name }}</bitrise-heading-text>
-  <virtual-scroller #testReportScroll
+  <div class="test-report-heading">
+    <bitrise-heading-text [borderBottom]="!showStatusSelector">{{ testReport.name }}</bitrise-heading-text>
+    <bitrise-status-selector *ngIf="showStatusSelector"></bitrise-status-selector>
+  </div>
+  <virtual-scroller
+    #testReportScroll
     [items]="testReport.testSuites"
     [bufferAmount]="10"
     [parentScroll]="testReportScroll.window"
-    [enableUnequalChildrenSizes]="true">
+    [enableUnequalChildrenSizes]="true"
+  >
     <bitrise-test-suite
       *ngFor="let testSuite of testReportScroll.viewPortItems"
       [buildSlug]="buildSlug"

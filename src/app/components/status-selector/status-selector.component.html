@@ -1,0 +1,8 @@
+<select
+  class="status-select"
+  [ngClass]="TestSuite.statusCssClass(selected)"
+  [(ngModel)]="selected"
+  (change)="onChange()"
+>
+  <option *ngFor="let item of statusMenuItems" [ngValue]="item.value">{{ item.name }}</option>
+</select>

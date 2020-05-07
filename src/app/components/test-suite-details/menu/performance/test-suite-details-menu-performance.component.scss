@@ -3,7 +3,8 @@
 
 .name {
   @include ui-element-header-5;
-  @include ui-modifier-header-5-underlined-purple-bold;
+  @include ui-modifier-header-5-bold-dark;
+  @include ui-modifier-header-5-border-bottom;
 }
 
 .metric {
@@ -169,11 +170,11 @@
             &:before {
               $width: 1px;
 
-              content: "";
+              content: '';
               position: absolute;
               left: 50%;
               @include size(1px, 100%);
-              margin-right: - $width / 2;
+              margin-right: -$width / 2;
               background-color: $black;
             }
 
@@ -183,8 +184,8 @@
               z-index: $zindex-metric_seek_pin;
               position: absolute;
               right: 50%;
-              margin-right: - $size / 2;
-              margin-bottom: - $size / 2;
+              margin-right: -$size / 2;
+              margin-bottom: -$size / 2;
               border-radius: $size / 2;
               @include size($size);
               background-color: $black;
