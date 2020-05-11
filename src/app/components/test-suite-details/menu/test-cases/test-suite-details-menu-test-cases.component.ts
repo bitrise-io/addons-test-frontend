@@ -1,10 +1,14 @@
 import { Component, OnInit, OnDestroy, ViewChild } from '@angular/core';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, Params } from '@angular/router';
 import { VirtualScrollerComponent } from 'ngx-virtual-scroller';
-import { Subscription } from 'rxjs';
+import { Subscription, Observable, combineLatest } from 'rxjs';
+import { Store } from '@ngrx/store';
+import { map } from 'rxjs/operators';
 
-import { TestReport } from 'src/app/models/test-report.model';
-import { TestSuite } from 'src/app/models/test-suite.model';
+import { TestSuite, TestSuiteStatus } from 'src/app/models/test-suite.model';
+import { TestCase, TestCaseStatus } from 'src/app/models/test-case.model';
+import { TestReportState } from 'src/app/store/reports/reducer';
+import { ResetReportsFilter } from 'src/app/store/reports/actions';
 
 @Component({
   selector: 'bitrise-test-suite-details-menu-test-cases',
@@ -12,11 +16,13 @@ import { TestSuite } from 'src/app/models/test-suite.model';
   styleUrls: ['./test-suite-details-menu-test-cases.component.scss']
 })
 export class TestSuiteDetailsMenuTestCasesComponent implements OnInit, OnDestroy {
-  testReport: TestReport;
-  testSuite: TestSuite;
-  subscription: Subscription;
+  testCases: TestCase[] = [];
+  combinedSubscription: Subscription;
+  filter$: Observable<TestSuiteStatus>;
 
-  constructor(private activatedRoute: ActivatedRoute) {}
+  constructor(private activatedRoute: ActivatedRoute, private store: Store<{ testReport: TestReportState }>) {
+    this.filter$ = store.select('testReport', 'filter');
+  }
 
   @ViewChild(VirtualScrollerComponent)
   private virtualScroller: VirtualScrollerComponent;
@@ -26,15 +32,35 @@ export class TestSuiteDetailsMenuTestCasesComponent implements OnInit, OnDestroy
   }
 
   ngOnInit() {
-    this.subscription = this.activatedRoute.parent.data.subscribe(
-      (data: { testSuite: { selectedTestReport: TestReport; selectedTestSuite: TestSuite } }) => {
-        this.testReport = data.testSuite.selectedTestReport;
-        this.testSuite = data.testSuite.selectedTestSuite;
-      }
-    );
+    // Reset status filter to show all
+    this.store.dispatch(ResetReportsFilter);
+
+    this.combinedSubscription = combineLatest(
+      this.activatedRoute.parent.data as Observable<{
+        testSuite: { selectedTestSuite: TestSuite };
+      }>,
+      this.filter$
+    )
+      .pipe(
+        map(
+          ([
+            {
+              testSuite: {
+                selectedTestSuite: { testCases }
+              }
+            },
+            filter
+          ]) => {
+            this.testCases = testCases.filter(
+              ({ status }) => filter === null || status === ((filter as unknown) as TestCaseStatus)
+            );
+          }
+        )
+      )
+      .subscribe();
   }
 
   ngOnDestroy() {
-    this.subscription.unsubscribe();
+    this.combinedSubscription.unsubscribe();
   }
 }

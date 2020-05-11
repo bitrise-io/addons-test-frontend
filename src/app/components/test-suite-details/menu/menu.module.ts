@@ -15,15 +15,10 @@ import { HeadingTextComponent } from '../../heading-text/heading-text.component'
 import { TestCaseComponent } from '../../test-case/test-case.component';
 import { TextFromDurationInMilliseconds } from 'src/app/pipes/text-from-duration-in-milliseconds.pipe';
 import { PlaybackTimePipe } from 'src/app/pipes/playback-time.pipe';
+import { StatusSelectorComponent } from '../../status-selector/status-selector.component';
 
 @NgModule({
-  imports: [
-    BrowserModule,
-    CommonModule,
-    FormsModule,
-    InlineSVGModule.forRoot(),
-    VirtualScrollerModule
-  ],
+  imports: [BrowserModule, CommonModule, FormsModule, InlineSVGModule.forRoot(), VirtualScrollerModule],
   providers: [DatePipe],
   declarations: [
     TextFromDurationInMilliseconds,
@@ -35,8 +30,9 @@ import { PlaybackTimePipe } from 'src/app/pipes/playback-time.pipe';
     TestSuiteDetailsMenuVideoComponent,
     TestSuiteDetailsMenuScreenshotsComponent,
     TestSuiteDetailsMenuTestArtifactsComponent,
-    TestSuiteDetailsMenuLogsComponent
+    TestSuiteDetailsMenuLogsComponent,
+    StatusSelectorComponent
   ],
-  exports: [HeadingTextComponent, TestCaseComponent, TextFromDurationInMilliseconds]
+  exports: [HeadingTextComponent, TestCaseComponent, TextFromDurationInMilliseconds, StatusSelectorComponent]
 })
 export class TestSuiteDetailsMenuModule {}
