@@ -25,6 +25,7 @@ import { TestReportComponent } from './components/test-report/test-report.compon
 import { TestSuiteComponent } from './components/test-suite/test-suite.component';
 import { TestSuiteDetailsComponent } from './components/test-suite-details/test-suite-details.component';
 import { TestSuiteDetailsHeaderComponent } from './components/test-suite-details-header/test-suite-details-header.component';
+import { StatusSelectorComponent } from 'src/app/components/status-selector/status-selector.component';
 import { TestSuiteDetailsMenuModule } from './components/test-suite-details/menu/menu.module';
 
 import { AppReducer } from 'src/app/store/app/reducer';
@@ -54,7 +55,8 @@ import { ZipperService } from './services/zipper.service';
     TestSuiteComponent,
     TestSuiteDetailsComponent,
     TestSuiteDetailsHeaderComponent,
-    LoaderCircleComponent
+    LoaderCircleComponent,
+    StatusSelectorComponent
   ],
   imports: [
     BrowserModule,
