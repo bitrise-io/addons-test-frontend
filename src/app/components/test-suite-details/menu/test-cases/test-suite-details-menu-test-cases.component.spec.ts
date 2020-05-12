@@ -13,9 +13,9 @@ import { TestSuiteDetailsMenuTestCasesComponent } from './test-suite-details-men
 import { TestSuiteDetailsMenuModule } from '../menu.module';
 import { TestReport } from 'src/app/models/test-report.model';
 import { TestReportState } from 'src/app/store/reports/reducer';
-import { TestSuite } from 'src/app/models/test-suite.model';
-import { TestCase } from 'src/app/models/test-case.model';
-import { initialState } from 'src/app/store/reports/reducer.spec';
+import { TestSuite, TestSuiteStatus } from 'src/app/models/test-suite.model';
+import { TestCase, TestCaseStatus } from 'src/app/models/test-case.model';
+import { initialState as initialTestReportState } from 'src/app/store/reports/reducer.spec';
 import { MockVirtualScrollerComponent } from '../../../../mock-components.spec';
 
 describe('TestSuiteDetailsMenuTestCasesComponent', () => {
@@ -27,23 +27,22 @@ describe('TestSuiteDetailsMenuTestCasesComponent', () => {
   let fixture: ComponentFixture<TestSuiteDetailsMenuTestCasesComponent>;
   let component: TestSuiteDetailsMenuTestCasesComponent;
 
-  const initialtestReportsState = initialState;
-
   beforeEach(async(() => {
     testReport = new TestReport();
     testSuite = new TestSuite();
     testReport.testSuites = [testSuite];
     testReport.id = '1';
     testSuite.id = 2;
-    testSuite.testCases = Array(3)
-      .fill(null)
-      .map(() => new TestCase());
+    testSuite.testCases = [TestCaseStatus.failed, TestCaseStatus.failed, TestCaseStatus.passed].map((status) => {
+      const testCase = new TestCase();
+      testCase.status = status;
+      return testCase;
+    });
 
-    TestBed
-      .overrideModule(TestSuiteDetailsMenuModule, {
-        remove: { imports: [VirtualScrollerModule] },
-        add: { declarations: [MockVirtualScrollerComponent] }
-      })
+    TestBed.overrideModule(TestSuiteDetailsMenuModule, {
+      remove: { imports: [VirtualScrollerModule] },
+      add: { declarations: [MockVirtualScrollerComponent] }
+    })
       .configureTestingModule({
         imports: [
           TestSuiteDetailsMenuModule,
@@ -57,7 +56,7 @@ describe('TestSuiteDetailsMenuTestCasesComponent', () => {
           HttpClientTestingModule
         ],
         providers: [
-          provideMockStore({}),
+          provideMockStore({ initialState: { testReport: initialTestReportState } }),
           {
             provide: ActivatedRoute,
             useValue: {
@@ -77,7 +76,8 @@ describe('TestSuiteDetailsMenuTestCasesComponent', () => {
     store = mockStore;
     store.setState({
       testReport: {
-        ...initialtestReportsState,
+        ...initialTestReportState,
+        filter: null,
         testReports: [testReport]
       }
     });
@@ -90,5 +90,17 @@ describe('TestSuiteDetailsMenuTestCasesComponent', () => {
 
   it('has elements for each test case', () => {
     expect(fixture.debugElement.queryAll(By.css('bitrise-test-case')).length).toBe(3);
+  });
+
+  it('shows all cases', () => {
+    store.setState({
+      testReport: {
+        filter: TestSuiteStatus.failed
+      }
+    } as any);
+
+    fixture.detectChanges();
+
+    expect(fixture.debugElement.queryAll(By.css('bitrise-test-case')).length).toBe(2);
   });
 });

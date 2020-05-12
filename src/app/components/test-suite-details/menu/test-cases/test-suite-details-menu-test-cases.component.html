@@ -1,13 +1,16 @@
 <div class="test-cases">
+  <bitrise-status-selector></bitrise-status-selector>
   <bitrise-heading-text>Test Cases</bitrise-heading-text>
-  <ng-container *ngIf="testSuite">
-    <virtual-scroller #testCasesScroll
-      [items]="testSuite.testCases"
+  <ng-container *ngIf="testCases.length">
+    <virtual-scroller
+      #testCasesScroll
+      [items]="testCases"
       [parentScroll]="testCasesScroll.window"
       [bufferAmount]="10"
       [childHeight]="80"
       [resizeBypassRefreshThreshold]="20"
-      [enableUnequalChildrenSizes]="true">
+      [enableUnequalChildrenSizes]="true"
+    >
       <bitrise-test-case
         *ngFor="let testCase of testCasesScroll.viewPortItems; index as caseIndex"
         (toggleSummaryEvent)="updateListHeight(caseIndex)"

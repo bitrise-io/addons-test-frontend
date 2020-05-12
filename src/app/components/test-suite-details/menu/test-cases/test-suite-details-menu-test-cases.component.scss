@@ -2,6 +2,13 @@
 @import '../../../../../sass/mixins';
 
 .test-cases {
+  position: relative;
+
+  bitrise-status-selector {
+    position: absolute;
+    top: 0;
+    right: 0;
+  }
   bitrise-heading-text {
     @include list-header;
   }
