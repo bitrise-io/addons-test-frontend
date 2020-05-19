@@ -34,7 +34,7 @@ export class TestSuiteResolve
       }
     } = route;
 
-    this.store.dispatch(new StartPollingReports(buildSlug));
+    this.store.dispatch(new StartPollingReports({ buildSlug }));
 
     return this.testReports$.pipe(
       first((testReports: TestReport[]) => {
